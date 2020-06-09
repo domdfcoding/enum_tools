@@ -18,6 +18,8 @@ if [ -z "$(git status --porcelain --untracked-files=no)" ] || [ "$1" == "-f" ]; 
   autopep8 --in-place --select "$errors" -a --recursive better_enum/
   autopep8 --in-place --select "$belligerent" -a -a -a -a -a --recursive better_enum/
 
+  autopep8 --in-place --select "$errors" -a --recursive tests/
+  autopep8 --in-place --select "$belligerent" -a -a -a -a -a --recursive tests/
 
   echo "Running flake8"
 

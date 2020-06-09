@@ -18,7 +18,7 @@ better_enum
 	* - Docs
 	  - |docs|
 	* - Tests
-	  - |travis| |requires| |codefactor|
+	  - |travis| |requires| |coveralls| |codefactor|
 	* - PyPI
 	  - |pypi-version| |supported-versions| |supported-implementations| |wheel|
 	* - Other
@@ -35,6 +35,10 @@ better_enum
 .. |requires| image:: https://requires.io/github/domdfcoding/better_enum/requirements.svg?branch=master
 	:target: https://requires.io/github/domdfcoding/better_enum/requirements/?branch=master
 	:alt: Requirements Status
+
+.. |coveralls| image:: https://coveralls.io/repos/github/domdfcoding/better_enum/badge.svg?branch=master
+	:target: https://coveralls.io/github/domdfcoding/better_enum?branch=master
+	:alt: Coverage
 
 .. |codefactor| image:: https://img.shields.io/codefactor/grade/github/domdfcoding/better_enum
 	:target: https://www.codefactor.io/repository/github/domdfcoding/better_enum
