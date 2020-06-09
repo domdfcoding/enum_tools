@@ -1,0 +1,83 @@
+modname: better_enum
+copyright_years: "2020"
+author: "Dominic Davis-Foster"
+email: "dominic@davis-foster.co.uk"
+version: "0.0.1"
+username: "domdfcoding"
+license: 'LGPLv3+'
+short_desc: 'Fork of the Advenced Enumeration library with better support for mypy, docstrins and Sphinx.'
+
+#conda_channels:
+#  - domdfcoding
+#  - conda-forge
+
+enable_tests: false
+enable_conda: false
+
+python_deploy_version: 3.6
+
+# Additional lines for .gitignore
+#additional_ignore:
+#  - "*.sqlite"
+
+# Versions to run tests for
+python_versions:
+  - '3.6'
+  - '3.7'
+  - "3.8"
+
+# travis secure password for PyPI
+#travis_pypi_secure: ""
+
+# additional lines for MANIFEST.in
+manifest_additional:
+  - recursive-include better_enum/ requirements.txt
+#  - recursive-exclude tests/ *
+  - prune tests*
+
+# directory that contains tests
+tests_dir: "tests"
+
+# Additional arguments for setup.py
+#additional_setup_args:
+#  foo: bar
+
+conda_description: "Python tools for analysis of chemical compounds"
+
+classifiers:
+  - 'Development Status :: 4 - Beta'
+#  - "Development Status :: 5 - Production/Stable"
+#  - "Development Status :: 6 - Mature"
+#  - "Development Status :: 7 - Inactive"
+  - 'Intended Audience :: Developers'
+  - "Intended Audience :: Education"
+  - "Intended Audience :: Science/Research"
+  - 'Operating System :: OS Independent'
+  - 'Programming Language :: Python'
+  - 'Topic :: Software Development :: Libraries :: Python Modules'
+
+
+
+#keywords:
+#  -
+
+#extras_require:
+#  pubchem: "chemistry_tools/pubchem/requirements.txt"
+#  elements: "chemistry_tools/elements/requirements.txt"
+#  formulae: "chemistry_tools/formulae/requirements.txt"
+#  plotting:
+#    - matplotlib>=3.0.0
+#  toxnet:
+#    - beautifulsoup4>=4.7.0
+
+
+# Paths to additional requirements.txt files, relative to repo root
+#additional_requirements_files:
+#  - "chemistry_tools/pubchem/requirements.txt"
+#  - "chemistry_tools/elements/requirements.txt"
+#  - "chemistry_tools/formulae/requirements.txt"
+
+#tox_testenv_extras: all
+
+#sphinx_conf_preamble:
+#  - "warnings.filterwarnings('ignore', message='duplicate object description of chemistry_tools.elements')"

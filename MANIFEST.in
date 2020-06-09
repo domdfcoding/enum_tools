@@ -1,0 +1,8 @@
+include __pkginfo__.py
+include LICENSE
+include requirements.txt
+recursive-exclude **/__pycache__ *
+recursive-include better_enum/ requirements.txt
+prune tests*
+recursive-include better_enum/ *.pyi
+recursive-include better_enum/ py.typed
