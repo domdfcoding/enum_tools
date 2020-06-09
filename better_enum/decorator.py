@@ -1,25 +1,18 @@
 # stdlib
 import inspect
 import re
-import tokenize
-from io import StringIO
-from pprint import pprint
 from textwrap import dedent
-from typing import TYPE_CHECKING, Any, Sequence, Union
+from typing import TYPE_CHECKING
 
 # 3rd party
 import pygments.token  # type: ignore
 from pygments.lexers import PythonLexer  # type: ignore
-
-if TYPE_CHECKING:
-	from enum import Enum
-else:
-	from aenum import Enum
+from .importer import EnumMeta
 
 
 def document(an_enum):
-	if not isinstance(an_enum, Enum):
-		raise TypeError("'an_enum' must be an `aenum.Enum`!")
+	if not isinstance(an_enum, EnumMeta):
+		raise TypeError(f"'an_enum' must be an `aenum.Enum`, not {type(an_enum)}!")
 
 	func_source = inspect.getsource(an_enum)
 

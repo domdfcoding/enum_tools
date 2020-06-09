@@ -49,27 +49,22 @@ __all__ = [
 		# TODO: 'extend_enum',
 		'unique',
 		'NamedTuple',
+		"EnumMeta"
 		]
 
-# stdlib
-from typing import TYPE_CHECKING
 
 # this package
 from .constant import AutoNumber, AutoValue, MultiValue, NoAlias, Unique, constant
 from .custom_enums import (
-		AutoEnum,
-		AutoNumberEnum,
-		IntEnum,
-		MultiValueEnum,
-		NoAliasEnum,
-		OrderedEnum,
-		SqliteEnum,
-		StrEnum,
-		UniqueEnum
-		)
-
-if TYPE_CHECKING:
-	from enum import Enum, unique, Flag, IntFlag
-	from typing import NamedTuple
-else:
-	from aenum import Enum, NamedTuple, unique, Flag, IntFlag
+	AutoEnum,
+	AutoNumberEnum,
+	IntEnum,
+	MultiValueEnum,
+	NoAliasEnum,
+	OrderedEnum,
+	SqliteEnum,
+	StrEnum,
+	UniqueEnum
+)
+from .decorator import document
+from .importer import Enum, Flag, IntFlag, NamedTuple, unique, EnumMeta
