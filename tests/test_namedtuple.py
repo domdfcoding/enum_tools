@@ -61,18 +61,18 @@ class TestNamedTuple(TestCase):
 
 		p1 = Person(17, 'John', 'Doe')
 		p2 = Person(21, 'Jane', 'Doe')
-		self.assertEqual(p1[0], 17)
-		self.assertEqual(p1[1], 'John')
-		self.assertEqual(p1[2], 'Doe')
-		self.assertEqual(p2[0], 21)
-		self.assertEqual(p2[1], 'Jane')
-		self.assertEqual(p2[2], 'Doe')
-		self.assertEqual(p1.age, 17)
-		self.assertEqual(p1.first, 'John')
-		self.assertEqual(p1.last, 'Doe')
-		self.assertEqual(p2.age, 21)
-		self.assertEqual(p2.first, 'Jane')
-		self.assertEqual(p2.last, 'Doe')
+		assert p1[0] == 17
+		assert p1[1] == 'John'
+		assert p1[2] == 'Doe'
+		assert p2[0] == 21
+		assert p2[1] == 'Jane'
+		assert p2[2] == 'Doe'
+		assert p1.age == 17
+		assert p1.first == 'John'
+		assert p1.last == 'Doe'
+		assert p2.age == 21
+		assert p2.first == 'Jane'
+		assert p2.last == 'Doe'
 
 	def test_implicit_indexing(self):
 
@@ -84,18 +84,18 @@ class TestNamedTuple(TestCase):
 
 		p1 = Person(17, 'John', 'Doe')
 		p2 = Person(21, 'Jane', 'Doe')
-		self.assertEqual(p1[0], 17)
-		self.assertEqual(p1[1], 'John')
-		self.assertEqual(p1[2], 'Doe')
-		self.assertEqual(p2[0], 21)
-		self.assertEqual(p2[1], 'Jane')
-		self.assertEqual(p2[2], 'Doe')
-		self.assertEqual(p1.age, 17)
-		self.assertEqual(p1.first, 'John')
-		self.assertEqual(p1.last, 'Doe')
-		self.assertEqual(p2.age, 21)
-		self.assertEqual(p2.first, 'Jane')
-		self.assertEqual(p2.last, 'Doe')
+		assert p1[0] == 17
+		assert p1[1] == 'John'
+		assert p1[2] == 'Doe'
+		assert p2[0] == 21
+		assert p2[1] == 'Jane'
+		assert p2[2] == 'Doe'
+		assert p1.age == 17
+		assert p1.first == 'John'
+		assert p1.last == 'Doe'
+		assert p2.age == 21
+		assert p2.first == 'Jane'
+		assert p2.last == 'Doe'
 
 	def test_mixed_indexing(self):
 
@@ -107,10 +107,10 @@ class TestNamedTuple(TestCase):
 
 		p1 = Person(17, 'John', 'Doe', 3)
 		p2 = Person(21, 'Jane', 'Doe', 9)
-		self.assertEqual(p1[0], 17)
-		self.assertEqual(p1[1], 'John')
-		self.assertEqual(p1[2], 'Doe')
-		self.assertEqual(p1[3], 3)
+		assert p1[0] == 17
+		assert p1[1] == 'John'
+		assert p1[2] == 'Doe'
+		assert p1[3] == 3
 		self.assertEqual(p2[0], 21)
 		self.assertEqual(p2[1], 'Jane')
 		self.assertEqual(p2[2], 'Doe')

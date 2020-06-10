@@ -140,28 +140,28 @@ class TestEnum(TestCase):
 
 	def test_enum_value(self):
 		season = self.Season
-		self.assertEqual(season.SPRING.value, 1)
+		assert season.SPRING.value == 1
 
 	def test_intenum_value(self):
-		self.assertEqual(IntStooges.CURLY.value, 2)
+		assert IntStooges.CURLY.value == 2
 
 	def test_enum(self):
 		lst = list(self.Season)
-		self.assertEqual(len(lst), len(self.Season))
-		self.assertEqual(len(self.Season), 4, self.Season)
-		self.assertEqual([self.Season.SPRING, self.Season.SUMMER, self.Season.AUTUMN, self.Season.WINTER], lst)
+		assert len(lst) == len(self.Season)
+		assert len(self.Season), 4 == self.Season
+		assert [self.Season.SPRING, self.Season.SUMMER, self.Season.AUTUMN, self.Season.WINTER] == lst
 
 		for i, season in enumerate('SPRING SUMMER AUTUMN WINTER'.split()):
 			i += 1
 			e = self.Season(i)
-			self.assertEqual(e, getattr(self.Season, season))
-			self.assertEqual(e.value, i)
+			assert e, getattr(self.Season == season)
+			assert e.value == i
 			self.assertNotEqual(e, i)
-			self.assertEqual(e.name, season)
+			assert e.name == season
 			self.assertTrue(e in self.Season)
 			assert isinstance(e, self.Season)
 			self.assertTrue(isinstance(e, self.Season))
-			self.assertEqual(str(e), 'Season.' + season)
+			assert str(e) == 'Season.' + season
 			self.assertEqual(
 					repr(e),
 					'<Season.%s: %s>' % (season, i),
@@ -172,13 +172,13 @@ class TestEnum(TestCase):
 		e2 = enum(1, 2, three=9)
 		e3 = enum(1, 2, 9)
 		self.assertTrue(e1 is not e2)
-		self.assertEqual(e1, e2)
+		assert e1 == e2
 		self.assertNotEqual(e1, e3)
 		self.assertNotEqual(e2, e3)
 
 	def test_value_name(self):
-		self.assertEqual(self.Season.SPRING.name, 'SPRING')
-		self.assertEqual(self.Season.SPRING.value, 1)
+		assert self.Season.SPRING.name == 'SPRING'
+		assert self.Season.SPRING.value == 1
 
 		def set_name(obj, new_value):
 			obj.name = new_value
@@ -289,12 +289,12 @@ class TestEnum(TestCase):
 
 	def test_format_enum(self):
 		Season = self.Season
-		self.assertEqual('{0}'.format(Season.SPRING), '{0}'.format(str(Season.SPRING)))
-		self.assertEqual('{0:}'.format(Season.SPRING), '{0:}'.format(str(Season.SPRING)))
-		self.assertEqual('{0:20}'.format(Season.SPRING), '{0:20}'.format(str(Season.SPRING)))
-		self.assertEqual('{0:^20}'.format(Season.SPRING), '{0:^20}'.format(str(Season.SPRING)))
-		self.assertEqual('{0:>20}'.format(Season.SPRING), '{0:>20}'.format(str(Season.SPRING)))
-		self.assertEqual('{0:<20}'.format(Season.SPRING), '{0:<20}'.format(str(Season.SPRING)))
+		assert '{0}'.format(Season.SPRING) == '{0}'.format(str(Season.SPRING))
+		assert '{0:}'.format(Season.SPRING) == '{0:}'.format(str(Season.SPRING))
+		assert '{0:20}'.format(Season.SPRING) == '{0:20}'.format(str(Season.SPRING))
+		assert '{0:^20}'.format(Season.SPRING) == '{0:^20}'.format(str(Season.SPRING))
+		assert '{0:>20}'.format(Season.SPRING) == '{0:>20}'.format(str(Season.SPRING))
+		assert '{0:<20}'.format(Season.SPRING) == '{0:<20}'.format(str(Season.SPRING))
 
 	def test_format_enum_custom(self):
 
@@ -305,10 +305,10 @@ class TestEnum(TestCase):
 			def __format__(self, spec):
 				return 'TestFloat success!'
 
-		self.assertEqual('{0}'.format(TestFloat.one), 'TestFloat success!')
+		assert '{0}'.format(TestFloat.one) == 'TestFloat success!'
 
 	def assertFormatIsValue(self, spec, member):
-		self.assertEqual(spec.format(member), spec.format(member.value))
+		assert spec.format(member) == spec.format(member.value)
 
 	def test_format_enum_date(self):
 		Holiday = self.Holiday
@@ -361,7 +361,7 @@ class TestEnum(TestCase):
 		dates[Season.SPRING] = '0315'
 		dates[Season.SUMMER] = '0704'
 		dates[Season.AUTUMN] = '1031'
-		self.assertEqual(dates[Season.AUTUMN], '1031')
+		assert dates[Season.AUTUMN] == '1031'
 
 	def test_enum_duplicates(self):
 
@@ -381,11 +381,11 @@ class TestEnum(TestCase):
 				Season.WINTER,
 				])
 		self.assertTrue(Season.FALL is Season.AUTUMN)
-		self.assertEqual(Season.FALL.value, 3)
-		self.assertEqual(Season.AUTUMN.value, 3)
+		assert Season.FALL.value == 3
+		assert Season.AUTUMN.value == 3
 		self.assertTrue(Season(3) is Season.AUTUMN)
 		self.assertTrue(Season(1) is Season.SPRING)
-		self.assertEqual(Season.FALL.name, 'AUTUMN')
+		assert Season.FALL.name == 'AUTUMN'
 		self.assertEqual(
 				set([k for k, v in Season.__members__.items() if v.name != k]),
 				set(['FALL', 'ANOTHER_SPRING']),
@@ -403,8 +403,8 @@ class TestEnum(TestCase):
 				[Huh.name, Huh.value],
 				)
 		assert isinstance(Huh.name, Huh)
-		self.assertEqual(Huh.name.name, 'name')
-		self.assertEqual(Huh.name.value, 1)
+		assert Huh.name.name == 'name'
+		assert Huh.name.value == 1
 
 	def test_intenum_from_scratch(self):
 
@@ -474,22 +474,22 @@ class TestEnum(TestCase):
 			FRIDAY = 6
 			SATURDAY = 7
 
-		self.assertEqual(['a', 'b', 'c'][WeekDay.MONDAY], 'c')
-		self.assertEqual([i for i in range(WeekDay.TUESDAY)], [0, 1, 2])
+		assert ['a', 'b', 'c'][WeekDay.MONDAY] == 'c'
+		assert [i for i in range(WeekDay.TUESDAY)], [0, 1 == 2]
 
 		lst = list(WeekDay)
-		self.assertEqual(len(lst), len(WeekDay))
-		self.assertEqual(len(WeekDay), 7)
+		assert len(lst) == len(WeekDay)
+		assert len(WeekDay) == 7
 		target = 'SUNDAY MONDAY TUESDAY WEDNESDAY THURSDAY FRIDAY SATURDAY'
 		target = target.split()
 		for i, weekday in enumerate(target):
 			i += 1
 			e = WeekDay(i)
-			self.assertEqual(e, i)
-			self.assertEqual(int(e), i)
-			self.assertEqual(e.name, weekday)
+			assert e == i
+			assert int(e) == i
+			assert e.name == weekday
 			self.assertTrue(e in WeekDay)
-			self.assertEqual(lst.index(e) + 1, i)
+			assert lst.index(e) + 1 == i
 			self.assertTrue(0 < e < 8)
 			assert isinstance(e, WeekDay)
 			self.assertTrue(isinstance(e, int))
@@ -508,7 +508,7 @@ class TestEnum(TestCase):
 			SATURDAY = 7
 
 		self.assertTrue(WeekDay.TEUSDAY is WeekDay.TUESDAY)
-		self.assertEqual(WeekDay(3).name, 'TUESDAY')
+		assert WeekDay(3).name == 'TUESDAY'
 		self.assertEqual([k for k, v in WeekDay.__members__.items() if v.name != k], [
 				'TEUSDAY',
 				])
@@ -896,7 +896,7 @@ class TestEnum(TestCase):
 			def really(self):
 				return 'no, not %s' % self.value
 
-		self.assertFalse(type(whatever.really) is whatever)
+		assert not isinstance(whatever.really, whatever)
 		self.assertEqual(whatever.this.really(), 'no, not that')
 
 	def test_wrong_inheritance_order(self):
@@ -1553,9 +1553,9 @@ class TestEnum(TestCase):
 			blue = ()
 
 		self.assertEqual(len(Color), 3, "wrong number of elements: %d (should be %d)" % (len(Color), 3))
-		Color.red
-		Color.green
-		Color.blue
+		Color.red  # pylint: disable=pointless-statement
+		Color.green  # pylint: disable=pointless-statement
+		Color.blue  # pylint: disable=pointless-statement
 		self.assertEqual(Color.blue, 13)
 
 	def test_equality(self):
@@ -2920,31 +2920,31 @@ class TestEnumV3(TestCase):
 		with self.assertRaises(NameError):
 
 			class Color(Enum, settings=AutoValue):
-				red
-				green
-				blue
+				red  # pylint: disable=pointless-statement
+				green  # pylint: disable=pointless-statement
+				blue  # pylint: disable=pointless-statement
 
 				def hello(self):
-					print('Hello!  My serial is %s.' % self.value)
+					print(f'Hello!  My serial is {self.value}.')
 
-				rose
+				rose  # pylint: disable=pointless-statement
 
 		with self.assertRaises(NameError):
 
 			class Color(Enum, settings=AutoValue):
-				red
-				green
-				blue
+				red  # pylint: disable=pointless-statement
+				green  # pylint: disable=pointless-statement
+				blue  # pylint: disable=pointless-statement
 
 				def __init__(self, *args):
 					pass
 
-				rose
+				rose  # pylint: disable=pointless-statement
 
 	def test_magic(self):
 
 		class Color(Enum, settings=AutoValue):
-			red, green, blue
+			red, green, blue  # pylint: disable=pointless-statement
 
 		self.assertEqual(list(Color), [Color.red, Color.green, Color.blue])
 		self.assertEqual(Color.red.value, 1)
@@ -2963,7 +2963,7 @@ class TestEnumV3(TestCase):
 	def test_magic_start(self):
 
 		class Color(Enum, start=0):
-			red, green, blue
+			red, green, blue  # pylint: disable=pointless-statement
 
 		self.assertEqual(list(Color), [Color.red, Color.green, Color.blue])
 		self.assertEqual(Color.red.value, 0)
@@ -3157,9 +3157,9 @@ class TestEnumV3(TestCase):
 	def test_multivalue_and_auto(self):
 
 		class Color(Enum, settings=(MultiValue, AutoValue)):
-			red
+			red  # pylint: disable=pointless-statement
 			green = 3, 'green'
-			blue
+			blue  # pylint: disable=pointless-statement
 
 		self.assertEqual(Color.red.value, 1)
 		self.assertEqual(Color.green.value, 3)
@@ -3302,9 +3302,9 @@ class TestEnumV3(TestCase):
 	def test_autoenum_and_default_ignore(self):
 
 		class Color(AutoEnum):
-			red
-			green
-			blue
+			red  # pylint: disable=pointless-statement
+			green  # pylint: disable=pointless-statement
+			blue  # pylint: disable=pointless-statement
 
 			@property
 			def cap_name(self):
@@ -3347,8 +3347,8 @@ class TestEnumV3(TestCase):
 		with self.assertRaises(ValueError):
 
 			class AutoUnique(Auto, settings=AutoValue):
-				BLAH
-				BLUH
+				BLAH  # pylint: disable=pointless-statement
+				BLUH  # pylint: disable=pointless-statement
 				ICK = 1
 
 	def test_timedelta(self):

@@ -96,36 +96,36 @@ class TestFlag(TestCase):
 
 	def test_str(self):
 		Perm = self.Perm
-		self.assertEqual(str(Perm.R), 'Perm.R')
-		self.assertEqual(str(Perm.W), 'Perm.W')
-		self.assertEqual(str(Perm.X), 'Perm.X')
-		self.assertEqual(str(Perm.R | Perm.W), 'Perm.R|W')
-		self.assertEqual(str(Perm.R | Perm.W | Perm.X), 'Perm.R|W|X')
-		self.assertEqual(str(Perm(0)), 'Perm.0')
-		self.assertEqual(str(~Perm.R), 'Perm.W|X')
-		self.assertEqual(str(~Perm.W), 'Perm.R|X')
-		self.assertEqual(str(~Perm.X), 'Perm.R|W')
-		self.assertEqual(str(~(Perm.R | Perm.W)), 'Perm.X')
-		self.assertEqual(str(~(Perm.R | Perm.W | Perm.X)), 'Perm.0')
-		self.assertEqual(str(Perm(~0)), 'Perm.R|W|X')
+		assert str(Perm.R) == 'Perm.R'
+		assert str(Perm.W) == 'Perm.W'
+		assert str(Perm.X) == 'Perm.X'
+		assert str(Perm.R | Perm.W) == 'Perm.R|W'
+		assert str(Perm.R | Perm.W | Perm.X) == 'Perm.R|W|X'
+		assert str(Perm(0)) == 'Perm.0'
+		assert str(~Perm.R) == 'Perm.W|X'
+		assert str(~Perm.W) == 'Perm.R|X'
+		assert str(~Perm.X) == 'Perm.R|W'
+		assert str(~(Perm.R | Perm.W)) == 'Perm.X'
+		assert str(~(Perm.R | Perm.W | Perm.X)) == 'Perm.0'
+		assert str(Perm(~0)) == 'Perm.R|W|X'
 
 		Open = self.Open
-		self.assertEqual(str(Open.RO), 'Open.RO')
-		self.assertEqual(str(Open.WO), 'Open.WO')
-		self.assertEqual(str(Open.AC), 'Open.AC')
-		self.assertEqual(str(Open.RO | Open.CE), 'Open.CE')
-		self.assertEqual(str(Open.WO | Open.CE), 'Open.CE|WO')
-		self.assertEqual(str(~Open.RO), 'Open.CE|AC|RW|WO')
-		self.assertEqual(str(~Open.WO), 'Open.CE|RW')
-		self.assertEqual(str(~Open.AC), 'Open.CE')
-		self.assertEqual(str(~(Open.RO | Open.CE)), 'Open.AC')
-		self.assertEqual(str(~(Open.WO | Open.CE)), 'Open.RW')
+		assert str(Open.RO) == 'Open.RO'
+		assert str(Open.WO) == 'Open.WO'
+		assert str(Open.AC) == 'Open.AC'
+		assert str(Open.RO | Open.CE) == 'Open.CE'
+		assert str(Open.WO | Open.CE) == 'Open.CE|WO'
+		assert str(~Open.RO) == 'Open.CE|AC|RW|WO'
+		assert str(~Open.WO) == 'Open.CE|RW'
+		assert str(~Open.AC) == 'Open.CE'
+		assert str(~(Open.RO | Open.CE)) == 'Open.AC'
+		assert str(~(Open.WO | Open.CE)) == 'Open.RW'
 
 	def test_repr(self):
 		Perm = self.Perm
-		self.assertEqual(repr(Perm.R), '<Perm.R: 4>')
-		self.assertEqual(repr(Perm.W), '<Perm.W: 2>')
-		self.assertEqual(repr(Perm.X), '<Perm.X: 1>')
+		assert repr(Perm.R) == '<Perm.R: 4>'
+		assert repr(Perm.W) == '<Perm.W: 2>'
+		assert repr(Perm.X) == '<Perm.X: 1>'
 		self.assertEqual(repr(Perm.R | Perm.W), '<Perm.R|W: 6>')
 		self.assertEqual(repr(Perm.R | Perm.W | Perm.X), '<Perm.R|W|X: 7>')
 		self.assertEqual(repr(Perm(0)), '<Perm.0: 0>')

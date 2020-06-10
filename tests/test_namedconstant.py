@@ -60,8 +60,8 @@ class TestNamedConstant(TestCase):
 			PI = 3.141596
 			TAU = 2 * PI
 
-		self.assertEqual(K.PI, 3.141596)
-		self.assertEqual(K.TAU, 2 * K.PI)
+		assert K.PI == 3.141596
+		assert K.TAU == 2 * K.PI
 		with self.assertRaisesRegex(AttributeError, 'cannot rebind constant'):
 			K.PI = 9
 		with self.assertRaisesRegex(AttributeError, 'cannot delete constant'):
@@ -87,8 +87,8 @@ class TestNamedConstant(TestCase):
 			KING = 10
 
 		self.assertFalse(CardNumber.TEN is CardNumber.JACK)
-		self.assertEqual(CardNumber.TEN, CardNumber.JACK)
-		self.assertEqual(CardNumber.TEN, 10)
+		assert CardNumber.TEN == CardNumber.JACK
+		assert CardNumber.TEN == 10
 
 	def test_extend_constants(self):
 
@@ -98,10 +98,10 @@ class TestNamedConstant(TestCase):
 			DIAMONTS = 3
 			CLUBS = 4
 
-		self.assertEqual(CardSuit.HEARTS, 1)
+		assert CardSuit.HEARTS == 1
 		stars = CardSuit('STARS', 5)
 		self.assertIs(stars, CardSuit.STARS)
-		self.assertEqual(CardSuit.STARS, 5)
+		assert CardSuit.STARS == 5
 
 	def test_constant_with_docstring(self):
 
@@ -110,9 +110,9 @@ class TestNamedConstant(TestCase):
 			Bowling = 11
 			HillWomp = constant(29, 'blah blah')
 
-		self.assertEqual(Stuff.Artifact, 7)
-		self.assertEqual(Stuff.Artifact.__doc__, 'lucky number!')
-		self.assertEqual(Stuff.Bowling, 11)
-		self.assertEqual(Stuff.Bowling.__doc__, None)
-		self.assertEqual(Stuff.HillWomp, 29)
-		self.assertEqual(Stuff.HillWomp.__doc__, 'blah blah')
+		assert Stuff.Artifact == 7
+		assert Stuff.Artifact.__doc__ == 'lucky number!'
+		assert Stuff.Bowling == 11
+		assert Stuff.Bowling.__doc__ == None
+		assert Stuff.HillWomp == 29
+		assert Stuff.HillWomp.__doc__ == 'blah blah'

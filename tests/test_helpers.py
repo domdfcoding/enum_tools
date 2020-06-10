@@ -128,7 +128,7 @@ class TestHelpers(TestCase):
 				left = auto()
 				value = op(left)
 				left.value = first
-				self.assertEqual(value.value, final, "%s %r -> %r != %r" % (op.__name__, first, value, final))
+				self.assertEqual(value.value, final, f"{op.__name__} {first!r} -> {value!r} != {final!r}")
 			else:
 				left = first
 				right = auto()
@@ -137,7 +137,7 @@ class TestHelpers(TestCase):
 				self.assertEqual(
 						value.value,
 						final,
-						"forward: %r %s %r -> %r != %r" % (first, op.__name__, second, value.value, final)
+						f"forward: {first!r} {op.__name__} {second!r} -> {value.value!r} != {final!r}"
 						)
 				left = auto()
 				right = second
@@ -146,7 +146,7 @@ class TestHelpers(TestCase):
 				self.assertEqual(
 						value.value,
 						final,
-						"reversed: %r %s %r -> %r != %r" % (second, op.__name__, first, value.value, final)
+						f"reversed: {second!r} {op.__name__} {first!r} -> {value.value!r} != {final!r}"
 						)
 
 		for args in (
@@ -177,7 +177,7 @@ class TestHelpers(TestCase):
 		right = 'eggs'
 		value = _mod_(left, right)
 		left.value = 'I see 17 %s!'
-		self.assertEqual(value.value, 'I see 17 %s!' % 'eggs')
+		assert value.value == 'I see 17 %s!' % 'eggs'
 
 	def test_constant(self):
 		errors = []
