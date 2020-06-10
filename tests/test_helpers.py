@@ -233,4 +233,4 @@ class TestHelpers(TestCase):
 			print()
 			for error in errors:
 				print(error)
-			self.assertTrue(False)
+			assert False

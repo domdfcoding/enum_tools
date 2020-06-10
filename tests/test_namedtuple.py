@@ -302,9 +302,9 @@ class TestNamedTuple(TestCase):
 	def test_contains(self):
 		Book = NamedTuple('Book', 'title author genre')
 		b = Book('Teckla', 'Steven Brust', 'fantasy')
-		self.assertTrue('Teckla' in b)
-		self.assertTrue('Steven Brust' in b)
-		self.assertTrue('fantasy' in b)
+		assert 'Teckla' in b
+		assert 'Steven Brust' in b
+		assert 'fantasy' in b
 
 	#
 	# def test_fixed_size(self):
@@ -316,9 +316,9 @@ class TestNamedTuple(TestCase):
 	# 		genre = 2
 	#
 	# 	b = Book('Teckla', 'Steven Brust', 'fantasy')
-	# 	self.assertTrue('Teckla' in b)
-	# 	self.assertTrue('Steven Brust' in b)
-	# 	self.assertTrue('fantasy' in b)
+	# 	assert 'Teckla' in b
+	# 	assert 'Steven Brust' in b
+	# 	assert 'fantasy' in b
 	# 	assert b.title == 'Teckla'
 	# 	assert b.author == 'Steven Brust'
 	# 	self.assertRaises(TypeError, Book, 'Teckla', 'Steven Brust')
@@ -433,9 +433,9 @@ class TestNamedTuple(TestCase):
 	# 		genre = 2
 	#
 	# 	b = Book('Teckla', 'Steven Brust', 'fantasy')
-	# 	self.assertTrue('Teckla' in b)
-	# 	self.assertTrue('Steven Brust' in b)
-	# 	self.assertTrue('fantasy' in b)
+	# 	assert 'Teckla' in b
+	# 	assert 'Steven Brust' in b
+	# 	assert 'fantasy' in b
 	# 	assert b.title == 'Teckla'
 	# 	assert b.author == 'Steven Brust'
 	# 	self.assertRaises(TypeError, Book, 'Teckla', 'Steven Brust')
@@ -449,14 +449,14 @@ class TestNamedTuple(TestCase):
 	# 		author = 1
 	#
 	# 	b = Book('Teckla', 'Steven Brust', 'fantasy')
-	# 	self.assertTrue('Teckla' in b)
-	# 	self.assertTrue('Steven Brust' in b)
-	# 	self.assertTrue('fantasy' in b)
+	# 	assert 'Teckla' in b
+	# 	assert 'Steven Brust' in b
+	# 	assert 'fantasy' in b
 	# 	assert b.title == 'Teckla'
 	# 	assert b.author == 'Steven Brust'
 	# 	b = Book('Teckla', 'Steven Brust')
-	# 	self.assertTrue('Teckla' in b)
-	# 	self.assertTrue('Steven Brust' in b)
+	# 	assert 'Teckla' in b
+	# 	assert 'Steven Brust' in b
 	# 	assert b.title == 'Teckla'
 	# 	assert b.author == 'Steven Brust'
 	# 	self.assertRaises(TypeError, Book, 'Teckla')
@@ -470,15 +470,15 @@ class TestNamedTuple(TestCase):
 			genre = 2
 
 		b = Book('Teckla', 'Steven Brust', 'fantasy')
-		self.assertTrue('Teckla' in b)
-		self.assertTrue('Steven Brust' in b)
-		self.assertTrue('fantasy' in b)
+		assert 'Teckla' in b
+		assert 'Steven Brust' in b
+		assert 'fantasy' in b
 		assert b.title == 'Teckla'
 		assert b.author == 'Steven Brust'
 		assert b.genre == 'fantasy'
 		b = Book('Teckla', 'Steven Brust')
-		self.assertTrue('Teckla' in b)
-		self.assertTrue('Steven Brust' in b)
+		assert 'Teckla' in b
+		assert 'Steven Brust' in b
 		assert b.title == 'Teckla'
 		assert b.author == 'Steven Brust'
 		self.assertRaises(AttributeError, getattr, b, 'genre')

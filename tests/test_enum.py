@@ -136,7 +136,7 @@ class TestEnum(TestCase):
 
 	def test_enum_in_enum_out(self):
 		season = self.Season
-		self.assertTrue(season(season.WINTER) is season.WINTER)
+		assert season(season.WINTER) is season.WINTER
 
 	def test_enum_value(self):
 		season = self.Season
@@ -158,7 +158,7 @@ class TestEnum(TestCase):
 			assert e.value == i
 			self.assertNotEqual(e, i)
 			assert e.name == season
-			self.assertTrue(e in self.Season)
+			assert e in self.Season
 			assert isinstance(e, self.Season)
 			self.assertTrue(isinstance(e, self.Season))
 			assert str(e) == 'Season.' + season
@@ -171,7 +171,7 @@ class TestEnum(TestCase):
 		e1 = enum(1, 2, three=9)
 		e2 = enum(1, 2, three=9)
 		e3 = enum(1, 2, 9)
-		self.assertTrue(e1 is not e2)
+		assert e1 is not e2
 		assert e1 == e2
 		self.assertNotEqual(e1, e3)
 		self.assertNotEqual(e2, e3)
@@ -256,23 +256,23 @@ class TestEnum(TestCase):
 
 			__nonzero__ = __bool__
 
-		self.assertTrue(Logic.true)
+		assert Logic.true
 		self.assertFalse(Logic.false)
 
 	def test_contains(self):
 		Season = self.Season
 		self.assertRaises(TypeError, lambda: 'AUTUMN' in Season)
-		self.assertTrue(Season.AUTUMN in Season)
+		assert Season.AUTUMN in Season
 		self.assertRaises(TypeError, lambda: 3 not in Season)
 		val = Season(3)
-		self.assertTrue(val in Season)
+		assert val in Season
 
 		#
 		class OtherEnum(Enum):
 			one = 1
 			two = 2
 
-		self.assertTrue(OtherEnum.two not in Season)
+		assert OtherEnum.two not in Season
 
 		#
 		class Wierd(Enum):
@@ -280,7 +280,7 @@ class TestEnum(TestCase):
 			that = (1, 2, 3)
 			those = {1: 1, 2: 2, 3: 3}
 
-		self.assertTrue(Wierd.this in Wierd)
+		assert Wierd.this in Wierd
 		self.assertRaises(TypeError, lambda: [1, 2, 3] in Wierd)
 		self.assertRaises(TypeError, lambda: {1: 1, 2: 2, 3: 3} in Wierd)
 
@@ -380,7 +380,7 @@ class TestEnum(TestCase):
 				Season.AUTUMN,
 				Season.WINTER,
 				])
-		self.assertTrue(Season.FALL is Season.AUTUMN)
+		assert Season.FALL is Season.AUTUMN
 		assert Season.FALL.value == 3
 		assert Season.AUTUMN.value == 3
 		self.assertTrue(Season(3) is Season.AUTUMN)
@@ -412,7 +412,7 @@ class TestEnum(TestCase):
 			pi = 3
 			tau = 2 * pi
 
-		self.assertTrue(phy.pi < phy.tau)
+		assert phy.pi < phy.tau
 
 	def test_intenum_inherited(self):
 
@@ -423,7 +423,7 @@ class TestEnum(TestCase):
 			pi = 3
 			tau = 2 * pi
 
-		self.assertTrue(phy.pi < phy.tau)
+		assert phy.pi < phy.tau
 
 	def test_floatenum_from_scratch(self):
 
@@ -431,7 +431,7 @@ class TestEnum(TestCase):
 			pi = 3.1415926
 			tau = 2 * pi
 
-		self.assertTrue(phy.pi < phy.tau)
+		assert phy.pi < phy.tau
 
 	def test_floatenum_inherited(self):
 
@@ -442,7 +442,7 @@ class TestEnum(TestCase):
 			pi = 3.1415926
 			tau = 2 * pi
 
-		self.assertTrue(phy.pi < phy.tau)
+		assert phy.pi < phy.tau
 
 	def test_strenum_from_scratch(self):
 
@@ -450,7 +450,7 @@ class TestEnum(TestCase):
 			pi = 'Pi'
 			tau = 'Tau'
 
-		self.assertTrue(phy.pi < phy.tau)
+		assert phy.pi < phy.tau
 
 	def test_strenum_inherited(self):
 
@@ -461,7 +461,7 @@ class TestEnum(TestCase):
 			pi = 'Pi'
 			tau = 'Tau'
 
-		self.assertTrue(phy.pi < phy.tau)
+		assert phy.pi < phy.tau
 
 	def test_intenum(self):
 
@@ -488,9 +488,9 @@ class TestEnum(TestCase):
 			assert e == i
 			assert int(e) == i
 			assert e.name == weekday
-			self.assertTrue(e in WeekDay)
+			assert e in WeekDay
 			assert lst.index(e) + 1 == i
-			self.assertTrue(0 < e < 8)
+			assert 0 < e < 8
 			assert isinstance(e, WeekDay)
 			self.assertTrue(isinstance(e, int))
 			self.assertTrue(isinstance(e, Enum))
@@ -507,7 +507,7 @@ class TestEnum(TestCase):
 			FRIDAY = 6
 			SATURDAY = 7
 
-		self.assertTrue(WeekDay.TEUSDAY is WeekDay.TUESDAY)
+		assert WeekDay.TEUSDAY is WeekDay.TUESDAY
 		assert WeekDay(3).name == 'TUESDAY'
 		self.assertEqual([k for k, v in WeekDay.__members__.items() if v.name != k], [
 				'TEUSDAY',
@@ -532,7 +532,7 @@ class TestEnum(TestCase):
 
 		self.assertTrue(Period(2) is Period.noon)
 		self.assertTrue(getattr(Period, 'night') is Period.night)
-		self.assertTrue(Period['morning'] is Period.morning)
+		assert Period['morning'] is Period.morning
 
 	def test_getattr_dunder(self):
 		Season = self.Season
@@ -586,7 +586,7 @@ class TestEnum(TestCase):
 			assert int(e.value) == i
 			self.assertNotEqual(e, i)
 			assert e.name == month
-			self.assertTrue(e in SummerMonth)
+			assert e in SummerMonth
 			assert isinstance(e, SummerMonth)
 
 	def test_programatic_function_string_with_start(self):
@@ -603,7 +603,7 @@ class TestEnum(TestCase):
 			assert int(e.value) == i
 			self.assertNotEqual(e, i)
 			assert e.name == month
-			self.assertTrue(e in SummerMonth)
+			assert e in SummerMonth
 			assert isinstance(e, SummerMonth)
 
 	def test_programatic_function_string_list(self):
@@ -621,7 +621,7 @@ class TestEnum(TestCase):
 			assert int(e.value) == i
 			self.assertNotEqual(e, i)
 			assert e.name == month
-			self.assertTrue(e in SummerMonth)
+			assert e in SummerMonth
 			assert isinstance(e, SummerMonth)
 
 	def test_programatic_function_string_list_with_start(self):
@@ -638,7 +638,7 @@ class TestEnum(TestCase):
 			assert int(e.value) == i
 			self.assertNotEqual(e, i)
 			assert e.name == month
-			self.assertTrue(e in SummerMonth)
+			assert e in SummerMonth
 			assert isinstance(e, SummerMonth)
 
 	def test_programatic_function_iterable(self):
@@ -656,7 +656,7 @@ class TestEnum(TestCase):
 			assert int(e.value) == i
 			self.assertNotEqual(e, i)
 			assert e.name == month
-			self.assertTrue(e in SummerMonth)
+			assert e in SummerMonth
 			assert isinstance(e, SummerMonth)
 
 	def test_programatic_function_from_dict(self):
@@ -671,7 +671,7 @@ class TestEnum(TestCase):
 			assert int(e.value) == i
 			self.assertNotEqual(e, i)
 			assert e.name == month
-			self.assertTrue(e in SummerMonth)
+			assert e in SummerMonth
 			assert isinstance(e, SummerMonth)
 
 	def test_programatic_function_type(self):
@@ -688,7 +688,7 @@ class TestEnum(TestCase):
 			e = SummerMonth(i)
 			assert e == i
 			assert e.name == month
-			self.assertTrue(e in SummerMonth)
+			assert e in SummerMonth
 			assert isinstance(e, SummerMonth)
 
 	def test_programatic_function_type_with_start(self):
@@ -704,7 +704,7 @@ class TestEnum(TestCase):
 			e = SummerMonth(i)
 			assert e == i
 			assert e.name == month
-			self.assertTrue(e in SummerMonth)
+			assert e in SummerMonth
 			assert isinstance(e, SummerMonth)
 
 	def test_programatic_function_type_from_subclass(self):
@@ -721,7 +721,7 @@ class TestEnum(TestCase):
 			e = SummerMonth(i)
 			assert e == i
 			assert e.name == month
-			self.assertTrue(e in SummerMonth)
+			assert e in SummerMonth
 			assert isinstance(e, SummerMonth)
 
 	def test_programatic_function_type_from_subclass_with_start(self):
@@ -737,7 +737,7 @@ class TestEnum(TestCase):
 			e = SummerMonth(i)
 			assert e == i
 			assert e.name == month
-			self.assertTrue(e in SummerMonth)
+			assert e in SummerMonth
 			assert isinstance(e, SummerMonth)
 
 	def test_programatic_function_unicode(self):
@@ -755,7 +755,7 @@ class TestEnum(TestCase):
 			assert int(e.value) == i
 			self.assertNotEqual(e, i)
 			assert e.name == month
-			self.assertTrue(e in SummerMonth)
+			assert e in SummerMonth
 			assert isinstance(e, SummerMonth)
 
 	def test_programatic_function_unicode_list(self):
@@ -773,7 +773,7 @@ class TestEnum(TestCase):
 			assert int(e.value) == i
 			self.assertNotEqual(e, i)
 			assert e.name == month
-			self.assertTrue(e in SummerMonth)
+			assert e in SummerMonth
 			assert isinstance(e, SummerMonth)
 
 	def test_programatic_function_unicode_iterable(self):
@@ -791,7 +791,7 @@ class TestEnum(TestCase):
 			assert int(e.value) == i
 			self.assertNotEqual(e, i)
 			assert e.name == month
-			self.assertTrue(e in SummerMonth)
+			assert e in SummerMonth
 			assert isinstance(e, SummerMonth)
 
 	def test_programatic_function_from_unicode_dict(self):
@@ -806,7 +806,7 @@ class TestEnum(TestCase):
 			assert int(e.value) == i
 			self.assertNotEqual(e, i)
 			assert e.name == month
-			self.assertTrue(e in SummerMonth)
+			assert e in SummerMonth
 			assert isinstance(e, SummerMonth)
 
 	def test_programatic_function_unicode_type(self):
@@ -823,7 +823,7 @@ class TestEnum(TestCase):
 			e = SummerMonth(i)
 			assert e == i
 			assert e.name == month
-			self.assertTrue(e in SummerMonth)
+			assert e in SummerMonth
 			assert isinstance(e, SummerMonth)
 
 	def test_programatic_function_unicode_type_from_subclass(self):
@@ -840,7 +840,7 @@ class TestEnum(TestCase):
 			e = SummerMonth(i)
 			assert e == i
 			assert e.name == month
-			self.assertTrue(e in SummerMonth)
+			assert e in SummerMonth
 			assert isinstance(e, SummerMonth)
 
 	def test_programmatic_function_unicode_class(self):
@@ -858,7 +858,7 @@ class TestEnum(TestCase):
 				e = SummerMonth(i)
 				assert e.value == i
 				assert e.name == month
-				self.assertTrue(e in SummerMonth)
+				assert e in SummerMonth
 				assert isinstance(e, SummerMonth)
 
 	def test_subclassing(self):
@@ -927,23 +927,23 @@ class TestEnum(TestCase):
 			one = 100
 			two = 200
 
-		self.assertTrue(Number.one._member_type_ is int)
-		self.assertTrue(Number._member_type_ is int)
+		assert Number.one._member_type_ is int
+		assert Number._member_type_ is int
 
 		class String(str, Enum):
 			yarn = 'soft'
 			rope = 'rough'
 			wire = 'hard'
 
-		self.assertTrue(String.yarn._member_type_ is str)
-		self.assertTrue(String._member_type_ is str)
+		assert String.yarn._member_type_ is str
+		assert String._member_type_ is str
 
 		class Plain(Enum):
 			vanilla = 'white'
 			one = 1
 
-		self.assertTrue(Plain.vanilla._member_type_ is object)
-		self.assertTrue(Plain._member_type_ is object)
+		assert Plain.vanilla._member_type_ is object
+		assert Plain._member_type_ is object
 
 	def test_wrong_enum_in_call(self):
 
@@ -1248,7 +1248,7 @@ class TestEnum(TestCase):
 			x = ('the-x', 1)
 			y = ('the-y', 2)
 
-		self.assertTrue(NEI.__new__ is Enum.__new__)
+		assert NEI.__new__ is Enum.__new__
 		assert repr(NEI.x + NEI.y), "NamedInt('(the-x + the-y)' == 3)"
 		globals()['NamedInt'] = NamedInt
 		globals()['NEI'] = NEI
@@ -1304,7 +1304,7 @@ class TestEnum(TestCase):
 			x = ('the-x', 1)
 			y = ('the-y', 2)
 
-		self.assertTrue(NEI.__new__ is Enum.__new__)
+		assert NEI.__new__ is Enum.__new__
 		assert repr(NEI.x + NEI.y), "NamedInt('(the-x + the-y)' == 3)"
 		globals()['NamedInt'] = NamedInt
 		globals()['NEI'] = NEI
@@ -1360,7 +1360,7 @@ class TestEnum(TestCase):
 			x = ('the-x', 1)
 			y = ('the-y', 2)
 
-		self.assertTrue(NEI.__new__ is Enum.__new__)
+		assert NEI.__new__ is Enum.__new__
 		assert repr(NEI.x + NEI.y), "NamedInt('(the-x + the-y)' == 3)"
 		globals()['NamedInt'] = NamedInt
 		globals()['NEI'] = NEI
@@ -1413,7 +1413,7 @@ class TestEnum(TestCase):
 			x = ('the-x', 1)
 			y = ('the-y', 2)
 
-		self.assertTrue(NEI.__new__ is Enum.__new__)
+		assert NEI.__new__ is Enum.__new__
 		assert repr(NEI.x + NEI.y), "NamedInt('(the-x + the-y)' == 3)"
 		globals()['NamedInt'] = NamedInt
 		globals()['NEI'] = NEI
@@ -1469,7 +1469,7 @@ class TestEnum(TestCase):
 			def __reduce_ex__(self, proto):
 				return getattr, (self.__class__, self._name_)
 
-		self.assertTrue(NEI.__new__ is Enum.__new__)
+		assert NEI.__new__ is Enum.__new__
 		assert repr(NEI.x + NEI.y), "NamedInt('(the-x + the-y)' == 3)"
 		globals()['NamedInt'] = NamedInt
 		globals()['NEI'] = NEI
@@ -1579,10 +1579,10 @@ class TestEnum(TestCase):
 			F = 1
 
 		assert list(Grade), [Grade.A, Grade.B, Grade.C, Grade.D == Grade.F]
-		self.assertTrue(Grade.A > Grade.B)
-		self.assertTrue(Grade.F <= Grade.C)
-		self.assertTrue(Grade.D < Grade.A)
-		self.assertTrue(Grade.B >= Grade.B)
+		assert Grade.A > Grade.B
+		assert Grade.F <= Grade.C
+		assert Grade.D < Grade.A
+		assert Grade.B >= Grade.B
 
 	def test_missing_deprecated(self):
 
@@ -1703,7 +1703,7 @@ class TestEnum(TestCase):
 		extend_enum(Color, 'brown', 4)
 		assert Color.brown.name == 'brown'
 		assert Color.brown.value == 4
-		self.assertTrue(Color.brown in Color)
+		assert Color.brown in Color
 		assert Color(4) == Color.brown
 		assert Color['brown'] == Color.brown
 		assert len(Color) == 4
@@ -1718,7 +1718,7 @@ class TestEnum(TestCase):
 		extend_enum(Color, 'rojo', 1)
 		assert Color.rojo.name == 'red'
 		assert Color.rojo.value == 1
-		self.assertTrue(Color.rojo in Color)
+		assert Color.rojo in Color
 		assert Color(1) == Color.rojo
 		assert Color['rojo'] == Color.red
 		assert len(Color) == 3
@@ -1733,17 +1733,17 @@ class TestEnum(TestCase):
 		self.assertRaisesRegex(ValueError, 'rojo is a duplicate of red', extend_enum, Color, 'rojo', 1)
 		assert Color.red.name == 'red'
 		assert Color.red.value == 1
-		self.assertTrue(Color.red in Color)
+		assert Color.red in Color
 		assert Color(1) == Color.red
 		assert Color['red'] == Color.red
 		assert Color.green.name == 'green'
 		assert Color.green.value == 2
-		self.assertTrue(Color.green in Color)
+		assert Color.green in Color
 		assert Color(2) == Color.green
 		assert Color['blue'] == Color.blue
 		assert Color.blue.name == 'blue'
 		assert Color.blue.value == 3
-		self.assertTrue(Color.blue in Color)
+		assert Color.blue in Color
 		assert Color(3) == Color.blue
 		assert len(Color) == 3
 
@@ -1757,7 +1757,7 @@ class TestEnum(TestCase):
 		extend_enum(Color, 'value', 4)
 		assert Color.value.name == 'value'
 		assert Color.value.value == 4
-		self.assertTrue(Color.value in Color)
+		assert Color.value in Color
 		assert Color(4) == Color.value
 		assert Color['value'] == Color.value
 		assert len(Color) == 4
@@ -1773,7 +1773,7 @@ class TestEnum(TestCase):
 		extend_enum(Color, 'brown', 10, 20)
 		assert Color.brown.name == 'brown'
 		assert Color.brown.value == 10
-		self.assertTrue(Color.brown in Color)
+		assert Color.brown in Color
 		assert Color(10) == Color.brown
 		assert Color(20) == Color.brown
 		assert Color['brown'] == Color.brown
@@ -1789,21 +1789,21 @@ class TestEnum(TestCase):
 		self.assertRaisesRegex(ValueError, 'rojo is a duplicate of red', extend_enum, Color, 'rojo', 7)
 		assert Color.red.name == 'red'
 		assert Color.red.value == 1
-		self.assertTrue(Color.red in Color)
+		assert Color.red in Color
 		assert Color(1) == Color.red
 		assert Color(4) == Color.red
 		assert Color(7) == Color.red
 		assert Color['red'] == Color.red
 		assert Color.green.name == 'green'
 		assert Color.green.value == 2
-		self.assertTrue(Color.green in Color)
+		assert Color.green in Color
 		assert Color(2) == Color.green
 		assert Color(5) == Color.green
 		assert Color(8) == Color.green
 		assert Color['blue'] == Color.blue
 		assert Color.blue.name == 'blue'
 		assert Color.blue.value == 3
-		self.assertTrue(Color.blue in Color)
+		assert Color.blue in Color
 		assert Color(3) == Color.blue
 		assert Color(6) == Color.blue
 		assert Color(9) == Color.blue
@@ -3382,7 +3382,7 @@ class TestEnumV3(TestCase):
 		extend_enum(Color, 'brown', 4)
 		assert Color.brown.name == 'brown'
 		assert Color.brown.value == 4
-		self.assertTrue(Color.brown in Color)
+		assert Color.brown in Color
 		assert len(Color) == 4
 
 	def test_extend_enum_shadow(self):
@@ -3395,7 +3395,7 @@ class TestEnumV3(TestCase):
 		extend_enum(Color, 'value', 4)
 		assert Color.value.name == 'value'
 		assert Color.value.value == 4
-		self.assertTrue(Color.value in Color)
+		assert Color.value in Color
 		assert len(Color) == 4
 		assert Color.red.value == 1
 

@@ -81,7 +81,7 @@ class TestUnique(TestCase):
 		except ValueError:
 			exc = sys.exc_info()[1]
 			message = exc.args[0]
-		self.assertTrue('tres -> one' in message)
+		assert 'tres -> one' in message
 
 		try:
 
@@ -96,8 +96,8 @@ class TestUnique(TestCase):
 		except ValueError:
 			exc = sys.exc_info()[1]
 			message = exc.args[0]
-		self.assertTrue('double -> single' in message)
-		self.assertTrue('turkey -> triple' in message)
+		assert 'double -> single' in message
+		assert 'turkey -> triple' in message
 
 	def test_unique_with_name(self):
 

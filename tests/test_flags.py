@@ -80,8 +80,8 @@ class TestFlag(TestCase):
 		Open = self.Open
 		self.assertRaises(TypeError, lambda: 'BLACK' in Color)
 		self.assertRaises(TypeError, lambda: 'RO' in Open)
-		self.assertTrue(Color.BLACK in Color)
-		self.assertTrue(Open.RO in Open)
+		assert Color.BLACK in Color
+		assert Open.RO in Open
 		self.assertFalse(Color.BLACK in Open)
 		self.assertFalse(Open.RO in Color)
 		self.assertRaises(TypeError, lambda: 0 in Color)
@@ -91,8 +91,8 @@ class TestFlag(TestCase):
 		Color = self.Color
 		self.assertRaises(TypeError, lambda: 'test' in Color.BLUE)
 		self.assertRaises(TypeError, lambda: 2 in Color.BLUE)
-		self.assertTrue(Color.BLUE in Color.BLUE)
-		self.assertTrue(Color.BLUE in Color['RED|GREEN|BLUE'])
+		assert Color.BLUE in Color.BLUE
+		assert Color.BLUE in Color['RED|GREEN|BLUE']
 
 	def test_str(self):
 		Perm = self.Perm
@@ -150,9 +150,9 @@ class TestFlag(TestCase):
 
 	def test_name_lookup(self):
 		Color = self.Color
-		self.assertTrue(Color.RED is Color['RED'])
-		self.assertTrue(Color.RED | Color.GREEN is Color['RED|GREEN'])
-		self.assertTrue(Color.PURPLE is Color['RED|BLUE'])
+		assert Color.RED is Color['RED']
+		assert Color.RED | Color.GREEN is Color['RED|GREEN']
+		assert Color.PURPLE is Color['RED|BLUE']
 
 	def test_or(self):
 		Perm = self.Perm
@@ -216,7 +216,7 @@ class TestFlag(TestCase):
 	def test_bool(self):
 		Perm = self.Perm
 		for f in Perm:
-			self.assertTrue(f)
+			assert f
 		Open = self.Open
 		for f in Open:
 			assert bool(f.value) == bool(f)
@@ -313,15 +313,15 @@ class TestFlag(TestCase):
 		RX = R | X
 		WX = W | X
 		RWX = R | W | X
-		self.assertTrue(R in RW)
-		self.assertTrue(R in RX)
-		self.assertTrue(R in RWX)
-		self.assertTrue(W in RW)
-		self.assertTrue(W in WX)
-		self.assertTrue(W in RWX)
-		self.assertTrue(X in RX)
-		self.assertTrue(X in WX)
-		self.assertTrue(X in RWX)
+		assert R in RW
+		assert R in RX
+		assert R in RWX
+		assert W in RW
+		assert W in WX
+		assert W in RWX
+		assert X in RX
+		assert X in WX
+		assert X in RWX
 		self.assertFalse(R in WX)
 		self.assertFalse(W in RX)
 		self.assertFalse(X in RW)
@@ -871,8 +871,8 @@ class TestIntFlag(TestCase):
 		Open = self.Open
 		self.assertRaises(TypeError, lambda: 'GREEN' in Color)
 		self.assertRaises(TypeError, lambda: 'RW' in Open)
-		self.assertTrue(Color.GREEN in Color)
-		self.assertTrue(Open.RW in Open)
+		assert Color.GREEN in Color
+		assert Open.RW in Open
 		self.assertFalse(Color.GREEN in Open)
 		self.assertFalse(Open.RW in Color)
 		self.assertRaises(TypeError, lambda: 2 in Color)
@@ -882,14 +882,14 @@ class TestIntFlag(TestCase):
 		Color = self.Color
 		self.assertRaises(TypeError, lambda: 'test' in Color.RED)
 		self.assertRaises(TypeError, lambda: 1 in Color.RED)
-		self.assertTrue(Color.RED in Color.RED)
-		self.assertTrue(Color.RED in Color.PURPLE)
+		assert Color.RED in Color.RED
+		assert Color.RED in Color.PURPLE
 
 	def test_name_lookup(self):
 		Color = self.Color
-		self.assertTrue(Color.RED is Color['RED'])
-		self.assertTrue(Color.RED | Color.GREEN is Color['RED|GREEN'])
-		self.assertTrue(Color.PURPLE is Color['RED|BLUE'])
+		assert Color.RED is Color['RED']
+		assert Color.RED | Color.GREEN is Color['RED|GREEN']
+		assert Color.PURPLE is Color['RED|BLUE']
 
 	def test_type(self):
 		Perm = self.Perm
@@ -1152,15 +1152,15 @@ class TestIntFlag(TestCase):
 		RX = R | X
 		WX = W | X
 		RWX = R | W | X
-		self.assertTrue(R in RW)
-		self.assertTrue(R in RX)
-		self.assertTrue(R in RWX)
-		self.assertTrue(W in RW)
-		self.assertTrue(W in WX)
-		self.assertTrue(W in RWX)
-		self.assertTrue(X in RX)
-		self.assertTrue(X in WX)
-		self.assertTrue(X in RWX)
+		assert R in RW
+		assert R in RX
+		assert R in RWX
+		assert W in RW
+		assert W in WX
+		assert W in RWX
+		assert X in RX
+		assert X in WX
+		assert X in RWX
 		self.assertFalse(R in WX)
 		self.assertFalse(W in RX)
 		self.assertFalse(X in RW)
@@ -1168,7 +1168,7 @@ class TestIntFlag(TestCase):
 	def test_bool(self):
 		Perm = self.Perm
 		for f in Perm:
-			self.assertTrue(f)
+			assert f
 		Open = self.Open
 		for f in Open:
 			assert bool(f.value) == bool(f)
