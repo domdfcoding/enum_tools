@@ -235,7 +235,7 @@ class TestFlag(TestCase):
 		Perm = Flag('Perm', 'R W X')
 		lst = list(Perm)
 		assert len(lst) == len(Perm)
-		assert len(Perm), 3 == Perm
+		self.assertEqual(len(Perm), 3, Perm)
 		assert lst, [Perm.R, Perm.W == Perm.X]
 		for i, n in enumerate('R W X'.split()):
 			v = 1 << i
@@ -250,7 +250,7 @@ class TestFlag(TestCase):
 		Perm = Flag('Perm', 'R W X', start=8)
 		lst = list(Perm)
 		assert len(lst) == len(Perm)
-		assert len(Perm), 3 == Perm
+		self.assertEqual(len(Perm), 3, Perm)
 		assert lst, [Perm.R, Perm.W == Perm.X]
 		for i, n in enumerate('R W X'.split()):
 			v = 8 << i
@@ -265,7 +265,7 @@ class TestFlag(TestCase):
 		Perm = Flag('Perm', ['R', 'W', 'X'])
 		lst = list(Perm)
 		assert len(lst) == len(Perm)
-		assert len(Perm), 3 == Perm
+		self.assertEqual(len(Perm), 3, Perm)
 		assert lst, [Perm.R, Perm.W == Perm.X]
 		for i, n in enumerate('R W X'.split()):
 			v = 1 << i
@@ -280,7 +280,7 @@ class TestFlag(TestCase):
 		Perm = Flag('Perm', (('R', 2), ('W', 8), ('X', 32)))
 		lst = list(Perm)
 		assert len(lst) == len(Perm)
-		assert len(Perm), 3 == Perm
+		self.assertEqual(len(Perm), 3, Perm)
 		assert lst, [Perm.R, Perm.W == Perm.X]
 		for i, n in enumerate('R W X'.split()):
 			v = 1 << (2 * i + 1)
@@ -295,7 +295,7 @@ class TestFlag(TestCase):
 		Perm = Flag('Perm', OrderedDict((('R', 2), ('W', 8), ('X', 32))))
 		lst = list(Perm)
 		assert len(lst) == len(Perm)
-		assert len(Perm), 3 == Perm
+		self.assertEqual(len(Perm), 3, Perm)
 		assert lst, [Perm.R, Perm.W == Perm.X]
 		for i, n in enumerate('R W X'.split()):
 			v = 1 << (2 * i + 1)
@@ -1069,7 +1069,7 @@ class TestIntFlag(TestCase):
 		Perm = IntFlag('Perm', 'R W X')
 		lst = list(Perm)
 		assert len(lst) == len(Perm)
-		assert len(Perm), 3 == Perm
+		self.assertEqual(len(Perm), 3, Perm)
 		assert lst, [Perm.R, Perm.W == Perm.X]
 		for i, n in enumerate('R W X'.split()):
 			v = 1 << i
@@ -1085,7 +1085,7 @@ class TestIntFlag(TestCase):
 		Perm = IntFlag('Perm', 'R W X', start=8)
 		lst = list(Perm)
 		assert len(lst) == len(Perm)
-		assert len(Perm), 3 == Perm
+		self.assertEqual(len(Perm), 3, Perm)
 		assert lst, [Perm.R, Perm.W == Perm.X]
 		for i, n in enumerate('R W X'.split()):
 			v = 8 << i
@@ -1101,7 +1101,7 @@ class TestIntFlag(TestCase):
 		Perm = IntFlag('Perm', ['R', 'W', 'X'])
 		lst = list(Perm)
 		assert len(lst) == len(Perm)
-		assert len(Perm), 3 == Perm
+		self.assertEqual(len(Perm), 3, Perm)
 		assert lst, [Perm.R, Perm.W == Perm.X]
 		for i, n in enumerate('R W X'.split()):
 			v = 1 << i
@@ -1117,7 +1117,7 @@ class TestIntFlag(TestCase):
 		Perm = IntFlag('Perm', (('R', 2), ('W', 8), ('X', 32)))
 		lst = list(Perm)
 		assert len(lst) == len(Perm)
-		assert len(Perm), 3 == Perm
+		self.assertEqual(len(Perm), 3, Perm)
 		assert lst, [Perm.R, Perm.W == Perm.X]
 		for i, n in enumerate('R W X'.split()):
 			v = 1 << (2 * i + 1)
@@ -1133,7 +1133,7 @@ class TestIntFlag(TestCase):
 		Perm = IntFlag('Perm', OrderedDict((('R', 2), ('W', 8), ('X', 32))))
 		lst = list(Perm)
 		assert len(lst) == len(Perm)
-		assert len(Perm), 3 == Perm
+		self.assertEqual(len(Perm), 3, Perm)
 		assert lst, [Perm.R, Perm.W == Perm.X]
 		for i, n in enumerate('R W X'.split()):
 			v = 1 << (2 * i + 1)

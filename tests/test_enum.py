@@ -575,7 +575,7 @@ class TestEnum(TestCase):
 		SummerMonth = Enum('SummerMonth', 'june july august')
 		lst = list(SummerMonth)
 		assert len(lst) == len(SummerMonth)
-		assert len(SummerMonth), 3 == SummerMonth
+		self.assertEqual(len(SummerMonth), 3, SummerMonth)
 		self.assertEqual(
 				[SummerMonth.june, SummerMonth.july, SummerMonth.august],
 				lst,
@@ -593,7 +593,7 @@ class TestEnum(TestCase):
 		SummerMonth = Enum('SummerMonth', 'june july august', start=10)
 		lst = list(SummerMonth)
 		assert len(lst) == len(SummerMonth)
-		assert len(SummerMonth), 3 == SummerMonth
+		self.assertEqual(len(SummerMonth), 3, SummerMonth)
 		self.assertEqual(
 				[SummerMonth.june, SummerMonth.july, SummerMonth.august],
 				lst,
@@ -610,7 +610,7 @@ class TestEnum(TestCase):
 		SummerMonth = Enum('SummerMonth', ['june', 'july', 'august'])
 		lst = list(SummerMonth)
 		assert len(lst) == len(SummerMonth)
-		assert len(SummerMonth), 3 == SummerMonth
+		self.assertEqual(len(SummerMonth), 3, SummerMonth)
 		self.assertEqual(
 				[SummerMonth.june, SummerMonth.july, SummerMonth.august],
 				lst,
@@ -628,7 +628,7 @@ class TestEnum(TestCase):
 		SummerMonth = Enum('SummerMonth', ['june', 'july', 'august'], start=20)
 		lst = list(SummerMonth)
 		assert len(lst) == len(SummerMonth)
-		assert len(SummerMonth), 3 == SummerMonth
+		self.assertEqual(len(SummerMonth), 3, SummerMonth)
 		self.assertEqual(
 				[SummerMonth.june, SummerMonth.july, SummerMonth.august],
 				lst,
@@ -645,7 +645,7 @@ class TestEnum(TestCase):
 		SummerMonth = Enum('SummerMonth', (('june', 1), ('july', 2), ('august', 3)))
 		lst = list(SummerMonth)
 		assert len(lst) == len(SummerMonth)
-		assert len(SummerMonth), 3 == SummerMonth
+		self.assertEqual(len(SummerMonth), 3, SummerMonth)
 		self.assertEqual(
 				[SummerMonth.june, SummerMonth.july, SummerMonth.august],
 				lst,
@@ -678,7 +678,7 @@ class TestEnum(TestCase):
 		SummerMonth = Enum('SummerMonth', 'june july august', type=int)
 		lst = list(SummerMonth)
 		assert len(lst) == len(SummerMonth)
-		assert len(SummerMonth), 3 == SummerMonth
+		self.assertEqual(len(SummerMonth), 3, SummerMonth)
 		self.assertEqual(
 				[SummerMonth.june, SummerMonth.july, SummerMonth.august],
 				lst,
@@ -695,7 +695,7 @@ class TestEnum(TestCase):
 		SummerMonth = Enum('SummerMonth', 'june july august', type=int, start=30)
 		lst = list(SummerMonth)
 		assert len(lst) == len(SummerMonth)
-		assert len(SummerMonth), 3 == SummerMonth
+		self.assertEqual(len(SummerMonth), 3, SummerMonth)
 		self.assertEqual(
 				[SummerMonth.june, SummerMonth.july, SummerMonth.august],
 				lst,
@@ -711,7 +711,7 @@ class TestEnum(TestCase):
 		SummerMonth = IntEnum('SummerMonth', 'june july august')
 		lst = list(SummerMonth)
 		assert len(lst) == len(SummerMonth)
-		assert len(SummerMonth), 3 == SummerMonth
+		self.assertEqual(len(SummerMonth), 3, SummerMonth)
 		self.assertEqual(
 				[SummerMonth.june, SummerMonth.july, SummerMonth.august],
 				lst,
@@ -728,7 +728,7 @@ class TestEnum(TestCase):
 		SummerMonth = IntEnum('SummerMonth', 'june july august', start=40)
 		lst = list(SummerMonth)
 		assert len(lst) == len(SummerMonth)
-		assert len(SummerMonth), 3 == SummerMonth
+		self.assertEqual(len(SummerMonth), 3, SummerMonth)
 		self.assertEqual(
 				[SummerMonth.june, SummerMonth.july, SummerMonth.august],
 				lst,
@@ -744,7 +744,7 @@ class TestEnum(TestCase):
 		SummerMonth = Enum('SummerMonth', str('june july august'))
 		lst = list(SummerMonth)
 		assert len(lst) == len(SummerMonth)
-		assert len(SummerMonth), 3 == SummerMonth
+		self.assertEqual(len(SummerMonth), 3, SummerMonth)
 		self.assertEqual(
 				[SummerMonth.june, SummerMonth.july, SummerMonth.august],
 				lst,
@@ -762,7 +762,7 @@ class TestEnum(TestCase):
 		SummerMonth = Enum('SummerMonth', [str('june'), str('july'), str('august')])
 		lst = list(SummerMonth)
 		assert len(lst) == len(SummerMonth)
-		assert len(SummerMonth), 3 == SummerMonth
+		self.assertEqual(len(SummerMonth), 3, SummerMonth)
 		self.assertEqual(
 				[SummerMonth.june, SummerMonth.july, SummerMonth.august],
 				lst,
@@ -780,7 +780,7 @@ class TestEnum(TestCase):
 		SummerMonth = Enum('SummerMonth', ((str('june'), 1), (str('july'), 2), (str('august'), 3)))
 		lst = list(SummerMonth)
 		assert len(lst) == len(SummerMonth)
-		assert len(SummerMonth), 3 == SummerMonth
+		self.assertEqual(len(SummerMonth), 3, SummerMonth)
 		self.assertEqual(
 				[SummerMonth.june, SummerMonth.july, SummerMonth.august],
 				lst,
