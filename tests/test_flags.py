@@ -39,7 +39,6 @@
 #  |  POSSIBILITY OF SUCH DAMAGE.
 #
 
-
 # stdlib
 import sys
 import threading
@@ -844,9 +843,6 @@ class TestFlag(TestCase):
 #
 
 
-
-
-
 class TestIntFlag(TestCase):
 	"""Tests of the IntFlags."""
 
@@ -1217,4 +1213,3 @@ class TestIntFlag(TestCase):
 		# check that only 248 members were created (8 were created originally)
 		self.assertFalse(failed[0], 'at least one thread failed while creating composite members')
 		self.assertEqual(256, len(seen), 'too many composite members created')
-

@@ -39,25 +39,37 @@
 #  |  POSSIBILITY OF SUCH DAMAGE.
 #
 
-
 # stdlib
 import os
 from collections import OrderedDict
 from datetime import timedelta
-from enum import Enum as StdlibEnum, EnumMeta as StdlibEnumMeta
+from enum import Enum as StdlibEnum
+from enum import EnumMeta as StdlibEnumMeta
 from unittest import TestCase
 
 # 3rd party
-from aenum import _decompose, _high_bit, auto, enum, EnumMeta, extend_enum, skip  # type: ignore
+from aenum import EnumMeta, _decompose, _high_bit, auto, enum, extend_enum, skip  # type: ignore
+from tests.conftest import tempdir
+from tests.demo_classes import IntStooges, Name
 
 # this package
 from better_enum import (
-	AutoEnum, AutoNumber, AutoNumberEnum, AutoValue, constant, Enum, Flag, IntEnum, MultiValue, MultiValueEnum,
-	NoAlias, OrderedEnum, Unique, UniqueEnum,
-	)
+		AutoEnum,
+		AutoNumber,
+		AutoNumberEnum,
+		AutoValue,
+		Enum,
+		Flag,
+		IntEnum,
+		MultiValue,
+		MultiValueEnum,
+		NoAlias,
+		OrderedEnum,
+		Unique,
+		UniqueEnum,
+		constant
+		)
 from better_enum.utils import _is_sunder
-from tests.conftest import tempdir
-from tests.demo_classes import IntStooges, Name
 
 
 class TestEnum(TestCase):
@@ -783,9 +795,7 @@ class TestEnum(TestCase):
 			self.assertTrue(type(e) is SummerMonth)
 
 	def test_programatic_function_from_unicode_dict(self):
-		SummerMonth = Enum(
-				'SummerMonth', dict(((str('june'), 1), (str('july'), 2), (str('august'), 3)))
-				)
+		SummerMonth = Enum('SummerMonth', dict(((str('june'), 1), (str('july'), 2), (str('august'), 3))))
 		lst = list(SummerMonth)
 		self.assertEqual(len(lst), len(SummerMonth))
 		self.assertEqual(len(SummerMonth), 3, SummerMonth)
@@ -2829,7 +2839,6 @@ class TestEnum(TestCase):
 			self.assertTrue(issubclass(self.Season, StdlibEnum))
 
 
-
 class TestEnumV3(TestCase):
 
 	def setUp(self):
@@ -3732,11 +3741,8 @@ class TestEnumV3(TestCase):
 		self.assertEqual(NEI.y.value, 2)
 
 
-
-
 class MagicAutoNumberEnum(Enum, settings=AutoNumber):
 	pass
-
 
 
 # These are unordered here on purpose to ensure that declaration order

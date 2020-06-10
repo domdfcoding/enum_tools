@@ -56,7 +56,6 @@
 #  |  POSSIBILITY OF SUCH DAMAGE.
 #
 
-
 # stdlib
 from typing import TYPE_CHECKING
 

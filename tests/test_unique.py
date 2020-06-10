@@ -39,7 +39,6 @@
 #  |  POSSIBILITY OF SUCH DAMAGE.
 #
 
-
 # stdlib
 import sys
 from unittest import TestCase

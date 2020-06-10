@@ -54,7 +54,7 @@ entry_points = {
 
 __license__ = "GNU Lesser General Public License v3 or later (LGPLv3+)"
 
-short_desc = "Fork of the Advenced Enumeration library with better support for mypy, docstrins and Sphinx."
+short_desc = "Fork of the Advanced Enumeration library with better support for mypy, docstrings and Sphinx."
 
 __author__ = author = "Dominic Davis-Foster"
 author_email = "dominic@davis-foster.co.uk"
@@ -72,13 +72,11 @@ repo_root = pathlib.Path(__file__).parent
 long_description = (repo_root / "README.rst").read_text().replace("0.0.1", __version__) + '\n'
 
 install_requires = (repo_root / "requirements.txt").read_text().split('\n')
-extras_require = {'all': []}
+extras_require = {'sphinx': ['sphinx'], 'all': ['sphinx']}
 
 classifiers = [
-		'Development Status :: 4 - Beta',
+		'Development Status :: 3 - Alpha',
 		'Intended Audience :: Developers',
-		'Intended Audience :: Education',
-		'Intended Audience :: Science/Research',
 		'Operating System :: OS Independent',
 		'Programming Language :: Python',
 		'Topic :: Software Development :: Libraries :: Python Modules',
@@ -91,4 +89,4 @@ classifiers = [
 
 		]
 
-keywords = ""
+keywords = "enum documentation"

@@ -5,7 +5,7 @@ email: "dominic@davis-foster.co.uk"
 version: "0.0.1"
 username: "domdfcoding"
 license: 'LGPLv3+'
-short_desc: 'Fork of the Advenced Enumeration library with better support for mypy, docstrins and Sphinx.'
+short_desc: 'Fork of the Advanced Enumeration library with better support for mypy, docstrings and Sphinx.'
 
 #conda_channels:
 #  - domdfcoding
@@ -14,10 +14,6 @@ short_desc: 'Fork of the Advenced Enumeration library with better support for my
 enable_conda: false
 
 python_deploy_version: 3.6
-
-# Additional lines for .gitignore
-#additional_ignore:
-#  - "*.sqlite"
 
 # Versions to run tests for
 python_versions:
@@ -31,15 +27,11 @@ python_versions:
 # additional lines for MANIFEST.in
 manifest_additional:
   - recursive-include better_enum/ requirements.txt
-#  - recursive-exclude tests/ *
+  - recursive-exclude tests/ *
   - prune tests*
 
 # directory that contains tests
 tests_dir: "tests"
-
-# Additional arguments for setup.py
-#additional_setup_args:
-#  foo: bar
 
 conda_description: "Python tools for analysis of chemical compounds"
 

@@ -39,22 +39,30 @@
 #  |  POSSIBILITY OF SUCH DAMAGE.
 #
 
-
 # stdlib
-from operator import (
-	abs as _abs_, add as _add_, and_ as _and_, floordiv as _floordiv_, inv as _inv_,
-	lshift as _lshift_, mod as _mod_, mul as _mul_, neg as _neg_, or_ as _or_, pos as _pos_, pow as _pow_,
-	rshift as _rshift_, sub as _sub_, truediv as _truediv_, xor as _xor_,
-	)
+from operator import abs as _abs_
+from operator import add as _add_
+from operator import and_ as _and_
+from operator import floordiv as _floordiv_
+from operator import inv as _inv_
+from operator import lshift as _lshift_
+from operator import mod as _mod_
+from operator import mul as _mul_
+from operator import neg as _neg_
+from operator import or_ as _or_
+from operator import pos as _pos_
+from operator import pow as _pow_
+from operator import rshift as _rshift_
+from operator import sub as _sub_
+from operator import truediv as _truediv_
+from operator import xor as _xor_
 from unittest import TestCase
 
 # 3rd party
-from aenum import (auto)  # type: ignore
+from aenum import auto  # type: ignore
 
 # this package
-from better_enum import (
-	constant,
-	)
+from better_enum import constant
 from better_enum.utils import _is_descriptor, _is_dunder, _is_sunder
 
 

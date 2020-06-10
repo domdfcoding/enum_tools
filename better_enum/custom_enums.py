@@ -56,7 +56,6 @@
 #  |  POSSIBILITY OF SUCH DAMAGE.
 #
 
-
 # stdlib
 import sqlite3
 import sys
@@ -91,11 +90,9 @@ class IntEnum(int, Enum):
 	Enum where members are also (and must be) ints
 	"""
 
-
-#
 # 	def __int__(self):
 # 		return self.value
-#
+
 # 	def __eq__(self, other):
 # 		if int(self) == other:
 # 			return True
@@ -111,7 +108,6 @@ class StrEnum(str, Enum):
 	def __str__(self) -> str:
 		return self.value
 
-	#
 	# def __repr__(self):
 	# 	return self.value
 

@@ -39,16 +39,15 @@
 #  |  POSSIBILITY OF SUCH DAMAGE.
 #
 
-
 # stdlib
 from unittest import TestCase
 
 # 3rd party
-from aenum import TupleSize # type: ignore
+from aenum import TupleSize  # type: ignore
+from tests.demo_classes import DeathForm, LifeForm, ThatsIt
 
 # this package
 from better_enum import NamedTuple
-from tests.demo_classes import DeathForm, LifeForm, ThatsIt
 
 
 class TestNamedTuple(TestCase):
@@ -236,6 +235,7 @@ class TestNamedTuple(TestCase):
 		self.assertEqual(p1.age, 17)
 		self.assertEqual(p1.first, 'John')
 		self.assertEqual(p1.last, 'Doe')
+
 	#
 	# def test_custom_new(self):
 	#
@@ -305,6 +305,7 @@ class TestNamedTuple(TestCase):
 		self.assertTrue('Teckla' in b)
 		self.assertTrue('Steven Brust' in b)
 		self.assertTrue('fantasy' in b)
+
 	#
 	# def test_fixed_size(self):
 	#
@@ -440,25 +441,25 @@ class TestNamedTuple(TestCase):
 	# 	self.assertRaises(TypeError, Book, 'Teckla', 'Steven Brust')
 	# 	self.assertRaises(TypeError, Book, 'Teckla')
 
-	def test_minimum_size(self):
-
-		class Book(NamedTuple):
-			_size_ = TupleSize.minimum
-			title = 0
-			author = 1
-
-		b = Book('Teckla', 'Steven Brust', 'fantasy')
-		self.assertTrue('Teckla' in b)
-		self.assertTrue('Steven Brust' in b)
-		self.assertTrue('fantasy' in b)
-		self.assertEqual(b.title, 'Teckla')
-		self.assertEqual(b.author, 'Steven Brust')
-		b = Book('Teckla', 'Steven Brust')
-		self.assertTrue('Teckla' in b)
-		self.assertTrue('Steven Brust' in b)
-		self.assertEqual(b.title, 'Teckla')
-		self.assertEqual(b.author, 'Steven Brust')
-		self.assertRaises(TypeError, Book, 'Teckla')
+	# def test_minimum_size(self):
+	#
+	# 	class Book(NamedTuple):
+	# 		_size_ = TupleSize.minimum
+	# 		title = 0
+	# 		author = 1
+	#
+	# 	b = Book('Teckla', 'Steven Brust', 'fantasy')
+	# 	self.assertTrue('Teckla' in b)
+	# 	self.assertTrue('Steven Brust' in b)
+	# 	self.assertTrue('fantasy' in b)
+	# 	self.assertEqual(b.title, 'Teckla')
+	# 	self.assertEqual(b.author, 'Steven Brust')
+	# 	b = Book('Teckla', 'Steven Brust')
+	# 	self.assertTrue('Teckla' in b)
+	# 	self.assertTrue('Steven Brust' in b)
+	# 	self.assertEqual(b.title, 'Teckla')
+	# 	self.assertEqual(b.author, 'Steven Brust')
+	# 	self.assertRaises(TypeError, Book, 'Teckla')
 
 	def test_variable_size(self):
 

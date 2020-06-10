@@ -4,7 +4,7 @@ better_enum
 
 .. start short_desc
 
-**Fork of the Advenced Enumeration library with better support for mypy, docstrins and Sphinx.**
+**Fork of the Advanced Enumeration library with better support for mypy, docstrings and Sphinx.**
 
 .. end short_desc
 

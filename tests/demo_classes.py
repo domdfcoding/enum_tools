@@ -39,8 +39,6 @@
 #  |  POSSIBILITY OF SUCH DAMAGE.
 #
 
-
-
 # this package
 from better_enum import Enum, NamedTuple, StrEnum
 

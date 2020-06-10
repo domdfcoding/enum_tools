@@ -32,7 +32,6 @@ __license__ = "GNU Lesser General Public License v3 or later (LGPLv3+)"
 __version__ = "0.0.1"
 __email__ = "dominic@davis-foster.co.uk"
 
-
 __all__ = [
 		'constant',
 		'Enum',
@@ -49,24 +48,28 @@ __all__ = [
 		'unique',
 		'NamedTuple',
 		"EnumMeta",
+		"__author__",
+		"__copyright__",
+		"__license__",
+		"__version__",
+		"__email__",
 		]
 # TODO: 'NamedConstant',
 # TODO: 'skip',
 # TODO: 'enum',
 # TODO: 'extend_enum',
 
-
 # this package
 from ._constant import AutoNumber, AutoValue, MultiValue, NoAlias, Unique, constant
-from ._custom_enums import (
-	AutoEnum,
-	AutoNumberEnum,
-	IntEnum,
-	MultiValueEnum,
-	NoAliasEnum,
-	OrderedEnum,
-	SqliteEnum,
-	StrEnum,
-	UniqueEnum
-)
+from .custom_enums import (
+		AutoEnum,
+		AutoNumberEnum,
+		IntEnum,
+		MultiValueEnum,
+		NoAliasEnum,
+		OrderedEnum,
+		SqliteEnum,
+		StrEnum,
+		UniqueEnum
+		)
 from ._importer import Enum, EnumMeta, Flag, IntFlag, NamedTuple, unique

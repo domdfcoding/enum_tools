@@ -4,7 +4,7 @@ better_enum
 
 .. start short_desc
 
-**Fork of the Advenced Enumeration library with better support for mypy, docstrins and Sphinx.**
+**Fork of the Advanced Enumeration library with better support for mypy, docstrings and Sphinx.**
 
 .. end short_desc
 
@@ -82,6 +82,15 @@ better_enum
 
 |
 
+This package has three aims:
+
+#. Import from the stdlib ``enum`` module when running mypy, and from ``aenum`` when the code actually runs. This helps mypy understand type annotations, but keeps all of the ``if TYPE_CHECKING:`` code in one place.
+
+#. Provide a decorator to add docstrings to ``Enum`` members from a comment at the end of the line.
+
+#. Provide a ``Sphinx`` extension to document ``Enum``s better that ``autoclass`` can currently.
+
+
 Installation
 --------------
 
@@ -96,3 +105,15 @@ To install with ``pip``:
 	$ python -m pip install better_enum
 
 .. end installation
+
+
+Further Reading
+-----------------------
+
+#. https://docs.python.org/3/library/enum.html
+
+#. `Is it possible to define a class constant inside an Enum? <https://stackoverflow.com/q/17911188/3092681>`_
+
+#. `Enums with Attributes <https://stackoverflow.com/a/19300424/3092681>`_
+
+#. `When should I subclass EnumMeta instead of Enum? <https://stackoverflow.com/a/43730306/3092681>`_

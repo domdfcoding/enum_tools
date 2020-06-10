@@ -1,3 +1,4 @@
+# this package
 from better_enum import Enum
 from better_enum.decorator import DocumentedEnum, document_enum
 

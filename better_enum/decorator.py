@@ -24,20 +24,18 @@ Decorators to add docstrings to enum members from comments
 #  MA 02110-1301, USA.
 #
 
-
 # stdlib
 import inspect
 import re
 from textwrap import dedent
-from typing import List, Optional, Tuple
+from typing import Callable, List, Optional, Tuple
 
 # 3rd party
 import pygments.token  # type: ignore
 from pygments.lexers.python import PythonLexer  # type: ignore
 
 # this package
-from ._importer import EnumMeta, Enum
-
+from ._importer import Enum, EnumMeta
 
 lexer = PythonLexer()
 
@@ -46,7 +44,13 @@ def get_tokens(line: str) -> List[Tuple]:
 	return list(lexer.get_tokens(line))
 
 
-def document_enum(an_enum):
+def document_enum(an_enum: Callable) -> Callable:
+	"""
+	Document all members of an enum by adding a comment to the end of each line that starts with ``doc:``
+
+	:param an_enum: An ``Enum`` subclass
+	"""
+
 	if not isinstance(an_enum, (EnumMeta, Enum)):
 		raise TypeError(f"'an_enum' must be an `aenum.Enum`, not {type(an_enum)}!")
 
@@ -94,6 +98,12 @@ def document_enum(an_enum):
 
 
 def document_member(enum_member):
+	"""
+	Document a member of an enum by adding a comment to the end of the line that starts with ``doc:``
+
+	:param enum_member: An member io an ``Enum`` subclass
+	"""
+
 	if not isinstance(enum_member, (EnumMeta, Enum)):
 		raise TypeError(f"'an_enum' must be an `aenum.Enum`, not {type(enum_member)}!")
 
@@ -140,6 +150,15 @@ def document_member(enum_member):
 
 
 def parse_tokens(all_tokens) -> Tuple[List, Optional[str]]:
+	"""
+	Parse the tokens representing a line of code to identify Enum members and ``doc:`` comments
+
+	:param all_tokens:
+	:type all_tokens:
+
+	:return: A list of the Enum members' names, and the docstring for them
+	"""
+
 	enum_vars = []
 	doc = None
 	comment = ''
@@ -159,7 +178,19 @@ def parse_tokens(all_tokens) -> Tuple[List, Optional[str]]:
 	return enum_vars, doc
 
 
-def get_base_indent(base_indent, all_tokens, indent):
+def get_base_indent(base_indent: Optional[int], all_tokens, indent: int) -> Optional[int]:
+	"""
+	Determine the base level of indentation (i.e. one level of indentation in from the ``c`` of ``class``)
+
+	:param base_indent: The current base level of indentation
+	:param all_tokens:
+	:type all_tokens:
+	:param indent: The current level of indentation
+	:type indent: int
+
+	:return: The base level of indentation
+	"""
+
 	if not base_indent:
 		if all_tokens[0][0] in pygments.token.Literal.String:
 			if all_tokens[0][1] in {'"""', "'''"}:
@@ -173,6 +204,10 @@ def get_base_indent(base_indent, all_tokens, indent):
 
 
 class DocumentedEnum(Enum):
+	"""
+	An enum where docstrings are automatically added to members from comments starting with ``doc:``
+	"""
+
 	def __init__(self, value):
 		document_member(self)
 		super().__init__(value)

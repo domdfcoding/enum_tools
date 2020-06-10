@@ -4,7 +4,15 @@
 #  autoenum.py
 """
 A Sphinx directive for documented Enums in Python
+
+
+Provides the ``.. autoenum::`` directive to document an enum.
+It behaves much like ``.. autoclass::`` and ``.. autofunction::``.
+
+Use with ``.. automodule::`` does not currently work.
+
 """
+# See also https://www.sphinx-doc.org/en/master/usage/extensions/autodoc.html?highlight=autoclass#directive-autoclass
 #
 #  Copyright (c) 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 #
@@ -44,7 +52,7 @@ def _start_generate(
 		check_module: bool = False,
 		) -> Optional[str]:
 	"""
-	Boilerplate for the top of ``generate`` in :class:`EnumDocumenter` and :class:`EnumVarDocumenter`.
+	Boilerplate for the top of ``generate`` in :class:`EnumDocumenter` and :class:`EnumMemberDocumenter`.
 
 	:param documenter:
 	:type documenter:
@@ -119,8 +127,13 @@ def _start_generate(
 
 
 class EnumDocumenter(ClassDocumenter):
+	"""
+	Sphinx autodoc Documenter for documenting ``Enum``s
+	"""
+
 	objtype = 'enum'
 	directivetype = 'class'
+	priority = 20
 
 	@classmethod
 	def can_document_member(cls, member: Any, membername: str, isattr: bool, parent: Any) -> bool:
@@ -168,7 +181,7 @@ class EnumDocumenter(ClassDocumenter):
 			full_mname = self.modname + '::' + '.'.join(self.objpath + [mname])
 
 			if isinstance(member, Enum) and member in self.object:
-				documenter = EnumVarDocumenter(self.directive, full_mname, self.indent)
+				documenter = EnumMemberDocumenter(self.directive, full_mname, self.indent)
 
 			else:
 				classes = [
@@ -267,7 +280,10 @@ class EnumDocumenter(ClassDocumenter):
 		self.document_members(all_members)
 
 
-class EnumVarDocumenter(AttributeDocumenter):
+class EnumMemberDocumenter(AttributeDocumenter):
+	"""
+	Sphinx autodoc Documenter for documenting ``Enum`` members
+	"""
 
 	def import_object(self) -> Any:
 		self._datadescriptor = False
@@ -327,6 +343,8 @@ def setup(app: Sphinx) -> Dict[str, Any]:
 	:return:
 	:rtype: dict
 	"""
+
+	from better_enum import __version__
 
 	app.add_autodocumenter(EnumDocumenter)
 
