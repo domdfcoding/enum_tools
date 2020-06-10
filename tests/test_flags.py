@@ -126,27 +126,27 @@ class TestFlag(TestCase):
 		assert repr(Perm.R) == '<Perm.R: 4>'
 		assert repr(Perm.W) == '<Perm.W: 2>'
 		assert repr(Perm.X) == '<Perm.X: 1>'
-		self.assertEqual(repr(Perm.R | Perm.W), '<Perm.R|W: 6>')
-		self.assertEqual(repr(Perm.R | Perm.W | Perm.X), '<Perm.R|W|X: 7>')
-		self.assertEqual(repr(Perm(0)), '<Perm.0: 0>')
-		self.assertEqual(repr(~Perm.R), '<Perm.W|X: 3>')
-		self.assertEqual(repr(~Perm.W), '<Perm.R|X: 5>')
-		self.assertEqual(repr(~Perm.X), '<Perm.R|W: 6>')
-		self.assertEqual(repr(~(Perm.R | Perm.W)), '<Perm.X: 1>')
-		self.assertEqual(repr(~(Perm.R | Perm.W | Perm.X)), '<Perm.0: 0>')
-		self.assertEqual(repr(Perm(~0)), '<Perm.R|W|X: 7>')
+		assert repr(Perm.R | Perm.W) == '<Perm.R|W: 6>'
+		assert repr(Perm.R | Perm.W | Perm.X) == '<Perm.R|W|X: 7>'
+		assert repr(Perm(0)) == '<Perm.0: 0>'
+		assert repr(~Perm.R) == '<Perm.W|X: 3>'
+		assert repr(~Perm.W) == '<Perm.R|X: 5>'
+		assert repr(~Perm.X) == '<Perm.R|W: 6>'
+		assert repr(~(Perm.R | Perm.W)) == '<Perm.X: 1>'
+		assert repr(~(Perm.R | Perm.W | Perm.X)) == '<Perm.0: 0>'
+		assert repr(Perm(~0)) == '<Perm.R|W|X: 7>'
 
 		Open = self.Open
-		self.assertEqual(repr(Open.RO), '<Open.RO: 0>')
-		self.assertEqual(repr(Open.WO), '<Open.WO: 1>')
-		self.assertEqual(repr(Open.AC), '<Open.AC: 3>')
-		self.assertEqual(repr(Open.RO | Open.CE), '<Open.CE: 524288>')
-		self.assertEqual(repr(Open.WO | Open.CE), '<Open.CE|WO: 524289>')
-		self.assertEqual(repr(~Open.RO), '<Open.CE|AC|RW|WO: 524291>')
-		self.assertEqual(repr(~Open.WO), '<Open.CE|RW: 524290>')
-		self.assertEqual(repr(~Open.AC), '<Open.CE: 524288>')
-		self.assertEqual(repr(~(Open.RO | Open.CE)), '<Open.AC: 3>')
-		self.assertEqual(repr(~(Open.WO | Open.CE)), '<Open.RW: 2>')
+		assert repr(Open.RO) == '<Open.RO: 0>'
+		assert repr(Open.WO) == '<Open.WO: 1>'
+		assert repr(Open.AC) == '<Open.AC: 3>'
+		assert repr(Open.RO | Open.CE) == '<Open.CE: 524288>'
+		assert repr(Open.WO | Open.CE) == '<Open.CE|WO: 524289>'
+		assert repr(~Open.RO) == '<Open.CE|AC|RW|WO: 524291>'
+		assert repr(~Open.WO) == '<Open.CE|RW: 524290>'
+		assert repr(~Open.AC) == '<Open.CE: 524288>'
+		assert repr(~(Open.RO | Open.CE)) == '<Open.AC: 3>'
+		assert repr(~(Open.WO | Open.CE)) == '<Open.RW: 2>'
 
 	def test_name_lookup(self):
 		Color = self.Color
@@ -158,8 +158,8 @@ class TestFlag(TestCase):
 		Perm = self.Perm
 		for i in Perm:
 			for j in Perm:
-				self.assertEqual((i | j), Perm(i.value | j.value))
-				self.assertEqual((i | j).value, i.value | j.value)
+				assert (i | j) == Perm(i.value | j.value)
+				assert (i | j).value == i.value | j.value
 				self.assertIs(type(i | j), Perm)
 		for i in Perm:
 			self.assertIs(i | i, i)
@@ -175,7 +175,7 @@ class TestFlag(TestCase):
 		values = list(Perm) + [RW, RX, WX, RWX, Perm(0)]
 		for i in values:
 			for j in values:
-				self.assertEqual((i & j).value, i.value & j.value)
+				assert (i & j).value == i.value & j.value
 				self.assertIs(type(i & j), Perm)
 		for i in Perm:
 			self.assertIs(i & i, i)
@@ -188,7 +188,7 @@ class TestFlag(TestCase):
 		Perm = self.Perm
 		for i in Perm:
 			for j in Perm:
-				self.assertEqual((i ^ j).value, i.value ^ j.value)
+				assert (i ^ j).value == i.value ^ j.value
 				self.assertIs(type(i ^ j), Perm)
 		for i in Perm:
 			self.assertIs(i ^ Perm(0), i)
@@ -206,7 +206,7 @@ class TestFlag(TestCase):
 		values = list(Perm) + [RW, RX, WX, RWX, Perm(0)]
 		for i in values:
 			self.assertIs(type(~i), Perm)
-			self.assertEqual(~~i, i)
+			assert ~~i == i
 		for i in Perm:
 			self.assertIs(~~i, i)
 		Open = self.Open
@@ -219,90 +219,90 @@ class TestFlag(TestCase):
 			self.assertTrue(f)
 		Open = self.Open
 		for f in Open:
-			self.assertEqual(bool(f.value), bool(f))
+			assert bool(f.value) == bool(f)
 
 	def test_iteration(self):
 		C = self.Color
-		self.assertEqual(list(C), [C.BLACK, C.RED, C.GREEN, C.BLUE, C.PURPLE])
+		assert list(C), [C.BLACK, C.RED, C.GREEN, C.BLUE == C.PURPLE]
 
 	def test_member_iteration(self):
 		C = self.Color
-		self.assertEqual(list(C.BLACK), [])
-		self.assertEqual(list(C.RED), [C.RED])
-		self.assertEqual(list(C.PURPLE), [C.BLUE, C.RED])
+		assert list(C.BLACK) == []
+		assert list(C.RED) == [C.RED]
+		assert list(C.PURPLE), [C.BLUE == C.RED]
 
 	def test_programatic_function_string(self):
 		Perm = Flag('Perm', 'R W X')
 		lst = list(Perm)
-		self.assertEqual(len(lst), len(Perm))
-		self.assertEqual(len(Perm), 3, Perm)
-		self.assertEqual(lst, [Perm.R, Perm.W, Perm.X])
+		assert len(lst) == len(Perm)
+		assert len(Perm), 3 == Perm
+		assert lst, [Perm.R, Perm.W == Perm.X]
 		for i, n in enumerate('R W X'.split()):
 			v = 1 << i
 			e = Perm(v)
-			self.assertEqual(e.value, v)
-			self.assertEqual(type(e.value), int)
-			self.assertEqual(e.name, n)
+			assert e.value == v
+			assert type(e.value) == int
+			assert e.name == n
 			self.assertIn(e, Perm)
 			self.assertIs(type(e), Perm)
 
 	def test_programatic_function_string_with_start(self):
 		Perm = Flag('Perm', 'R W X', start=8)
 		lst = list(Perm)
-		self.assertEqual(len(lst), len(Perm))
-		self.assertEqual(len(Perm), 3, Perm)
-		self.assertEqual(lst, [Perm.R, Perm.W, Perm.X])
+		assert len(lst) == len(Perm)
+		assert len(Perm), 3 == Perm
+		assert lst, [Perm.R, Perm.W == Perm.X]
 		for i, n in enumerate('R W X'.split()):
 			v = 8 << i
 			e = Perm(v)
-			self.assertEqual(e.value, v)
-			self.assertEqual(type(e.value), int)
-			self.assertEqual(e.name, n)
+			assert e.value == v
+			assert type(e.value) == int
+			assert e.name == n
 			self.assertIn(e, Perm)
 			self.assertIs(type(e), Perm)
 
 	def test_programatic_function_string_list(self):
 		Perm = Flag('Perm', ['R', 'W', 'X'])
 		lst = list(Perm)
-		self.assertEqual(len(lst), len(Perm))
-		self.assertEqual(len(Perm), 3, Perm)
-		self.assertEqual(lst, [Perm.R, Perm.W, Perm.X])
+		assert len(lst) == len(Perm)
+		assert len(Perm), 3 == Perm
+		assert lst, [Perm.R, Perm.W == Perm.X]
 		for i, n in enumerate('R W X'.split()):
 			v = 1 << i
 			e = Perm(v)
-			self.assertEqual(e.value, v)
-			self.assertEqual(type(e.value), int)
-			self.assertEqual(e.name, n)
+			assert e.value == v
+			assert type(e.value) == int
+			assert e.name == n
 			self.assertIn(e, Perm)
 			self.assertIs(type(e), Perm)
 
 	def test_programatic_function_iterable(self):
 		Perm = Flag('Perm', (('R', 2), ('W', 8), ('X', 32)))
 		lst = list(Perm)
-		self.assertEqual(len(lst), len(Perm))
-		self.assertEqual(len(Perm), 3, Perm)
-		self.assertEqual(lst, [Perm.R, Perm.W, Perm.X])
+		assert len(lst) == len(Perm)
+		assert len(Perm), 3 == Perm
+		assert lst, [Perm.R, Perm.W == Perm.X]
 		for i, n in enumerate('R W X'.split()):
 			v = 1 << (2 * i + 1)
 			e = Perm(v)
-			self.assertEqual(e.value, v)
-			self.assertEqual(type(e.value), int)
-			self.assertEqual(e.name, n)
+			assert e.value == v
+			assert type(e.value) == int
+			assert e.name == n
 			self.assertIn(e, Perm)
 			self.assertIs(type(e), Perm)
 
 	def test_programatic_function_from_dict(self):
 		Perm = Flag('Perm', OrderedDict((('R', 2), ('W', 8), ('X', 32))))
 		lst = list(Perm)
-		self.assertEqual(len(lst), len(Perm))
-		self.assertEqual(len(Perm), 3, Perm)
-		self.assertEqual(lst, [Perm.R, Perm.W, Perm.X])
+		assert len(lst) == len(Perm)
+		assert len(Perm), 3 == Perm
+		assert lst, [Perm.R, Perm.W == Perm.X]
 		for i, n in enumerate('R W X'.split()):
 			v = 1 << (2 * i + 1)
 			e = Perm(v)
-			self.assertEqual(e.value, v)
-			self.assertEqual(type(e.value), int)
-			self.assertEqual(e.name, n)
+			assert e.value == v
+			assert type(e.value) == int
+			assert e.name == n
 			self.assertIn(e, Perm)
 			self.assertIs(type(e), Perm)
 
@@ -334,10 +334,10 @@ class TestFlag(TestCase):
 			blue = auto()
 			green = auto()
 
-		self.assertEqual(list(Color), [Color.red, Color.blue, Color.green])
-		self.assertEqual(Color.red.value, 1)
-		self.assertEqual(Color.blue.value, 2)
-		self.assertEqual(Color.green.value, 4)
+		assert list(Color), [Color.red, Color.blue == Color.green]
+		assert Color.red.value == 1
+		assert Color.blue.value == 2
+		assert Color.green.value == 4
 
 	#
 	# def test_auto_number_garbage(self):
@@ -357,9 +357,9 @@ class TestFlag(TestCase):
 	# 		FROM_S = auto()
 	# 		BOTH = TO_S | FROM_S
 	#
-	# 	self.assertEqual(Required.TO_S.value, 1)
-	# 	self.assertEqual(Required.FROM_S.value, 2)
-	# 	self.assertEqual(Required.BOTH.value, 3)
+	# 	assert Required.TO_S.value == 1
+	# 	assert Required.FROM_S.value == 2
+	# 	assert Required.BOTH.value == 3
 
 	# def test_cascading_failure(self):
 	#
@@ -384,7 +384,7 @@ class TestFlag(TestCase):
 			second = auto()
 			third = auto()
 
-		self.assertEqual([Dupes.first, Dupes.second, Dupes.third], list(Dupes))
+		assert [Dupes.first, Dupes.second, Dupes.third] == list(Dupes)
 
 	def test_bizarre(self):
 
@@ -393,7 +393,7 @@ class TestFlag(TestCase):
 			c = 4
 			d = 6
 
-		self.assertEqual(repr(Bizarre(7)), '<Bizarre.d|c|b: 7>')
+		assert repr(Bizarre(7)) == '<Bizarre.d|c|b: 7>'
 
 	@unittest.skipUnless(threading, 'Threading required for this test.')
 	def test_unique_composite(self):
@@ -434,7 +434,7 @@ class TestFlag(TestCase):
 			t.join()
 		# check that only 248 members were created (8 were created originally)
 		self.assertFalse(failed[0], 'at least one thread failed while creating composite members')
-		self.assertEqual(256, len(seen), 'too many composite members created')
+		assert 256, len(seen) == 'too many composite members created'
 
 	#
 	# def test_ignore_with_autovalue_and_property(self):
@@ -520,8 +520,8 @@ class TestFlag(TestCase):
 #
 # 		self.assertTrue(isinstance(Color.FG_Black, Color))
 # 		self.assertTrue(isinstance(Color.FG_Black, str))
-# 		self.assertEqual(Color.FG_Black, '\x1b[30m')
-# 		self.assertEqual(Color.FG_Black.code, '30')
+# 		assert Color.FG_Black == '\x1b[30m'
+# 		assert Color.FG_Black.code == '30'
 #
 # 	def test_sub_subclass_1(self):
 #
@@ -561,8 +561,8 @@ class TestFlag(TestCase):
 #
 # 		self.assertTrue(isinstance(Color.FG_Black, Color))
 # 		self.assertTrue(isinstance(Color.FG_Black, str))
-# 		self.assertEqual(Color.FG_Black, '\x1b[30m')
-# 		self.assertEqual(Color.FG_Black.code, '30')
+# 		assert Color.FG_Black == '\x1b[30m'
+# 		assert Color.FG_Black.code == '30'
 #
 # 	def test_sub_subclass_2(self):
 #
@@ -607,8 +607,8 @@ class TestFlag(TestCase):
 #
 # 		self.assertTrue(isinstance(Color.FG_Black, Color))
 # 		self.assertTrue(isinstance(Color.FG_Black, str))
-# 		self.assertEqual(Color.FG_Black, '\x1b[30m')
-# 		self.assertEqual(Color.FG_Black.code, '30')
+# 		assert Color.FG_Black == '\x1b[30m'
+# 		assert Color.FG_Black.code == '30'
 #
 # 	def test_sub_subclass_3(self):
 #
@@ -648,8 +648,8 @@ class TestFlag(TestCase):
 #
 # 		self.assertTrue(isinstance(Color.FG_Black, Color))
 # 		self.assertTrue(isinstance(Color.FG_Black, str))
-# 		self.assertEqual(Color.FG_Black, '\x1b[30m')
-# 		self.assertEqual(Color.FG_Black.code, '30')
+# 		assert Color.FG_Black == '\x1b[30m'
+# 		assert Color.FG_Black.code == '30'
 #
 # 	def test_sub_subclass_4(self):
 #
@@ -691,14 +691,14 @@ class TestFlag(TestCase):
 #
 # 		self.assertTrue(isinstance(Color.FG_Black, Color))
 # 		self.assertTrue(isinstance(Color.FG_Black, str))
-# 		self.assertEqual(Color.FG_Black, '\x1b[30m')
-# 		self.assertEqual(Color.FG_Black.code, '30')
+# 		assert Color.FG_Black == '\x1b[30m'
+# 		assert Color.FG_Black.code == '30'
 # 		colors = Color.BG_Magenta | Color.FG_Black
 # 		self.assertTrue(isinstance(colors, Color))
 # 		self.assertTrue(isinstance(colors, str))
-# 		self.assertEqual(colors, '\x1b[45;30m')
-# 		self.assertEqual(colors.code, '45;30')
-# 		self.assertEqual(repr(colors), '<Color: BG_Magenta|FG_Black>')
+# 		assert colors == '\x1b[45;30m'
+# 		assert colors.code == '45;30'
+# 		assert repr(colors) == '<Color: BG_Magenta|FG_Black>'
 #
 # 	def test_sub_subclass_with_new_new(self):
 #
@@ -754,8 +754,8 @@ class TestFlag(TestCase):
 #
 # 		self.assertTrue(isinstance(Color.FG_Black, Color))
 # 		self.assertTrue(isinstance(Color.FG_Black, str))
-# 		self.assertEqual(Color.FG_Black, 'Blk', str.__repr__(Color.FG_Black))
-# 		self.assertEqual(Color.FG_Black.abbr, 'blk')
+# 		assert Color.FG_Black, 'Blk' == str.__repr__(Color.FG_Black)
+# 		assert Color.FG_Black.abbr == 'blk'
 #
 # 	def test_subclass_with_default_new(self):
 #
@@ -766,12 +766,12 @@ class TestFlag(TestCase):
 # 			these = 'those'
 # 			theother = 'thingimibobs'
 #
-# 		self.assertEqual(MyFlag.this, 'that')
-# 		self.assertEqual(MyFlag.this.value, 1)
-# 		self.assertEqual(MyFlag.these, 'those')
-# 		self.assertEqual(MyFlag.these.value, 2)
-# 		self.assertEqual(MyFlag.theother, 'thingimibobs')
-# 		self.assertEqual(MyFlag.theother.value, 4)
+# 		assert MyFlag.this == 'that'
+# 		assert MyFlag.this.value == 1
+# 		assert MyFlag.these == 'those'
+# 		assert MyFlag.these.value == 2
+# 		assert MyFlag.theother == 'thingimibobs'
+# 		assert MyFlag.theother.value == 4
 #
 # 	def test_extend_flag(self):
 #
@@ -784,7 +784,7 @@ class TestFlag(TestCase):
 # 		extend_enum(Color, 'PURPLE', 5)
 # 		self.assertTrue(Color(5) is Color.PURPLE)
 # 		self.assertTrue(isinstance(Color.PURPLE, Color))
-# 		self.assertEqual(Color.PURPLE.value, 5)
+# 		assert Color.PURPLE.value == 5
 #
 # 	def test_extend_flag_subclass(self):
 #
@@ -837,8 +837,8 @@ class TestFlag(TestCase):
 # 		self.assertTrue(isinstance(Purple, Color))
 # 		self.assertTrue(isinstance(Purple, str))
 # 		self.assertIs(Purple, Color.BG_Magenta | Color.FG_Blue)
-# 		self.assertEqual(Purple, '\x1b[45;34m')
-# 		self.assertEqual(Purple.code, '45;34')
+# 		assert Purple == '\x1b[45;34m'
+# 		assert Purple.code == '45;34'
 # 		self.assertIs(Purple.name, None)
 #
 
@@ -896,94 +896,94 @@ class TestIntFlag(TestCase):
 		Open = self.Open
 		for f in Perm:
 			self.assertTrue(isinstance(f, Perm))
-			self.assertEqual(f, f.value)
+			assert f == f.value
 		self.assertTrue(isinstance(Perm.W | Perm.X, Perm))
-		self.assertEqual(Perm.W | Perm.X, 3)
+		assert Perm.W | Perm.X == 3
 		for f in Open:
 			self.assertTrue(isinstance(f, Open))
-			self.assertEqual(f, f.value)
+			assert f == f.value
 		self.assertTrue(isinstance(Open.WO | Open.RW, Open))
-		self.assertEqual(Open.WO | Open.RW, 3)
+		assert Open.WO | Open.RW == 3
 
 	def test_str(self):
 		Perm = self.Perm
-		self.assertEqual(str(Perm.R), 'Perm.R')
-		self.assertEqual(str(Perm.W), 'Perm.W')
-		self.assertEqual(str(Perm.X), 'Perm.X')
-		self.assertEqual(str(Perm.R | Perm.W), 'Perm.R|W')
-		self.assertEqual(str(Perm.R | Perm.W | Perm.X), 'Perm.R|W|X')
-		self.assertEqual(str(Perm.R | 8), 'Perm.8|R')
-		self.assertEqual(str(Perm(0)), 'Perm.0')
-		self.assertEqual(str(Perm(8)), 'Perm.8')
-		self.assertEqual(str(~Perm.R), 'Perm.W|X')
-		self.assertEqual(str(~Perm.W), 'Perm.R|X')
-		self.assertEqual(str(~Perm.X), 'Perm.R|W')
-		self.assertEqual(str(~(Perm.R | Perm.W)), 'Perm.X')
-		self.assertEqual(str(~(Perm.R | Perm.W | Perm.X)), 'Perm.-8')
-		self.assertEqual(str(~(Perm.R | 8)), 'Perm.W|X')
-		self.assertEqual(str(Perm(~0)), 'Perm.R|W|X')
-		self.assertEqual(str(Perm(~8)), 'Perm.R|W|X')
+		assert str(Perm.R) == 'Perm.R'
+		assert str(Perm.W) == 'Perm.W'
+		assert str(Perm.X) == 'Perm.X'
+		assert str(Perm.R | Perm.W) == 'Perm.R|W'
+		assert str(Perm.R | Perm.W | Perm.X) == 'Perm.R|W|X'
+		assert str(Perm.R | 8) == 'Perm.8|R'
+		assert str(Perm(0)) == 'Perm.0'
+		assert str(Perm(8)) == 'Perm.8'
+		assert str(~Perm.R) == 'Perm.W|X'
+		assert str(~Perm.W) == 'Perm.R|X'
+		assert str(~Perm.X) == 'Perm.R|W'
+		assert str(~(Perm.R | Perm.W)) == 'Perm.X'
+		assert str(~(Perm.R | Perm.W | Perm.X)) == 'Perm.-8'
+		assert str(~(Perm.R | 8)) == 'Perm.W|X'
+		assert str(Perm(~0)) == 'Perm.R|W|X'
+		assert str(Perm(~8)) == 'Perm.R|W|X'
 
 		Open = self.Open
-		self.assertEqual(str(Open.RO), 'Open.RO')
-		self.assertEqual(str(Open.WO), 'Open.WO')
-		self.assertEqual(str(Open.AC), 'Open.AC')
-		self.assertEqual(str(Open.RO | Open.CE), 'Open.CE')
-		self.assertEqual(str(Open.WO | Open.CE), 'Open.CE|WO')
-		self.assertEqual(str(Open(4)), 'Open.4')
-		self.assertEqual(str(~Open.RO), 'Open.CE|AC|RW|WO')
-		self.assertEqual(str(~Open.WO), 'Open.CE|RW')
-		self.assertEqual(str(~Open.AC), 'Open.CE')
-		self.assertEqual(str(~(Open.RO | Open.CE)), 'Open.AC|RW|WO')
-		self.assertEqual(str(~(Open.WO | Open.CE)), 'Open.RW')
-		self.assertEqual(str(Open(~4)), 'Open.CE|AC|RW|WO')
+		assert str(Open.RO) == 'Open.RO'
+		assert str(Open.WO) == 'Open.WO'
+		assert str(Open.AC) == 'Open.AC'
+		assert str(Open.RO | Open.CE) == 'Open.CE'
+		assert str(Open.WO | Open.CE) == 'Open.CE|WO'
+		assert str(Open(4)) == 'Open.4'
+		assert str(~Open.RO) == 'Open.CE|AC|RW|WO'
+		assert str(~Open.WO) == 'Open.CE|RW'
+		assert str(~Open.AC) == 'Open.CE'
+		assert str(~(Open.RO | Open.CE)) == 'Open.AC|RW|WO'
+		assert str(~(Open.WO | Open.CE)) == 'Open.RW'
+		assert str(Open(~4)) == 'Open.CE|AC|RW|WO'
 
 	def test_repr(self):
 		Perm = self.Perm
-		self.assertEqual(repr(Perm.R), '<Perm.R: 4>')
-		self.assertEqual(repr(Perm.W), '<Perm.W: 2>')
-		self.assertEqual(repr(Perm.X), '<Perm.X: 1>')
-		self.assertEqual(repr(Perm.R | Perm.W), '<Perm.R|W: 6>')
-		self.assertEqual(repr(Perm.R | Perm.W | Perm.X), '<Perm.R|W|X: 7>')
-		self.assertEqual(repr(Perm.R | 8), '<Perm.8|R: 12>')
-		self.assertEqual(repr(Perm(0)), '<Perm.0: 0>')
-		self.assertEqual(repr(Perm(8)), '<Perm.8: 8>')
-		self.assertEqual(repr(~Perm.R), '<Perm.W|X: -5>')
-		self.assertEqual(repr(~Perm.W), '<Perm.R|X: -3>')
-		self.assertEqual(repr(~Perm.X), '<Perm.R|W: -2>')
-		self.assertEqual(repr(~(Perm.R | Perm.W)), '<Perm.X: -7>')
-		self.assertEqual(repr(~(Perm.R | Perm.W | Perm.X)), '<Perm.-8: -8>')
-		self.assertEqual(repr(~(Perm.R | 8)), '<Perm.W|X: -13>')
-		self.assertEqual(repr(Perm(~0)), '<Perm.R|W|X: -1>')
-		self.assertEqual(repr(Perm(~8)), '<Perm.R|W|X: -9>')
+		assert repr(Perm.R) == '<Perm.R: 4>'
+		assert repr(Perm.W) == '<Perm.W: 2>'
+		assert repr(Perm.X) == '<Perm.X: 1>'
+		assert repr(Perm.R | Perm.W) == '<Perm.R|W: 6>'
+		assert repr(Perm.R | Perm.W | Perm.X) == '<Perm.R|W|X: 7>'
+		assert repr(Perm.R | 8) == '<Perm.8|R: 12>'
+		assert repr(Perm(0)) == '<Perm.0: 0>'
+		assert repr(Perm(8)) == '<Perm.8: 8>'
+		assert repr(~Perm.R) == '<Perm.W|X: -5>'
+		assert repr(~Perm.W) == '<Perm.R|X: -3>'
+		assert repr(~Perm.X) == '<Perm.R|W: -2>'
+		assert repr(~(Perm.R | Perm.W)) == '<Perm.X: -7>'
+		assert repr(~(Perm.R | Perm.W | Perm.X)) == '<Perm.-8: -8>'
+		assert repr(~(Perm.R | 8)) == '<Perm.W|X: -13>'
+		assert repr(Perm(~0)) == '<Perm.R|W|X: -1>'
+		assert repr(Perm(~8)) == '<Perm.R|W|X: -9>'
 
 		Open = self.Open
-		self.assertEqual(repr(Open.RO), '<Open.RO: 0>')
-		self.assertEqual(repr(Open.WO), '<Open.WO: 1>')
-		self.assertEqual(repr(Open.AC), '<Open.AC: 3>')
-		self.assertEqual(repr(Open.RO | Open.CE), '<Open.CE: 524288>')
-		self.assertEqual(repr(Open.WO | Open.CE), '<Open.CE|WO: 524289>')
-		self.assertEqual(repr(Open(4)), '<Open.4: 4>')
-		self.assertEqual(repr(~Open.RO), '<Open.CE|AC|RW|WO: -1>')
-		self.assertEqual(repr(~Open.WO), '<Open.CE|RW: -2>')
-		self.assertEqual(repr(~Open.AC), '<Open.CE: -4>')
-		self.assertEqual(repr(~(Open.RO | Open.CE)), '<Open.AC|RW|WO: -524289>')
-		self.assertEqual(repr(~(Open.WO | Open.CE)), '<Open.RW: -524290>')
-		self.assertEqual(repr(Open(~4)), '<Open.CE|AC|RW|WO: -5>')
+		assert repr(Open.RO) == '<Open.RO: 0>'
+		assert repr(Open.WO) == '<Open.WO: 1>'
+		assert repr(Open.AC) == '<Open.AC: 3>'
+		assert repr(Open.RO | Open.CE) == '<Open.CE: 524288>'
+		assert repr(Open.WO | Open.CE) == '<Open.CE|WO: 524289>'
+		assert repr(Open(4)) == '<Open.4: 4>'
+		assert repr(~Open.RO) == '<Open.CE|AC|RW|WO: -1>'
+		assert repr(~Open.WO) == '<Open.CE|RW: -2>'
+		assert repr(~Open.AC) == '<Open.CE: -4>'
+		assert repr(~(Open.RO | Open.CE)) == '<Open.AC|RW|WO: -524289>'
+		assert repr(~(Open.WO | Open.CE)) == '<Open.RW: -524290>'
+		assert repr(Open(~4)) == '<Open.CE|AC|RW|WO: -5>'
 
 	def test_or(self):
 		Perm = self.Perm
 		for i in Perm:
 			for j in Perm:
-				self.assertEqual(i | j, i.value | j.value)
-				self.assertEqual((i | j).value, i.value | j.value)
+				assert i | j == i.value | j.value
+				assert (i | j).value == i.value | j.value
 				self.assertIs(type(i | j), Perm)
 			for j in range(8):
-				self.assertEqual(i | j, i.value | j)
-				self.assertEqual((i | j).value, i.value | j)
+				assert i | j == i.value | j
+				assert (i | j).value == i.value | j
 				self.assertIs(type(i | j), Perm)
-				self.assertEqual(j | i, j | i.value)
-				self.assertEqual((j | i).value, j | i.value)
+				assert j | i == j | i.value
+				assert (j | i).value == j | i.value
 				self.assertIs(type(j | i), Perm)
 		for i in Perm:
 			self.assertIs(i | i, i)
@@ -1005,11 +1005,11 @@ class TestIntFlag(TestCase):
 				self.assertEqual((i & j).value, i.value & j.value, 'i is %r, j is %r' % (i, j))
 				self.assertIs(type(i & j), Perm, 'i is %r, j is %r' % (i, j))
 			for j in range(8):
-				self.assertEqual(i & j, i.value & j)
-				self.assertEqual((i & j).value, i.value & j)
+				assert i & j == i.value & j
+				assert (i & j).value == i.value & j
 				self.assertIs(type(i & j), Perm)
-				self.assertEqual(j & i, j & i.value)
-				self.assertEqual((j & i).value, j & i.value)
+				assert j & i == j & i.value
+				assert (j & i).value == j & i.value
 				self.assertIs(type(j & i), Perm)
 		for i in Perm:
 			self.assertIs(i & i, i)
@@ -1022,15 +1022,15 @@ class TestIntFlag(TestCase):
 		Perm = self.Perm
 		for i in Perm:
 			for j in Perm:
-				self.assertEqual(i ^ j, i.value ^ j.value)
-				self.assertEqual((i ^ j).value, i.value ^ j.value)
+				assert i ^ j == i.value ^ j.value
+				assert (i ^ j).value == i.value ^ j.value
 				self.assertIs(type(i ^ j), Perm)
 			for j in range(8):
-				self.assertEqual(i ^ j, i.value ^ j)
-				self.assertEqual((i ^ j).value, i.value ^ j)
+				assert i ^ j == i.value ^ j
+				assert (i ^ j).value == i.value ^ j
 				self.assertIs(type(i ^ j), Perm)
-				self.assertEqual(j ^ i, j ^ i.value)
-				self.assertEqual((j ^ i).value, j ^ i.value)
+				assert j ^ i == j ^ i.value
+				assert (j ^ i).value == j ^ i.value
 				self.assertIs(type(j ^ i), Perm)
 		for i in Perm:
 			self.assertIs(i ^ 0, i)
@@ -1047,10 +1047,10 @@ class TestIntFlag(TestCase):
 		RWX = Perm.R | Perm.W | Perm.X
 		values = list(Perm) + [RW, RX, WX, RWX, Perm(0)]
 		for i in values:
-			self.assertEqual(~i, ~i.value)
-			self.assertEqual((~i).value, ~i.value)
+			assert ~i == ~i.value
+			assert (~i).value == ~i.value
 			self.assertIs(type(~i), Perm)
-			self.assertEqual(~~i, i)
+			assert ~~i == i
 		for i in Perm:
 			self.assertIs(~~i, i)
 		Open = self.Open
@@ -1061,87 +1061,87 @@ class TestIntFlag(TestCase):
 		Perm = self.Perm
 		NoPerm = Perm.R ^ Perm.R
 		RWX = Perm.R | Perm.W | Perm.X
-		self.assertEqual(list(NoPerm), [])
-		self.assertEqual(list(Perm.R), [Perm.R])
-		self.assertEqual(list(RWX), [Perm.R, Perm.W, Perm.X])
+		assert list(NoPerm) == []
+		assert list(Perm.R) == [Perm.R]
+		assert list(RWX), [Perm.R, Perm.W == Perm.X]
 
 	def test_programatic_function_string(self):
 		Perm = IntFlag('Perm', 'R W X')
 		lst = list(Perm)
-		self.assertEqual(len(lst), len(Perm))
-		self.assertEqual(len(Perm), 3, Perm)
-		self.assertEqual(lst, [Perm.R, Perm.W, Perm.X])
+		assert len(lst) == len(Perm)
+		assert len(Perm), 3 == Perm
+		assert lst, [Perm.R, Perm.W == Perm.X]
 		for i, n in enumerate('R W X'.split()):
 			v = 1 << i
 			e = Perm(v)
-			self.assertEqual(e.value, v)
-			self.assertEqual(type(e.value), int)
-			self.assertEqual(e, v)
-			self.assertEqual(e.name, n)
+			assert e.value == v
+			assert type(e.value) == int
+			assert e == v
+			assert e.name == n
 			self.assertIn(e, Perm)
 			self.assertIs(type(e), Perm)
 
 	def test_programatic_function_string_with_start(self):
 		Perm = IntFlag('Perm', 'R W X', start=8)
 		lst = list(Perm)
-		self.assertEqual(len(lst), len(Perm))
-		self.assertEqual(len(Perm), 3, Perm)
-		self.assertEqual(lst, [Perm.R, Perm.W, Perm.X])
+		assert len(lst) == len(Perm)
+		assert len(Perm), 3 == Perm
+		assert lst, [Perm.R, Perm.W == Perm.X]
 		for i, n in enumerate('R W X'.split()):
 			v = 8 << i
 			e = Perm(v)
-			self.assertEqual(e.value, v)
-			self.assertEqual(type(e.value), int)
-			self.assertEqual(e, v)
-			self.assertEqual(e.name, n)
+			assert e.value == v
+			assert type(e.value) == int
+			assert e == v
+			assert e.name == n
 			self.assertIn(e, Perm)
 			self.assertIs(type(e), Perm)
 
 	def test_programatic_function_string_list(self):
 		Perm = IntFlag('Perm', ['R', 'W', 'X'])
 		lst = list(Perm)
-		self.assertEqual(len(lst), len(Perm))
-		self.assertEqual(len(Perm), 3, Perm)
-		self.assertEqual(lst, [Perm.R, Perm.W, Perm.X])
+		assert len(lst) == len(Perm)
+		assert len(Perm), 3 == Perm
+		assert lst, [Perm.R, Perm.W == Perm.X]
 		for i, n in enumerate('R W X'.split()):
 			v = 1 << i
 			e = Perm(v)
-			self.assertEqual(e.value, v)
-			self.assertEqual(type(e.value), int)
-			self.assertEqual(e, v)
-			self.assertEqual(e.name, n)
+			assert e.value == v
+			assert type(e.value) == int
+			assert e == v
+			assert e.name == n
 			self.assertIn(e, Perm)
 			self.assertIs(type(e), Perm)
 
 	def test_programatic_function_iterable(self):
 		Perm = IntFlag('Perm', (('R', 2), ('W', 8), ('X', 32)))
 		lst = list(Perm)
-		self.assertEqual(len(lst), len(Perm))
-		self.assertEqual(len(Perm), 3, Perm)
-		self.assertEqual(lst, [Perm.R, Perm.W, Perm.X])
+		assert len(lst) == len(Perm)
+		assert len(Perm), 3 == Perm
+		assert lst, [Perm.R, Perm.W == Perm.X]
 		for i, n in enumerate('R W X'.split()):
 			v = 1 << (2 * i + 1)
 			e = Perm(v)
-			self.assertEqual(e.value, v)
-			self.assertEqual(type(e.value), int)
-			self.assertEqual(e, v)
-			self.assertEqual(e.name, n)
+			assert e.value == v
+			assert type(e.value) == int
+			assert e == v
+			assert e.name == n
 			self.assertIn(e, Perm)
 			self.assertIs(type(e), Perm)
 
 	def test_programatic_function_from_dict(self):
 		Perm = IntFlag('Perm', OrderedDict((('R', 2), ('W', 8), ('X', 32))))
 		lst = list(Perm)
-		self.assertEqual(len(lst), len(Perm))
-		self.assertEqual(len(Perm), 3, Perm)
-		self.assertEqual(lst, [Perm.R, Perm.W, Perm.X])
+		assert len(lst) == len(Perm)
+		assert len(Perm), 3 == Perm
+		assert lst, [Perm.R, Perm.W == Perm.X]
 		for i, n in enumerate('R W X'.split()):
 			v = 1 << (2 * i + 1)
 			e = Perm(v)
-			self.assertEqual(e.value, v)
-			self.assertEqual(type(e.value), int)
-			self.assertEqual(e, v)
-			self.assertEqual(e.name, n)
+			assert e.value == v
+			assert type(e.value) == int
+			assert e == v
+			assert e.name == n
 			self.assertIn(e, Perm)
 			self.assertIs(type(e), Perm)
 
@@ -1171,7 +1171,7 @@ class TestIntFlag(TestCase):
 			self.assertTrue(f)
 		Open = self.Open
 		for f in Open:
-			self.assertEqual(bool(f.value), bool(f))
+			assert bool(f.value) == bool(f)
 
 	@unittest.skipUnless(threading, 'Threading required for this test.')
 	def test_unique_composite(self):
@@ -1212,4 +1212,4 @@ class TestIntFlag(TestCase):
 			t.join()
 		# check that only 248 members were created (8 were created originally)
 		self.assertFalse(failed[0], 'at least one thread failed while creating composite members')
-		self.assertEqual(256, len(seen), 'too many composite members created')
+		assert 256, len(seen) == 'too many composite members created'

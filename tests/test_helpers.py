@@ -128,7 +128,7 @@ class TestHelpers(TestCase):
 				left = auto()
 				value = op(left)
 				left.value = first
-				self.assertEqual(value.value, final, f"{op.__name__} {first!r} -> {value!r} != {final!r}")
+				assert value.value, final == f"{op.__name__} {first!r} -> {value!r} != {final!r}"
 			else:
 				left = first
 				right = auto()

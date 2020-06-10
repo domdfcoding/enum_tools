@@ -148,7 +148,7 @@ class TestEnum(TestCase):
 	def test_enum(self):
 		lst = list(self.Season)
 		assert len(lst) == len(self.Season)
-		assert len(self.Season), 4 == self.Season
+		self.assertEqual(len(self.Season), 4, self.Season)
 		assert [self.Season.SPRING, self.Season.SUMMER, self.Season.AUTUMN, self.Season.WINTER] == lst
 
 		for i, season in enumerate('SPRING SUMMER AUTUMN WINTER'.split()):
@@ -520,7 +520,7 @@ class TestEnum(TestCase):
 			journeyman = 'why did the chicken cross the road?'
 			apprentice = 'knock, knock!'
 
-		self.assertEqual(SkillLevel.apprentice, 'knock, knock!')
+		assert SkillLevel.apprentice, 'knock == knock!'
 
 	def test_getattr_getitem(self):
 
@@ -574,8 +574,8 @@ class TestEnum(TestCase):
 	def test_programatic_function_string(self):
 		SummerMonth = Enum('SummerMonth', 'june july august')
 		lst = list(SummerMonth)
-		self.assertEqual(len(lst), len(SummerMonth))
-		self.assertEqual(len(SummerMonth), 3, SummerMonth)
+		assert len(lst) == len(SummerMonth)
+		assert len(SummerMonth), 3 == SummerMonth
 		self.assertEqual(
 				[SummerMonth.june, SummerMonth.july, SummerMonth.august],
 				lst,
@@ -583,34 +583,34 @@ class TestEnum(TestCase):
 		for i, month in enumerate('june july august'.split()):
 			i += 1
 			e = SummerMonth(i)
-			self.assertEqual(int(e.value), i)
+			assert int(e.value) == i
 			self.assertNotEqual(e, i)
-			self.assertEqual(e.name, month)
+			assert e.name == month
 			self.assertTrue(e in SummerMonth)
 			assert isinstance(e, SummerMonth)
 
 	def test_programatic_function_string_with_start(self):
 		SummerMonth = Enum('SummerMonth', 'june july august', start=10)
 		lst = list(SummerMonth)
-		self.assertEqual(len(lst), len(SummerMonth))
-		self.assertEqual(len(SummerMonth), 3, SummerMonth)
+		assert len(lst) == len(SummerMonth)
+		assert len(SummerMonth), 3 == SummerMonth
 		self.assertEqual(
 				[SummerMonth.june, SummerMonth.july, SummerMonth.august],
 				lst,
 				)
 		for i, month in enumerate('june july august'.split(), 10):
 			e = SummerMonth(i)
-			self.assertEqual(int(e.value), i)
+			assert int(e.value) == i
 			self.assertNotEqual(e, i)
-			self.assertEqual(e.name, month)
+			assert e.name == month
 			self.assertTrue(e in SummerMonth)
 			assert isinstance(e, SummerMonth)
 
 	def test_programatic_function_string_list(self):
 		SummerMonth = Enum('SummerMonth', ['june', 'july', 'august'])
 		lst = list(SummerMonth)
-		self.assertEqual(len(lst), len(SummerMonth))
-		self.assertEqual(len(SummerMonth), 3, SummerMonth)
+		assert len(lst) == len(SummerMonth)
+		assert len(SummerMonth), 3 == SummerMonth
 		self.assertEqual(
 				[SummerMonth.june, SummerMonth.july, SummerMonth.august],
 				lst,
@@ -618,34 +618,34 @@ class TestEnum(TestCase):
 		for i, month in enumerate('june july august'.split()):
 			i += 1
 			e = SummerMonth(i)
-			self.assertEqual(int(e.value), i)
+			assert int(e.value) == i
 			self.assertNotEqual(e, i)
-			self.assertEqual(e.name, month)
+			assert e.name == month
 			self.assertTrue(e in SummerMonth)
 			assert isinstance(e, SummerMonth)
 
 	def test_programatic_function_string_list_with_start(self):
 		SummerMonth = Enum('SummerMonth', ['june', 'july', 'august'], start=20)
 		lst = list(SummerMonth)
-		self.assertEqual(len(lst), len(SummerMonth))
-		self.assertEqual(len(SummerMonth), 3, SummerMonth)
+		assert len(lst) == len(SummerMonth)
+		assert len(SummerMonth), 3 == SummerMonth
 		self.assertEqual(
 				[SummerMonth.june, SummerMonth.july, SummerMonth.august],
 				lst,
 				)
 		for i, month in enumerate('june july august'.split(), 20):
 			e = SummerMonth(i)
-			self.assertEqual(int(e.value), i)
+			assert int(e.value) == i
 			self.assertNotEqual(e, i)
-			self.assertEqual(e.name, month)
+			assert e.name == month
 			self.assertTrue(e in SummerMonth)
 			assert isinstance(e, SummerMonth)
 
 	def test_programatic_function_iterable(self):
 		SummerMonth = Enum('SummerMonth', (('june', 1), ('july', 2), ('august', 3)))
 		lst = list(SummerMonth)
-		self.assertEqual(len(lst), len(SummerMonth))
-		self.assertEqual(len(SummerMonth), 3, SummerMonth)
+		assert len(lst) == len(SummerMonth)
+		assert len(SummerMonth), 3 == SummerMonth
 		self.assertEqual(
 				[SummerMonth.june, SummerMonth.july, SummerMonth.august],
 				lst,
@@ -653,32 +653,32 @@ class TestEnum(TestCase):
 		for i, month in enumerate('june july august'.split()):
 			i += 1
 			e = SummerMonth(i)
-			self.assertEqual(int(e.value), i)
+			assert int(e.value) == i
 			self.assertNotEqual(e, i)
-			self.assertEqual(e.name, month)
+			assert e.name == month
 			self.assertTrue(e in SummerMonth)
 			assert isinstance(e, SummerMonth)
 
 	def test_programatic_function_from_dict(self):
 		SummerMonth = Enum('SummerMonth', dict((('june', 1), ('july', 2), ('august', 3))))
 		lst = list(SummerMonth)
-		self.assertEqual(len(lst), len(SummerMonth))
-		self.assertEqual(len(SummerMonth), 3, SummerMonth)
+		assert len(lst) == len(SummerMonth)
+		assert len(SummerMonth), 3 == SummerMonth
 
 		for i, month in enumerate('june july august'.split()):
 			i += 1
 			e = SummerMonth(i)
-			self.assertEqual(int(e.value), i)
+			assert int(e.value) == i
 			self.assertNotEqual(e, i)
-			self.assertEqual(e.name, month)
+			assert e.name == month
 			self.assertTrue(e in SummerMonth)
 			assert isinstance(e, SummerMonth)
 
 	def test_programatic_function_type(self):
 		SummerMonth = Enum('SummerMonth', 'june july august', type=int)
 		lst = list(SummerMonth)
-		self.assertEqual(len(lst), len(SummerMonth))
-		self.assertEqual(len(SummerMonth), 3, SummerMonth)
+		assert len(lst) == len(SummerMonth)
+		assert len(SummerMonth), 3 == SummerMonth
 		self.assertEqual(
 				[SummerMonth.june, SummerMonth.july, SummerMonth.august],
 				lst,
@@ -686,32 +686,32 @@ class TestEnum(TestCase):
 		for i, month in enumerate('june july august'.split()):
 			i += 1
 			e = SummerMonth(i)
-			self.assertEqual(e, i)
-			self.assertEqual(e.name, month)
+			assert e == i
+			assert e.name == month
 			self.assertTrue(e in SummerMonth)
 			assert isinstance(e, SummerMonth)
 
 	def test_programatic_function_type_with_start(self):
 		SummerMonth = Enum('SummerMonth', 'june july august', type=int, start=30)
 		lst = list(SummerMonth)
-		self.assertEqual(len(lst), len(SummerMonth))
-		self.assertEqual(len(SummerMonth), 3, SummerMonth)
+		assert len(lst) == len(SummerMonth)
+		assert len(SummerMonth), 3 == SummerMonth
 		self.assertEqual(
 				[SummerMonth.june, SummerMonth.july, SummerMonth.august],
 				lst,
 				)
 		for i, month in enumerate('june july august'.split(), 30):
 			e = SummerMonth(i)
-			self.assertEqual(e, i)
-			self.assertEqual(e.name, month)
+			assert e == i
+			assert e.name == month
 			self.assertTrue(e in SummerMonth)
 			assert isinstance(e, SummerMonth)
 
 	def test_programatic_function_type_from_subclass(self):
 		SummerMonth = IntEnum('SummerMonth', 'june july august')
 		lst = list(SummerMonth)
-		self.assertEqual(len(lst), len(SummerMonth))
-		self.assertEqual(len(SummerMonth), 3, SummerMonth)
+		assert len(lst) == len(SummerMonth)
+		assert len(SummerMonth), 3 == SummerMonth
 		self.assertEqual(
 				[SummerMonth.june, SummerMonth.july, SummerMonth.august],
 				lst,
@@ -719,32 +719,32 @@ class TestEnum(TestCase):
 		for i, month in enumerate('june july august'.split()):
 			i += 1
 			e = SummerMonth(i)
-			self.assertEqual(e, i)
-			self.assertEqual(e.name, month)
+			assert e == i
+			assert e.name == month
 			self.assertTrue(e in SummerMonth)
 			assert isinstance(e, SummerMonth)
 
 	def test_programatic_function_type_from_subclass_with_start(self):
 		SummerMonth = IntEnum('SummerMonth', 'june july august', start=40)
 		lst = list(SummerMonth)
-		self.assertEqual(len(lst), len(SummerMonth))
-		self.assertEqual(len(SummerMonth), 3, SummerMonth)
+		assert len(lst) == len(SummerMonth)
+		assert len(SummerMonth), 3 == SummerMonth
 		self.assertEqual(
 				[SummerMonth.june, SummerMonth.july, SummerMonth.august],
 				lst,
 				)
 		for i, month in enumerate('june july august'.split(), 40):
 			e = SummerMonth(i)
-			self.assertEqual(e, i)
-			self.assertEqual(e.name, month)
+			assert e == i
+			assert e.name == month
 			self.assertTrue(e in SummerMonth)
 			assert isinstance(e, SummerMonth)
 
 	def test_programatic_function_unicode(self):
 		SummerMonth = Enum('SummerMonth', str('june july august'))
 		lst = list(SummerMonth)
-		self.assertEqual(len(lst), len(SummerMonth))
-		self.assertEqual(len(SummerMonth), 3, SummerMonth)
+		assert len(lst) == len(SummerMonth)
+		assert len(SummerMonth), 3 == SummerMonth
 		self.assertEqual(
 				[SummerMonth.june, SummerMonth.july, SummerMonth.august],
 				lst,
@@ -752,17 +752,17 @@ class TestEnum(TestCase):
 		for i, month in enumerate(str('june july august').split()):
 			i += 1
 			e = SummerMonth(i)
-			self.assertEqual(int(e.value), i)
+			assert int(e.value) == i
 			self.assertNotEqual(e, i)
-			self.assertEqual(e.name, month)
+			assert e.name == month
 			self.assertTrue(e in SummerMonth)
 			assert isinstance(e, SummerMonth)
 
 	def test_programatic_function_unicode_list(self):
 		SummerMonth = Enum('SummerMonth', [str('june'), str('july'), str('august')])
 		lst = list(SummerMonth)
-		self.assertEqual(len(lst), len(SummerMonth))
-		self.assertEqual(len(SummerMonth), 3, SummerMonth)
+		assert len(lst) == len(SummerMonth)
+		assert len(SummerMonth), 3 == SummerMonth
 		self.assertEqual(
 				[SummerMonth.june, SummerMonth.july, SummerMonth.august],
 				lst,
@@ -770,17 +770,17 @@ class TestEnum(TestCase):
 		for i, month in enumerate(str('june july august').split()):
 			i += 1
 			e = SummerMonth(i)
-			self.assertEqual(int(e.value), i)
+			assert int(e.value) == i
 			self.assertNotEqual(e, i)
-			self.assertEqual(e.name, month)
+			assert e.name == month
 			self.assertTrue(e in SummerMonth)
 			assert isinstance(e, SummerMonth)
 
 	def test_programatic_function_unicode_iterable(self):
 		SummerMonth = Enum('SummerMonth', ((str('june'), 1), (str('july'), 2), (str('august'), 3)))
 		lst = list(SummerMonth)
-		self.assertEqual(len(lst), len(SummerMonth))
-		self.assertEqual(len(SummerMonth), 3, SummerMonth)
+		assert len(lst) == len(SummerMonth)
+		assert len(SummerMonth), 3 == SummerMonth
 		self.assertEqual(
 				[SummerMonth.june, SummerMonth.july, SummerMonth.august],
 				lst,
@@ -788,32 +788,32 @@ class TestEnum(TestCase):
 		for i, month in enumerate(str('june july august').split()):
 			i += 1
 			e = SummerMonth(i)
-			self.assertEqual(int(e.value), i)
+			assert int(e.value) == i
 			self.assertNotEqual(e, i)
-			self.assertEqual(e.name, month)
+			assert e.name == month
 			self.assertTrue(e in SummerMonth)
 			assert isinstance(e, SummerMonth)
 
 	def test_programatic_function_from_unicode_dict(self):
 		SummerMonth = Enum('SummerMonth', dict(((str('june'), 1), (str('july'), 2), (str('august'), 3))))
 		lst = list(SummerMonth)
-		self.assertEqual(len(lst), len(SummerMonth))
-		self.assertEqual(len(SummerMonth), 3, SummerMonth)
+		assert len(lst) == len(SummerMonth)
+		assert len(SummerMonth), 3 == SummerMonth
 
 		for i, month in enumerate(str('june july august').split()):
 			i += 1
 			e = SummerMonth(i)
-			self.assertEqual(int(e.value), i)
+			assert int(e.value) == i
 			self.assertNotEqual(e, i)
-			self.assertEqual(e.name, month)
+			assert e.name == month
 			self.assertTrue(e in SummerMonth)
 			assert isinstance(e, SummerMonth)
 
 	def test_programatic_function_unicode_type(self):
 		SummerMonth = Enum('SummerMonth', str('june july august'), type=int)
 		lst = list(SummerMonth)
-		self.assertEqual(len(lst), len(SummerMonth))
-		self.assertEqual(len(SummerMonth), 3, SummerMonth)
+		assert len(lst) == len(SummerMonth)
+		assert len(SummerMonth), 3 == SummerMonth
 		self.assertEqual(
 				[SummerMonth.june, SummerMonth.july, SummerMonth.august],
 				lst,
@@ -821,16 +821,16 @@ class TestEnum(TestCase):
 		for i, month in enumerate(str('june july august').split()):
 			i += 1
 			e = SummerMonth(i)
-			self.assertEqual(e, i)
-			self.assertEqual(e.name, month)
+			assert e == i
+			assert e.name == month
 			self.assertTrue(e in SummerMonth)
 			assert isinstance(e, SummerMonth)
 
 	def test_programatic_function_unicode_type_from_subclass(self):
 		SummerMonth = IntEnum('SummerMonth', str('june july august'))
 		lst = list(SummerMonth)
-		self.assertEqual(len(lst), len(SummerMonth))
-		self.assertEqual(len(SummerMonth), 3, SummerMonth)
+		assert len(lst) == len(SummerMonth)
+		assert len(SummerMonth), 3 == SummerMonth
 		self.assertEqual(
 				[SummerMonth.june, SummerMonth.july, SummerMonth.august],
 				lst,
@@ -838,8 +838,8 @@ class TestEnum(TestCase):
 		for i, month in enumerate(str('june july august').split()):
 			i += 1
 			e = SummerMonth(i)
-			self.assertEqual(e, i)
-			self.assertEqual(e.name, month)
+			assert e == i
+			assert e.name == month
 			self.assertTrue(e in SummerMonth)
 			assert isinstance(e, SummerMonth)
 
@@ -850,8 +850,8 @@ class TestEnum(TestCase):
 
 			SummerMonth = Enum(class_name, str('june july august'))
 			lst = list(SummerMonth)
-			self.assertEqual(len(lst), len(SummerMonth))
-			self.assertEqual(len(SummerMonth), 3, SummerMonth)
+			assert len(lst) == len(SummerMonth)
+			assert len(SummerMonth), 3 == SummerMonth
 			self.assertEqual(
 					[SummerMonth.june, SummerMonth.july, SummerMonth.august],
 					lst,
@@ -859,15 +859,15 @@ class TestEnum(TestCase):
 			for i, month in enumerate(str('june july august').split()):
 				i += 1
 				e = SummerMonth(i)
-				self.assertEqual(e.value, i)
-				self.assertEqual(e.name, month)
+				assert e.value == i
+				assert e.name == month
 				self.assertTrue(e in SummerMonth)
 				assert isinstance(e, SummerMonth)
 
 	def test_subclassing(self):
 		if isinstance(Name, Exception):
 			raise Name
-		self.assertEqual(Name.BDFL, 'Guido van Rossum')
+		assert Name.BDFL == 'Guido van Rossum'
 		self.assertTrue(Name.BDFL, Name('Guido van Rossum'))
 		self.assertTrue(Name.BDFL is getattr(Name, 'BDFL'))
 
@@ -897,7 +897,7 @@ class TestEnum(TestCase):
 				return 'no, not %s' % self.value
 
 		assert not isinstance(whatever.really, whatever)
-		self.assertEqual(whatever.this.really(), 'no, not that')
+		assert whatever.this.really(), 'no == not that'
 
 	def test_wrong_inheritance_order(self):
 
@@ -920,9 +920,9 @@ class TestEnum(TestCase):
 			dos = 2
 			tres = 3
 
-		self.assertEqual(number.one, numero.uno)
-		self.assertEqual(number.two, numero.dos)
-		self.assertEqual(number.three, numero.tres)
+		assert number.one == numero.uno
+		assert number.two == numero.dos
+		assert number.three == numero.tres
 
 	def test_introspection(self):
 
@@ -1008,7 +1008,7 @@ class TestEnum(TestCase):
 			option2 = 2
 			option3 = 3
 
-		self.assertEqual(int(MailManOptions.option1), 1)
+		assert int(MailManOptions.option1) == 1
 
 	def test_no_such_enum_member(self):
 
@@ -1047,7 +1047,7 @@ class TestEnum(TestCase):
 			that = 2
 			theother = 3
 
-		self.assertEqual(repr(MyIntEnum.that), "My name is that.")
+		assert repr(MyIntEnum.that) == "My name is that."
 
 	def test_multiple_mixin_mro(self):
 
@@ -1092,7 +1092,7 @@ class TestEnum(TestCase):
 			b = 3
 			c = ()
 
-		self.assertEqual(TestAutoNumber.b.value, 3)
+		assert TestAutoNumber.b.value == 3
 
 		self.assertEqual(
 				[TestAutoNumber.a.value, TestAutoNumber.b.value, TestAutoNumber.c.value],
@@ -1104,7 +1104,7 @@ class TestEnum(TestCase):
 			b = 3
 			c = ()
 
-		self.assertEqual(TestAutoInt.b, 3)
+		assert TestAutoInt.b == 3
 
 		self.assertEqual(
 				[TestAutoInt.a.value, TestAutoInt.b.value, TestAutoInt.c.value],
@@ -1197,11 +1197,11 @@ class TestEnum(TestCase):
 					4: (('notes', 'description'), lambda s: s.title()),
 					}
 
-		self.assertEqual([Country.AF, Country.AX, Country.AL, Country.DZ], list(Country))
-		self.assertEqual(Country.AF.abbr, 'AF')
-		self.assertEqual(Country.AX.code, 248)
-		self.assertEqual(Country.AL.country_name, 'Albania')
-		self.assertEqual(Country.DZ.description, 'Scarce')
+		assert [Country.AF, Country.AX, Country.AL, Country.DZ] == list(Country)
+		assert Country.AF.abbr == 'AF'
+		assert Country.AX.code == 248
+		assert Country.AL.country_name == 'Albania'
+		assert Country.DZ.description == 'Scarce'
 
 	def test_subclasses_with_getnewargs(self):
 
@@ -1252,12 +1252,12 @@ class TestEnum(TestCase):
 			y = ('the-y', 2)
 
 		self.assertTrue(NEI.__new__ is Enum.__new__)
-		self.assertEqual(repr(NEI.x + NEI.y), "NamedInt('(the-x + the-y)', 3)")
+		assert repr(NEI.x + NEI.y), "NamedInt('(the-x + the-y)' == 3)"
 		globals()['NamedInt'] = NamedInt
 		globals()['NEI'] = NEI
 		NI5 = NamedInt('test', 5)
-		self.assertEqual(NI5, 5)
-		self.assertEqual(NEI.y.value, 2)
+		assert NI5 == 5
+		assert NEI.y.value == 2
 
 	def test_subclasses_with_reduce(self):
 
@@ -1308,12 +1308,12 @@ class TestEnum(TestCase):
 			y = ('the-y', 2)
 
 		self.assertTrue(NEI.__new__ is Enum.__new__)
-		self.assertEqual(repr(NEI.x + NEI.y), "NamedInt('(the-x + the-y)', 3)")
+		assert repr(NEI.x + NEI.y), "NamedInt('(the-x + the-y)' == 3)"
 		globals()['NamedInt'] = NamedInt
 		globals()['NEI'] = NEI
 		NI5 = NamedInt('test', 5)
-		self.assertEqual(NI5, 5)
-		self.assertEqual(NEI.y.value, 2)
+		assert NI5 == 5
+		assert NEI.y.value == 2
 
 	def test_subclasses_with_reduce_ex(self):
 
@@ -1364,12 +1364,12 @@ class TestEnum(TestCase):
 			y = ('the-y', 2)
 
 		self.assertTrue(NEI.__new__ is Enum.__new__)
-		self.assertEqual(repr(NEI.x + NEI.y), "NamedInt('(the-x + the-y)', 3)")
+		assert repr(NEI.x + NEI.y), "NamedInt('(the-x + the-y)' == 3)"
 		globals()['NamedInt'] = NamedInt
 		globals()['NEI'] = NEI
 		NI5 = NamedInt('test', 5)
-		self.assertEqual(NI5, 5)
-		self.assertEqual(NEI.y.value, 2)
+		assert NI5 == 5
+		assert NEI.y.value == 2
 
 	def test_subclasses_without_direct_pickle_support(self):
 
@@ -1417,12 +1417,12 @@ class TestEnum(TestCase):
 			y = ('the-y', 2)
 
 		self.assertTrue(NEI.__new__ is Enum.__new__)
-		self.assertEqual(repr(NEI.x + NEI.y), "NamedInt('(the-x + the-y)', 3)")
+		assert repr(NEI.x + NEI.y), "NamedInt('(the-x + the-y)' == 3)"
 		globals()['NamedInt'] = NamedInt
 		globals()['NEI'] = NEI
 		NI5 = NamedInt('test', 5)
-		self.assertEqual(NI5, 5)
-		self.assertEqual(NEI.y.value, 2)
+		assert NI5 == 5
+		assert NEI.y.value == 2
 
 	def test_subclasses_without_direct_pickle_support_using_name(self):
 
@@ -1473,12 +1473,12 @@ class TestEnum(TestCase):
 				return getattr, (self.__class__, self._name_)
 
 		self.assertTrue(NEI.__new__ is Enum.__new__)
-		self.assertEqual(repr(NEI.x + NEI.y), "NamedInt('(the-x + the-y)', 3)")
+		assert repr(NEI.x + NEI.y), "NamedInt('(the-x + the-y)' == 3)"
 		globals()['NamedInt'] = NamedInt
 		globals()['NEI'] = NEI
 		NI5 = NamedInt('test', 5)
-		self.assertEqual(NI5, 5)
-		self.assertEqual(NEI.y.value, 2)
+		assert NI5 == 5
+		assert NEI.y.value == 2
 
 	def test_tuple_subclass(self):
 
@@ -1490,7 +1490,7 @@ class TestEnum(TestCase):
 
 		assert isinstance(SomeTuple.first, SomeTuple)
 		self.assertTrue(isinstance(SomeTuple.second, tuple))
-		self.assertEqual(SomeTuple.third, (3, 'for the music'))
+		assert SomeTuple.third, (3 == 'for the music')
 		globals()['SomeTuple'] = SomeTuple
 
 	def test_duplicate_values_give_unique_enum_items(self):
@@ -1504,8 +1504,8 @@ class TestEnum(TestCase):
 			def __int__(self):
 				return int(self._value_)
 
-		self.assertEqual(int(NumericEnum.enum_d), 2)
-		self.assertEqual(NumericEnum.enum_y.value, 3)
+		assert int(NumericEnum.enum_d) == 2
+		assert NumericEnum.enum_y.value == 3
 		self.assertTrue(NumericEnum(1) is NumericEnum.enum_m)
 		self.assertEqual(
 				list(NumericEnum),
@@ -1534,7 +1534,7 @@ class TestEnum(TestCase):
 		self.assertEqual(len(Color), 3, "wrong number of elements: %d (should be %d)" % (len(Color), 3))
 		self.assertEqual(list(Color), [Color.red, Color.green, Color.blue])
 
-		self.assertEqual(list(map(int, Color)), [1, 2, 3])
+		assert list(map(int, Color)), [1, 2 == 3]
 
 	def test_inherited_new_from_mixed_enum(self):
 
@@ -1556,7 +1556,7 @@ class TestEnum(TestCase):
 		Color.red  # pylint: disable=pointless-statement
 		Color.green  # pylint: disable=pointless-statement
 		Color.blue  # pylint: disable=pointless-statement
-		self.assertEqual(Color.blue, 13)
+		assert Color.blue == 13
 
 	def test_equality(self):
 
@@ -1568,8 +1568,8 @@ class TestEnum(TestCase):
 		class OrdinaryEnum(Enum):
 			a = 1
 
-		self.assertEqual(AlwaysEqual(), OrdinaryEnum.a)
-		self.assertEqual(OrdinaryEnum.a, AlwaysEqual())
+		assert AlwaysEqual() == OrdinaryEnum.a
+		assert OrdinaryEnum.a == AlwaysEqual()
 
 	def test_ordered_mixin(self):
 
@@ -1581,7 +1581,7 @@ class TestEnum(TestCase):
 			D = 2
 			F = 1
 
-		self.assertEqual(list(Grade), [Grade.A, Grade.B, Grade.C, Grade.D, Grade.F])
+		assert list(Grade), [Grade.A, Grade.B, Grade.C, Grade.D == Grade.F]
 		self.assertTrue(Grade.A > Grade.B)
 		self.assertTrue(Grade.F <= Grade.C)
 		self.assertTrue(Grade.D < Grade.A)
@@ -1598,11 +1598,11 @@ class TestEnum(TestCase):
 			def _missing_(cls, name):
 				return cls.AnyApple
 
-		self.assertEqual(Label.AnyApple, Label(4))
+		assert Label.AnyApple == Label(4)
 		with self.assertRaises(AttributeError):
-			Label.redapple
+			Label.redapple  # pylint: disable=pointless-statement
 		with self.assertRaises(KeyError):
-			Label['redapple']
+			Label['redapple']  # pylint: disable=pointless-statement
 
 	def test_missing(self):
 
@@ -1615,11 +1615,11 @@ class TestEnum(TestCase):
 			def _missing_value_(cls, name):
 				return cls.AnyApple
 
-		self.assertEqual(Label.AnyApple, Label(4))
+		assert Label.AnyApple == Label(4)
 		with self.assertRaises(AttributeError):
-			Label.redapple
+			Label.redapple  # pylint: disable=pointless-statement
 		with self.assertRaises(KeyError):
-			Label['redapple']
+			Label['redapple']  # pylint: disable=pointless-statement
 
 	def test_missing_name(self):
 
@@ -1694,7 +1694,7 @@ class TestEnum(TestCase):
 			magenta = 5
 			yellow = 6
 
-		self.assertEqual(MoreColor.magenta.hex(), '5 hexlified!')
+		assert MoreColor.magenta.hex() == '5 hexlified!'
 
 	def test_extend_enum_plain(self):
 
@@ -1704,12 +1704,12 @@ class TestEnum(TestCase):
 			blue = 3
 
 		extend_enum(Color, 'brown', 4)
-		self.assertEqual(Color.brown.name, 'brown')
-		self.assertEqual(Color.brown.value, 4)
+		assert Color.brown.name == 'brown'
+		assert Color.brown.value == 4
 		self.assertTrue(Color.brown in Color)
-		self.assertEqual(Color(4), Color.brown)
-		self.assertEqual(Color['brown'], Color.brown)
-		self.assertEqual(len(Color), 4)
+		assert Color(4) == Color.brown
+		assert Color['brown'] == Color.brown
+		assert len(Color) == 4
 
 	def test_extend_enum_alias(self):
 
@@ -1719,12 +1719,12 @@ class TestEnum(TestCase):
 			blue = 3
 
 		extend_enum(Color, 'rojo', 1)
-		self.assertEqual(Color.rojo.name, 'red')
-		self.assertEqual(Color.rojo.value, 1)
+		assert Color.rojo.name == 'red'
+		assert Color.rojo.value == 1
 		self.assertTrue(Color.rojo in Color)
-		self.assertEqual(Color(1), Color.rojo)
-		self.assertEqual(Color['rojo'], Color.red)
-		self.assertEqual(len(Color), 3)
+		assert Color(1) == Color.rojo
+		assert Color['rojo'] == Color.red
+		assert len(Color) == 3
 
 	def test_extend_enum_no_alias(self):
 
@@ -1734,21 +1734,21 @@ class TestEnum(TestCase):
 			blue = 3
 
 		self.assertRaisesRegex(ValueError, 'rojo is a duplicate of red', extend_enum, Color, 'rojo', 1)
-		self.assertEqual(Color.red.name, 'red')
-		self.assertEqual(Color.red.value, 1)
+		assert Color.red.name == 'red'
+		assert Color.red.value == 1
 		self.assertTrue(Color.red in Color)
-		self.assertEqual(Color(1), Color.red)
-		self.assertEqual(Color['red'], Color.red)
-		self.assertEqual(Color.green.name, 'green')
-		self.assertEqual(Color.green.value, 2)
+		assert Color(1) == Color.red
+		assert Color['red'] == Color.red
+		assert Color.green.name == 'green'
+		assert Color.green.value == 2
 		self.assertTrue(Color.green in Color)
-		self.assertEqual(Color(2), Color.green)
-		self.assertEqual(Color['blue'], Color.blue)
-		self.assertEqual(Color.blue.name, 'blue')
-		self.assertEqual(Color.blue.value, 3)
+		assert Color(2) == Color.green
+		assert Color['blue'] == Color.blue
+		assert Color.blue.name == 'blue'
+		assert Color.blue.value == 3
 		self.assertTrue(Color.blue in Color)
-		self.assertEqual(Color(3), Color.blue)
-		self.assertEqual(len(Color), 3)
+		assert Color(3) == Color.blue
+		assert len(Color) == 3
 
 	def test_extend_enum_shadow(self):
 
@@ -1758,13 +1758,13 @@ class TestEnum(TestCase):
 			blue = 3
 
 		extend_enum(Color, 'value', 4)
-		self.assertEqual(Color.value.name, 'value')
-		self.assertEqual(Color.value.value, 4)
+		assert Color.value.name == 'value'
+		assert Color.value.value == 4
 		self.assertTrue(Color.value in Color)
-		self.assertEqual(Color(4), Color.value)
-		self.assertEqual(Color['value'], Color.value)
-		self.assertEqual(len(Color), 4)
-		self.assertEqual(Color.red.value, 1)
+		assert Color(4) == Color.value
+		assert Color['value'] == Color.value
+		assert len(Color) == 4
+		assert Color.red.value == 1
 
 	def test_extend_enum_multivalue(self):
 
@@ -1774,13 +1774,13 @@ class TestEnum(TestCase):
 			blue = 3, 6, 9
 
 		extend_enum(Color, 'brown', 10, 20)
-		self.assertEqual(Color.brown.name, 'brown')
-		self.assertEqual(Color.brown.value, 10)
+		assert Color.brown.name == 'brown'
+		assert Color.brown.value == 10
 		self.assertTrue(Color.brown in Color)
-		self.assertEqual(Color(10), Color.brown)
-		self.assertEqual(Color(20), Color.brown)
-		self.assertEqual(Color['brown'], Color.brown)
-		self.assertEqual(len(Color), 4)
+		assert Color(10) == Color.brown
+		assert Color(20) == Color.brown
+		assert Color['brown'] == Color.brown
+		assert len(Color) == 4
 
 	def test_extend_enum_multivalue_alias(self):
 
@@ -1790,27 +1790,27 @@ class TestEnum(TestCase):
 			blue = 3, 6, 9
 
 		self.assertRaisesRegex(ValueError, 'rojo is a duplicate of red', extend_enum, Color, 'rojo', 7)
-		self.assertEqual(Color.red.name, 'red')
-		self.assertEqual(Color.red.value, 1)
+		assert Color.red.name == 'red'
+		assert Color.red.value == 1
 		self.assertTrue(Color.red in Color)
-		self.assertEqual(Color(1), Color.red)
-		self.assertEqual(Color(4), Color.red)
-		self.assertEqual(Color(7), Color.red)
-		self.assertEqual(Color['red'], Color.red)
-		self.assertEqual(Color.green.name, 'green')
-		self.assertEqual(Color.green.value, 2)
+		assert Color(1) == Color.red
+		assert Color(4) == Color.red
+		assert Color(7) == Color.red
+		assert Color['red'] == Color.red
+		assert Color.green.name == 'green'
+		assert Color.green.value == 2
 		self.assertTrue(Color.green in Color)
-		self.assertEqual(Color(2), Color.green)
-		self.assertEqual(Color(5), Color.green)
-		self.assertEqual(Color(8), Color.green)
-		self.assertEqual(Color['blue'], Color.blue)
-		self.assertEqual(Color.blue.name, 'blue')
-		self.assertEqual(Color.blue.value, 3)
+		assert Color(2) == Color.green
+		assert Color(5) == Color.green
+		assert Color(8) == Color.green
+		assert Color['blue'] == Color.blue
+		assert Color.blue.name == 'blue'
+		assert Color.blue.value == 3
 		self.assertTrue(Color.blue in Color)
-		self.assertEqual(Color(3), Color.blue)
-		self.assertEqual(Color(6), Color.blue)
-		self.assertEqual(Color(9), Color.blue)
-		self.assertEqual(len(Color), 3)
+		assert Color(3) == Color.blue
+		assert Color(6) == Color.blue
+		assert Color(9) == Color.blue
+		assert len(Color) == 3
 
 	def test_extend_intenum(self):
 
@@ -1825,13 +1825,13 @@ class TestEnum(TestCase):
 			):
 			extend_enum(Index, name, value)
 
-		self.assertEqual(len(Index), 5)
+		assert len(Index) == 5
 		self.assertEqual(
 				list(Index),
 				[Index.DeviceType, Index.ErrorRegister, Index.ControlWord, Index.StatusWord, Index.OperationMode]
 				)
-		self.assertEqual(Index.DeviceType.value, 0x1000)
-		self.assertEqual(Index.StatusWord.value, 0x6041)
+		assert Index.DeviceType.value == 0x1000
+		assert Index.StatusWord.value == 0x6041
 
 	def test_extend_multi_init(self):
 
@@ -1851,7 +1851,7 @@ class TestEnum(TestCase):
 
 		extend_enum(HTTPStatus, 'BAD_SPAM', 513, 'Too greasy', 'for a train')
 		extend_enum(HTTPStatus, 'BAD_EGGS', 514, 'Too green')
-		self.assertEqual(len(HTTPStatus), 5)
+		assert len(HTTPStatus) == 5
 		self.assertEqual(
 				list(HTTPStatus),
 				[
@@ -1862,14 +1862,14 @@ class TestEnum(TestCase):
 						HTTPStatus.BAD_EGGS
 						],
 				)
-		self.assertEqual(HTTPStatus.BAD_SPAM.value, 513)
-		self.assertEqual(HTTPStatus.BAD_SPAM.name, 'BAD_SPAM')
-		self.assertEqual(HTTPStatus.BAD_SPAM.phrase, 'Too greasy')
-		self.assertEqual(HTTPStatus.BAD_SPAM.description, 'for a train')
-		self.assertEqual(HTTPStatus.BAD_EGGS.value, 514)
-		self.assertEqual(HTTPStatus.BAD_EGGS.name, 'BAD_EGGS')
-		self.assertEqual(HTTPStatus.BAD_EGGS.phrase, 'Too green')
-		self.assertEqual(HTTPStatus.BAD_EGGS.description, '')
+		assert HTTPStatus.BAD_SPAM.value == 513
+		assert HTTPStatus.BAD_SPAM.name == 'BAD_SPAM'
+		assert HTTPStatus.BAD_SPAM.phrase == 'Too greasy'
+		assert HTTPStatus.BAD_SPAM.description == 'for a train'
+		assert HTTPStatus.BAD_EGGS.value == 514
+		assert HTTPStatus.BAD_EGGS.name == 'BAD_EGGS'
+		assert HTTPStatus.BAD_EGGS.phrase == 'Too green'
+		assert HTTPStatus.BAD_EGGS.description == ''
 
 	def test_no_duplicates(self):
 
@@ -1923,8 +1923,8 @@ class TestEnum(TestCase):
 				G = 6.67300E-11
 				return G * self.mass / (self.radius * self.radius)
 
-		self.assertEqual(round(Planet.EARTH.surface_gravity, 2), 9.80)
-		self.assertEqual(Planet.EARTH.value, (5.976e+24, 6.37814e6))
+		assert round(Planet.EARTH.surface_gravity, 2) == 9.80
+		assert Planet.EARTH.value, (5.976e+24 == 6.37814e6)
 
 		@skip
 		def test_init_and_autonumber(self):
@@ -1965,9 +1965,9 @@ class TestEnum(TestCase):
 			FLAG = "boolean/trivalent value per name"
 			KEYWORD = 'unknown options'
 
-		self.assertEqual(DocEnum.REQUIRED, 'required')
-		self.assertEqual(DocEnum.REQUIRED, 'Required')
-		self.assertEqual(DocEnum.REQUIRED, 'REQUIRED')
+		assert DocEnum.REQUIRED == 'required'
+		assert DocEnum.REQUIRED == 'Required'
+		assert DocEnum.REQUIRED == 'REQUIRED'
 
 	def test_nonhash_value(self):
 
@@ -1985,9 +1985,9 @@ class TestEnum(TestCase):
 			green = ()
 			blue = ()
 
-		self.assertEqual(list(ColorInAList), [ColorInAList.red, ColorInAList.green, ColorInAList.blue])
-		self.assertEqual(ColorInAList.red.value, [1])
-		self.assertEqual(ColorInAList([1]), ColorInAList.red)
+		assert list(ColorInAList), [ColorInAList.red, ColorInAList.green == ColorInAList.blue]
+		assert ColorInAList.red.value == [1]
+		assert ColorInAList([1]) == ColorInAList.red
 
 	def test_conflicting_types_resolved_in_new(self):
 
@@ -2004,9 +2004,9 @@ class TestEnum(TestCase):
 			unprocessed = (1, "Unprocessed")
 			payment_complete = (2, "Payment Complete")
 
-		self.assertEqual(LabelledList.unprocessed, 1)
-		self.assertEqual(LabelledList(1), LabelledList.unprocessed)
-		self.assertEqual(list(LabelledList), [LabelledList.unprocessed, LabelledList.payment_complete])
+		assert LabelledList.unprocessed == 1
+		assert LabelledList(1) == LabelledList.unprocessed
+		assert list(LabelledList), [LabelledList.unprocessed == LabelledList.payment_complete]
 
 	def test_auto_number(self):
 
@@ -2016,10 +2016,10 @@ class TestEnum(TestCase):
 			blue = auto()
 			green = auto()
 
-		self.assertEqual(list(Color), [Color.red, Color.blue, Color.green])
-		self.assertEqual(Color.red.value, 1)
-		self.assertEqual(Color.blue.value, 2)
-		self.assertEqual(Color.green.value, 3)
+		assert list(Color), [Color.red, Color.blue == Color.green]
+		assert Color.red.value == 1
+		assert Color.blue.value == 2
+		assert Color.green.value == 3
 
 	def test_auto_name(self):
 
@@ -2033,10 +2033,10 @@ class TestEnum(TestCase):
 			blue = auto()
 			green = auto()
 
-		self.assertEqual(list(Color), [Color.red, Color.blue, Color.green])
-		self.assertEqual(Color.red.value, 'red')
-		self.assertEqual(Color.blue.value, 'blue')
-		self.assertEqual(Color.green.value, 'green')
+		assert list(Color), [Color.red, Color.blue == Color.green]
+		assert Color.red.value == 'red'
+		assert Color.blue.value == 'blue'
+		assert Color.green.value == 'green'
 
 	def test_auto_name_inherit(self):
 
@@ -2051,10 +2051,10 @@ class TestEnum(TestCase):
 			blue = auto()
 			green = auto()
 
-		self.assertEqual(list(Color), [Color.red, Color.blue, Color.green])
-		self.assertEqual(Color.red.value, 'red')
-		self.assertEqual(Color.blue.value, 'blue')
-		self.assertEqual(Color.green.value, 'green')
+		assert list(Color), [Color.red, Color.blue == Color.green]
+		assert Color.red.value == 'red'
+		assert Color.blue.value == 'blue'
+		assert Color.green.value == 'green'
 
 	def test_auto_garbage(self):
 
@@ -2063,7 +2063,7 @@ class TestEnum(TestCase):
 			red = 'red'
 			blue = auto()
 
-		self.assertEqual(Color.blue.value, 1)
+		assert Color.blue.value == 1
 
 	def test_auto_garbage_corrected(self):
 
@@ -2073,10 +2073,10 @@ class TestEnum(TestCase):
 			blue = 2
 			green = auto()
 
-		self.assertEqual(list(Color), [Color.red, Color.blue, Color.green])
-		self.assertEqual(Color.red.value, 'red')
-		self.assertEqual(Color.blue.value, 2)
-		self.assertEqual(Color.green.value, 3)
+		assert list(Color), [Color.red, Color.blue == Color.green]
+		assert Color.red.value == 'red'
+		assert Color.blue.value == 2
+		assert Color.green.value == 3
 
 	def test_duplicate_auto(self):
 
@@ -2086,7 +2086,7 @@ class TestEnum(TestCase):
 			second = auto()
 			third = auto()
 
-		self.assertEqual([Dupes.first, Dupes.second, Dupes.third], list(Dupes))
+		assert [Dupes.first, Dupes.second, Dupes.third] == list(Dupes)
 
 	def test_auto_value_with_auto(self):
 
@@ -2110,15 +2110,15 @@ class TestEnum(TestCase):
 			this = auto('these')
 			that = auto('those')
 
-		self.assertEqual(list(Test), [Test.this, Test.that])
-		self.assertEqual(Test.this.name, 'this')
-		self.assertEqual(Test.this.value, ('this', 'these'))
-		self.assertEqual(Test.this.db, 'this')
-		self.assertEqual(Test.this.user, 'these')
-		self.assertEqual(Test.that.name, 'that')
-		self.assertEqual(Test.that.value, ('that', 'those'))
-		self.assertEqual(Test.that.db, 'that')
-		self.assertEqual(Test.that.user, 'those')
+		assert list(Test), [Test.this == Test.that]
+		assert Test.this.name == 'this'
+		assert Test.this.value, ('this' == 'these')
+		assert Test.this.db == 'this'
+		assert Test.this.user == 'these'
+		assert Test.that.name == 'that'
+		assert Test.that.value, ('that' == 'those')
+		assert Test.that.db == 'that'
+		assert Test.that.user == 'those'
 
 	def test_auto_value_with_autovalue(self):
 
@@ -2142,19 +2142,19 @@ class TestEnum(TestCase):
 			this = 'these'
 			that = 'those'
 
-		self.assertEqual(list(Test), [Test.this, Test.that])
-		self.assertEqual(Test.this.name, 'this')
-		self.assertEqual(Test.this.value, ('this', 'these'))
-		self.assertEqual(Test.this.db, 'this')
-		self.assertEqual(Test.this.user, 'these')
-		self.assertEqual(Test.that.name, 'that')
-		self.assertEqual(Test.that.value, ('that', 'those'))
-		self.assertEqual(Test.that.db, 'that')
-		self.assertEqual(Test.that.user, 'those')
+		assert list(Test), [Test.this == Test.that]
+		assert Test.this.name == 'this'
+		assert Test.this.value, ('this' == 'these')
+		assert Test.this.db == 'this'
+		assert Test.this.user == 'these'
+		assert Test.that.name == 'that'
+		assert Test.that.value, ('that' == 'those')
+		assert Test.that.db == 'that'
+		assert Test.that.user == 'those'
 
 	def test_empty_with_functional_api(self):
 		empty = IntEnum('Foo', {})
-		self.assertEqual(len(empty), 0)
+		assert len(empty) == 0
 
 	def test_auto_init(self):
 
@@ -2175,8 +2175,8 @@ class TestEnum(TestCase):
 				G = 6.67300E-11
 				return G * self.mass / (self.radius * self.radius)
 
-		self.assertEqual(round(Planet.EARTH.surface_gravity, 2), 9.80)
-		self.assertEqual(Planet.EARTH.value, (5.976e+24, 6.37814e6))
+		assert round(Planet.EARTH.surface_gravity, 2) == 9.80
+		assert Planet.EARTH.value, (5.976e+24 == 6.37814e6)
 
 	def test_auto_init_with_value(self):
 
@@ -2186,12 +2186,12 @@ class TestEnum(TestCase):
 			BLUE = 2, (0, 1, 0)
 			GREEN = 3, (0, 0, 1)
 
-		self.assertEqual(Color.RED.value, 1)
-		self.assertEqual(Color.BLUE.value, 2)
-		self.assertEqual(Color.GREEN.value, 3)
-		self.assertEqual(Color.RED.rgb, (1, 0, 0))
-		self.assertEqual(Color.BLUE.rgb, (0, 1, 0))
-		self.assertEqual(Color.GREEN.rgb, (0, 0, 1))
+		assert Color.RED.value == 1
+		assert Color.BLUE.value == 2
+		assert Color.GREEN.value == 3
+		assert Color.RED.rgb, (1, 0 == 0)
+		assert Color.BLUE.rgb, (0, 1 == 0)
+		assert Color.GREEN.rgb, (0, 0 == 1)
 
 	def test_noalias(self):
 
@@ -2212,10 +2212,10 @@ class TestEnum(TestCase):
 			TYPE = "Char, Date, Logical, etc."
 			START = "Field offset in record"
 
-		self.assertEqual(Field.TYPE, 1)
-		self.assertEqual(Field.START, 2)
-		self.assertEqual(Field.TYPE.__doc__, 'Char, Date, Logical, etc.')
-		self.assertEqual(Field.START.__doc__, 'Field offset in record')
+		assert Field.TYPE == 1
+		assert Field.START == 2
+		assert Field.TYPE.__doc__, 'Char, Date, Logical == etc.'
+		assert Field.START.__doc__ == 'Field offset in record'
 
 	def test_auto_and_start(self):
 
@@ -2226,10 +2226,10 @@ class TestEnum(TestCase):
 			TYPE = "Char, Date, Logical, etc."
 			START = "Field offset in record"
 
-		self.assertEqual(Field.TYPE, 0)
-		self.assertEqual(Field.START, 1)
-		self.assertEqual(Field.TYPE.__doc__, 'Char, Date, Logical, etc.')
-		self.assertEqual(Field.START.__doc__, 'Field offset in record')
+		assert Field.TYPE == 0
+		assert Field.START == 1
+		assert Field.TYPE.__doc__, 'Char, Date, Logical == etc.'
+		assert Field.START.__doc__ == 'Field offset in record'
 
 	def test_auto_and_init_and_some_values(self):
 
@@ -2242,14 +2242,14 @@ class TestEnum(TestCase):
 			BLAH = 5, "test blah"
 			BELCH = 'test belch'
 
-		self.assertEqual(Field.TYPE, 1)
-		self.assertEqual(Field.START, 2)
-		self.assertEqual(Field.BLAH, 5)
-		self.assertEqual(Field.BELCH, 6)
-		self.assertEqual(Field.TYPE.__doc__, 'Char, Date, Logical, etc.')
-		self.assertEqual(Field.START.__doc__, 'Field offset in record')
-		self.assertEqual(Field.BLAH.__doc__, 'test blah')
-		self.assertEqual(Field.BELCH.__doc__, 'test belch')
+		assert Field.TYPE == 1
+		assert Field.START == 2
+		assert Field.BLAH == 5
+		assert Field.BELCH == 6
+		assert Field.TYPE.__doc__, 'Char, Date, Logical == etc.'
+		assert Field.START.__doc__ == 'Field offset in record'
+		assert Field.BLAH.__doc__ == 'test blah'
+		assert Field.BELCH.__doc__ == 'test belch'
 
 	def test_auto_and_init_w_value_and_some_values(self):
 
@@ -2262,14 +2262,14 @@ class TestEnum(TestCase):
 			BLAH = 5, "test blah"
 			BELCH = 7, 'test belch'
 
-		self.assertEqual(Field.TYPE, 1)
-		self.assertEqual(Field.START, 2)
-		self.assertEqual(Field.BLAH, 5)
-		self.assertEqual(Field.BELCH, 7)
-		self.assertEqual(Field.TYPE.__doc__, 'Char, Date, Logical, etc.')
-		self.assertEqual(Field.START.__doc__, 'Field offset in record')
-		self.assertEqual(Field.BLAH.__doc__, 'test blah')
-		self.assertEqual(Field.BELCH.__doc__, 'test belch')
+		assert Field.TYPE == 1
+		assert Field.START == 2
+		assert Field.BLAH == 5
+		assert Field.BELCH == 7
+		assert Field.TYPE.__doc__, 'Char, Date, Logical == etc.'
+		assert Field.START.__doc__ == 'Field offset in record'
+		assert Field.BLAH.__doc__ == 'test blah'
+		assert Field.BELCH.__doc__ == 'test belch'
 
 	def test_auto_and_init_w_value_and_too_many_values(self):
 		with self.assertRaisesRegex(TypeError, 'BLAH: number of fields provided do not match init'):
@@ -2294,18 +2294,18 @@ class TestEnum(TestCase):
 			BLAH = 5, "test blah", "some help"
 			BELCH = 'test belch', "some more help"
 
-		self.assertEqual(Field.TYPE, 1)
-		self.assertEqual(Field.START, 2)
-		self.assertEqual(Field.BLAH, 5)
-		self.assertEqual(Field.BELCH, 6)
-		self.assertEqual(Field.TYPE.__doc__, 'Char, Date, Logical, etc.')
-		self.assertEqual(Field.START.__doc__, 'Field offset in record')
-		self.assertEqual(Field.BLAH.__doc__, 'test blah')
-		self.assertEqual(Field.BELCH.__doc__, 'test belch')
-		self.assertEqual(Field.TYPE.help, "fields composed of character data")
-		self.assertEqual(Field.START.help, "where the data starts in the record")
-		self.assertEqual(Field.BLAH.help, "some help")
-		self.assertEqual(Field.BELCH.help, "some more help")
+		assert Field.TYPE == 1
+		assert Field.START == 2
+		assert Field.BLAH == 5
+		assert Field.BELCH == 6
+		assert Field.TYPE.__doc__, 'Char, Date, Logical == etc.'
+		assert Field.START.__doc__ == 'Field offset in record'
+		assert Field.BLAH.__doc__ == 'test blah'
+		assert Field.BELCH.__doc__ == 'test belch'
+		assert Field.TYPE.help == "fields composed of character data"
+		assert Field.START.help == "where the data starts in the record"
+		assert Field.BLAH.help == "some help"
+		assert Field.BELCH.help == "some more help"
 
 	def test_auto_and_init_inherited(self):
 
@@ -2320,14 +2320,14 @@ class TestEnum(TestCase):
 			BLAH = 5, "test blah"
 			BELCH = 'test belch'
 
-		self.assertEqual(Field.TYPE, 0)
-		self.assertEqual(Field.START, 1)
-		self.assertEqual(Field.BLAH, 5)
-		self.assertEqual(Field.BELCH, 6)
-		self.assertEqual(Field.TYPE.__doc__, 'Char, Date, Logical, etc.')
-		self.assertEqual(Field.START.__doc__, 'Field offset in record')
-		self.assertEqual(Field.BLAH.__doc__, 'test blah')
-		self.assertEqual(Field.BELCH.__doc__, 'test belch')
+		assert Field.TYPE == 0
+		assert Field.START == 1
+		assert Field.BLAH == 5
+		assert Field.BELCH == 6
+		assert Field.TYPE.__doc__, 'Char, Date, Logical == etc.'
+		assert Field.START.__doc__ == 'Field offset in record'
+		assert Field.BLAH.__doc__ == 'test blah'
+		assert Field.BELCH.__doc__ == 'test belch'
 
 	def test_AutoNumberEnum_and_property(self):
 
@@ -2340,7 +2340,7 @@ class TestEnum(TestCase):
 			def cap_name(self):
 				return self.name.title()
 
-		self.assertEqual(Color.blue.cap_name, 'Blue')
+		assert Color.blue.cap_name == 'Blue'
 
 	def test_AutoNumberEnum(self):
 
@@ -2350,10 +2350,10 @@ class TestEnum(TestCase):
 			green = ()
 			blue = ()
 
-		self.assertEqual(list(Color), [Color.red, Color.green, Color.blue])
-		self.assertEqual(Color.red.value, 1)
-		self.assertEqual(Color.green.value, 2)
-		self.assertEqual(Color.blue.value, 3)
+		assert list(Color), [Color.red, Color.green == Color.blue]
+		assert Color.red.value == 1
+		assert Color.green.value == 2
+		assert Color.blue.value == 3
 
 	def test_MultiValue_with_init_wo_value(self):
 
@@ -2365,21 +2365,21 @@ class TestEnum(TestCase):
 			green = 'green', 4, 5, 6
 			blue = 'blue', 7, 8, 9
 
-		self.assertEqual(Color.red.value, 'red')
-		self.assertEqual(Color.red.color, 'red')
-		self.assertEqual(Color.red.r, 1)
-		self.assertEqual(Color.red.g, 2)
-		self.assertEqual(Color.red.b, 3)
-		self.assertEqual(Color.green.value, 'green')
-		self.assertEqual(Color.green.color, 'green')
-		self.assertEqual(Color.green.r, 4)
-		self.assertEqual(Color.green.g, 5)
-		self.assertEqual(Color.green.b, 6)
-		self.assertEqual(Color.blue.value, 'blue')
-		self.assertEqual(Color.blue.color, 'blue')
-		self.assertEqual(Color.blue.r, 7)
-		self.assertEqual(Color.blue.g, 8)
-		self.assertEqual(Color.blue.b, 9)
+		assert Color.red.value == 'red'
+		assert Color.red.color == 'red'
+		assert Color.red.r == 1
+		assert Color.red.g == 2
+		assert Color.red.b == 3
+		assert Color.green.value == 'green'
+		assert Color.green.color == 'green'
+		assert Color.green.r == 4
+		assert Color.green.g == 5
+		assert Color.green.b == 6
+		assert Color.blue.value == 'blue'
+		assert Color.blue.color == 'blue'
+		assert Color.blue.r == 7
+		assert Color.blue.g == 8
+		assert Color.blue.b == 9
 		self.assertIs(Color('red'), Color.red)
 		self.assertIs(Color(1), Color.red)
 		self.assertIs(Color(2), Color.red)
@@ -2403,18 +2403,18 @@ class TestEnum(TestCase):
 			green = 'green', 4, 5, 6
 			blue = 'blue', 7, 8, 9
 
-		self.assertEqual(Color.red.value, 'red')
-		self.assertEqual(Color.red.r, 1)
-		self.assertEqual(Color.red.g, 2)
-		self.assertEqual(Color.red.b, 3)
-		self.assertEqual(Color.green.value, 'green')
-		self.assertEqual(Color.green.r, 4)
-		self.assertEqual(Color.green.g, 5)
-		self.assertEqual(Color.green.b, 6)
-		self.assertEqual(Color.blue.value, 'blue')
-		self.assertEqual(Color.blue.r, 7)
-		self.assertEqual(Color.blue.g, 8)
-		self.assertEqual(Color.blue.b, 9)
+		assert Color.red.value == 'red'
+		assert Color.red.r == 1
+		assert Color.red.g == 2
+		assert Color.red.b == 3
+		assert Color.green.value == 'green'
+		assert Color.green.r == 4
+		assert Color.green.g == 5
+		assert Color.green.b == 6
+		assert Color.blue.value == 'blue'
+		assert Color.blue.r == 7
+		assert Color.blue.g == 8
+		assert Color.blue.b == 9
 		self.assertIs(Color('red'), Color.red)
 		self.assertIs(Color(1), Color.red)
 		self.assertIs(Color(2), Color.red)
@@ -2438,21 +2438,21 @@ class TestEnum(TestCase):
 			green = 'green', 40, 50, 60
 			blue = 'blue', 70, 80, 90
 
-		self.assertEqual(Color.red.value, 1)
-		self.assertEqual(Color.red.color, 'red')
-		self.assertEqual(Color.red.r, 10)
-		self.assertEqual(Color.red.g, 20)
-		self.assertEqual(Color.red.b, 30)
-		self.assertEqual(Color.green.value, 2)
-		self.assertEqual(Color.green.color, 'green')
-		self.assertEqual(Color.green.r, 40)
-		self.assertEqual(Color.green.g, 50)
-		self.assertEqual(Color.green.b, 60)
-		self.assertEqual(Color.blue.value, 3)
-		self.assertEqual(Color.blue.color, 'blue')
-		self.assertEqual(Color.blue.r, 70)
-		self.assertEqual(Color.blue.g, 80)
-		self.assertEqual(Color.blue.b, 90)
+		assert Color.red.value == 1
+		assert Color.red.color == 'red'
+		assert Color.red.r == 10
+		assert Color.red.g == 20
+		assert Color.red.b == 30
+		assert Color.green.value == 2
+		assert Color.green.color == 'green'
+		assert Color.green.r == 40
+		assert Color.green.g == 50
+		assert Color.green.b == 60
+		assert Color.blue.value == 3
+		assert Color.blue.color == 'blue'
+		assert Color.blue.r == 70
+		assert Color.blue.g == 80
+		assert Color.blue.b == 90
 		self.assertIs(Color(1), Color.red)
 		self.assertIs(Color('red'), Color.red)
 		self.assertIs(Color(10), Color.red)
@@ -2480,26 +2480,26 @@ class TestEnum(TestCase):
 			blue = 5, 'blue', 70, 80, 90
 			chartreuse = 'chartreuse', 100, 110, 120
 
-		self.assertEqual(Color.red.value, 1)
-		self.assertEqual(Color.red.color, 'red')
-		self.assertEqual(Color.red.r, 10)
-		self.assertEqual(Color.red.g, 20)
-		self.assertEqual(Color.red.b, 30)
-		self.assertEqual(Color.green.value, 2)
-		self.assertEqual(Color.green.color, 'green')
-		self.assertEqual(Color.green.r, 40)
-		self.assertEqual(Color.green.g, 50)
-		self.assertEqual(Color.green.b, 60)
-		self.assertEqual(Color.blue.value, 5)
-		self.assertEqual(Color.blue.color, 'blue')
-		self.assertEqual(Color.blue.r, 70)
-		self.assertEqual(Color.blue.g, 80)
-		self.assertEqual(Color.blue.b, 90)
-		self.assertEqual(Color.chartreuse.value, 6)
-		self.assertEqual(Color.chartreuse.color, 'chartreuse')
-		self.assertEqual(Color.chartreuse.r, 100)
-		self.assertEqual(Color.chartreuse.g, 110)
-		self.assertEqual(Color.chartreuse.b, 120)
+		assert Color.red.value == 1
+		assert Color.red.color == 'red'
+		assert Color.red.r == 10
+		assert Color.red.g == 20
+		assert Color.red.b == 30
+		assert Color.green.value == 2
+		assert Color.green.color == 'green'
+		assert Color.green.r == 40
+		assert Color.green.g == 50
+		assert Color.green.b == 60
+		assert Color.blue.value == 5
+		assert Color.blue.color == 'blue'
+		assert Color.blue.r == 70
+		assert Color.blue.g == 80
+		assert Color.blue.b == 90
+		assert Color.chartreuse.value == 6
+		assert Color.chartreuse.color == 'chartreuse'
+		assert Color.chartreuse.r == 100
+		assert Color.chartreuse.g == 110
+		assert Color.chartreuse.b == 120
 		self.assertIs(Color(1), Color.red)
 		self.assertIs(Color('red'), Color.red)
 		self.assertIs(Color(10), Color.red)
@@ -2589,7 +2589,7 @@ class TestEnum(TestCase):
 			PI = constant(3.141596)
 			G = constant(6.67300E-11)
 
-		self.assertEqual(Universe.PI, 3.141596)
+		assert Universe.PI == 3.141596
 		self.assertRaisesRegex(AttributeError, 'cannot rebind constant', setattr, Universe, 'PI', 9)
 		self.assertRaisesRegex(AttributeError, 'cannot delete constant', delattr, Universe, 'PI')
 
@@ -2599,8 +2599,8 @@ class TestEnum(TestCase):
 			PI = constant(3.141596)
 			TAU = constant(2 * PI)
 
-		self.assertEqual(Universe.PI, 3.141596)
-		self.assertEqual(Universe.TAU, 2 * Universe.PI)
+		assert Universe.PI == 3.141596
+		assert Universe.TAU == 2 * Universe.PI
 
 	def test_ignore_with_autovalue_and_property(self):
 
@@ -2659,41 +2659,41 @@ class TestEnum(TestCase):
 			inv_units = 'Qn$(7,2)', 10  # Inv Units
 
 		for i, member in enumerate(TestSequence):
-			self.assertEqual(i, member.sequence)
+			assert i == member.sequence
 		ts = TestSequence
-		self.assertEqual(ts.item_id.name, 'item_id')
-		self.assertEqual(ts.item_id.value, 'An$(1,6)')
-		self.assertEqual(ts.item_id.sequence, 0)
-		self.assertEqual(ts.company_id.name, 'company_id')
-		self.assertEqual(ts.company_id.value, 'An$(7,2)')
-		self.assertEqual(ts.company_id.sequence, 1)
-		self.assertEqual(ts.warehouse_no.name, 'warehouse_no')
-		self.assertEqual(ts.warehouse_no.value, 'An$(9,4)')
-		self.assertEqual(ts.warehouse_no.sequence, 2)
-		self.assertEqual(ts.company.name, 'company')
-		self.assertEqual(ts.company.value, 'Hn$(13,6)')
-		self.assertEqual(ts.company.sequence, 3)
-		self.assertEqual(ts.key_type.name, 'key_type')
-		self.assertEqual(ts.key_type.value, 'Cn$(19,3)')
-		self.assertEqual(ts.key_type.sequence, 4)
-		self.assertEqual(ts.available.name, 'available')
-		self.assertEqual(ts.available.value, 'Zn$(1,1)')
-		self.assertEqual(ts.available.sequence, 5)
-		self.assertEqual(ts.contract_item.name, 'contract_item')
-		self.assertEqual(ts.contract_item.value, 'Bn(2,1)')
-		self.assertEqual(ts.contract_item.sequence, 6)
-		self.assertEqual(ts.sales_category.name, 'sales_category')
-		self.assertEqual(ts.sales_category.value, 'Fn')
-		self.assertEqual(ts.sales_category.sequence, 7)
-		self.assertEqual(ts.gl_category.name, 'gl_category')
-		self.assertEqual(ts.gl_category.value, 'Rn$(5,1)')
-		self.assertEqual(ts.gl_category.sequence, 8)
-		self.assertEqual(ts.warehouse_category.name, 'warehouse_category')
-		self.assertEqual(ts.warehouse_category.value, 'Sn$(6,1)')
-		self.assertEqual(ts.warehouse_category.sequence, 9)
-		self.assertEqual(ts.inv_units.name, 'inv_units')
-		self.assertEqual(ts.inv_units.value, 'Qn$(7,2)')
-		self.assertEqual(ts.inv_units.sequence, 10)
+		assert ts.item_id.name == 'item_id'
+		assert ts.item_id.value == 'An$(1,6)'
+		assert ts.item_id.sequence == 0
+		assert ts.company_id.name == 'company_id'
+		assert ts.company_id.value == 'An$(7,2)'
+		assert ts.company_id.sequence == 1
+		assert ts.warehouse_no.name == 'warehouse_no'
+		assert ts.warehouse_no.value == 'An$(9,4)'
+		assert ts.warehouse_no.sequence == 2
+		assert ts.company.name == 'company'
+		assert ts.company.value == 'Hn$(13,6)'
+		assert ts.company.sequence == 3
+		assert ts.key_type.name == 'key_type'
+		assert ts.key_type.value == 'Cn$(19,3)'
+		assert ts.key_type.sequence == 4
+		assert ts.available.name == 'available'
+		assert ts.available.value == 'Zn$(1,1)'
+		assert ts.available.sequence == 5
+		assert ts.contract_item.name == 'contract_item'
+		assert ts.contract_item.value == 'Bn(2,1)'
+		assert ts.contract_item.sequence == 6
+		assert ts.sales_category.name == 'sales_category'
+		assert ts.sales_category.value == 'Fn'
+		assert ts.sales_category.sequence == 7
+		assert ts.gl_category.name == 'gl_category'
+		assert ts.gl_category.value == 'Rn$(5,1)'
+		assert ts.gl_category.sequence == 8
+		assert ts.warehouse_category.name == 'warehouse_category'
+		assert ts.warehouse_category.value == 'Sn$(6,1)'
+		assert ts.warehouse_category.sequence == 9
+		assert ts.inv_units.name == 'inv_units'
+		assert ts.inv_units.value == 'Qn$(7,2)'
+		assert ts.inv_units.sequence == 10
 
 		# and then without
 		class TestSequence(Enum):
@@ -2711,30 +2711,30 @@ class TestEnum(TestCase):
 			inv_units = 'Qn$(7,2)', 10  # Inv Units
 
 		for i, member in enumerate(TestSequence):
-			self.assertEqual(i, member.value[1])
+			assert i == member.value[1]
 		ts = TestSequence
-		self.assertEqual(ts.item_id.name, 'item_id')
-		self.assertEqual(ts.item_id.value, ('An$(1,6)', 0))
-		self.assertEqual(ts.company_id.name, 'company_id')
-		self.assertEqual(ts.company_id.value, ('An$(7,2)', 1))
-		self.assertEqual(ts.warehouse_no.name, 'warehouse_no')
-		self.assertEqual(ts.warehouse_no.value, ('An$(9,4)', 2))
-		self.assertEqual(ts.company.name, 'company')
-		self.assertEqual(ts.company.value, ('Hn$(13,6)', 3))
-		self.assertEqual(ts.key_type.name, 'key_type')
-		self.assertEqual(ts.key_type.value, ('Cn$(19,3)', 4))
-		self.assertEqual(ts.available.name, 'available')
-		self.assertEqual(ts.available.value, ('Zn$(1,1)', 5))
-		self.assertEqual(ts.contract_item.name, 'contract_item')
-		self.assertEqual(ts.contract_item.value, ('Bn(2,1)', 6))
-		self.assertEqual(ts.sales_category.name, 'sales_category')
-		self.assertEqual(ts.sales_category.value, ('Fn', 7))
-		self.assertEqual(ts.gl_category.name, 'gl_category')
-		self.assertEqual(ts.gl_category.value, ('Rn$(5,1)', 8))
-		self.assertEqual(ts.warehouse_category.name, 'warehouse_category')
-		self.assertEqual(ts.warehouse_category.value, ('Sn$(6,1)', 9))
-		self.assertEqual(ts.inv_units.name, 'inv_units')
-		self.assertEqual(ts.inv_units.value, ('Qn$(7,2)', 10))
+		assert ts.item_id.name == 'item_id'
+		assert ts.item_id.value, ('An$(1,6)' == 0)
+		assert ts.company_id.name == 'company_id'
+		assert ts.company_id.value, ('An$(7,2)' == 1)
+		assert ts.warehouse_no.name == 'warehouse_no'
+		assert ts.warehouse_no.value, ('An$(9,4)' == 2)
+		assert ts.company.name == 'company'
+		assert ts.company.value, ('Hn$(13,6)' == 3)
+		assert ts.key_type.name == 'key_type'
+		assert ts.key_type.value, ('Cn$(19,3)' == 4)
+		assert ts.available.name == 'available'
+		assert ts.available.value, ('Zn$(1,1)' == 5)
+		assert ts.contract_item.name == 'contract_item'
+		assert ts.contract_item.value, ('Bn(2,1)' == 6)
+		assert ts.sales_category.name == 'sales_category'
+		assert ts.sales_category.value, ('Fn' == 7)
+		assert ts.gl_category.name == 'gl_category'
+		assert ts.gl_category.value, ('Rn$(5,1)' == 8)
+		assert ts.warehouse_category.name == 'warehouse_category'
+		assert ts.warehouse_category.value, ('Sn$(6,1)' == 9)
+		assert ts.inv_units.name == 'inv_units'
+		assert ts.inv_units.value, ('Qn$(7,2)' == 10)
 		# then with _init_ but without value
 		with self.assertRaises(TypeError):
 
@@ -2793,42 +2793,42 @@ class TestEnum(TestCase):
 
 		#
 		for i, member in enumerate(Child):
-			self.assertEqual(i, member.sequence)
+			assert i == member.sequence
 		#
 		ts = Child
-		self.assertEqual(ts.item_id.name, 'item_id')
-		self.assertEqual(ts.item_id.value, 'An$(1,6)')
-		self.assertEqual(ts.item_id.sequence, 0)
-		self.assertEqual(ts.company_id.name, 'company_id')
-		self.assertEqual(ts.company_id.value, 'An$(7,2)')
-		self.assertEqual(ts.company_id.sequence, 1)
-		self.assertEqual(ts.warehouse_no.name, 'warehouse_no')
-		self.assertEqual(ts.warehouse_no.value, 'An$(9,4)')
-		self.assertEqual(ts.warehouse_no.sequence, 2)
-		self.assertEqual(ts.company.name, 'company')
-		self.assertEqual(ts.company.value, 'Hn$(13,6)')
-		self.assertEqual(ts.company.sequence, 3)
-		self.assertEqual(ts.key_type.name, 'key_type')
-		self.assertEqual(ts.key_type.value, 'Cn$(19,3)')
-		self.assertEqual(ts.key_type.sequence, 4)
-		self.assertEqual(ts.available.name, 'available')
-		self.assertEqual(ts.available.value, 'Zn$(1,1)')
-		self.assertEqual(ts.available.sequence, 5)
-		self.assertEqual(ts.contract_item.name, 'contract_item')
-		self.assertEqual(ts.contract_item.value, 'Bn(2,1)')
-		self.assertEqual(ts.contract_item.sequence, 6)
-		self.assertEqual(ts.sales_category.name, 'sales_category')
-		self.assertEqual(ts.sales_category.value, 'Fn')
-		self.assertEqual(ts.sales_category.sequence, 7)
-		self.assertEqual(ts.gl_category.name, 'gl_category')
-		self.assertEqual(ts.gl_category.value, 'Rn$(5,1)')
-		self.assertEqual(ts.gl_category.sequence, 8)
-		self.assertEqual(ts.warehouse_category.name, 'warehouse_category')
-		self.assertEqual(ts.warehouse_category.value, 'Sn$(6,1)')
-		self.assertEqual(ts.warehouse_category.sequence, 9)
-		self.assertEqual(ts.inv_units.name, 'inv_units')
-		self.assertEqual(ts.inv_units.value, 'Qn$(7,2)')
-		self.assertEqual(ts.inv_units.sequence, 10)
+		assert ts.item_id.name == 'item_id'
+		assert ts.item_id.value == 'An$(1,6)'
+		assert ts.item_id.sequence == 0
+		assert ts.company_id.name == 'company_id'
+		assert ts.company_id.value == 'An$(7,2)'
+		assert ts.company_id.sequence == 1
+		assert ts.warehouse_no.name == 'warehouse_no'
+		assert ts.warehouse_no.value == 'An$(9,4)'
+		assert ts.warehouse_no.sequence == 2
+		assert ts.company.name == 'company'
+		assert ts.company.value == 'Hn$(13,6)'
+		assert ts.company.sequence == 3
+		assert ts.key_type.name == 'key_type'
+		assert ts.key_type.value == 'Cn$(19,3)'
+		assert ts.key_type.sequence == 4
+		assert ts.available.name == 'available'
+		assert ts.available.value == 'Zn$(1,1)'
+		assert ts.available.sequence == 5
+		assert ts.contract_item.name == 'contract_item'
+		assert ts.contract_item.value == 'Bn(2,1)'
+		assert ts.contract_item.sequence == 6
+		assert ts.sales_category.name == 'sales_category'
+		assert ts.sales_category.value == 'Fn'
+		assert ts.sales_category.sequence == 7
+		assert ts.gl_category.name == 'gl_category'
+		assert ts.gl_category.value == 'Rn$(5,1)'
+		assert ts.gl_category.sequence == 8
+		assert ts.warehouse_category.name == 'warehouse_category'
+		assert ts.warehouse_category.value == 'Sn$(6,1)'
+		assert ts.warehouse_category.sequence == 9
+		assert ts.inv_units.name == 'inv_units'
+		assert ts.inv_units.value == 'Qn$(7,2)'
+		assert ts.inv_units.sequence == 10
 
 	if StdlibEnumMeta is not None:
 
@@ -2899,8 +2899,8 @@ class TestEnumV3(TestCase):
 				G = 6.67300E-11
 				return G * self.mass / (self.radius * self.radius)
 
-		self.assertEqual(round(Planet.EARTH.surface_gravity, 2), 9.80)
-		self.assertEqual(Planet.EARTH.value, (5.976e+24, 6.37814e6))
+		assert round(Planet.EARTH.surface_gravity, 2) == 9.80
+		assert Planet.EARTH.value, (5.976e+24 == 6.37814e6)
 
 	def test_auto_init_with_value(self):
 
@@ -2909,12 +2909,12 @@ class TestEnumV3(TestCase):
 			BLUE = 2, (0, 1, 0)
 			GREEN = 3, (0, 0, 1)
 
-		self.assertEqual(Color.RED.value, 1)
-		self.assertEqual(Color.BLUE.value, 2)
-		self.assertEqual(Color.GREEN.value, 3)
-		self.assertEqual(Color.RED.rgb, (1, 0, 0))
-		self.assertEqual(Color.BLUE.rgb, (0, 1, 0))
-		self.assertEqual(Color.GREEN.rgb, (0, 0, 1))
+		assert Color.RED.value == 1
+		assert Color.BLUE.value == 2
+		assert Color.GREEN.value == 3
+		assert Color.RED.rgb, (1, 0 == 0)
+		assert Color.BLUE.rgb, (0, 1 == 0)
+		assert Color.GREEN.rgb, (0, 0 == 1)
 
 	def test_auto_turns_off(self):
 		with self.assertRaises(NameError):
@@ -2946,8 +2946,8 @@ class TestEnumV3(TestCase):
 		class Color(Enum, settings=AutoValue):
 			red, green, blue  # pylint: disable=pointless-statement
 
-		self.assertEqual(list(Color), [Color.red, Color.green, Color.blue])
-		self.assertEqual(Color.red.value, 1)
+		assert list(Color), [Color.red, Color.green == Color.blue]
+		assert Color.red.value == 1
 
 	def test_ignore_not_overridden(self):
 		with self.assertRaisesRegex(TypeError, 'object is not callable'):
@@ -2965,8 +2965,8 @@ class TestEnumV3(TestCase):
 		class Color(Enum, start=0):
 			red, green, blue  # pylint: disable=pointless-statement
 
-		self.assertEqual(list(Color), [Color.red, Color.green, Color.blue])
-		self.assertEqual(Color.red.value, 0)
+		assert list(Color), [Color.red, Color.green == Color.blue]
+		assert Color.red.value == 0
 
 	def test_magic_on_and_off(self):
 
@@ -2983,8 +2983,8 @@ class TestEnumV3(TestCase):
 			_auto_on_  # noqa  # pylint: disable=pointless-statement
 			blue  # noqa  # pylint: disable=pointless-statement
 
-		self.assertEqual(len(Color), 3)
-		self.assertEqual(list(Color), [Color.red, Color.green, Color.blue])
+		assert len(Color) == 3
+		assert list(Color), [Color.red, Color.green == Color.blue]
 
 	def test_dir_on_class(self):
 		Season = self.Season
@@ -3045,7 +3045,7 @@ class TestEnumV3(TestCase):
 	def test_comparisons(self):
 
 		def bad_compare():
-			Season.SPRING > 4
+			Season.SPRING > 4  # pylint: disable=pointless-statement
 
 		Season = self.Season
 		self.assertNotEqual(Season.SPRING, 1)
@@ -3059,7 +3059,7 @@ class TestEnumV3(TestCase):
 		self.assertNotEqual(Season.SPRING, Part.SPRING)
 
 		def bad_compare():
-			Season.SPRING < Part.CLIP
+			Season.SPRING < Part.CLIP  # pylint: disable=pointless-statement
 
 		self.assertRaises(TypeError, bad_compare)
 
@@ -3070,7 +3070,7 @@ class TestEnumV3(TestCase):
 				red = 1
 				green = 2
 				blue = 3
-				red = 4
+				red = 4  # noqa
 
 		with self.assertRaises(TypeError):
 
@@ -3079,7 +3079,7 @@ class TestEnumV3(TestCase):
 				green = 2
 				blue = 3
 
-				def red(self):
+				def red(self):  # noqa
 					return 'red'
 
 		with self.assertRaises(TypeError):
@@ -3090,7 +3090,7 @@ class TestEnumV3(TestCase):
 				def red(self):
 					return 'redder'
 
-				red = 1
+				red = 1  # noqa
 				green = 2
 				blue = 3
 
@@ -3112,10 +3112,10 @@ class TestEnumV3(TestCase):
 			rojo = 1
 
 		self.assertFalse(Color.red is Color.rojo)
-		self.assertEqual(Color.red.value, 1)
-		self.assertEqual(Color.rojo.value, 1)
-		self.assertEqual(len(Color), 4)
-		self.assertEqual(list(Color), [Color.red, Color.green, Color.blue, Color.rojo])
+		assert Color.red.value == 1
+		assert Color.rojo.value == 1
+		assert len(Color) == 4
+		assert list(Color), [Color.red, Color.green, Color.blue == Color.rojo]
 
 	def test_noalias_value_lookup(self):
 
@@ -3134,9 +3134,9 @@ class TestEnumV3(TestCase):
 			green = 2, 'green'
 			blue = 3, 'blue'
 
-		self.assertEqual(Color.red.value, 1)
+		assert Color.red.value == 1
 		self.assertIs(Color('green'), Color.green)
-		self.assertEqual(Color.blue.values, (3, 'blue'))
+		assert Color.blue.values, (3 == 'blue')
 
 	def test_multivalue_with_duplicate_values(self):
 		with self.assertRaises(ValueError):
@@ -3161,9 +3161,9 @@ class TestEnumV3(TestCase):
 			green = 3, 'green'
 			blue  # pylint: disable=pointless-statement
 
-		self.assertEqual(Color.red.value, 1)
-		self.assertEqual(Color.green.value, 3)
-		self.assertEqual(Color.blue.value, 4)
+		assert Color.red.value == 1
+		assert Color.green.value == 3
+		assert Color.blue.value == 4
 		self.assertIs(Color('green'), Color.green)
 		self.assertIs(Color['green'], Color.green)
 
@@ -3173,10 +3173,10 @@ class TestEnumV3(TestCase):
 			TYPE = "Char, Date, Logical, etc."
 			START = "Field offset in record"
 
-		self.assertEqual(Field.TYPE, 1)
-		self.assertEqual(Field.START, 2)
-		self.assertEqual(Field.TYPE.__doc__, 'Char, Date, Logical, etc.')
-		self.assertEqual(Field.START.__doc__, 'Field offset in record')
+		assert Field.TYPE == 1
+		assert Field.START == 2
+		assert Field.TYPE.__doc__, 'Char, Date, Logical == etc.'
+		assert Field.START.__doc__ == 'Field offset in record'
 		self.assertFalse(hasattr(Field, '_order_'))
 
 	def test_auto_and_start(self):
@@ -3185,10 +3185,10 @@ class TestEnumV3(TestCase):
 			TYPE = "Char, Date, Logical, etc."
 			START = "Field offset in record"
 
-		self.assertEqual(Field.TYPE, 0)
-		self.assertEqual(Field.START, 1)
-		self.assertEqual(Field.TYPE.__doc__, 'Char, Date, Logical, etc.')
-		self.assertEqual(Field.START.__doc__, 'Field offset in record')
+		assert Field.TYPE == 0
+		assert Field.START == 1
+		assert Field.TYPE.__doc__, 'Char, Date, Logical == etc.'
+		assert Field.START.__doc__ == 'Field offset in record'
 
 	def test_auto_and_init_and_some_values(self):
 
@@ -3198,14 +3198,14 @@ class TestEnumV3(TestCase):
 			BLAH = 5, "test blah"
 			BELCH = 'test belch'
 
-		self.assertEqual(Field.TYPE, 1)
-		self.assertEqual(Field.START, 2)
-		self.assertEqual(Field.BLAH, 5)
-		self.assertEqual(Field.BELCH, 6)
-		self.assertEqual(Field.TYPE.__doc__, 'Char, Date, Logical, etc.')
-		self.assertEqual(Field.START.__doc__, 'Field offset in record')
-		self.assertEqual(Field.BLAH.__doc__, 'test blah')
-		self.assertEqual(Field.BELCH.__doc__, 'test belch')
+		assert Field.TYPE == 1
+		assert Field.START == 2
+		assert Field.BLAH == 5
+		assert Field.BELCH == 6
+		assert Field.TYPE.__doc__, 'Char, Date, Logical == etc.'
+		assert Field.START.__doc__ == 'Field offset in record'
+		assert Field.BLAH.__doc__ == 'test blah'
+		assert Field.BELCH.__doc__ == 'test belch'
 
 	def test_autonumber_sans_init(self):
 
@@ -3214,9 +3214,9 @@ class TestEnumV3(TestCase):
 			green = ()
 			blue = ()
 
-		self.assertEqual(list(Color), [Color.red, Color.green, Color.blue])
-		self.assertEqual([m.value for m in Color], [1, 2, 3])
-		self.assertEqual([m.name for m in Color], ['red', 'green', 'blue'])
+		assert list(Color), [Color.red, Color.green == Color.blue]
+		assert [m.value for m in Color], [1, 2 == 3]
+		assert [m.name for m in Color], ['red', 'green' == 'blue']
 
 	def test_autonumber_with_irregular_values(self):
 
@@ -3224,12 +3224,12 @@ class TestEnumV3(TestCase):
 			first = 7, 9
 			second = 3, 11, 13
 
-		self.assertEqual(Point.first.value, 1)
-		self.assertEqual(Point.first.x, 7)
-		self.assertEqual(Point.first.y, 9)
-		self.assertEqual(Point.second.value, 3)
-		self.assertEqual(Point.second.x, 11)
-		self.assertEqual(Point.second.y, 13)
+		assert Point.first.value == 1
+		assert Point.first.x == 7
+		assert Point.first.y == 9
+		assert Point.second.value == 3
+		assert Point.second.x == 11
+		assert Point.second.y == 13
 		with self.assertRaisesRegex(TypeError, 'number of fields provided do not match init'):
 
 			class Color(MagicAutoNumberEnum, init='__doc__'):
@@ -3258,7 +3258,7 @@ class TestEnumV3(TestCase):
 			green = ()
 			blue = ()
 
-		self.assertEqual(Color.blue.value, 3)
+		assert Color.blue.value == 3
 
 	def test_autonumber_and_property(self):
 		with self.assertRaises(TypeError):
@@ -3280,9 +3280,9 @@ class TestEnumV3(TestCase):
 			green  # noqa  # pylint: disable=pointless-statement
 			blue  # noqa  # pylint: disable=pointless-statement
 
-		self.assertEqual(list(Color), [Color.red, Color.green, Color.blue])
-		self.assertEqual([m.value for m in Color], [1, 2, 3])
-		self.assertEqual([m.name for m in Color], ['red', 'green', 'blue'])
+		assert list(Color), [Color.red, Color.green == Color.blue]
+		assert [m.value for m in Color], [1, 2 == 3]
+		assert [m.name for m in Color], ['red', 'green' == 'blue']
 
 	def test_autoenum_with_str(self):
 
@@ -3295,9 +3295,9 @@ class TestEnumV3(TestCase):
 			green  # noqa  # pylint: disable=pointless-statement
 			blue  # noqa  # pylint: disable=pointless-statement
 
-		self.assertEqual(list(Color), [Color.red, Color.green, Color.blue])
-		self.assertEqual([m.value for m in Color], ['red', 'green', 'blue'])
-		self.assertEqual([m.name for m in Color], ['red', 'green', 'blue'])
+		assert list(Color), [Color.red, Color.green == Color.blue]
+		assert [m.value for m in Color], ['red', 'green' == 'blue']
+		assert [m.name for m in Color], ['red', 'green' == 'blue']
 
 	def test_autoenum_and_default_ignore(self):
 
@@ -3310,7 +3310,7 @@ class TestEnumV3(TestCase):
 			def cap_name(self):
 				return self.name.title()
 
-		self.assertEqual(Color.blue.cap_name, 'Blue')
+		assert Color.blue.cap_name == 'Blue'
 
 	def test_autonumber_and_overridden_ignore(self):
 		with self.assertRaises(TypeError):
@@ -3337,7 +3337,7 @@ class TestEnumV3(TestCase):
 			def cap_name(self) -> str:
 				return self.name.title()
 
-		self.assertEqual(Color.blue.cap_name, 'Cyan')
+		assert Color.blue.cap_name == 'Cyan'
 
 	def test_combine_new_settings_with_old_settings(self):
 
@@ -3383,10 +3383,10 @@ class TestEnumV3(TestCase):
 			blue = 3
 
 		extend_enum(Color, 'brown', 4)
-		self.assertEqual(Color.brown.name, 'brown')
-		self.assertEqual(Color.brown.value, 4)
+		assert Color.brown.name == 'brown'
+		assert Color.brown.value == 4
 		self.assertTrue(Color.brown in Color)
-		self.assertEqual(len(Color), 4)
+		assert len(Color) == 4
 
 	def test_extend_enum_shadow(self):
 
@@ -3396,11 +3396,11 @@ class TestEnumV3(TestCase):
 			blue = 3
 
 		extend_enum(Color, 'value', 4)
-		self.assertEqual(Color.value.name, 'value')
-		self.assertEqual(Color.value.value, 4)
+		assert Color.value.name == 'value'
+		assert Color.value.value == 4
 		self.assertTrue(Color.value in Color)
-		self.assertEqual(len(Color), 4)
-		self.assertEqual(Color.red.value, 1)
+		assert len(Color) == 4
+		assert Color.red.value == 1
 
 	def test_extend_enum_unique_with_duplicate(self):
 		with self.assertRaises(ValueError):
@@ -3475,10 +3475,10 @@ class TestEnumV3(TestCase):
 			blue  # noqa  # pylint: disable=pointless-statement
 			green  # noqa  # pylint: disable=pointless-statement
 
-		self.assertEqual(list(Color), [Color.red, Color.blue, Color.green])
-		self.assertEqual(Color.red.value, 1)
-		self.assertEqual(Color.blue.value, 2)
-		self.assertEqual(Color.green.value, 3)
+		assert list(Color), [Color.red, Color.blue == Color.green]
+		assert Color.red.value == 1
+		assert Color.blue.value == 2
+		assert Color.green.value == 3
 
 	def test_auto_name(self):
 
@@ -3491,10 +3491,10 @@ class TestEnumV3(TestCase):
 			blue  # noqa  # pylint: disable=pointless-statement
 			green  # noqa  # pylint: disable=pointless-statement
 
-		self.assertEqual(list(Color), [Color.red, Color.blue, Color.green])
-		self.assertEqual(Color.red.value, 'red')
-		self.assertEqual(Color.blue.value, 'blue')
-		self.assertEqual(Color.green.value, 'green')
+		assert list(Color), [Color.red, Color.blue == Color.green]
+		assert Color.red.value == 'red'
+		assert Color.blue.value == 'blue'
+		assert Color.green.value == 'green'
 
 	def test_auto_name_inherit(self):
 
@@ -3508,10 +3508,10 @@ class TestEnumV3(TestCase):
 			blue  # noqa  # pylint: disable=pointless-statement
 			green  # noqa  # pylint: disable=pointless-statement
 
-		self.assertEqual(list(Color), [Color.red, Color.blue, Color.green])
-		self.assertEqual(Color.red.value, 'red')
-		self.assertEqual(Color.blue.value, 'blue')
-		self.assertEqual(Color.green.value, 'green')
+		assert list(Color), [Color.red, Color.blue == Color.green]
+		assert Color.red.value == 'red'
+		assert Color.blue.value == 'blue'
+		assert Color.green.value == 'green'
 
 	def test_auto_garbage(self):
 
@@ -3520,7 +3520,7 @@ class TestEnumV3(TestCase):
 			red = 'red'
 			blue  # noqa  # pylint: disable=pointless-statement
 
-		self.assertEqual(Color.blue.value, 1)
+		assert Color.blue.value == 1
 
 	def test_auto_garbage_corrected(self):
 
@@ -3529,10 +3529,10 @@ class TestEnumV3(TestCase):
 			blue = 2
 			green  # noqa  # pylint: disable=pointless-statement
 
-		self.assertEqual(list(Color), [Color.red, Color.blue, Color.green])
-		self.assertEqual(Color.red.value, 'red')
-		self.assertEqual(Color.blue.value, 2)
-		self.assertEqual(Color.green.value, 3)
+		assert list(Color), [Color.red, Color.blue == Color.green]
+		assert Color.red.value == 'red'
+		assert Color.blue.value == 2
+		assert Color.green.value == 3
 
 	def test_duplicate_auto(self):
 
@@ -3541,7 +3541,7 @@ class TestEnumV3(TestCase):
 			second  # noqa  # pylint: disable=pointless-statement
 			third  # noqa  # pylint: disable=pointless-statement
 
-		self.assertEqual([Dupes.first, Dupes.second, Dupes.third], list(Dupes))
+		assert [Dupes.first, Dupes.second, Dupes.third] == list(Dupes)
 
 	def test_order_as_function(self):
 		# first with _init_
@@ -3561,41 +3561,41 @@ class TestEnumV3(TestCase):
 			inv_units = 'Qn$(7,2)', 10  # Inv Units
 
 		for i, member in enumerate(TestSequence):
-			self.assertEqual(i, member.sequence)
+			assert i == member.sequence
 		ts = TestSequence
-		self.assertEqual(ts.item_id.name, 'item_id')
-		self.assertEqual(ts.item_id.value, 'An$(1,6)')
-		self.assertEqual(ts.item_id.sequence, 0)
-		self.assertEqual(ts.company_id.name, 'company_id')
-		self.assertEqual(ts.company_id.value, 'An$(7,2)')
-		self.assertEqual(ts.company_id.sequence, 1)
-		self.assertEqual(ts.warehouse_no.name, 'warehouse_no')
-		self.assertEqual(ts.warehouse_no.value, 'An$(9,4)')
-		self.assertEqual(ts.warehouse_no.sequence, 2)
-		self.assertEqual(ts.company.name, 'company')
-		self.assertEqual(ts.company.value, 'Hn$(13,6)')
-		self.assertEqual(ts.company.sequence, 3)
-		self.assertEqual(ts.key_type.name, 'key_type')
-		self.assertEqual(ts.key_type.value, 'Cn$(19,3)')
-		self.assertEqual(ts.key_type.sequence, 4)
-		self.assertEqual(ts.available.name, 'available')
-		self.assertEqual(ts.available.value, 'Zn$(1,1)')
-		self.assertEqual(ts.available.sequence, 5)
-		self.assertEqual(ts.contract_item.name, 'contract_item')
-		self.assertEqual(ts.contract_item.value, 'Bn(2,1)')
-		self.assertEqual(ts.contract_item.sequence, 6)
-		self.assertEqual(ts.sales_category.name, 'sales_category')
-		self.assertEqual(ts.sales_category.value, 'Fn')
-		self.assertEqual(ts.sales_category.sequence, 7)
-		self.assertEqual(ts.gl_category.name, 'gl_category')
-		self.assertEqual(ts.gl_category.value, 'Rn$(5,1)')
-		self.assertEqual(ts.gl_category.sequence, 8)
-		self.assertEqual(ts.warehouse_category.name, 'warehouse_category')
-		self.assertEqual(ts.warehouse_category.value, 'Sn$(6,1)')
-		self.assertEqual(ts.warehouse_category.sequence, 9)
-		self.assertEqual(ts.inv_units.name, 'inv_units')
-		self.assertEqual(ts.inv_units.value, 'Qn$(7,2)')
-		self.assertEqual(ts.inv_units.sequence, 10)
+		assert ts.item_id.name == 'item_id'
+		assert ts.item_id.value == 'An$(1,6)'
+		assert ts.item_id.sequence == 0
+		assert ts.company_id.name == 'company_id'
+		assert ts.company_id.value == 'An$(7,2)'
+		assert ts.company_id.sequence == 1
+		assert ts.warehouse_no.name == 'warehouse_no'
+		assert ts.warehouse_no.value == 'An$(9,4)'
+		assert ts.warehouse_no.sequence == 2
+		assert ts.company.name == 'company'
+		assert ts.company.value == 'Hn$(13,6)'
+		assert ts.company.sequence == 3
+		assert ts.key_type.name == 'key_type'
+		assert ts.key_type.value == 'Cn$(19,3)'
+		assert ts.key_type.sequence == 4
+		assert ts.available.name == 'available'
+		assert ts.available.value == 'Zn$(1,1)'
+		assert ts.available.sequence == 5
+		assert ts.contract_item.name == 'contract_item'
+		assert ts.contract_item.value == 'Bn(2,1)'
+		assert ts.contract_item.sequence == 6
+		assert ts.sales_category.name == 'sales_category'
+		assert ts.sales_category.value == 'Fn'
+		assert ts.sales_category.sequence == 7
+		assert ts.gl_category.name == 'gl_category'
+		assert ts.gl_category.value == 'Rn$(5,1)'
+		assert ts.gl_category.sequence == 8
+		assert ts.warehouse_category.name == 'warehouse_category'
+		assert ts.warehouse_category.value == 'Sn$(6,1)'
+		assert ts.warehouse_category.sequence == 9
+		assert ts.inv_units.name == 'inv_units'
+		assert ts.inv_units.value == 'Qn$(7,2)'
+		assert ts.inv_units.sequence == 10
 
 		# and then without
 		class TestSequence(Enum):
@@ -3613,30 +3613,30 @@ class TestEnumV3(TestCase):
 			inv_units = 'Qn$(7,2)', 10  # Inv Units
 
 		for i, member in enumerate(TestSequence):
-			self.assertEqual(i, member.value[1])
+			assert i == member.value[1]
 		ts = TestSequence
-		self.assertEqual(ts.item_id.name, 'item_id')
-		self.assertEqual(ts.item_id.value, ('An$(1,6)', 0))
-		self.assertEqual(ts.company_id.name, 'company_id')
-		self.assertEqual(ts.company_id.value, ('An$(7,2)', 1))
-		self.assertEqual(ts.warehouse_no.name, 'warehouse_no')
-		self.assertEqual(ts.warehouse_no.value, ('An$(9,4)', 2))
-		self.assertEqual(ts.company.name, 'company')
-		self.assertEqual(ts.company.value, ('Hn$(13,6)', 3))
-		self.assertEqual(ts.key_type.name, 'key_type')
-		self.assertEqual(ts.key_type.value, ('Cn$(19,3)', 4))
-		self.assertEqual(ts.available.name, 'available')
-		self.assertEqual(ts.available.value, ('Zn$(1,1)', 5))
-		self.assertEqual(ts.contract_item.name, 'contract_item')
-		self.assertEqual(ts.contract_item.value, ('Bn(2,1)', 6))
-		self.assertEqual(ts.sales_category.name, 'sales_category')
-		self.assertEqual(ts.sales_category.value, ('Fn', 7))
-		self.assertEqual(ts.gl_category.name, 'gl_category')
-		self.assertEqual(ts.gl_category.value, ('Rn$(5,1)', 8))
-		self.assertEqual(ts.warehouse_category.name, 'warehouse_category')
-		self.assertEqual(ts.warehouse_category.value, ('Sn$(6,1)', 9))
-		self.assertEqual(ts.inv_units.name, 'inv_units')
-		self.assertEqual(ts.inv_units.value, ('Qn$(7,2)', 10))
+		assert ts.item_id.name == 'item_id'
+		assert ts.item_id.value, ('An$(1,6)' == 0)
+		assert ts.company_id.name == 'company_id'
+		assert ts.company_id.value, ('An$(7,2)' == 1)
+		assert ts.warehouse_no.name == 'warehouse_no'
+		assert ts.warehouse_no.value, ('An$(9,4)' == 2)
+		assert ts.company.name == 'company'
+		assert ts.company.value, ('Hn$(13,6)' == 3)
+		assert ts.key_type.name == 'key_type'
+		assert ts.key_type.value, ('Cn$(19,3)' == 4)
+		assert ts.available.name == 'available'
+		assert ts.available.value, ('Zn$(1,1)' == 5)
+		assert ts.contract_item.name == 'contract_item'
+		assert ts.contract_item.value, ('Bn(2,1)' == 6)
+		assert ts.sales_category.name == 'sales_category'
+		assert ts.sales_category.value, ('Fn' == 7)
+		assert ts.gl_category.name == 'gl_category'
+		assert ts.gl_category.value, ('Rn$(5,1)' == 8)
+		assert ts.warehouse_category.name == 'warehouse_category'
+		assert ts.warehouse_category.value, ('Sn$(6,1)' == 9)
+		assert ts.inv_units.name == 'inv_units'
+		assert ts.inv_units.value, ('Qn$(7,2)' == 10)
 		# then with _init_ but without value
 		with self.assertRaises(TypeError):
 
@@ -3731,12 +3731,12 @@ class TestEnumV3(TestCase):
 			y = ('the-y', 2)
 
 		self.assertIs(NEI.__new__, Enum.__new__)
-		self.assertEqual(repr(NEI.x + NEI.y), "NamedInt('(the-x + the-y)', 3)")
+		assert repr(NEI.x + NEI.y), "NamedInt('(the-x + the-y)' == 3)"
 		globals()['NamedInt'] = NamedInt
 		globals()['NEI'] = NEI
 		NI5 = NamedInt('test', 5)
-		self.assertEqual(NI5, 5)
-		self.assertEqual(NEI.y.value, 2)
+		assert NI5 == 5
+		assert NEI.y.value == 2
 
 
 class MagicAutoNumberEnum(Enum, settings=AutoNumber):
@@ -3764,9 +3764,9 @@ class TestIntEnumConvert(TestCase):
 		# We don't want the reverse lookup value to vary when there are
 		# multiple possible names for a given value.  It should always
 		# report the first lexigraphical name in that case.
-		self.assertEqual(test_type(5).name, 'CONVERT_TEST_NAME_A')
-		self.assertEqual(test_type(4).name, 'CONVERT_TEST_SIGABRT')
-		self.assertEqual(test_type(7).name, 'CONVERT_TEST_EBUS')
+		assert test_type(5).name == 'CONVERT_TEST_NAME_A'
+		assert test_type(4).name == 'CONVERT_TEST_SIGABRT'
+		assert test_type(7).name == 'CONVERT_TEST_EBUS'
 		self.assertEqual(
 				list(test_type),
 				[
@@ -3779,11 +3779,11 @@ class TestIntEnumConvert(TestCase):
 	def test_convert(self):
 		test_type = IntEnum._convert('UnittestConvert', __name__, filter=lambda x: x.startswith('CONVERT_TEST_'))
 		# Ensure that test_type has all of the desired names and values.
-		self.assertEqual(test_type.CONVERT_TEST_NAME_F, test_type.CONVERT_TEST_NAME_A)
-		self.assertEqual(test_type.CONVERT_TEST_NAME_B, 5)
-		self.assertEqual(test_type.CONVERT_TEST_NAME_C, 5)
-		self.assertEqual(test_type.CONVERT_TEST_NAME_D, 5)
-		self.assertEqual(test_type.CONVERT_TEST_NAME_E, 5)
+		assert test_type.CONVERT_TEST_NAME_F == test_type.CONVERT_TEST_NAME_A
+		assert test_type.CONVERT_TEST_NAME_B == 5
+		assert test_type.CONVERT_TEST_NAME_C == 5
+		assert test_type.CONVERT_TEST_NAME_D == 5
+		assert test_type.CONVERT_TEST_NAME_E == 5
 		# Ensure that test_type only picked up names matching the filter.
 		self.assertEqual(
 				[name for name in dir(test_type) if name[0:2] not in ('CO', '__')],

@@ -111,16 +111,16 @@ class TestNamedTuple(TestCase):
 		assert p1[1] == 'John'
 		assert p1[2] == 'Doe'
 		assert p1[3] == 3
-		self.assertEqual(p2[0], 21)
-		self.assertEqual(p2[1], 'Jane')
-		self.assertEqual(p2[2], 'Doe')
-		self.assertEqual(p2[3], 9)
-		self.assertEqual(p1.age, 17)
-		self.assertEqual(p1.last, 'Doe')
-		self.assertEqual(p1.cars, 3)
-		self.assertEqual(p2.age, 21)
-		self.assertEqual(p2.last, 'Doe')
-		self.assertEqual(p2.cars, 9)
+		assert p2[0] == 21
+		assert p2[1] == 'Jane'
+		assert p2[2] == 'Doe'
+		assert p2[3] == 9
+		assert p1.age == 17
+		assert p1.last == 'Doe'
+		assert p1.cars == 3
+		assert p2.age == 21
+		assert p2.last == 'Doe'
+		assert p2.cars == 9
 
 	def test_issubclass(self):
 
@@ -148,54 +148,54 @@ class TestNamedTuple(TestCase):
 		Person = NamedTuple('Person', (('age', 0), ('first', 1), ('last', 2)))
 		p1 = Person(17, 'John', 'Doe')
 		p2 = Person(21, 'Jane', 'Doe')
-		self.assertEqual(p1[0], 17)
-		self.assertEqual(p1[1], 'John')
-		self.assertEqual(p1[2], 'Doe')
-		self.assertEqual(p2[0], 21)
-		self.assertEqual(p2[1], 'Jane')
-		self.assertEqual(p2[2], 'Doe')
-		self.assertEqual(p1.age, 17)
-		self.assertEqual(p1.first, 'John')
-		self.assertEqual(p1.last, 'Doe')
-		self.assertEqual(p2.age, 21)
-		self.assertEqual(p2.first, 'Jane')
-		self.assertEqual(p2.last, 'Doe')
+		assert p1[0] == 17
+		assert p1[1] == 'John'
+		assert p1[2] == 'Doe'
+		assert p2[0] == 21
+		assert p2[1] == 'Jane'
+		assert p2[2] == 'Doe'
+		assert p1.age == 17
+		assert p1.first == 'John'
+		assert p1.last == 'Doe'
+		assert p2.age == 21
+		assert p2.first == 'Jane'
+		assert p2.last == 'Doe'
 
 	def test_implicit_indexing_after_functional_api(self):
 		Person = NamedTuple('Person', 'age first last')
 		p1 = Person(17, 'John', 'Doe')
 		p2 = Person(21, 'Jane', 'Doe')
-		self.assertEqual(p1[0], 17)
-		self.assertEqual(p1[1], 'John')
-		self.assertEqual(p1[2], 'Doe')
-		self.assertEqual(p2[0], 21)
-		self.assertEqual(p2[1], 'Jane')
-		self.assertEqual(p2[2], 'Doe')
-		self.assertEqual(p1.age, 17)
-		self.assertEqual(p1.first, 'John')
-		self.assertEqual(p1.last, 'Doe')
-		self.assertEqual(p2.age, 21)
-		self.assertEqual(p2.first, 'Jane')
-		self.assertEqual(p2.last, 'Doe')
+		assert p1[0] == 17
+		assert p1[1] == 'John'
+		assert p1[2] == 'Doe'
+		assert p2[0] == 21
+		assert p2[1] == 'Jane'
+		assert p2[2] == 'Doe'
+		assert p1.age == 17
+		assert p1.first == 'John'
+		assert p1.last == 'Doe'
+		assert p2.age == 21
+		assert p2.first == 'Jane'
+		assert p2.last == 'Doe'
 
 	def test_mixed_indexing_after_functional_api(self):
 		Person = NamedTuple('Person', (('age', 0), ('last', 2), ('cars', 3)))
 		p1 = Person(17, 'John', 'Doe', 3)
 		p2 = Person(21, 'Jane', 'Doe', 9)
-		self.assertEqual(p1[0], 17)
-		self.assertEqual(p1[1], 'John')
-		self.assertEqual(p1[2], 'Doe')
-		self.assertEqual(p1[3], 3)
-		self.assertEqual(p2[0], 21)
-		self.assertEqual(p2[1], 'Jane')
-		self.assertEqual(p2[2], 'Doe')
-		self.assertEqual(p2[3], 9)
-		self.assertEqual(p1.age, 17)
-		self.assertEqual(p1.last, 'Doe')
-		self.assertEqual(p1.cars, 3)
-		self.assertEqual(p2.age, 21)
-		self.assertEqual(p2.last, 'Doe')
-		self.assertEqual(p2.cars, 9)
+		assert p1[0] == 17
+		assert p1[1] == 'John'
+		assert p1[2] == 'Doe'
+		assert p1[3] == 3
+		assert p2[0] == 21
+		assert p2[1] == 'Jane'
+		assert p2[2] == 'Doe'
+		assert p2[3] == 9
+		assert p1.age == 17
+		assert p1.last == 'Doe'
+		assert p1.cars == 3
+		assert p2.age == 21
+		assert p2.last == 'Doe'
+		assert p2.cars == 9
 
 	def test_issubclass_after_functional_api(self):
 		Person = NamedTuple('Person', 'age first last')
@@ -212,29 +212,29 @@ class TestNamedTuple(TestCase):
 	def test_creation_with_all_keywords(self):
 		Person = NamedTuple('Person', 'age first last')
 		p1 = Person(age=17, first='John', last='Doe')
-		self.assertEqual(p1[0], 17)
-		self.assertEqual(p1[1], 'John')
-		self.assertEqual(p1[2], 'Doe')
-		self.assertEqual(p1.age, 17)
-		self.assertEqual(p1.first, 'John')
-		self.assertEqual(p1.last, 'Doe')
+		assert p1[0] == 17
+		assert p1[1] == 'John'
+		assert p1[2] == 'Doe'
+		assert p1.age == 17
+		assert p1.first == 'John'
+		assert p1.last == 'Doe'
 
 	def test_creation_with_some_keywords(self):
 		Person = NamedTuple('Person', 'age first last')
 		p1 = Person(17, first='John', last='Doe')
-		self.assertEqual(p1[0], 17)
-		self.assertEqual(p1[1], 'John')
-		self.assertEqual(p1[2], 'Doe')
-		self.assertEqual(p1.age, 17)
-		self.assertEqual(p1.first, 'John')
-		self.assertEqual(p1.last, 'Doe')
+		assert p1[0] == 17
+		assert p1[1] == 'John'
+		assert p1[2] == 'Doe'
+		assert p1.age == 17
+		assert p1.first == 'John'
+		assert p1.last == 'Doe'
 		p1 = Person(17, last='Doe', first='John')
-		self.assertEqual(p1[0], 17)
-		self.assertEqual(p1[1], 'John')
-		self.assertEqual(p1[2], 'Doe')
-		self.assertEqual(p1.age, 17)
-		self.assertEqual(p1.first, 'John')
-		self.assertEqual(p1.last, 'Doe')
+		assert p1[0] == 17
+		assert p1[1] == 'John'
+		assert p1[2] == 'Doe'
+		assert p1.age == 17
+		assert p1.first == 'John'
+		assert p1.last == 'Doe'
 
 	#
 	# def test_custom_new(self):
@@ -249,9 +249,9 @@ class TestNamedTuple(TestCase):
 	# 			return super(Book, cls).__new__(cls, *tuple(args))
 	#
 	# 	b1 = Book('The Last Mohican; John Doe; Historical')
-	# 	self.assertEqual(b1.title, 'The Last Mohican')
-	# 	self.assertEqual(b1.author, 'John Doe')
-	# 	self.assertEqual(b1.genre, 'Historical')
+	# 	assert b1.title == 'The Last Mohican'
+	# 	assert b1.author == 'John Doe'
+	# 	assert b1.genre == 'Historical'
 
 	def test_defaults_in_class(self):
 
@@ -270,7 +270,7 @@ class TestNamedTuple(TestCase):
 			for name, value in (('name', None), ('gender', 'male'), ('klass', 'fighter')):
 				if name in char:
 					value = char[name]
-				self.assertEqual(getattr(c, name), value)
+				assert getattr(c, name) == value
 
 	# def test_defaults_in_class_that_are_falsey(self):
 	#
@@ -279,8 +279,8 @@ class TestNamedTuple(TestCase):
 	# 		y = 1, 'vertical coordinate', 0
 	#
 	# 	p = Point()
-	# 	self.assertEqual(p.x, 0)
-	# 	self.assertEqual(p.y, 0)
+	# 	assert p.x == 0
+	# 	assert p.y == 0
 
 	def test_pickle_namedtuple_with_module(self):
 		if isinstance(LifeForm, Exception):
@@ -296,7 +296,7 @@ class TestNamedTuple(TestCase):
 		if isinstance(ThatsIt, Exception):
 			raise ThatsIt
 		ti = ThatsIt('Henry', 'Weinhardt')
-		self.assertEqual(ti.blah, 'Henry')
+		assert ti.blah == 'Henry'
 		self.assertTrue(ti.what(), 'Henry')
 
 	def test_contains(self):
@@ -319,8 +319,8 @@ class TestNamedTuple(TestCase):
 	# 	self.assertTrue('Teckla' in b)
 	# 	self.assertTrue('Steven Brust' in b)
 	# 	self.assertTrue('fantasy' in b)
-	# 	self.assertEqual(b.title, 'Teckla')
-	# 	self.assertEqual(b.author, 'Steven Brust')
+	# 	assert b.title == 'Teckla'
+	# 	assert b.author == 'Steven Brust'
 	# 	self.assertRaises(TypeError, Book, 'Teckla', 'Steven Brust')
 	# 	self.assertRaises(TypeError, Book, 'Teckla')
 
@@ -345,39 +345,39 @@ class TestNamedTuple(TestCase):
 	# 		g = 3, 'green component', 29
 	# 		b = 4, 'blue component', 37
 	#
-	# 	self.assertEqual(Pixel1._fields_, 'x y r g b'.split())
-	# 	self.assertEqual(Pixel1.x.__doc__, 'horizontal coordinate')
-	# 	self.assertEqual(Pixel1.x.default, 1)
-	# 	self.assertEqual(Pixel1.y.__doc__, 'vertical coordinate')
-	# 	self.assertEqual(Pixel1.y.default, -1)
-	# 	self.assertEqual(Pixel1.r.__doc__, 'red component')
-	# 	self.assertEqual(Pixel1.r.default, 11)
-	# 	self.assertEqual(Pixel1.g.__doc__, 'green component')
-	# 	self.assertEqual(Pixel1.g.default, 29)
-	# 	self.assertEqual(Pixel1.b.__doc__, 'blue component')
-	# 	self.assertEqual(Pixel1.b.default, 37)
-	# 	self.assertEqual(Pixel2._fields_, 'x y r g b'.split())
-	# 	self.assertEqual(Pixel2.x.__doc__, 'horizontal coordinate')
-	# 	self.assertEqual(Pixel2.x.default, 1)
-	# 	self.assertEqual(Pixel2.y.__doc__, 'vertical coordinate')
-	# 	self.assertEqual(Pixel2.y.default, -1)
-	# 	self.assertEqual(Pixel2.r.__doc__, 'red component')
-	# 	self.assertEqual(Pixel2.r.default, 11)
-	# 	self.assertEqual(Pixel2.g.__doc__, 'green component')
-	# 	self.assertEqual(Pixel2.g.default, 29)
-	# 	self.assertEqual(Pixel2.b.__doc__, 'blue component')
-	# 	self.assertEqual(Pixel2.b.default, 37)
-	# 	self.assertEqual(Pixel3._fields_, 'x y r g b'.split())
-	# 	self.assertEqual(Pixel3.x.__doc__, 'horizontal coordinate')
-	# 	self.assertEqual(Pixel3.x.default, 1)
-	# 	self.assertEqual(Pixel3.y.__doc__, 'vertical coordinate')
-	# 	self.assertEqual(Pixel3.y.default, -1)
-	# 	self.assertEqual(Pixel3.r.__doc__, 'red component')
-	# 	self.assertEqual(Pixel3.r.default, 11)
-	# 	self.assertEqual(Pixel3.g.__doc__, 'green component')
-	# 	self.assertEqual(Pixel3.g.default, 29)
-	# 	self.assertEqual(Pixel3.b.__doc__, 'blue component')
-	# 	self.assertEqual(Pixel3.b.default, 37)
+	# 	assert Pixel1._fields_ == 'x y r g b'.split()
+	# 	assert Pixel1.x.__doc__ == 'horizontal coordinate'
+	# 	assert Pixel1.x.default == 1
+	# 	assert Pixel1.y.__doc__ == 'vertical coordinate'
+	# 	assert Pixel1.y.default == -1
+	# 	assert Pixel1.r.__doc__ == 'red component'
+	# 	assert Pixel1.r.default == 11
+	# 	assert Pixel1.g.__doc__ == 'green component'
+	# 	assert Pixel1.g.default == 29
+	# 	assert Pixel1.b.__doc__ == 'blue component'
+	# 	assert Pixel1.b.default == 37
+	# 	assert Pixel2._fields_ == 'x y r g b'.split()
+	# 	assert Pixel2.x.__doc__ == 'horizontal coordinate'
+	# 	assert Pixel2.x.default == 1
+	# 	assert Pixel2.y.__doc__ == 'vertical coordinate'
+	# 	assert Pixel2.y.default == -1
+	# 	assert Pixel2.r.__doc__ == 'red component'
+	# 	assert Pixel2.r.default == 11
+	# 	assert Pixel2.g.__doc__ == 'green component'
+	# 	assert Pixel2.g.default == 29
+	# 	assert Pixel2.b.__doc__ == 'blue component'
+	# 	assert Pixel2.b.default == 37
+	# 	assert Pixel3._fields_ == 'x y r g b'.split()
+	# 	assert Pixel3.x.__doc__ == 'horizontal coordinate'
+	# 	assert Pixel3.x.default == 1
+	# 	assert Pixel3.y.__doc__ == 'vertical coordinate'
+	# 	assert Pixel3.y.default == -1
+	# 	assert Pixel3.r.__doc__ == 'red component'
+	# 	assert Pixel3.r.default == 11
+	# 	assert Pixel3.g.__doc__ == 'green component'
+	# 	assert Pixel3.g.default == 29
+	# 	assert Pixel3.b.__doc__ == 'blue component'
+	# 	assert Pixel3.b.default == 37
 
 	def test_function_api_type(self):
 
@@ -388,7 +388,7 @@ class TestNamedTuple(TestCase):
 
 		Testee = NamedTuple('Testee', 'a c e', type=Tester)
 		t = Testee(1, 2, 3)
-		self.assertEqual(t.howdy(), ('backwards', [3, 2, 1]))
+		assert t.howdy(), ('backwards', [3, 2 == 1])
 
 	# def test_asdict(self):
 	#
@@ -403,7 +403,7 @@ class TestNamedTuple(TestCase):
 	#
 	# 	Pixel = NamedTuple('Pixel', Point + Color, module=__name__)
 	# 	pixel = Pixel(99, -101, 255, 128, 0)
-	# 	self.assertEqual(pixel._asdict(), {'x': 99, 'y': -101, 'r': 255, 'g': 128, 'b': 0})
+	# 	assert pixel._asdict(), {'x': 99, 'y': -101, 'r': 255, 'g': 128 == 'b': 0}
 
 	# def test_make(self):
 	#
@@ -411,8 +411,8 @@ class TestNamedTuple(TestCase):
 	# 		x = 0, 'horizontal coordinate', 1
 	# 		y = 1, 'vertical coordinate', -1
 	#
-	# 	self.assertEqual(Point(4, 5), (4, 5))
-	# 	self.assertEqual(Point._make((4, 5)), (4, 5))
+	# 	assert Point(4, 5), (4 == 5)
+	# 	assert Point._make((4, 5)), (4 == 5)
 
 	def test_replace(self):
 
@@ -423,7 +423,7 @@ class TestNamedTuple(TestCase):
 
 		purple = Color(127, 0, 127)
 		mid_gray = purple._replace(g=127)
-		self.assertEqual(mid_gray, (127, 127, 127))
+		assert mid_gray, (127, 127 == 127)
 
 	# def test_fixed_size(self):
 	#
@@ -436,8 +436,8 @@ class TestNamedTuple(TestCase):
 	# 	self.assertTrue('Teckla' in b)
 	# 	self.assertTrue('Steven Brust' in b)
 	# 	self.assertTrue('fantasy' in b)
-	# 	self.assertEqual(b.title, 'Teckla')
-	# 	self.assertEqual(b.author, 'Steven Brust')
+	# 	assert b.title == 'Teckla'
+	# 	assert b.author == 'Steven Brust'
 	# 	self.assertRaises(TypeError, Book, 'Teckla', 'Steven Brust')
 	# 	self.assertRaises(TypeError, Book, 'Teckla')
 
@@ -452,13 +452,13 @@ class TestNamedTuple(TestCase):
 	# 	self.assertTrue('Teckla' in b)
 	# 	self.assertTrue('Steven Brust' in b)
 	# 	self.assertTrue('fantasy' in b)
-	# 	self.assertEqual(b.title, 'Teckla')
-	# 	self.assertEqual(b.author, 'Steven Brust')
+	# 	assert b.title == 'Teckla'
+	# 	assert b.author == 'Steven Brust'
 	# 	b = Book('Teckla', 'Steven Brust')
 	# 	self.assertTrue('Teckla' in b)
 	# 	self.assertTrue('Steven Brust' in b)
-	# 	self.assertEqual(b.title, 'Teckla')
-	# 	self.assertEqual(b.author, 'Steven Brust')
+	# 	assert b.title == 'Teckla'
+	# 	assert b.author == 'Steven Brust'
 	# 	self.assertRaises(TypeError, Book, 'Teckla')
 
 	def test_variable_size(self):
@@ -473,14 +473,14 @@ class TestNamedTuple(TestCase):
 		self.assertTrue('Teckla' in b)
 		self.assertTrue('Steven Brust' in b)
 		self.assertTrue('fantasy' in b)
-		self.assertEqual(b.title, 'Teckla')
-		self.assertEqual(b.author, 'Steven Brust')
-		self.assertEqual(b.genre, 'fantasy')
+		assert b.title == 'Teckla'
+		assert b.author == 'Steven Brust'
+		assert b.genre == 'fantasy'
 		b = Book('Teckla', 'Steven Brust')
 		self.assertTrue('Teckla' in b)
 		self.assertTrue('Steven Brust' in b)
-		self.assertEqual(b.title, 'Teckla')
-		self.assertEqual(b.author, 'Steven Brust')
+		assert b.title == 'Teckla'
+		assert b.author == 'Steven Brust'
 		self.assertRaises(AttributeError, getattr, b, 'genre')
 		self.assertRaises(TypeError, Book, title='Teckla', genre='fantasy')
 		self.assertRaises(TypeError, Book, author='Steven Brust')
