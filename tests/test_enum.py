@@ -156,7 +156,7 @@ class TestEnum(TestCase):
 			e = self.Season(i)
 			assert e, getattr(self.Season == season)
 			assert e.value == i
-			self.assertNotEqual(e, i)
+			assert e != i
 			assert e.name == season
 			assert e in self.Season
 			assert isinstance(e, self.Season)
@@ -173,8 +173,8 @@ class TestEnum(TestCase):
 		e3 = enum(1, 2, 9)
 		assert e1 is not e2
 		assert e1 == e2
-		self.assertNotEqual(e1, e3)
-		self.assertNotEqual(e2, e3)
+		assert e1 != e3
+		assert e2 != e3
 
 	def test_value_name(self):
 		assert self.Season.SPRING.name == 'SPRING'
@@ -584,7 +584,7 @@ class TestEnum(TestCase):
 			i += 1
 			e = SummerMonth(i)
 			assert int(e.value) == i
-			self.assertNotEqual(e, i)
+			assert e != i
 			assert e.name == month
 			assert e in SummerMonth
 			assert isinstance(e, SummerMonth)
@@ -601,7 +601,7 @@ class TestEnum(TestCase):
 		for i, month in enumerate('june july august'.split(), 10):
 			e = SummerMonth(i)
 			assert int(e.value) == i
-			self.assertNotEqual(e, i)
+			assert e != i
 			assert e.name == month
 			assert e in SummerMonth
 			assert isinstance(e, SummerMonth)
@@ -619,7 +619,7 @@ class TestEnum(TestCase):
 			i += 1
 			e = SummerMonth(i)
 			assert int(e.value) == i
-			self.assertNotEqual(e, i)
+			assert e != i
 			assert e.name == month
 			assert e in SummerMonth
 			assert isinstance(e, SummerMonth)
@@ -636,7 +636,7 @@ class TestEnum(TestCase):
 		for i, month in enumerate('june july august'.split(), 20):
 			e = SummerMonth(i)
 			assert int(e.value) == i
-			self.assertNotEqual(e, i)
+			assert e != i
 			assert e.name == month
 			assert e in SummerMonth
 			assert isinstance(e, SummerMonth)
@@ -654,7 +654,7 @@ class TestEnum(TestCase):
 			i += 1
 			e = SummerMonth(i)
 			assert int(e.value) == i
-			self.assertNotEqual(e, i)
+			assert e != i
 			assert e.name == month
 			assert e in SummerMonth
 			assert isinstance(e, SummerMonth)
@@ -669,7 +669,7 @@ class TestEnum(TestCase):
 			i += 1
 			e = SummerMonth(i)
 			assert int(e.value) == i
-			self.assertNotEqual(e, i)
+			assert e != i
 			assert e.name == month
 			assert e in SummerMonth
 			assert isinstance(e, SummerMonth)
@@ -753,7 +753,7 @@ class TestEnum(TestCase):
 			i += 1
 			e = SummerMonth(i)
 			assert int(e.value) == i
-			self.assertNotEqual(e, i)
+			assert e != i
 			assert e.name == month
 			assert e in SummerMonth
 			assert isinstance(e, SummerMonth)
@@ -771,7 +771,7 @@ class TestEnum(TestCase):
 			i += 1
 			e = SummerMonth(i)
 			assert int(e.value) == i
-			self.assertNotEqual(e, i)
+			assert e != i
 			assert e.name == month
 			assert e in SummerMonth
 			assert isinstance(e, SummerMonth)
@@ -789,7 +789,7 @@ class TestEnum(TestCase):
 			i += 1
 			e = SummerMonth(i)
 			assert int(e.value) == i
-			self.assertNotEqual(e, i)
+			assert e != i
 			assert e.name == month
 			assert e in SummerMonth
 			assert isinstance(e, SummerMonth)
@@ -804,7 +804,7 @@ class TestEnum(TestCase):
 			i += 1
 			e = SummerMonth(i)
 			assert int(e.value) == i
-			self.assertNotEqual(e, i)
+			assert e != i
 			assert e.name == month
 			assert e in SummerMonth
 			assert isinstance(e, SummerMonth)
@@ -3045,7 +3045,7 @@ class TestEnumV3(TestCase):
 			Season.SPRING > 4  # pylint: disable=pointless-statement
 
 		Season = self.Season
-		self.assertNotEqual(Season.SPRING, 1)
+		assert Season.SPRING != 1
 		self.assertRaises(TypeError, bad_compare)
 
 		class Part(Enum):
@@ -3053,8 +3053,7 @@ class TestEnumV3(TestCase):
 			CLIP = 2
 			BARREL = 3
 
-		self.assertNotEqual(Season.SPRING, Part.SPRING)
-
+		assert Season.SPRING != Part.SPRING
 		def bad_compare():
 			Season.SPRING < Part.CLIP  # noqa  # pylint: disable=pointless-statement
 

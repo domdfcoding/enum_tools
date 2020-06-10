@@ -64,7 +64,7 @@ from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
 	from enum import Enum, unique, Flag, IntFlag, EnumMeta
-	from typing import NamedTuple, TYPE_CHECKING
+	from typing import NamedTuple
 else:
 	from aenum import Enum, NamedTuple, unique, Flag, IntFlag, EnumMeta
 

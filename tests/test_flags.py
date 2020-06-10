@@ -243,7 +243,7 @@ class TestFlag(TestCase):
 			assert e.value == v
 			assert isinstance(e.value, int)
 			assert e.name == n
-			self.assertIn(e, Perm)
+			assert e in Perm
 			self.assertIs(type(e), Perm)
 
 	def test_programatic_function_string_with_start(self):
@@ -258,7 +258,7 @@ class TestFlag(TestCase):
 			assert e.value == v
 			assert isinstance(e.value, int)
 			assert e.name == n
-			self.assertIn(e, Perm)
+			assert e in Perm
 			self.assertIs(type(e), Perm)
 
 	def test_programatic_function_string_list(self):
@@ -273,7 +273,7 @@ class TestFlag(TestCase):
 			assert e.value == v
 			assert isinstance(e.value, int)
 			assert e.name == n
-			self.assertIn(e, Perm)
+			assert e in Perm
 			self.assertIs(type(e), Perm)
 
 	def test_programatic_function_iterable(self):
@@ -288,7 +288,7 @@ class TestFlag(TestCase):
 			assert e.value == v
 			assert isinstance(e.value, int)
 			assert e.name == n
-			self.assertIn(e, Perm)
+			assert e in Perm
 			self.assertIs(type(e), Perm)
 
 	def test_programatic_function_from_dict(self):
@@ -303,7 +303,7 @@ class TestFlag(TestCase):
 			assert e.value == v
 			assert isinstance(e.value, int)
 			assert e.name == n
-			self.assertIn(e, Perm)
+			assert e in Perm
 			self.assertIs(type(e), Perm)
 
 	def test_containment(self):
@@ -1078,7 +1078,7 @@ class TestIntFlag(TestCase):
 			assert isinstance(e.value, int)
 			assert e == v
 			assert e.name == n
-			self.assertIn(e, Perm)
+			assert e in Perm
 			self.assertIs(type(e), Perm)
 
 	def test_programatic_function_string_with_start(self):
@@ -1094,7 +1094,7 @@ class TestIntFlag(TestCase):
 			assert isinstance(e.value, int)
 			assert e == v
 			assert e.name == n
-			self.assertIn(e, Perm)
+			assert e in Perm
 			self.assertIs(type(e), Perm)
 
 	def test_programatic_function_string_list(self):
@@ -1110,7 +1110,7 @@ class TestIntFlag(TestCase):
 			assert isinstance(e.value, int)
 			assert e == v
 			assert e.name == n
-			self.assertIn(e, Perm)
+			assert e in Perm
 			self.assertIs(type(e), Perm)
 
 	def test_programatic_function_iterable(self):
@@ -1126,7 +1126,7 @@ class TestIntFlag(TestCase):
 			assert isinstance(e.value, int)
 			assert e == v
 			assert e.name == n
-			self.assertIn(e, Perm)
+			assert e in Perm
 			self.assertIs(type(e), Perm)
 
 	def test_programatic_function_from_dict(self):
@@ -1142,7 +1142,7 @@ class TestIntFlag(TestCase):
 			assert isinstance(e.value, int)
 			assert e == v
 			assert e.name == n
-			self.assertIn(e, Perm)
+			assert e in Perm
 			self.assertIs(type(e), Perm)
 
 	def test_containment(self):
