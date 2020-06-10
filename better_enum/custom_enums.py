@@ -90,6 +90,7 @@ class IntEnum(int, Enum):
 	Enum where members are also (and must be) ints
 	"""
 
+
 # 	def __int__(self):
 # 		return self.value
 

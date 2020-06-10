@@ -124,7 +124,7 @@ class TestEnum(TestCase):
 			second = 'boppity'
 			third = 'boo'
 
-		self.assertTrue(type(Ordered.__members__) is OrderedDict)
+		assert isinstance(Ordered.__members__, OrderedDict)
 
 	def test_members_is_ordereddict_if_not_ordered(self):
 
@@ -132,7 +132,7 @@ class TestEnum(TestCase):
 			this = 'that'
 			these = 'those'
 
-		self.assertTrue(type(Unordered.__members__) is OrderedDict)
+		assert isinstance(Unordered.__members__, OrderedDict)
 
 	def test_enum_in_enum_out(self):
 		season = self.Season
@@ -159,7 +159,7 @@ class TestEnum(TestCase):
 			self.assertNotEqual(e, i)
 			self.assertEqual(e.name, season)
 			self.assertTrue(e in self.Season)
-			self.assertTrue(type(e) is self.Season)
+			assert isinstance(e, self.Season)
 			self.assertTrue(isinstance(e, self.Season))
 			self.assertEqual(str(e), 'Season.' + season)
 			self.assertEqual(
@@ -402,7 +402,7 @@ class TestEnum(TestCase):
 				list(Huh),
 				[Huh.name, Huh.value],
 				)
-		self.assertTrue(type(Huh.name) is Huh)
+		assert isinstance(Huh.name, Huh)
 		self.assertEqual(Huh.name.name, 'name')
 		self.assertEqual(Huh.name.value, 1)
 
@@ -491,7 +491,7 @@ class TestEnum(TestCase):
 			self.assertTrue(e in WeekDay)
 			self.assertEqual(lst.index(e) + 1, i)
 			self.assertTrue(0 < e < 8)
-			self.assertTrue(type(e) is WeekDay)
+			assert isinstance(e, WeekDay)
 			self.assertTrue(isinstance(e, int))
 			self.assertTrue(isinstance(e, Enum))
 
@@ -587,7 +587,7 @@ class TestEnum(TestCase):
 			self.assertNotEqual(e, i)
 			self.assertEqual(e.name, month)
 			self.assertTrue(e in SummerMonth)
-			self.assertTrue(type(e) is SummerMonth)
+			assert isinstance(e, SummerMonth)
 
 	def test_programatic_function_string_with_start(self):
 		SummerMonth = Enum('SummerMonth', 'june july august', start=10)
@@ -604,7 +604,7 @@ class TestEnum(TestCase):
 			self.assertNotEqual(e, i)
 			self.assertEqual(e.name, month)
 			self.assertTrue(e in SummerMonth)
-			self.assertTrue(type(e) is SummerMonth)
+			assert isinstance(e, SummerMonth)
 
 	def test_programatic_function_string_list(self):
 		SummerMonth = Enum('SummerMonth', ['june', 'july', 'august'])
@@ -622,7 +622,7 @@ class TestEnum(TestCase):
 			self.assertNotEqual(e, i)
 			self.assertEqual(e.name, month)
 			self.assertTrue(e in SummerMonth)
-			self.assertTrue(type(e) is SummerMonth)
+			assert isinstance(e, SummerMonth)
 
 	def test_programatic_function_string_list_with_start(self):
 		SummerMonth = Enum('SummerMonth', ['june', 'july', 'august'], start=20)
@@ -639,7 +639,7 @@ class TestEnum(TestCase):
 			self.assertNotEqual(e, i)
 			self.assertEqual(e.name, month)
 			self.assertTrue(e in SummerMonth)
-			self.assertTrue(type(e) is SummerMonth)
+			assert isinstance(e, SummerMonth)
 
 	def test_programatic_function_iterable(self):
 		SummerMonth = Enum('SummerMonth', (('june', 1), ('july', 2), ('august', 3)))
@@ -657,7 +657,7 @@ class TestEnum(TestCase):
 			self.assertNotEqual(e, i)
 			self.assertEqual(e.name, month)
 			self.assertTrue(e in SummerMonth)
-			self.assertTrue(type(e) is SummerMonth)
+			assert isinstance(e, SummerMonth)
 
 	def test_programatic_function_from_dict(self):
 		SummerMonth = Enum('SummerMonth', dict((('june', 1), ('july', 2), ('august', 3))))
@@ -672,7 +672,7 @@ class TestEnum(TestCase):
 			self.assertNotEqual(e, i)
 			self.assertEqual(e.name, month)
 			self.assertTrue(e in SummerMonth)
-			self.assertTrue(type(e) is SummerMonth)
+			assert isinstance(e, SummerMonth)
 
 	def test_programatic_function_type(self):
 		SummerMonth = Enum('SummerMonth', 'june july august', type=int)
@@ -689,7 +689,7 @@ class TestEnum(TestCase):
 			self.assertEqual(e, i)
 			self.assertEqual(e.name, month)
 			self.assertTrue(e in SummerMonth)
-			self.assertTrue(type(e) is SummerMonth)
+			assert isinstance(e, SummerMonth)
 
 	def test_programatic_function_type_with_start(self):
 		SummerMonth = Enum('SummerMonth', 'june july august', type=int, start=30)
@@ -705,7 +705,7 @@ class TestEnum(TestCase):
 			self.assertEqual(e, i)
 			self.assertEqual(e.name, month)
 			self.assertTrue(e in SummerMonth)
-			self.assertTrue(type(e) is SummerMonth)
+			assert isinstance(e, SummerMonth)
 
 	def test_programatic_function_type_from_subclass(self):
 		SummerMonth = IntEnum('SummerMonth', 'june july august')
@@ -722,7 +722,7 @@ class TestEnum(TestCase):
 			self.assertEqual(e, i)
 			self.assertEqual(e.name, month)
 			self.assertTrue(e in SummerMonth)
-			self.assertTrue(type(e) is SummerMonth)
+			assert isinstance(e, SummerMonth)
 
 	def test_programatic_function_type_from_subclass_with_start(self):
 		SummerMonth = IntEnum('SummerMonth', 'june july august', start=40)
@@ -738,7 +738,7 @@ class TestEnum(TestCase):
 			self.assertEqual(e, i)
 			self.assertEqual(e.name, month)
 			self.assertTrue(e in SummerMonth)
-			self.assertTrue(type(e) is SummerMonth)
+			assert isinstance(e, SummerMonth)
 
 	def test_programatic_function_unicode(self):
 		SummerMonth = Enum('SummerMonth', str('june july august'))
@@ -756,7 +756,7 @@ class TestEnum(TestCase):
 			self.assertNotEqual(e, i)
 			self.assertEqual(e.name, month)
 			self.assertTrue(e in SummerMonth)
-			self.assertTrue(type(e) is SummerMonth)
+			assert isinstance(e, SummerMonth)
 
 	def test_programatic_function_unicode_list(self):
 		SummerMonth = Enum('SummerMonth', [str('june'), str('july'), str('august')])
@@ -774,7 +774,7 @@ class TestEnum(TestCase):
 			self.assertNotEqual(e, i)
 			self.assertEqual(e.name, month)
 			self.assertTrue(e in SummerMonth)
-			self.assertTrue(type(e) is SummerMonth)
+			assert isinstance(e, SummerMonth)
 
 	def test_programatic_function_unicode_iterable(self):
 		SummerMonth = Enum('SummerMonth', ((str('june'), 1), (str('july'), 2), (str('august'), 3)))
@@ -792,7 +792,7 @@ class TestEnum(TestCase):
 			self.assertNotEqual(e, i)
 			self.assertEqual(e.name, month)
 			self.assertTrue(e in SummerMonth)
-			self.assertTrue(type(e) is SummerMonth)
+			assert isinstance(e, SummerMonth)
 
 	def test_programatic_function_from_unicode_dict(self):
 		SummerMonth = Enum('SummerMonth', dict(((str('june'), 1), (str('july'), 2), (str('august'), 3))))
@@ -807,7 +807,7 @@ class TestEnum(TestCase):
 			self.assertNotEqual(e, i)
 			self.assertEqual(e.name, month)
 			self.assertTrue(e in SummerMonth)
-			self.assertTrue(type(e) is SummerMonth)
+			assert isinstance(e, SummerMonth)
 
 	def test_programatic_function_unicode_type(self):
 		SummerMonth = Enum('SummerMonth', str('june july august'), type=int)
@@ -824,7 +824,7 @@ class TestEnum(TestCase):
 			self.assertEqual(e, i)
 			self.assertEqual(e.name, month)
 			self.assertTrue(e in SummerMonth)
-			self.assertTrue(type(e) is SummerMonth)
+			assert isinstance(e, SummerMonth)
 
 	def test_programatic_function_unicode_type_from_subclass(self):
 		SummerMonth = IntEnum('SummerMonth', str('june july august'))
@@ -841,7 +841,7 @@ class TestEnum(TestCase):
 			self.assertEqual(e, i)
 			self.assertEqual(e.name, month)
 			self.assertTrue(e in SummerMonth)
-			self.assertTrue(type(e) is SummerMonth)
+			assert isinstance(e, SummerMonth)
 
 	def test_programmatic_function_unicode_class(self):
 
@@ -862,7 +862,7 @@ class TestEnum(TestCase):
 				self.assertEqual(e.value, i)
 				self.assertEqual(e.name, month)
 				self.assertTrue(e in SummerMonth)
-				self.assertTrue(type(e) is SummerMonth)
+				assert isinstance(e, SummerMonth)
 
 	def test_subclassing(self):
 		if isinstance(Name, Exception):
@@ -1488,7 +1488,7 @@ class TestEnum(TestCase):
 			second = (2, 'for the show')
 			third = (3, 'for the music')
 
-		self.assertTrue(type(SomeTuple.first) is SomeTuple)
+		assert isinstance(SomeTuple.first, SomeTuple)
 		self.assertTrue(isinstance(SomeTuple.second, tuple))
 		self.assertEqual(SomeTuple.third, (3, 'for the music'))
 		globals()['SomeTuple'] = SomeTuple
@@ -1633,9 +1633,9 @@ class TestEnum(TestCase):
 					if member.name.lower() == name.lower():
 						return member
 
-		Label['redapple']
+		Label['redapple']  # noqa  # pylint: disable=pointless-statement
 		with self.assertRaises(AttributeError):
-			Label.redapple
+			Label.redapple  # noqa  # pylint: disable=pointless-statement
 		with self.assertRaises(ValueError):
 			Label('redapple')
 
@@ -1650,11 +1650,11 @@ class TestEnum(TestCase):
 				return None
 
 		with self.assertRaises(AttributeError):
-			Label.redapple
+			Label.redapple  # noqa  # pylint: disable=pointless-statement
 		with self.assertRaises(ValueError):
 			Label('redapple')
 		with self.assertRaises(KeyError):
-			Label['redapple']
+			Label['redapple']  # noqa  # pylint: disable=pointless-statement
 
 	def test_extending2(self):
 
@@ -1687,7 +1687,7 @@ class TestEnum(TestCase):
 		class Color(Shade):
 
 			def hex(self):
-				return '%s hexlified!' % self.value
+				return f'{self.value} hexlified!'
 
 		class MoreColor(Color):
 			cyan = 4
@@ -2473,12 +2473,12 @@ class TestEnum(TestCase):
 
 		class Color(Enum):
 			_init_ = 'color r g b'
-			_order_ = 'red green blue chartruese'
+			_order_ = 'red green blue chartreuse'
 			_settings_ = MultiValue, AutoNumber
 			red = 'red', 10, 20, 30
 			green = 'green', 40, 50, 60
 			blue = 5, 'blue', 70, 80, 90
-			chartruese = 'chartruese', 100, 110, 120
+			chartreuse = 'chartreuse', 100, 110, 120
 
 		self.assertEqual(Color.red.value, 1)
 		self.assertEqual(Color.red.color, 'red')
@@ -2495,11 +2495,11 @@ class TestEnum(TestCase):
 		self.assertEqual(Color.blue.r, 70)
 		self.assertEqual(Color.blue.g, 80)
 		self.assertEqual(Color.blue.b, 90)
-		self.assertEqual(Color.chartruese.value, 6)
-		self.assertEqual(Color.chartruese.color, 'chartruese')
-		self.assertEqual(Color.chartruese.r, 100)
-		self.assertEqual(Color.chartruese.g, 110)
-		self.assertEqual(Color.chartruese.b, 120)
+		self.assertEqual(Color.chartreuse.value, 6)
+		self.assertEqual(Color.chartreuse.color, 'chartreuse')
+		self.assertEqual(Color.chartreuse.r, 100)
+		self.assertEqual(Color.chartreuse.g, 110)
+		self.assertEqual(Color.chartreuse.b, 120)
 		self.assertIs(Color(1), Color.red)
 		self.assertIs(Color('red'), Color.red)
 		self.assertIs(Color(10), Color.red)
@@ -2515,11 +2515,11 @@ class TestEnum(TestCase):
 		self.assertIs(Color(70), Color.blue)
 		self.assertIs(Color(80), Color.blue)
 		self.assertIs(Color(90), Color.blue)
-		self.assertIs(Color(6), Color.chartruese)
-		self.assertIs(Color('chartruese'), Color.chartruese)
-		self.assertIs(Color(100), Color.chartruese)
-		self.assertIs(Color(110), Color.chartruese)
-		self.assertIs(Color(120), Color.chartruese)
+		self.assertIs(Color(6), Color.chartreuse)
+		self.assertIs(Color('chartreuse'), Color.chartreuse)
+		self.assertIs(Color(100), Color.chartreuse)
+		self.assertIs(Color(110), Color.chartreuse)
+		self.assertIs(Color(120), Color.chartreuse)
 
 	def test_multivalue_and_autonumber_wo_init_wo_value(self):
 
@@ -2830,8 +2830,6 @@ class TestEnum(TestCase):
 		self.assertEqual(ts.inv_units.value, 'Qn$(7,2)')
 		self.assertEqual(ts.inv_units.sequence, 10)
 
-		pass
-
 	if StdlibEnumMeta is not None:
 
 		def test_stdlib_inheritence(self):
@@ -2973,17 +2971,17 @@ class TestEnumV3(TestCase):
 	def test_magic_on_and_off(self):
 
 		class Color(Enum):
-			_auto_on_
-			red
-			green
-			_auto_off_
+			_auto_on_  # noqa  # pylint: disable=pointless-statement
+			red  # noqa  # pylint: disable=pointless-statement
+			green  # noqa  # pylint: disable=pointless-statement
+			_auto_off_  # noqa  # pylint: disable=pointless-statement
 
 			@property
 			def cap_name(self) -> str:
 				return self.name.title()
 
-			_auto_on_
-			blue
+			_auto_on_  # noqa  # pylint: disable=pointless-statement
+			blue  # noqa  # pylint: disable=pointless-statement
 
 		self.assertEqual(len(Color), 3)
 		self.assertEqual(list(Color), [Color.red, Color.green, Color.blue])
@@ -3042,7 +3040,7 @@ class TestEnumV3(TestCase):
 			second = 2
 			third = 3
 
-		self.assertTrue(type(AlwaysOrdered.__members__) is OrderedDict)
+		assert isinstance(AlwaysOrdered.__members__, OrderedDict)
 
 	def test_comparisons(self):
 
@@ -3278,9 +3276,9 @@ class TestEnumV3(TestCase):
 	def test_autoenum(self):
 
 		class Color(AutoEnum):
-			red
-			green
-			blue
+			red  # noqa  # pylint: disable=pointless-statement
+			green  # noqa  # pylint: disable=pointless-statement
+			blue  # noqa  # pylint: disable=pointless-statement
 
 		self.assertEqual(list(Color), [Color.red, Color.green, Color.blue])
 		self.assertEqual([m.value for m in Color], [1, 2, 3])
@@ -3293,9 +3291,9 @@ class TestEnumV3(TestCase):
 			def _generate_next_value_(name, start, count, last_values):
 				return name
 
-			red
-			green
-			blue
+			red  # noqa  # pylint: disable=pointless-statement
+			green  # noqa  # pylint: disable=pointless-statement
+			blue  # noqa  # pylint: disable=pointless-statement
 
 		self.assertEqual(list(Color), [Color.red, Color.green, Color.blue])
 		self.assertEqual([m.value for m in Color], ['red', 'green', 'blue'])
@@ -3319,9 +3317,9 @@ class TestEnumV3(TestCase):
 
 			class Color(MagicAutoNumberEnum):
 				_ignore_ = 'staticmethod'
-				red
-				green
-				blue
+				red  # noqa  # pylint: disable=pointless-statement
+				green  # noqa  # pylint: disable=pointless-statement
+				blue  # noqa  # pylint: disable=pointless-statement
 
 				@property
 				def cap_name(self) -> str:
@@ -3331,9 +3329,9 @@ class TestEnumV3(TestCase):
 
 		class Color(MagicAutoNumberEnum):
 			_ignore_ = 'property'
-			red
-			green
-			blue = cyan
+			red  # noqa  # pylint: disable=pointless-statement
+			green  # noqa  # pylint: disable=pointless-statement
+			blue = cyan  # noqa  # pylint: disable=pointless-statement
 
 			@property
 			def cap_name(self) -> str:
@@ -3473,9 +3471,9 @@ class TestEnumV3(TestCase):
 	def test_auto_number(self):
 
 		class Color(Enum, settings=AutoValue):
-			red
-			blue
-			green
+			red  # noqa  # pylint: disable=pointless-statement
+			blue  # noqa  # pylint: disable=pointless-statement
+			green  # noqa  # pylint: disable=pointless-statement
 
 		self.assertEqual(list(Color), [Color.red, Color.blue, Color.green])
 		self.assertEqual(Color.red.value, 1)
@@ -3489,9 +3487,9 @@ class TestEnumV3(TestCase):
 			def _generate_next_value_(name, start, count, last):
 				return name
 
-			red
-			blue
-			green
+			red  # noqa  # pylint: disable=pointless-statement
+			blue  # noqa  # pylint: disable=pointless-statement
+			green  # noqa  # pylint: disable=pointless-statement
 
 		self.assertEqual(list(Color), [Color.red, Color.blue, Color.green])
 		self.assertEqual(Color.red.value, 'red')
@@ -3506,9 +3504,9 @@ class TestEnumV3(TestCase):
 				return name
 
 		class Color(AutoNameEnum, settings=AutoValue):
-			red
-			blue
-			green
+			red  # noqa  # pylint: disable=pointless-statement
+			blue  # noqa  # pylint: disable=pointless-statement
+			green  # noqa  # pylint: disable=pointless-statement
 
 		self.assertEqual(list(Color), [Color.red, Color.blue, Color.green])
 		self.assertEqual(Color.red.value, 'red')
@@ -3520,7 +3518,7 @@ class TestEnumV3(TestCase):
 		class Color(Enum):
 			_settings_ = AutoValue
 			red = 'red'
-			blue
+			blue  # noqa  # pylint: disable=pointless-statement
 
 		self.assertEqual(Color.blue.value, 1)
 
@@ -3529,7 +3527,7 @@ class TestEnumV3(TestCase):
 		class Color(Enum, settings=AutoValue):
 			red = 'red'
 			blue = 2
-			green
+			green  # noqa  # pylint: disable=pointless-statement
 
 		self.assertEqual(list(Color), [Color.red, Color.blue, Color.green])
 		self.assertEqual(Color.red.value, 'red')
@@ -3539,9 +3537,9 @@ class TestEnumV3(TestCase):
 	def test_duplicate_auto(self):
 
 		class Dupes(Enum, settings=AutoValue):
-			first = primero
-			second
-			third
+			first = primero  # noqa  # pylint: disable=pointless-statement
+			second  # noqa  # pylint: disable=pointless-statement
+			third  # noqa  # pylint: disable=pointless-statement
 
 		self.assertEqual([Dupes.first, Dupes.second, Dupes.third], list(Dupes))
 
@@ -3787,5 +3785,8 @@ class TestIntEnumConvert(TestCase):
 		self.assertEqual(test_type.CONVERT_TEST_NAME_D, 5)
 		self.assertEqual(test_type.CONVERT_TEST_NAME_E, 5)
 		# Ensure that test_type only picked up names matching the filter.
-		self.assertEqual([name for name in dir(test_type) if name[0:2] not in ('CO', '__')], [],
-							msg='Names other than CONVERT_TEST_* found.')
+		self.assertEqual(
+				[name for name in dir(test_type) if name[0:2] not in ('CO', '__')],
+				[],
+				msg='Names other than CONVERT_TEST_* found.',
+				)
