@@ -241,7 +241,7 @@ class TestFlag(TestCase):
 			v = 1 << i
 			e = Perm(v)
 			assert e.value == v
-			assert type(e.value) == int
+			assert isinstance(e.value, int)
 			assert e.name == n
 			self.assertIn(e, Perm)
 			self.assertIs(type(e), Perm)
@@ -256,7 +256,7 @@ class TestFlag(TestCase):
 			v = 8 << i
 			e = Perm(v)
 			assert e.value == v
-			assert type(e.value) == int
+			assert isinstance(e.value, int)
 			assert e.name == n
 			self.assertIn(e, Perm)
 			self.assertIs(type(e), Perm)
@@ -271,7 +271,7 @@ class TestFlag(TestCase):
 			v = 1 << i
 			e = Perm(v)
 			assert e.value == v
-			assert type(e.value) == int
+			assert isinstance(e.value, int)
 			assert e.name == n
 			self.assertIn(e, Perm)
 			self.assertIs(type(e), Perm)
@@ -286,7 +286,7 @@ class TestFlag(TestCase):
 			v = 1 << (2 * i + 1)
 			e = Perm(v)
 			assert e.value == v
-			assert type(e.value) == int
+			assert isinstance(e.value, int)
 			assert e.name == n
 			self.assertIn(e, Perm)
 			self.assertIs(type(e), Perm)
@@ -301,7 +301,7 @@ class TestFlag(TestCase):
 			v = 1 << (2 * i + 1)
 			e = Perm(v)
 			assert e.value == v
-			assert type(e.value) == int
+			assert isinstance(e.value, int)
 			assert e.name == n
 			self.assertIn(e, Perm)
 			self.assertIs(type(e), Perm)
@@ -1075,7 +1075,7 @@ class TestIntFlag(TestCase):
 			v = 1 << i
 			e = Perm(v)
 			assert e.value == v
-			assert type(e.value) == int
+			assert isinstance(e.value, int)
 			assert e == v
 			assert e.name == n
 			self.assertIn(e, Perm)
@@ -1091,7 +1091,7 @@ class TestIntFlag(TestCase):
 			v = 8 << i
 			e = Perm(v)
 			assert e.value == v
-			assert type(e.value) == int
+			assert isinstance(e.value, int)
 			assert e == v
 			assert e.name == n
 			self.assertIn(e, Perm)
@@ -1107,7 +1107,7 @@ class TestIntFlag(TestCase):
 			v = 1 << i
 			e = Perm(v)
 			assert e.value == v
-			assert type(e.value) == int
+			assert isinstance(e.value, int)
 			assert e == v
 			assert e.name == n
 			self.assertIn(e, Perm)
@@ -1123,7 +1123,7 @@ class TestIntFlag(TestCase):
 			v = 1 << (2 * i + 1)
 			e = Perm(v)
 			assert e.value == v
-			assert type(e.value) == int
+			assert isinstance(e.value, int)
 			assert e == v
 			assert e.name == n
 			self.assertIn(e, Perm)
@@ -1139,7 +1139,7 @@ class TestIntFlag(TestCase):
 			v = 1 << (2 * i + 1)
 			e = Perm(v)
 			assert e.value == v
-			assert type(e.value) == int
+			assert isinstance(e.value, int)
 			assert e == v
 			assert e.name == n
 			self.assertIn(e, Perm)
