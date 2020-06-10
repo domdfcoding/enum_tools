@@ -85,7 +85,7 @@ __all__ = [
 		]
 
 
-class IntEnum(int, Enum):
+class IntEnum(int, Enum):  # pylint: disable=used-before-assignment
 	"""
 	Enum where members are also (and must be) ints
 	"""

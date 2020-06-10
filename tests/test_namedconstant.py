@@ -88,6 +88,7 @@ def test_duplicates():
 	assert CardNumber.TEN == CardNumber.JACK
 	assert CardNumber.TEN == 10
 
+
 def test_extend_constants():
 
 	class CardSuit(NamedConstant):
@@ -101,6 +102,7 @@ def test_extend_constants():
 	assert stars is CardSuit.STARS
 	assert CardSuit.STARS == 5
 
+
 def test_constant_with_docstring():
 
 	class Stuff(NamedConstant):
@@ -111,6 +113,6 @@ def test_constant_with_docstring():
 	assert Stuff.Artifact == 7
 	assert Stuff.Artifact.__doc__ == 'lucky number!'
 	assert Stuff.Bowling == 11
-	assert Stuff.Bowling.__doc__ == None
+	assert Stuff.Bowling.__doc__ is None
 	assert Stuff.HillWomp == 29
 	assert Stuff.HillWomp.__doc__ == 'blah blah'

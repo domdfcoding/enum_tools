@@ -83,27 +83,3 @@ def _is_sunder(name) -> bool:
 
 def _reduce_ex_by_name(self, proto):
 	return self.name
-
-
-def enumsort(things):
-	"""
-	sorts things by value if all same type; otherwise by name
-	"""
-	if not things:
-		return things
-	sort_type = type(things[0])
-	if not issubclass(sort_type, tuple):
-		# direct sort or type error
-		if not all((type(v) is sort_type) for v in things[1:]):
-			raise TypeError('cannot sort items of different types')
-		return sorted(things)
-	else:
-		# expecting list of (name, value) tuples
-		sort_type = type(things[0][1])
-		try:
-			if all((type(v[1]) is sort_type) for v in things[1:]):
-				return sorted(things, key=lambda i: i[1])
-			else:
-				raise TypeError('try name sort instead')
-		except TypeError:
-			return sorted(things, key=lambda i: i[0])

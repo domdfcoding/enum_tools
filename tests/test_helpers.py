@@ -71,7 +71,6 @@ from better_enum.utils import _is_descriptor, _is_dunder, _is_sunder
 
 class TestHelpers(TestCase):
 
-
 	def test_auto(self):
 
 		def tester(first, op, final, second=None):
@@ -199,6 +198,7 @@ def test_is_descriptor():
 		setattr(obj, attr, 1)
 		assert _is_descriptor(obj)
 
+
 def test_is_sunder():
 	for s in ('_a_', '_aa_'):
 		assert _is_sunder(s)
@@ -219,6 +219,7 @@ def test_is_sunder():
 			'_____',
 			):
 		assert not _is_sunder(s)
+
 
 def test_is_dunder():
 	for s in ('__a__', '__aa__'):
