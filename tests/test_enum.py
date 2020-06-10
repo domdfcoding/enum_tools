@@ -663,7 +663,7 @@ class TestEnum(TestCase):
 		SummerMonth = Enum('SummerMonth', dict((('june', 1), ('july', 2), ('august', 3))))
 		lst = list(SummerMonth)
 		assert len(lst) == len(SummerMonth)
-		assert len(SummerMonth), 3 == SummerMonth
+		self.assertEqual(len(SummerMonth), 3, SummerMonth)
 
 		for i, month in enumerate('june july august'.split()):
 			i += 1
@@ -798,7 +798,7 @@ class TestEnum(TestCase):
 		SummerMonth = Enum('SummerMonth', dict(((str('june'), 1), (str('july'), 2), (str('august'), 3))))
 		lst = list(SummerMonth)
 		assert len(lst) == len(SummerMonth)
-		assert len(SummerMonth), 3 == SummerMonth
+		self.assertEqual(len(SummerMonth), 3, SummerMonth)
 
 		for i, month in enumerate(str('june july august').split()):
 			i += 1
@@ -813,7 +813,7 @@ class TestEnum(TestCase):
 		SummerMonth = Enum('SummerMonth', str('june july august'), type=int)
 		lst = list(SummerMonth)
 		assert len(lst) == len(SummerMonth)
-		assert len(SummerMonth), 3 == SummerMonth
+		self.assertEqual(len(SummerMonth), 3, SummerMonth)
 		self.assertEqual(
 				[SummerMonth.june, SummerMonth.july, SummerMonth.august],
 				lst,
@@ -830,7 +830,7 @@ class TestEnum(TestCase):
 		SummerMonth = IntEnum('SummerMonth', str('june july august'))
 		lst = list(SummerMonth)
 		assert len(lst) == len(SummerMonth)
-		assert len(SummerMonth), 3 == SummerMonth
+		self.assertEqual(len(SummerMonth), 3, SummerMonth)
 		self.assertEqual(
 				[SummerMonth.june, SummerMonth.july, SummerMonth.august],
 				lst,
@@ -851,11 +851,8 @@ class TestEnum(TestCase):
 			SummerMonth = Enum(class_name, str('june july august'))
 			lst = list(SummerMonth)
 			assert len(lst) == len(SummerMonth)
-			assert len(SummerMonth), 3 == SummerMonth
-			self.assertEqual(
-					[SummerMonth.june, SummerMonth.july, SummerMonth.august],
-					lst,
-					)
+			self.assertEqual(len(SummerMonth), 3, SummerMonth)
+			assert [SummerMonth.june, SummerMonth.july, SummerMonth.august] == lst
 			for i, month in enumerate(str('june july august').split()):
 				i += 1
 				e = SummerMonth(i)
@@ -3059,7 +3056,7 @@ class TestEnumV3(TestCase):
 		self.assertNotEqual(Season.SPRING, Part.SPRING)
 
 		def bad_compare():
-			Season.SPRING < Part.CLIP  # pylint: disable=pointless-statement
+			Season.SPRING < Part.CLIP  # noqa  # pylint: disable=pointless-statement
 
 		self.assertRaises(TypeError, bad_compare)
 
@@ -3157,9 +3154,9 @@ class TestEnumV3(TestCase):
 	def test_multivalue_and_auto(self):
 
 		class Color(Enum, settings=(MultiValue, AutoValue)):
-			red  # pylint: disable=pointless-statement
+			red  # noqa  # pylint: disable=pointless-statement
 			green = 3, 'green'
-			blue  # pylint: disable=pointless-statement
+			blue  # noqa  # pylint: disable=pointless-statement
 
 		assert Color.red.value == 1
 		assert Color.green.value == 3
@@ -3302,9 +3299,9 @@ class TestEnumV3(TestCase):
 	def test_autoenum_and_default_ignore(self):
 
 		class Color(AutoEnum):
-			red  # pylint: disable=pointless-statement
-			green  # pylint: disable=pointless-statement
-			blue  # pylint: disable=pointless-statement
+			red  # noqa  # pylint: disable=pointless-statement
+			green  # noqa  # pylint: disable=pointless-statement
+			blue  # noqa  # pylint: disable=pointless-statement
 
 			@property
 			def cap_name(self):
@@ -3347,8 +3344,8 @@ class TestEnumV3(TestCase):
 		with self.assertRaises(ValueError):
 
 			class AutoUnique(Auto, settings=AutoValue):
-				BLAH  # pylint: disable=pointless-statement
-				BLUH  # pylint: disable=pointless-statement
+				BLAH  # noqa  # pylint: disable=pointless-statement
+				BLUH  # noqa  # pylint: disable=pointless-statement
 				ICK = 1
 
 	def test_timedelta(self):
