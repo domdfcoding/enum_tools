@@ -129,8 +129,8 @@ class TestNamedTuple(TestCase):
 			first = 1
 			last = 2
 
-		self.assertTrue(issubclass(Person, NamedTuple))
-		self.assertTrue(issubclass(Person, tuple))
+		assert issubclass(Person, NamedTuple)
+		assert issubclass(Person, tuple)
 
 	def test_isinstance(self):
 
@@ -140,9 +140,9 @@ class TestNamedTuple(TestCase):
 			last = 2
 
 		p1 = Person(17, 'John', 'Doe')
-		self.assertTrue(isinstance(p1, Person))
-		self.assertTrue(isinstance(p1, NamedTuple))
-		self.assertTrue(isinstance(p1, tuple))
+		assert isinstance(p1, Person)
+		assert isinstance(p1, NamedTuple)
+		assert isinstance(p1, tuple)
 
 	def test_explicit_indexing_after_functional_api(self):
 		Person = NamedTuple('Person', (('age', 0), ('first', 1), ('last', 2)))
@@ -199,15 +199,15 @@ class TestNamedTuple(TestCase):
 
 	def test_issubclass_after_functional_api(self):
 		Person = NamedTuple('Person', 'age first last')
-		self.assertTrue(issubclass(Person, NamedTuple))
-		self.assertTrue(issubclass(Person, tuple))
+		assert issubclass(Person, NamedTuple)
+		assert issubclass(Person, tuple)
 
 	def test_isinstance_after_functional_api(self):
 		Person = NamedTuple('Person', 'age first last')
 		p1 = Person(17, 'John', 'Doe')
-		self.assertTrue(isinstance(p1, Person))
-		self.assertTrue(isinstance(p1, NamedTuple))
-		self.assertTrue(isinstance(p1, tuple))
+		assert isinstance(p1, Person)
+		assert isinstance(p1, NamedTuple)
+		assert isinstance(p1, tuple)
 
 	def test_creation_with_all_keywords(self):
 		Person = NamedTuple('Person', 'age first last')

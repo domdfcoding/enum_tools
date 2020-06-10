@@ -160,12 +160,9 @@ class TestEnum(TestCase):
 			assert e.name == season
 			assert e in self.Season
 			assert isinstance(e, self.Season)
-			self.assertTrue(isinstance(e, self.Season))
+			assert isinstance(e, self.Season)
 			assert str(e) == 'Season.' + season
-			self.assertEqual(
-					repr(e),
-					'<Season.%s: %s>' % (season, i),
-					)
+			assert repr(e) == '<Season.%s: %s>' % (season, i)
 
 	def test_enum_helper(self):
 		e1 = enum(1, 2, three=9)
@@ -205,9 +202,9 @@ class TestEnum(TestCase):
 			def spam(cls):
 				pass
 
-		self.assertTrue(hasattr(Season, 'spam'))
+		assert hasattr(Season, 'spam')
 		del Season.spam
-		self.assertFalse(hasattr(Season, 'spam'))
+		assert not hasattr(Season, 'spam')
 
 		self.assertRaises(AttributeError, delattr, Season, 'SPRING')
 		self.assertRaises(AttributeError, delattr, Season, 'DRY')
@@ -218,7 +215,7 @@ class TestEnum(TestCase):
 		class Empty(Enum):
 			pass
 
-		self.assertTrue(bool(Empty))
+		assert bool(Empty)
 
 	def test_bool_of_member(self):
 
@@ -228,7 +225,7 @@ class TestEnum(TestCase):
 			two = 2
 
 		for member in Count:
-			self.assertTrue(bool(member))
+			assert bool(member)
 
 	def test_invalid_names(self):
 
@@ -257,7 +254,7 @@ class TestEnum(TestCase):
 			__nonzero__ = __bool__
 
 		assert Logic.true
-		self.assertFalse(Logic.false)
+		assert not Logic.false
 
 	def test_contains(self):
 		Season = self.Season
@@ -383,13 +380,10 @@ class TestEnum(TestCase):
 		assert Season.FALL is Season.AUTUMN
 		assert Season.FALL.value == 3
 		assert Season.AUTUMN.value == 3
-		self.assertTrue(Season(3) is Season.AUTUMN)
-		self.assertTrue(Season(1) is Season.SPRING)
+		assert Season(3) is Season.AUTUMN
+		assert Season(1) is Season.SPRING
 		assert Season.FALL.name == 'AUTUMN'
-		self.assertEqual(
-				set([k for k, v in Season.__members__.items() if v.name != k]),
-				set(['FALL', 'ANOTHER_SPRING']),
-				)
+		assert set([k for k, v in Season.__members__.items() if v.name != k]) == set(['FALL', 'ANOTHER_SPRING'])
 
 	def test_enum_with_value_name(self):
 
@@ -398,10 +392,7 @@ class TestEnum(TestCase):
 			name = 1
 			value = 2
 
-		self.assertEqual(
-				list(Huh),
-				[Huh.name, Huh.value],
-				)
+		assert list(Huh) == [Huh.name, Huh.value]
 		assert isinstance(Huh.name, Huh)
 		assert Huh.name.name == 'name'
 		assert Huh.name.value == 1
@@ -492,8 +483,8 @@ class TestEnum(TestCase):
 			assert lst.index(e) + 1 == i
 			assert 0 < e < 8
 			assert isinstance(e, WeekDay)
-			self.assertTrue(isinstance(e, int))
-			self.assertTrue(isinstance(e, Enum))
+			assert isinstance(e, int)
+			assert isinstance(e, Enum)
 
 	def test_intenum_duplicates(self):
 
@@ -530,13 +521,13 @@ class TestEnum(TestCase):
 			evening = 3
 			night = 4
 
-		self.assertTrue(Period(2) is Period.noon)
-		self.assertTrue(getattr(Period, 'night') is Period.night)
+		assert Period(2) is Period.noon
+		assert getattr(Period, 'night') is Period.night
 		assert Period['morning'] is Period.morning
 
 	def test_getattr_dunder(self):
 		Season = self.Season
-		self.assertTrue(getattr(Season, '__hash__'))
+		assert getattr(Season, '__hash__')
 
 	def test_iteration_order(self):
 
@@ -865,8 +856,8 @@ class TestEnum(TestCase):
 		if isinstance(Name, Exception):
 			raise Name
 		assert Name.BDFL == 'Guido van Rossum'
-		self.assertTrue(Name.BDFL, Name('Guido van Rossum'))
-		self.assertTrue(Name.BDFL is getattr(Name, 'BDFL'))
+		assert Name.BDFL, Name('Guido van Rossum')
+		assert Name.BDFL is getattr(Name, 'BDFL')
 
 	def test_extending(self):
 
@@ -979,7 +970,7 @@ class TestEnum(TestCase):
 			male = 0
 			female = 1
 
-		self.assertTrue(Monochrome(Gender.female) is Monochrome.white)
+		assert Monochrome(Gender.female) is Monochrome.white
 
 	def test_mixed_enum_in_call_2(self):
 
@@ -991,7 +982,7 @@ class TestEnum(TestCase):
 			male = 0
 			female = 1
 
-		self.assertTrue(Monochrome(Gender.male) is Monochrome.black)
+		assert Monochrome(Gender.male) is Monochrome.black
 
 	def test_flufl_enum(self):
 
@@ -1486,7 +1477,7 @@ class TestEnum(TestCase):
 			third = (3, 'for the music')
 
 		assert isinstance(SomeTuple.first, SomeTuple)
-		self.assertTrue(isinstance(SomeTuple.second, tuple))
+		assert isinstance(SomeTuple.second, tuple)
 		assert SomeTuple.third, (3 == 'for the music')
 		globals()['SomeTuple'] = SomeTuple
 
@@ -1503,7 +1494,7 @@ class TestEnum(TestCase):
 
 		assert int(NumericEnum.enum_d) == 2
 		assert NumericEnum.enum_y.value == 3
-		self.assertTrue(NumericEnum(1) is NumericEnum.enum_m)
+		assert NumericEnum(1) is NumericEnum.enum_m
 		self.assertEqual(
 				list(NumericEnum),
 				[NumericEnum.enum_m, NumericEnum.enum_d, NumericEnum.enum_y],
@@ -2556,13 +2547,13 @@ class TestEnum(TestCase):
 				Period['week_%d' % i] = i * 7, 'week'
 			for i in range(12):
 				Period['month_%d' % i] = i * 30, 'month'
-			OneDay = day_1
-			OneWeek = week_1
+			OneDay = day_1  # noqa  # pylint: disable=pointless-statement
+			OneWeek = week_1  # noqa  # pylint: disable=pointless-statement
 
 		self.assertFalse(hasattr(Period, '_ignore_'))
 		self.assertFalse(hasattr(Period, 'Period'))
 		self.assertFalse(hasattr(Period, 'i'))
-		self.assertTrue(isinstance(Period.day_1, timedelta))
+		assert isinstance(Period.day_1, timedelta)
 
 	def test_skip(self):
 
@@ -2830,8 +2821,8 @@ class TestEnum(TestCase):
 	if StdlibEnumMeta is not None:
 
 		def test_stdlib_inheritence(self):
-			self.assertTrue(isinstance(self.Season, StdlibEnumMeta))
-			self.assertTrue(issubclass(self.Season, StdlibEnum))
+			assert isinstance(self.Season, StdlibEnumMeta)
+			assert issubclass(self.Season, StdlibEnum)
 
 
 class TestEnumV3(TestCase):
@@ -3363,13 +3354,13 @@ class TestEnumV3(TestCase):
 				Period['week_%d' % i] = i * 7, 'week'
 			for i in range(12):
 				Period['month_%d' % i] = i * 30, 'month'
-			OneDay = day_1
-			OneWeek = week_1
+			OneDay = day_1  # noqa  # pylint: disable=pointless-statement
+			OneWeek = week_1  # noqa  # pylint: disable=pointless-statement
 
 		self.assertFalse(hasattr(Period, '_ignore_'))
 		self.assertFalse(hasattr(Period, 'Period'))
 		self.assertFalse(hasattr(Period, 'i'))
-		self.assertTrue(isinstance(Period.day_1, timedelta))
+		assert isinstance(Period.day_1, timedelta)
 
 	def test_extend_enum_plain(self):
 
@@ -3431,7 +3422,7 @@ class TestEnumV3(TestCase):
 				3,
 				)
 		self.assertRaises(TypeError, Color, 3)
-		self.assertFalse(Color.value is Color.blue)
+		assert Color.value is not Color.blue
 		self.assertTrue(Color.value.value, 3)
 
 	def test_no_duplicates(self):
@@ -3726,7 +3717,7 @@ class TestEnumV3(TestCase):
 			x = ('the-x', 1)
 			y = ('the-y', 2)
 
-		self.assertIs(NEI.__new__, Enum.__new__)
+		assert NEI.__new__ is Enum.__new__
 		assert repr(NEI.x + NEI.y), "NamedInt('(the-x + the-y)' == 3)"
 		globals()['NamedInt'] = NamedInt
 		globals()['NEI'] = NEI
@@ -3763,14 +3754,11 @@ class TestIntEnumConvert(TestCase):
 		assert test_type(5).name == 'CONVERT_TEST_NAME_A'
 		assert test_type(4).name == 'CONVERT_TEST_SIGABRT'
 		assert test_type(7).name == 'CONVERT_TEST_EBUS'
-		self.assertEqual(
-				list(test_type),
-				[
-						test_type.CONVERT_TEST_SIGABRT,
-						test_type.CONVERT_TEST_NAME_A,
-						test_type.CONVERT_TEST_EBUS,
-						],
-				)
+		assert list(test_type) == [
+				test_type.CONVERT_TEST_SIGABRT,
+				test_type.CONVERT_TEST_NAME_A,
+				test_type.CONVERT_TEST_EBUS,
+				]
 
 	def test_convert(self):
 		test_type = IntEnum._convert('UnittestConvert', __name__, filter=lambda x: x.startswith('CONVERT_TEST_'))

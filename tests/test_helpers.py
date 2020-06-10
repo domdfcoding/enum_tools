@@ -76,13 +76,13 @@ class TestHelpers(TestCase):
 
 		for attr in ('__get__', '__set__', '__delete__'):
 			obj = Foo()
-			self.assertFalse(_is_descriptor(obj))
+			assert not _is_descriptor(obj)
 			setattr(obj, attr, 1)
-			self.assertTrue(_is_descriptor(obj))
+			assert _is_descriptor(obj)
 
 	def test_is_sunder(self):
 		for s in ('_a_', '_aa_'):
-			self.assertTrue(_is_sunder(s))
+			assert _is_sunder(s)
 
 		for s in (
 				'a',
@@ -99,11 +99,11 @@ class TestHelpers(TestCase):
 				'____',
 				'_____',
 				):
-			self.assertFalse(_is_sunder(s))
+			assert not _is_sunder(s)
 
 	def test_is_dunder(self):
 		for s in ('__a__', '__aa__'):
-			self.assertTrue(_is_dunder(s))
+			assert _is_dunder(s)
 		for s in (
 				'a',
 				'a_',
@@ -119,7 +119,7 @@ class TestHelpers(TestCase):
 				'____',
 				'_____',
 				):
-			self.assertFalse(_is_dunder(s))
+			assert not _is_dunder(s)
 
 	def test_auto(self):
 

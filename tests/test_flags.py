@@ -895,14 +895,14 @@ class TestIntFlag(TestCase):
 		Perm = self.Perm
 		Open = self.Open
 		for f in Perm:
-			self.assertTrue(isinstance(f, Perm))
+			assert isinstance(f, Perm)
 			assert f == f.value
-		self.assertTrue(isinstance(Perm.W | Perm.X, Perm))
+		assert isinstance(Perm.W | Perm.X, Perm)
 		assert Perm.W | Perm.X == 3
 		for f in Open:
-			self.assertTrue(isinstance(f, Open))
+			assert isinstance(f, Open)
 			assert f == f.value
-		self.assertTrue(isinstance(Open.WO | Open.RW, Open))
+		assert isinstance(Open.WO | Open.RW, Open)
 		assert Open.WO | Open.RW == 3
 
 	def test_str(self):

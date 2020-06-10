@@ -86,7 +86,7 @@ class TestNamedConstant(TestCase):
 			QUEEN = 10
 			KING = 10
 
-		self.assertFalse(CardNumber.TEN is CardNumber.JACK)
+		assert CardNumber.TEN is not CardNumber.JACK
 		assert CardNumber.TEN == CardNumber.JACK
 		assert CardNumber.TEN == 10
 
@@ -100,7 +100,7 @@ class TestNamedConstant(TestCase):
 
 		assert CardSuit.HEARTS == 1
 		stars = CardSuit('STARS', 5)
-		self.assertIs(stars, CardSuit.STARS)
+		assert stars is CardSuit.STARS
 		assert CardSuit.STARS == 5
 
 	def test_constant_with_docstring(self):
