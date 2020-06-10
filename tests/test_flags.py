@@ -45,6 +45,7 @@ import threading
 import unittest
 from collections import OrderedDict
 from unittest import TestCase
+import pytest
 
 # 3rd party
 from aenum import auto  # type: ignore
@@ -78,14 +79,21 @@ class TestFlag(TestCase):
 	def test_membership(self):
 		Color = self.Color
 		Open = self.Open
-		self.assertRaises(TypeError, lambda: 'BLACK' in Color)
-		self.assertRaises(TypeError, lambda: 'RO' in Open)
+
 		assert Color.BLACK in Color
 		assert Open.RO in Open
-		self.assertFalse(Color.BLACK in Open)
-		self.assertFalse(Open.RO in Color)
-		self.assertRaises(TypeError, lambda: 0 in Color)
-		self.assertRaises(TypeError, lambda: 0 in Open)
+		assert Color.BLACK not in Open
+		assert Open.RO not in Color
+
+	@pytest.mark.parametrize("member", ['BLACK', 0])
+	def test_membership_failures_color(self, member):
+		with pytest.raises(TypeError):
+			assert member in self.Color
+
+	@pytest.mark.parametrize("member", ['RO', 0])
+	def test_membership_failures_open(self, member):
+		with pytest.raises(TypeError):
+			assert member in self.Open
 
 	def test_member_contains(self):
 		Color = self.Color
@@ -160,7 +168,7 @@ class TestFlag(TestCase):
 			for j in Perm:
 				assert (i | j) == Perm(i.value | j.value)
 				assert (i | j).value == i.value | j.value
-				self.assertIs(type(i | j), Perm)
+				assert isinstance(i | j, Perm)
 		for i in Perm:
 			self.assertIs(i | i, i)
 		Open = self.Open
@@ -176,7 +184,7 @@ class TestFlag(TestCase):
 		for i in values:
 			for j in values:
 				assert (i & j).value == i.value & j.value
-				self.assertIs(type(i & j), Perm)
+				assert isinstance(i & j, Perm)
 		for i in Perm:
 			self.assertIs(i & i, i)
 			self.assertIs(i & RWX, i)
@@ -189,7 +197,7 @@ class TestFlag(TestCase):
 		for i in Perm:
 			for j in Perm:
 				assert (i ^ j).value == i.value ^ j.value
-				self.assertIs(type(i ^ j), Perm)
+				assert isinstance(i ^ j, Perm)
 		for i in Perm:
 			self.assertIs(i ^ Perm(0), i)
 			self.assertIs(Perm(0) ^ i, i)
@@ -205,7 +213,7 @@ class TestFlag(TestCase):
 		RWX = Perm.R | Perm.W | Perm.X
 		values = list(Perm) + [RW, RX, WX, RWX, Perm(0)]
 		for i in values:
-			self.assertIs(type(~i), Perm)
+			assert isinstance(~i, Perm)
 			assert ~~i == i
 		for i in Perm:
 			self.assertIs(~~i, i)
@@ -244,7 +252,7 @@ class TestFlag(TestCase):
 			assert isinstance(e.value, int)
 			assert e.name == n
 			assert e in Perm
-			self.assertIs(type(e), Perm)
+			assert isinstance(e, Perm)
 
 	def test_programatic_function_string_with_start(self):
 		Perm = Flag('Perm', 'R W X', start=8)
@@ -259,7 +267,7 @@ class TestFlag(TestCase):
 			assert isinstance(e.value, int)
 			assert e.name == n
 			assert e in Perm
-			self.assertIs(type(e), Perm)
+			assert isinstance(e, Perm)
 
 	def test_programatic_function_string_list(self):
 		Perm = Flag('Perm', ['R', 'W', 'X'])
@@ -274,7 +282,7 @@ class TestFlag(TestCase):
 			assert isinstance(e.value, int)
 			assert e.name == n
 			assert e in Perm
-			self.assertIs(type(e), Perm)
+			assert isinstance(e, Perm)
 
 	def test_programatic_function_iterable(self):
 		Perm = Flag('Perm', (('R', 2), ('W', 8), ('X', 32)))
@@ -289,7 +297,7 @@ class TestFlag(TestCase):
 			assert isinstance(e.value, int)
 			assert e.name == n
 			assert e in Perm
-			self.assertIs(type(e), Perm)
+			assert isinstance(e, Perm)
 
 	def test_programatic_function_from_dict(self):
 		Perm = Flag('Perm', OrderedDict((('R', 2), ('W', 8), ('X', 32))))
@@ -304,7 +312,7 @@ class TestFlag(TestCase):
 			assert isinstance(e.value, int)
 			assert e.name == n
 			assert e in Perm
-			self.assertIs(type(e), Perm)
+			assert isinstance(e, Perm)
 
 	def test_containment(self):
 		Perm = self.Perm
@@ -977,14 +985,14 @@ class TestIntFlag(TestCase):
 			for j in Perm:
 				assert i | j == i.value | j.value
 				assert (i | j).value == i.value | j.value
-				self.assertIs(type(i | j), Perm)
+				assert isinstance(i | j, Perm)
 			for j in range(8):
 				assert i | j == i.value | j
 				assert (i | j).value == i.value | j
-				self.assertIs(type(i | j), Perm)
+				assert isinstance(i | j, Perm)
 				assert j | i == j | i.value
 				assert (j | i).value == j | i.value
-				self.assertIs(type(j | i), Perm)
+				assert isinstance(j | i, Perm)
 		for i in Perm:
 			self.assertIs(i | i, i)
 			self.assertIs(i | 0, i)
@@ -1001,22 +1009,22 @@ class TestIntFlag(TestCase):
 		values = list(Perm) + [RW, RX, WX, RWX, Perm(0)]
 		for i in values:
 			for j in values:
-				self.assertEqual(i & j, i.value & j.value, 'i is %r, j is %r' % (i, j))
-				self.assertEqual((i & j).value, i.value & j.value, 'i is %r, j is %r' % (i, j))
-				self.assertIs(type(i & j), Perm, 'i is %r, j is %r' % (i, j))
+				self.assertEqual(i & j, i.value & j.value, f'i is {i!r}, j is {j!r}')
+				self.assertEqual((i & j).value, i.value & j.value, f'i is {i!r}, j is {j!r}')
+				assert type(i & j), Perm is f'i is {i!r}, j is {j!r}'
 			for j in range(8):
 				assert i & j == i.value & j
 				assert (i & j).value == i.value & j
-				self.assertIs(type(i & j), Perm)
+				assert isinstance(i & j, Perm)
 				assert j & i == j & i.value
 				assert (j & i).value == j & i.value
-				self.assertIs(type(j & i), Perm)
+				assert isinstance(j & i, Perm)
 		for i in Perm:
-			self.assertIs(i & i, i)
-			self.assertIs(i & 7, i)
-			self.assertIs(7 & i, i)
+			assert i & i is i
+			assert i & 7 is i
+			assert 7 & i is i
 		Open = self.Open
-		self.assertIs(Open.RO & Open.CE, Open.RO)
+		assert Open.RO & Open.CE is Open.RO
 
 	def test_xor(self):
 		Perm = self.Perm
@@ -1024,20 +1032,20 @@ class TestIntFlag(TestCase):
 			for j in Perm:
 				assert i ^ j == i.value ^ j.value
 				assert (i ^ j).value == i.value ^ j.value
-				self.assertIs(type(i ^ j), Perm)
+				assert isinstance(i ^ j, Perm)
 			for j in range(8):
 				assert i ^ j == i.value ^ j
 				assert (i ^ j).value == i.value ^ j
-				self.assertIs(type(i ^ j), Perm)
+				assert isinstance(i ^ j, Perm)
 				assert j ^ i == j ^ i.value
 				assert (j ^ i).value == j ^ i.value
-				self.assertIs(type(j ^ i), Perm)
+				assert isinstance(j ^ i, Perm)
 		for i in Perm:
 			self.assertIs(i ^ 0, i)
 			self.assertIs(0 ^ i, i)
 		Open = self.Open
-		self.assertIs(Open.RO ^ Open.CE, Open.CE)
-		self.assertIs(Open.CE ^ Open.CE, Open.RO)
+		assert Open.RO ^ Open.CE is Open.CE
+		assert Open.CE ^ Open.CE is Open.RO
 
 	def test_invert(self):
 		Perm = self.Perm
@@ -1049,13 +1057,13 @@ class TestIntFlag(TestCase):
 		for i in values:
 			assert ~i == ~i.value
 			assert (~i).value == ~i.value
-			self.assertIs(type(~i), Perm)
+			assert isinstance(~i, Perm)
 			assert ~~i == i
 		for i in Perm:
-			self.assertIs(~~i, i)
+			assert ~~i is i
 		Open = self.Open
-		self.assertIs(Open.WO & ~Open.WO, Open.RO)
-		self.assertIs((Open.WO | Open.CE) & ~Open.WO, Open.CE)
+		assert Open.WO & ~Open.WO is Open.RO
+		assert (Open.WO | Open.CE) & ~Open.WO is Open.CE
 
 	def test_iter(self):
 		Perm = self.Perm
@@ -1079,7 +1087,7 @@ class TestIntFlag(TestCase):
 			assert e == v
 			assert e.name == n
 			assert e in Perm
-			self.assertIs(type(e), Perm)
+			assert isinstance(e, Perm)
 
 	def test_programatic_function_string_with_start(self):
 		Perm = IntFlag('Perm', 'R W X', start=8)
@@ -1095,7 +1103,7 @@ class TestIntFlag(TestCase):
 			assert e == v
 			assert e.name == n
 			assert e in Perm
-			self.assertIs(type(e), Perm)
+			assert isinstance(e, Perm)
 
 	def test_programatic_function_string_list(self):
 		Perm = IntFlag('Perm', ['R', 'W', 'X'])
@@ -1111,14 +1119,16 @@ class TestIntFlag(TestCase):
 			assert e == v
 			assert e.name == n
 			assert e in Perm
-			self.assertIs(type(e), Perm)
+			assert isinstance(e, Perm)
 
 	def test_programatic_function_iterable(self):
 		Perm = IntFlag('Perm', (('R', 2), ('W', 8), ('X', 32)))
 		lst = list(Perm)
+
 		assert len(lst) == len(Perm)
 		self.assertEqual(len(Perm), 3, Perm)
 		assert lst, [Perm.R, Perm.W == Perm.X]
+
 		for i, n in enumerate('R W X'.split()):
 			v = 1 << (2 * i + 1)
 			e = Perm(v)
@@ -1127,14 +1137,16 @@ class TestIntFlag(TestCase):
 			assert e == v
 			assert e.name == n
 			assert e in Perm
-			self.assertIs(type(e), Perm)
+			assert isinstance(e, Perm)
 
 	def test_programatic_function_from_dict(self):
 		Perm = IntFlag('Perm', OrderedDict((('R', 2), ('W', 8), ('X', 32))))
 		lst = list(Perm)
+
 		assert len(lst) == len(Perm)
 		self.assertEqual(len(Perm), 3, Perm)
 		assert lst, [Perm.R, Perm.W == Perm.X]
+
 		for i, n in enumerate('R W X'.split()):
 			v = 1 << (2 * i + 1)
 			e = Perm(v)
@@ -1143,15 +1155,17 @@ class TestIntFlag(TestCase):
 			assert e == v
 			assert e.name == n
 			assert e in Perm
-			self.assertIs(type(e), Perm)
+			assert isinstance(e, Perm)
 
 	def test_containment(self):
 		Perm = self.Perm
+
 		R, W, X = Perm
 		RW = R | W
 		RX = R | X
 		WX = W | X
 		RWX = R | W | X
+
 		assert R in RW
 		assert R in RX
 		assert R in RWX
@@ -1161,15 +1175,18 @@ class TestIntFlag(TestCase):
 		assert X in RX
 		assert X in WX
 		assert X in RWX
-		self.assertFalse(R in WX)
-		self.assertFalse(W in RX)
-		self.assertFalse(X in RW)
+		assert R not in WX
+		assert W not in RX
+		assert X not in RW
 
 	def test_bool(self):
 		Perm = self.Perm
+
 		for f in Perm:
 			assert f
+
 		Open = self.Open
+
 		for f in Open:
 			assert bool(f.value) == bool(f)
 

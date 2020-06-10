@@ -46,24 +46,26 @@ from unittest import TestCase
 from better_enum import Enum
 
 
-class TestOrderV3(TestCase):
+def test_same_members():
 
-	def test_same_members(self):
+	class Color(Enum):
+		_order_ = 'red green blue'
+		red = 1
+		green = 2
+		blue = 3
 
-		class Color(Enum):
-			_order_ = 'red green blue'
-			red = 1
-			green = 2
-			blue = 3
 
-	def test_same_members_with_aliases(self):
+def test_same_members_with_aliases():
 
-		class Color(Enum):
-			_order_ = 'red green blue'
-			red = 1
-			green = 2
-			blue = 3
-			verde = green
+	class Color(Enum):
+		_order_ = 'red green blue'
+		red = 1
+		green = 2
+		blue = 3
+		verde = green
+
+
+class TestOrder(TestCase):
 
 	def test_same_members_wrong_order(self):
 		with self.assertRaisesRegex(TypeError, 'member order does not match _order_'):

@@ -40,7 +40,6 @@
 #
 
 # stdlib
-import sys
 from unittest import TestCase
 
 # 3rd party
@@ -48,8 +47,6 @@ from aenum import NamedConstant  # type: ignore
 
 # this package
 from better_enum import constant
-
-pyver = float('%s.%s' % sys.version_info[:2])
 
 
 class TestNamedConstant(TestCase):
@@ -69,50 +66,51 @@ class TestNamedConstant(TestCase):
 		with self.assertRaisesRegex(AttributeError, 'cannot rebind constant'):
 			K('PI', 3)
 
-	def test_duplicates(self):
 
-		class CardNumber(NamedConstant):
-			ACE = 11
-			TWO = 2
-			THREE = 3
-			FOUR = 4
-			FIVE = 5
-			SIX = 6
-			SEVEN = 7
-			EIGHT = 8
-			NINE = 9
-			TEN = 10
-			JACK = 10
-			QUEEN = 10
-			KING = 10
+def test_duplicates():
 
-		assert CardNumber.TEN is not CardNumber.JACK
-		assert CardNumber.TEN == CardNumber.JACK
-		assert CardNumber.TEN == 10
+	class CardNumber(NamedConstant):
+		ACE = 11
+		TWO = 2
+		THREE = 3
+		FOUR = 4
+		FIVE = 5
+		SIX = 6
+		SEVEN = 7
+		EIGHT = 8
+		NINE = 9
+		TEN = 10
+		JACK = 10
+		QUEEN = 10
+		KING = 10
 
-	def test_extend_constants(self):
+	assert CardNumber.TEN is not CardNumber.JACK
+	assert CardNumber.TEN == CardNumber.JACK
+	assert CardNumber.TEN == 10
 
-		class CardSuit(NamedConstant):
-			HEARTS = 1
-			SPADES = 2
-			DIAMONTS = 3
-			CLUBS = 4
+def test_extend_constants():
 
-		assert CardSuit.HEARTS == 1
-		stars = CardSuit('STARS', 5)
-		assert stars is CardSuit.STARS
-		assert CardSuit.STARS == 5
+	class CardSuit(NamedConstant):
+		HEARTS = 1
+		SPADES = 2
+		DIAMONTS = 3
+		CLUBS = 4
 
-	def test_constant_with_docstring(self):
+	assert CardSuit.HEARTS == 1
+	stars = CardSuit('STARS', 5)
+	assert stars is CardSuit.STARS
+	assert CardSuit.STARS == 5
 
-		class Stuff(NamedConstant):
-			Artifact = constant(7, "lucky number!")
-			Bowling = 11
-			HillWomp = constant(29, 'blah blah')
+def test_constant_with_docstring():
 
-		assert Stuff.Artifact == 7
-		assert Stuff.Artifact.__doc__ == 'lucky number!'
-		assert Stuff.Bowling == 11
-		assert Stuff.Bowling.__doc__ == None
-		assert Stuff.HillWomp == 29
-		assert Stuff.HillWomp.__doc__ == 'blah blah'
+	class Stuff(NamedConstant):
+		Artifact = constant(7, "lucky number!")
+		Bowling = 11
+		HillWomp = constant(29, 'blah blah')
+
+	assert Stuff.Artifact == 7
+	assert Stuff.Artifact.__doc__ == 'lucky number!'
+	assert Stuff.Bowling == 11
+	assert Stuff.Bowling.__doc__ == None
+	assert Stuff.HillWomp == 29
+	assert Stuff.HillWomp.__doc__ == 'blah blah'

@@ -3045,6 +3045,7 @@ class TestEnumV3(TestCase):
 			BARREL = 3
 
 		assert Season.SPRING != Part.SPRING
+
 		def bad_compare():
 			Season.SPRING < Part.CLIP  # noqa  # pylint: disable=pointless-statement
 

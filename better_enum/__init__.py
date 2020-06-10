@@ -61,6 +61,7 @@ __all__ = [
 
 # this package
 from ._constant import AutoNumber, AutoValue, MultiValue, NoAlias, Unique, constant
+from ._importer import Enum, EnumMeta, Flag, IntFlag, NamedTuple, unique
 from .custom_enums import (
 		AutoEnum,
 		AutoNumberEnum,
@@ -72,4 +73,3 @@ from .custom_enums import (
 		StrEnum,
 		UniqueEnum
 		)
-from ._importer import Enum, EnumMeta, Flag, IntFlag, NamedTuple, unique
