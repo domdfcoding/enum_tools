@@ -44,39 +44,24 @@ tests_dir: "tests"
 conda_description: "Python tools for analysis of chemical compounds"
 
 classifiers:
-  - 'Development Status :: 4 - Beta'
+  - 'Development Status :: 3 - Alpha'
+#  - 'Development Status :: 4 - Beta'
 #  - "Development Status :: 5 - Production/Stable"
 #  - "Development Status :: 6 - Mature"
 #  - "Development Status :: 7 - Inactive"
   - 'Intended Audience :: Developers'
-  - "Intended Audience :: Education"
-  - "Intended Audience :: Science/Research"
   - 'Operating System :: OS Independent'
   - 'Programming Language :: Python'
   - 'Topic :: Software Development :: Libraries :: Python Modules'
 
 
 
-#keywords:
-#  -
+keywords:
+  - enum
+  - documentation
 
-#extras_require:
-#  pubchem: "chemistry_tools/pubchem/requirements.txt"
-#  elements: "chemistry_tools/elements/requirements.txt"
-#  formulae: "chemistry_tools/formulae/requirements.txt"
-#  plotting:
-#    - matplotlib>=3.0.0
-#  toxnet:
-#    - beautifulsoup4>=4.7.0
+extras_require:
+  sphinx:
+    - sphinx
 
-
-# Paths to additional requirements.txt files, relative to repo root
-#additional_requirements_files:
-#  - "chemistry_tools/pubchem/requirements.txt"
-#  - "chemistry_tools/elements/requirements.txt"
-#  - "chemistry_tools/formulae/requirements.txt"
-
-#tox_testenv_extras: all
-
-#sphinx_conf_preamble:
-#  - "warnings.filterwarnings('ignore', message='duplicate object description of chemistry_tools.elements')"
+tox_testenv_extras: all

@@ -1,47 +1,38 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+#
+#  autoenum.py
 """
-autoenum
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-A Sphinx directive to specify that a module has extra requirements, and show how to install them
-Display a warning at the top of module documentation that it has additional requirements.
-
-:copyright: Copyright (c) 2020 by Dominic Davis-Foster <dominic@davis-foster.co.uk>
-:license: BSD, see LICENSE for details.
+A Sphinx directive for documented Enums in Python
 """
-
-__author__ = "Dominic Davis-Foster"
-__copyright__ = "2020 Dominic Davis-Foster"
-
-__license__ = "BSD"
-__version__ = "0.1.0"
-__email__ = "dominic@davis-foster.co.uk"
+#
+#  Copyright (c) 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
+#
+#  This program is free software; you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation; either version 3 of the License, or
+#  (at your option) any later version.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with this program; if not, write to the Free Software
+#  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+#  MA 02110-1301, USA.
+#
 
 # stdlib
-import configparser
-import importlib.util
-import inspect
-import mimetypes
-import os
-import pathlib
-import re
-import sys
-import textwrap
-import warnings
-from pprint import pprint
-from typing import Any, Dict, List, Optional, Tuple, Union
+from typing import Any, Dict, List, Optional, Tuple
 
 # 3rd party
-from docutils import nodes
-from docutils.parsers.rst import directives
-from docutils.statemachine import ViewList
 from sphinx.application import Sphinx
 from sphinx.errors import PycodeError
 from sphinx.ext.autodoc import ALL, AttributeDocumenter, ClassDocumenter, Documenter, logger
-from sphinx.locale import _, __
+from sphinx.locale import __
 from sphinx.pycode import ModuleAnalyzer
-from sphinx.util.docutils import SphinxDirective
 
 # this package
 from better_enum import Enum
@@ -58,12 +49,12 @@ def _start_generate(
 	:param documenter:
 	:type documenter:
 	:param real_modname:
-	:type real_modname:
+	:type real_modname: str
 	:param check_module:
-	:type check_module:
+	:type check_module: bool
 
-	:return:
-	:rtype:
+	:return: The ``sourcename``, or None if certain conditions are met,
+		to indicate that the Documenter class should exit early.
 	"""
 
 	# Do not pass real_modname and use the name from the __module__
@@ -290,25 +281,22 @@ class EnumVarDocumenter(AttributeDocumenter):
 			all_members: bool = False
 			) -> None:
 		"""
-		Generate reST for the object given by *self.name*, and possibly for
+		Generate reST for the object given by ``self.name``, and possibly for
 		its members.
 
-		If *more_content* is given, include that content. If *real_modname* is
-		given, use that module name to find attribute docs. If *check_module* is
+		If ``more_content`` is given, include that content. If ``real_modname`` is
+		given, use that module name to find attribute docs. If ``check_module`` is
 		True, only generate if the object is defined in the module name it is
-		imported from. If *all_members* is True, document all members.
+		imported from. If ``all_members`` is True, document all members.
 
 		:param more_content:
 		:type more_content:
 		:param real_modname:
-		:type real_modname:
+		:type real_modname: str
 		:param check_module:
-		:type check_module:
+		:type check_module: str
 		:param all_members:
-		:type all_members:
-
-		:return:
-		:rtype:
+		:type all_members: str
 		"""
 
 		ret = _start_generate(self, real_modname, check_module)
@@ -339,8 +327,6 @@ def setup(app: Sphinx) -> Dict[str, Any]:
 	:return:
 	:rtype: dict
 	"""
-
-	# Location of package source directory relative to documentation source directory
 
 	app.add_autodocumenter(EnumDocumenter)
 

@@ -32,9 +32,9 @@ __license__ = "GNU Lesser General Public License v3 or later (LGPLv3+)"
 __version__ = "0.0.1"
 __email__ = "dominic@davis-foster.co.uk"
 
+
 __all__ = [
-		# TODO: 'NamedConstant',
-		'constant',  # TODO: 'skip',
+		'constant',
 		'Enum',
 		'IntEnum',
 		'AutoNumberEnum',
@@ -45,17 +45,20 @@ __all__ = [
 		'AutoNumber',
 		'MultiValue',
 		'NoAlias',
-		'Unique',  # TODO: 'enum',
-		# TODO: 'extend_enum',
+		'Unique',
 		'unique',
 		'NamedTuple',
-		"EnumMeta"
+		"EnumMeta",
 		]
+# TODO: 'NamedConstant',
+# TODO: 'skip',
+# TODO: 'enum',
+# TODO: 'extend_enum',
 
 
 # this package
-from .constant import AutoNumber, AutoValue, MultiValue, NoAlias, Unique, constant
-from .custom_enums import (
+from ._constant import AutoNumber, AutoValue, MultiValue, NoAlias, Unique, constant
+from ._custom_enums import (
 	AutoEnum,
 	AutoNumberEnum,
 	IntEnum,
@@ -66,5 +69,4 @@ from .custom_enums import (
 	StrEnum,
 	UniqueEnum
 )
-from .decorator import document
-from .importer import Enum, Flag, IntFlag, NamedTuple, unique, EnumMeta
+from ._importer import Enum, EnumMeta, Flag, IntFlag, NamedTuple, unique

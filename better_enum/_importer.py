@@ -1,7 +1,27 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
-#  demo_classes.py
+#  _importer.py
+"""
+Import Enum etc. from the correct place, depending on whether mypy is running or not
+"""
+#
+#  Copyright (c) 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
+#
+#  This program is free software; you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation; either version 3 of the License, or
+#  (at your option) any later version.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with this program; if not, write to the Free Software
+#  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+#  MA 02110-1301, USA.
 #
 #  Based on aenum
 #  https://bitbucket.org/stoneleaf/aenum
@@ -39,78 +59,13 @@
 #  |  POSSIBILITY OF SUCH DAMAGE.
 #
 
-
 # stdlib
-import sys
-from unittest import TestCase
+from typing import TYPE_CHECKING
 
-# this package
-from better_enum import Enum, IntEnum, unique
+if TYPE_CHECKING:
+	from enum import Enum, unique, Flag, IntFlag, EnumMeta
+	from typing import NamedTuple, TYPE_CHECKING
+else:
+	from aenum import Enum, NamedTuple, unique, Flag, IntFlag, EnumMeta
 
-pyver = float('%s.%s' % sys.version_info[:2])
-
-
-class TestUnique(TestCase):
-	"""2.4 doesn't allow class decorators, use function syntax."""
-
-	def test_unique_clean(self):
-
-		class Clean(Enum):
-			one = 1
-			two = 'dos'
-			tres = 4.0
-
-		unique(Clean)
-
-		class Cleaner(IntEnum):
-			single = 1
-			double = 2
-			triple = 3
-
-		unique(Cleaner)
-
-	def test_unique_dirty(self):
-		try:
-
-			class Dirty(Enum):
-				__order__ = 'one two'
-				one = 1
-				two = 'dos'
-				tres = 1
-
-			unique(Dirty)
-		except ValueError:
-			exc = sys.exc_info()[1]
-			message = exc.args[0]
-		self.assertTrue('tres -> one' in message)
-
-		try:
-
-			class Dirtier(IntEnum):
-				__order__ = 'single triple'
-				single = 1
-				double = 1
-				triple = 3
-				turkey = 3
-
-			unique(Dirtier)
-		except ValueError:
-			exc = sys.exc_info()[1]
-			message = exc.args[0]
-		self.assertTrue('double -> single' in message)
-		self.assertTrue('turkey -> triple' in message)
-
-	def test_unique_with_name(self):
-
-		@unique
-		class Silly(Enum):
-			one = 1
-			two = 'dos'
-			name = 3
-
-		@unique
-		class Sillier(IntEnum):
-			single = 1
-			name = 2
-			triple = 3
-			value = 4
+__all__ = ["Enum", "NamedTuple", "unique", "Flag", "IntFlag", "EnumMeta"]

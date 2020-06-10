@@ -1,7 +1,8 @@
-from better_enum import Enum, document
+from better_enum import Enum
+from better_enum.decorator import DocumentedEnum, document_enum
 
 
-@document
+@document_enum
 class People(int, Enum):
 	"""
 	An enumeration of people
@@ -51,3 +52,12 @@ def test_people():
 	assert list(iter(People)) == [1, 2, 3]
 	assert list(People.iter_values()) == [People.Bob, People.Alice, People.Carol]
 	assert list(People.iter_values()) == [1, 2, 3]
+
+
+class MyEnum(str, DocumentedEnum):
+	a_value = b_value = "a value"  # doc: Docstring
+
+
+def test_documented_enum():
+	assert MyEnum.a_value == "a value"
+	assert MyEnum.a_value.__doc__ == "Docstring"
