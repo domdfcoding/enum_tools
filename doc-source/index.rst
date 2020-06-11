@@ -23,7 +23,7 @@ better_enum
 	* - Other
 	  - |license| |language| |commits-since| |commits-latest| |maintained| 
 
-.. |docs| image:: https://readthedocs.org/projects/better_enum/badge/?version=latest
+.. |docs| image:: https://img.shields.io/readthedocs/better_enum/latest?logo=read-the-docs
 	:target: https://better_enum.readthedocs.io/en/latest/?badge=latest
 	:alt: Documentation Status
 
@@ -35,19 +35,19 @@ better_enum
 	:target: https://requires.io/github/domdfcoding/better_enum/requirements/?branch=master
 	:alt: Requirements Status
 
-.. |coveralls| image:: https://coveralls.io/repos/github/domdfcoding/better_enum/badge.svg?branch=master
+.. |coveralls| image:: https://shields.io/coveralls/github/domdfcoding/better_enum/master?logo=coveralls
 	:target: https://coveralls.io/github/domdfcoding/better_enum?branch=master
 	:alt: Coverage
 
-.. |codefactor| image:: https://img.shields.io/codefactor/grade/github/domdfcoding/better_enum
+.. |codefactor| image:: https://img.shields.io/codefactor/grade/github/domdfcoding/better_enum?logo=codefactor
 	:target: https://www.codefactor.io/repository/github/domdfcoding/better_enum
 	:alt: CodeFactor Grade
 
-.. |pypi-version| image:: https://img.shields.io/pypi/v/better_enum.svg
+.. |pypi-version| image:: https://img.shields.io/pypi/v/better_enum
 	:target: https://pypi.org/project/better_enum/
 	:alt: PyPI - Package Version
 
-.. |supported-versions| image:: https://img.shields.io/pypi/pyversions/better_enum.svg
+.. |supported-versions| image:: https://img.shields.io/pypi/pyversions/better_enum
 	:target: https://pypi.org/project/better_enum/
 	:alt: PyPI - Supported Python Versions
 

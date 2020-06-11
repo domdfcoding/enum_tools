@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
-#  demo_classes.py
+#  test_flags.py
 #
 #  Based on aenum
 #  https://bitbucket.org/stoneleaf/aenum
@@ -40,7 +40,6 @@
 #
 
 # stdlib
-import sys
 import threading
 import unittest
 from collections import OrderedDict
@@ -93,62 +92,78 @@ def test_membership_failures_open(member):
 		assert member in Open
 
 
-def test_str():
-	assert str(Perm.R) == 'Perm.R'
-	assert str(Perm.W) == 'Perm.W'
-	assert str(Perm.X) == 'Perm.X'
-	assert str(Perm.R | Perm.W) == 'Perm.R|W'
-	assert str(Perm.R | Perm.W | Perm.X) == 'Perm.R|W|X'
-	assert str(Perm(0)) == 'Perm.0'
-	assert str(~Perm.R) == 'Perm.W|X'
-	assert str(~Perm.W) == 'Perm.R|X'
-	assert str(~Perm.X) == 'Perm.R|W'
-	assert str(~(Perm.R | Perm.W)) == 'Perm.X'
-	assert str(~(Perm.R | Perm.W | Perm.X)) == 'Perm.0'
-	assert str(Perm(~0)) == 'Perm.R|W|X'
-
-	assert str(Open.RO) == 'Open.RO'
-	assert str(Open.WO) == 'Open.WO'
-	assert str(Open.AC) == 'Open.AC'
-	assert str(Open.RO | Open.CE) == 'Open.CE'
-	assert str(Open.WO | Open.CE) == 'Open.CE|WO'
-	assert str(~Open.RO) == 'Open.CE|AC|RW|WO'
-	assert str(~Open.WO) == 'Open.CE|RW'
-	assert str(~Open.AC) == 'Open.CE'
-	assert str(~(Open.RO | Open.CE)) == 'Open.AC'
-	assert str(~(Open.WO | Open.CE)) == 'Open.RW'
-
-
-def test_repr():
-	assert repr(Perm.R) == '<Perm.R: 4>'
-	assert repr(Perm.W) == '<Perm.W: 2>'
-	assert repr(Perm.X) == '<Perm.X: 1>'
-	assert repr(Perm.R | Perm.W) == '<Perm.R|W: 6>'
-	assert repr(Perm.R | Perm.W | Perm.X) == '<Perm.R|W|X: 7>'
-	assert repr(Perm(0)) == '<Perm.0: 0>'
-	assert repr(~Perm.R) == '<Perm.W|X: 3>'
-	assert repr(~Perm.W) == '<Perm.R|X: 5>'
-	assert repr(~Perm.X) == '<Perm.R|W: 6>'
-	assert repr(~(Perm.R | Perm.W)) == '<Perm.X: 1>'
-	assert repr(~(Perm.R | Perm.W | Perm.X)) == '<Perm.0: 0>'
-	assert repr(Perm(~0)) == '<Perm.R|W|X: 7>'
-
-	assert repr(Open.RO) == '<Open.RO: 0>'
-	assert repr(Open.WO) == '<Open.WO: 1>'
-	assert repr(Open.AC) == '<Open.AC: 3>'
-	assert repr(Open.RO | Open.CE) == '<Open.CE: 524288>'
-	assert repr(Open.WO | Open.CE) == '<Open.CE|WO: 524289>'
-	assert repr(~Open.RO) == '<Open.CE|AC|RW|WO: 524291>'
-	assert repr(~Open.WO) == '<Open.CE|RW: 524290>'
-	assert repr(~Open.AC) == '<Open.CE: 524288>'
-	assert repr(~(Open.RO | Open.CE)) == '<Open.AC: 3>'
-	assert repr(~(Open.WO | Open.CE)) == '<Open.RW: 2>'
+@pytest.mark.parametrize(
+		"expression, expects",
+		[
+				(Perm.R, 'Perm.R'),
+				(Perm.W, 'Perm.W'),
+				(Perm.X, 'Perm.X'),
+				(Perm.R | Perm.W, 'Perm.R|W'),
+				(Perm.R | Perm.W | Perm.X, 'Perm.R|W|X'),
+				(Perm(0), 'Perm.0'),
+				(~Perm.R, 'Perm.W|X'),
+				(~Perm.W, 'Perm.R|X'),
+				(~Perm.X, 'Perm.R|W'),
+				(~(Perm.R | Perm.W), 'Perm.X'),
+				(~(Perm.R | Perm.W | Perm.X), 'Perm.0'),
+				(Perm(~0), 'Perm.R|W|X'),
+				(Open.RO, 'Open.RO'),
+				(Open.WO, 'Open.WO'),
+				(Open.AC, 'Open.AC'),
+				(Open.RO | Open.CE, 'Open.CE'),
+				(Open.WO | Open.CE, 'Open.CE|WO'),
+				(~Open.RO, 'Open.CE|AC|RW|WO'),
+				(~Open.WO, 'Open.CE|RW'),
+				(~Open.AC, 'Open.CE'),
+				(~(Open.RO | Open.CE), 'Open.AC'),
+				(~(Open.WO | Open.CE), 'Open.RW'),
+				]
+		)
+def test_str(expression, expects):
+	assert str(expression) == expects
 
 
-def test_name_lookup():
-	assert Color.RED is Color['RED']
-	assert Color.RED | Color.GREEN is Color['RED|GREEN']
-	assert Color.PURPLE is Color['RED|BLUE']
+@pytest.mark.parametrize(
+		"expression, expects",
+		[
+				(Perm.R, '<Perm.R: 4>'),
+				(Perm.W, '<Perm.W: 2>'),
+				(Perm.X, '<Perm.X: 1>'),
+				(Perm.R | Perm.W, '<Perm.R|W: 6>'),
+				(Perm.R | Perm.W | Perm.X, '<Perm.R|W|X: 7>'),
+				(Perm(0), '<Perm.0: 0>'),
+				(~Perm.R, '<Perm.W|X: 3>'),
+				(~Perm.W, '<Perm.R|X: 5>'),
+				(~Perm.X, '<Perm.R|W: 6>'),
+				(~(Perm.R | Perm.W), '<Perm.X: 1>'),
+				(~(Perm.R | Perm.W | Perm.X), '<Perm.0: 0>'),
+				(Perm(~0), '<Perm.R|W|X: 7>'),
+				(Open.RO, '<Open.RO: 0>'),
+				(Open.WO, '<Open.WO: 1>'),
+				(Open.AC, '<Open.AC: 3>'),
+				(Open.RO | Open.CE, '<Open.CE: 524288>'),
+				(Open.WO | Open.CE, '<Open.CE|WO: 524289>'),
+				(~Open.RO, '<Open.CE|AC|RW|WO: 524291>'),
+				(~Open.WO, '<Open.CE|RW: 524290>'),
+				(~Open.AC, '<Open.CE: 524288>'),
+				(~(Open.RO | Open.CE), '<Open.AC: 3>'),
+				(~(Open.WO | Open.CE), '<Open.RW: 2>'),
+				]
+		)
+def test_repr(expression, expects):
+	assert repr(expression) == expects
+
+
+@pytest.mark.parametrize(
+		"left, right",
+		[
+				(Color.RED, Color['RED']),
+				(Color.RED | Color.GREEN, Color['RED|GREEN']),
+				(Color.PURPLE, Color['RED|BLUE']),
+				]
+		)
+def test_name_lookup(left, right):
+	assert left is right
 
 
 def test_or():
@@ -220,19 +235,24 @@ def test_bool():
 
 
 def test_iteration():
-	C = Color
-	assert list(C), [C.BLACK, C.RED, C.GREEN, C.BLUE == C.PURPLE]
+	assert list(Color), [Color.BLACK, Color.RED, Color.GREEN, Color.BLUE == Color.PURPLE]
 
 
-def test_member_iteration():
-	C = Color
-	assert list(C.BLACK) == []
-	assert list(C.RED) == [C.RED]
-	assert list(C.PURPLE), [C.BLUE == C.RED]
+@pytest.mark.parametrize(
+		"left, right", [
+				(list(Color.BLACK), []),
+				(list(Color.RED), [Color.RED]),
+				(list(Color.PURPLE), [Color.BLUE, Color.RED]),
+				]
+		)
+def test_member_iteration(left, right):
+	assert left == right
 
 
 class TestFlag(TestCase):
-	"""Tests of the Flags."""
+	"""
+	Tests of the Flags.
+	"""
 
 	def test_member_contains(self):
 		self.assertRaises(TypeError, lambda: 'test' in Color.BLUE)

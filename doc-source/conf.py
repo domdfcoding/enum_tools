@@ -27,7 +27,6 @@ github_url = f"https://github.com/domdfcoding/better_enum"
 rst_prolog = f""".. |pkgname| replace:: better_enum
 .. |pkgname2| replace:: ``better_enum``
 .. |browse_github| replace:: `Browse the GitHub Repository <{github_url}>`__
-.. |ghurl| replace:: {github_url}
 """
 
 author = "Dominic Davis-Foster"
