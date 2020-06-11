@@ -216,7 +216,7 @@ def convert(enum, name, module, filter, source=None):
 		source = vars(source)
 	else:
 		source = module_globals
-	members = dict((name, value) for name, value in source.items() if filter(name))
+	members = {name: value for name, value in source.items() if filter(name)}
 	enum = enum(name, members, module=module)
 	enum.__reduce_ex__ = _reduce_ex_by_name
 	module_globals.update(enum.__members__)
