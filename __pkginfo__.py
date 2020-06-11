@@ -75,7 +75,7 @@ install_requires = (repo_root / "requirements.txt").read_text().split('\n')
 extras_require = {'sphinx': ['sphinx'], 'all': ['sphinx']}
 
 classifiers = [
-		'Development Status :: 3 - Alpha',
+		'Development Status :: 4 - Beta',
 		'Intended Audience :: Developers',
 		'Operating System :: OS Independent',
 		'Programming Language :: Python',

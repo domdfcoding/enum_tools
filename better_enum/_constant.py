@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 #
 #  _constant.py
 #
@@ -61,7 +60,7 @@ from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
 
-	class constant(object):
+	class constant:
 		"""
 		Simple constant descriptor for NamedConstant and Enum use.
 		"""

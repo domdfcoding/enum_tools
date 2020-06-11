@@ -33,11 +33,9 @@ manifest_additional:
 # directory that contains tests
 tests_dir: "tests"
 
-conda_description: "Python tools for analysis of chemical compounds"
-
 classifiers:
-  - 'Development Status :: 3 - Alpha'
-#  - 'Development Status :: 4 - Beta'
+#  - 'Development Status :: 3 - Alpha'
+  - 'Development Status :: 4 - Beta'
 #  - "Development Status :: 5 - Production/Stable"
 #  - "Development Status :: 6 - Mature"
 #  - "Development Status :: 7 - Inactive"

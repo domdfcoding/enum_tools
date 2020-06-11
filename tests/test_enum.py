@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 #
 #  demo_classes.py
 #
@@ -163,7 +162,7 @@ class TestEnum(TestCase):
 			assert isinstance(e, self.Season)
 			assert isinstance(e, self.Season)
 			assert str(e) == 'Season.' + season
-			assert repr(e) == '<Season.%s: %s>' % (season, i)
+			assert repr(e) == f'<Season.{season}: {i}>'
 
 	def test_enum_helper(self):
 		e1 = enum(1, 2, three=9)
@@ -287,12 +286,12 @@ class TestEnum(TestCase):
 
 	def test_format_enum(self):
 		Season = self.Season
-		assert '{0}'.format(Season.SPRING) == '{0}'.format(str(Season.SPRING))
-		assert '{0:}'.format(Season.SPRING) == '{0:}'.format(str(Season.SPRING))
-		assert '{0:20}'.format(Season.SPRING) == '{0:20}'.format(str(Season.SPRING))
-		assert '{0:^20}'.format(Season.SPRING) == '{0:^20}'.format(str(Season.SPRING))
-		assert '{0:>20}'.format(Season.SPRING) == '{0:>20}'.format(str(Season.SPRING))
-		assert '{0:<20}'.format(Season.SPRING) == '{0:<20}'.format(str(Season.SPRING))
+		assert f'{Season.SPRING}' == '{}'.format(str(Season.SPRING))
+		assert f'{Season.SPRING}' == '{}'.format(str(Season.SPRING))
+		assert f'{Season.SPRING:20}' == '{:20}'.format(str(Season.SPRING))
+		assert f'{Season.SPRING:^20}' == '{:^20}'.format(str(Season.SPRING))
+		assert f'{Season.SPRING:>20}' == '{:>20}'.format(str(Season.SPRING))
+		assert f'{Season.SPRING:<20}' == '{:<20}'.format(str(Season.SPRING))
 
 	def test_format_enum_custom(self):
 
@@ -303,7 +302,7 @@ class TestEnum(TestCase):
 			def __format__(self, spec):
 				return 'TestFloat success!'
 
-		assert '{0}'.format(TestFloat.one) == 'TestFloat success!'
+		assert f'{TestFloat.one}' == 'TestFloat success!'
 
 	def assertFormatIsValue(self, spec, member):
 		assert spec.format(member) == spec.format(member.value)
@@ -384,7 +383,7 @@ class TestEnum(TestCase):
 		assert Season(3) is Season.AUTUMN
 		assert Season(1) is Season.SPRING
 		assert Season.FALL.name == 'AUTUMN'
-		assert set([k for k, v in Season.__members__.items() if v.name != k]) == set(['FALL', 'ANOTHER_SPRING'])
+		assert {k for k, v in Season.__members__.items() if v.name != k} == {'FALL', 'ANOTHER_SPRING'}
 
 	def test_enum_with_value_name(self):
 
@@ -733,7 +732,7 @@ class TestEnum(TestCase):
 			assert isinstance(e, SummerMonth)
 
 	def test_programatic_function_unicode(self):
-		SummerMonth = Enum('SummerMonth', str('june july august'))
+		SummerMonth = Enum('SummerMonth', 'june july august')
 		lst = list(SummerMonth)
 		assert len(lst) == len(SummerMonth)
 		self.assertEqual(len(SummerMonth), 3, SummerMonth)
@@ -741,7 +740,7 @@ class TestEnum(TestCase):
 				[SummerMonth.june, SummerMonth.july, SummerMonth.august],
 				lst,
 				)
-		for i, month in enumerate(str('june july august').split()):
+		for i, month in enumerate('june july august'.split()):
 			i += 1
 			e = SummerMonth(i)
 			assert int(e.value) == i
@@ -751,7 +750,7 @@ class TestEnum(TestCase):
 			assert isinstance(e, SummerMonth)
 
 	def test_programatic_function_unicode_list(self):
-		SummerMonth = Enum('SummerMonth', [str('june'), str('july'), str('august')])
+		SummerMonth = Enum('SummerMonth', ['june', 'july', 'august'])
 		lst = list(SummerMonth)
 		assert len(lst) == len(SummerMonth)
 		self.assertEqual(len(SummerMonth), 3, SummerMonth)
@@ -759,7 +758,7 @@ class TestEnum(TestCase):
 				[SummerMonth.june, SummerMonth.july, SummerMonth.august],
 				lst,
 				)
-		for i, month in enumerate(str('june july august').split()):
+		for i, month in enumerate('june july august'.split()):
 			i += 1
 			e = SummerMonth(i)
 			assert int(e.value) == i
@@ -769,7 +768,7 @@ class TestEnum(TestCase):
 			assert isinstance(e, SummerMonth)
 
 	def test_programatic_function_unicode_iterable(self):
-		SummerMonth = Enum('SummerMonth', ((str('june'), 1), (str('july'), 2), (str('august'), 3)))
+		SummerMonth = Enum('SummerMonth', (('june', 1), ('july', 2), ('august', 3)))
 		lst = list(SummerMonth)
 		assert len(lst) == len(SummerMonth)
 		self.assertEqual(len(SummerMonth), 3, SummerMonth)
@@ -777,7 +776,7 @@ class TestEnum(TestCase):
 				[SummerMonth.june, SummerMonth.july, SummerMonth.august],
 				lst,
 				)
-		for i, month in enumerate(str('june july august').split()):
+		for i, month in enumerate('june july august'.split()):
 			i += 1
 			e = SummerMonth(i)
 			assert int(e.value) == i
@@ -787,12 +786,12 @@ class TestEnum(TestCase):
 			assert isinstance(e, SummerMonth)
 
 	def test_programatic_function_from_unicode_dict(self):
-		SummerMonth = Enum('SummerMonth', dict(((str('june'), 1), (str('july'), 2), (str('august'), 3))))
+		SummerMonth = Enum('SummerMonth', dict((('june', 1), ('july', 2), ('august', 3))))
 		lst = list(SummerMonth)
 		assert len(lst) == len(SummerMonth)
 		self.assertEqual(len(SummerMonth), 3, SummerMonth)
 
-		for i, month in enumerate(str('june july august').split()):
+		for i, month in enumerate('june july august'.split()):
 			i += 1
 			e = SummerMonth(i)
 			assert int(e.value) == i
@@ -802,7 +801,7 @@ class TestEnum(TestCase):
 			assert isinstance(e, SummerMonth)
 
 	def test_programatic_function_unicode_type(self):
-		SummerMonth = Enum('SummerMonth', str('june july august'), type=int)
+		SummerMonth = Enum('SummerMonth', 'june july august', type=int)
 		lst = list(SummerMonth)
 		assert len(lst) == len(SummerMonth)
 		self.assertEqual(len(SummerMonth), 3, SummerMonth)
@@ -810,7 +809,7 @@ class TestEnum(TestCase):
 				[SummerMonth.june, SummerMonth.july, SummerMonth.august],
 				lst,
 				)
-		for i, month in enumerate(str('june july august').split()):
+		for i, month in enumerate('june july august'.split()):
 			i += 1
 			e = SummerMonth(i)
 			assert e == i
@@ -819,7 +818,7 @@ class TestEnum(TestCase):
 			assert isinstance(e, SummerMonth)
 
 	def test_programatic_function_unicode_type_from_subclass(self):
-		SummerMonth = IntEnum('SummerMonth', str('june july august'))
+		SummerMonth = IntEnum('SummerMonth', 'june july august')
 		lst = list(SummerMonth)
 		assert len(lst) == len(SummerMonth)
 		self.assertEqual(len(SummerMonth), 3, SummerMonth)
@@ -827,7 +826,7 @@ class TestEnum(TestCase):
 				[SummerMonth.june, SummerMonth.july, SummerMonth.august],
 				lst,
 				)
-		for i, month in enumerate(str('june july august').split()):
+		for i, month in enumerate('june july august'.split()):
 			i += 1
 			e = SummerMonth(i)
 			assert e == i
@@ -840,12 +839,12 @@ class TestEnum(TestCase):
 		class_names = 'SummerMonth', 'S\xfcmm\xe9rM\xf6nth'
 		for i, class_name in enumerate(class_names):
 
-			SummerMonth = Enum(class_name, str('june july august'))
+			SummerMonth = Enum(class_name, 'june july august')
 			lst = list(SummerMonth)
 			assert len(lst) == len(SummerMonth)
 			self.assertEqual(len(SummerMonth), 3, SummerMonth)
 			assert [SummerMonth.june, SummerMonth.july, SummerMonth.august] == lst
-			for i, month in enumerate(str('june july august').split()):
+			for i, month in enumerate('june july august'.split()):
 				i += 1
 				e = SummerMonth(i)
 				assert e.value == i
@@ -1070,7 +1069,7 @@ class TestEnum(TestCase):
 				for k, v in original_dict.items():
 					if k not in temp_dict._member_names and k not in sunders:
 						classdict[k] = v
-				return super(auto_enum, metacls).__new__(metacls, cls, bases, classdict)
+				return super().__new__(metacls, cls, bases, classdict)
 
 		AutoNumberedEnum = auto_enum('AutoNumberedEnum', (Enum, ), {})
 
@@ -1116,7 +1115,7 @@ class TestEnum(TestCase):
 				return {}
 
 			def __init__(cls, *args, **kwds):
-				super(JSONEnumMeta, cls).__init__(*args)
+				super().__init__(*args)
 
 			def __new__(metacls, cls, bases, clsdict, init=None, start=None, settings=()):
 				# stdlib
@@ -1153,7 +1152,7 @@ class TestEnum(TestCase):
 						values = tuple(values)
 						members.append((name, identity(*values)))
 				# get the real EnumDict
-				enum_dict = super(JSONEnumMeta, metacls).__prepare__(cls, bases, init, start, settings)
+				enum_dict = super().__prepare__(cls, bases, init, start, settings)
 				# transfer the original dict content, _items first
 				items = list(clsdict.items())
 				items.sort(key=lambda p: (0 if p[0][0] == '_' else 1, p))
@@ -1162,7 +1161,7 @@ class TestEnum(TestCase):
 				# add the members
 				for name, value in members:
 					enum_dict[name] = value
-				return super(JSONEnumMeta, metacls).__new__(metacls, cls, bases, enum_dict, init, start, settings)
+				return super().__new__(metacls, cls, bases, enum_dict, init, start, settings)
 
 		# for use with both Python 2/3
 		JSONEnum = JSONEnumMeta('JsonEnum', (Enum, ), {})
@@ -1217,7 +1216,7 @@ class TestEnum(TestCase):
 
 			def __repr__(self):
 				# repr() is updated to include the name and type info
-				return "%s(%r, %s)" % (type(self).__name__, self.__name__, int.__repr__(self))
+				return "{}({!r}, {})".format(type(self).__name__, self.__name__, int.__repr__(self))
 
 			def __str__(self):
 				# str() is unchanged, even if it relies on the repr() fallback
@@ -1232,7 +1231,7 @@ class TestEnum(TestCase):
 			def __add__(self, other):
 				temp = int(self) + int(other)
 				if isinstance(self, NamedInt) and isinstance(other, NamedInt):
-					return NamedInt('(%s + %s)' % (self.__name__, other.__name__), temp)
+					return NamedInt(f'({self.__name__} + {other.__name__})', temp)
 				else:
 					return temp
 
@@ -1273,7 +1272,7 @@ class TestEnum(TestCase):
 
 			def __repr__(self):
 				# repr() is updated to include the name and type info
-				return "%s(%r, %s)" % (type(self).__name__, self.__name__, int.__repr__(self))
+				return "{}({!r}, {})".format(type(self).__name__, self.__name__, int.__repr__(self))
 
 			def __str__(self):
 				# str() is unchanged, even if it relies on the repr() fallback
@@ -1288,7 +1287,7 @@ class TestEnum(TestCase):
 			def __add__(self, other):
 				temp = int(self) + int(other)
 				if isinstance(self, NamedInt) and isinstance(other, NamedInt):
-					return NamedInt('(%s + %s)' % (self.__name__, other.__name__), temp)
+					return NamedInt(f'({self.__name__} + {other.__name__})', temp)
 				else:
 					return temp
 
@@ -1329,7 +1328,7 @@ class TestEnum(TestCase):
 
 			def __repr__(self):
 				# repr() is updated to include the name and type info
-				return "%s(%r, %s)" % (type(self).__name__, self.__name__, int.__repr__(self))
+				return "{}({!r}, {})".format(type(self).__name__, self.__name__, int.__repr__(self))
 
 			def __str__(self):
 				# str() is unchanged, even if it relies on the repr() fallback
@@ -1344,7 +1343,7 @@ class TestEnum(TestCase):
 			def __add__(self, other):
 				temp = int(self) + int(other)
 				if isinstance(self, NamedInt) and isinstance(other, NamedInt):
-					return NamedInt('(%s + %s)' % (self.__name__, other.__name__), temp)
+					return NamedInt(f'({self.__name__} + {other.__name__})', temp)
 				else:
 					return temp
 
@@ -1382,7 +1381,7 @@ class TestEnum(TestCase):
 
 			def __repr__(self):
 				# repr() is updated to include the name and type info
-				return "%s(%r, %s)" % (type(self).__name__, self.__name__, int.__repr__(self))
+				return "{}({!r}, {})".format(type(self).__name__, self.__name__, int.__repr__(self))
 
 			def __str__(self):
 				# str() is unchanged, even if it relies on the repr() fallback
@@ -1397,7 +1396,7 @@ class TestEnum(TestCase):
 			def __add__(self, other):
 				temp = int(self) + int(other)
 				if isinstance(self, NamedInt) and isinstance(other, NamedInt):
-					return NamedInt('(%s + %s)' % (self.__name__, other.__name__), temp)
+					return NamedInt(f'({self.__name__} + {other.__name__})', temp)
 				else:
 					return temp
 
@@ -1435,7 +1434,7 @@ class TestEnum(TestCase):
 
 			def __repr__(self):
 				# repr() is updated to include the name and type info
-				return "%s(%r, %s)" % (type(self).__name__, self.__name__, int.__repr__(self))
+				return "{}({!r}, {})".format(type(self).__name__, self.__name__, int.__repr__(self))
 
 			def __str__(self):
 				# str() is unchanged, even if it relies on the repr() fallback
@@ -1450,7 +1449,7 @@ class TestEnum(TestCase):
 			def __add__(self, other):
 				temp = int(self) + int(other)
 				if isinstance(self, NamedInt) and isinstance(other, NamedInt):
-					return NamedInt('(%s + %s)' % (self.__name__, other.__name__), temp)
+					return NamedInt(f'({self.__name__} + {other.__name__})', temp)
 				else:
 					return temp
 
@@ -2611,7 +2610,7 @@ class TestEnum(TestCase):
 						error = True
 						break
 				if error:
-					raise TypeError('Invalid Flag value: %r' % (last_value, ))
+					raise TypeError(f'Invalid Flag value: {last_value!r}')
 				return (2**(high_bit + 1), ) + args
 
 			@classmethod
@@ -2619,7 +2618,7 @@ class TestEnum(TestCase):
 				pseudo_member = cls._value2member_map_.get(value, None)
 				if pseudo_member is None:
 					members, _ = _decompose(cls, value)
-					pseudo_member = super(Color, cls)._create_pseudo_member_(value)
+					pseudo_member = super()._create_pseudo_member_(value)
 					pseudo_member.code = ';'.join(m.code for m in members)
 				return pseudo_member
 
@@ -2981,14 +2980,14 @@ class TestEnumV3(TestCase):
 		Season = self.Season
 		self.assertEqual(
 				set(dir(Season)),
-				set(['__class__', '__doc__', '__members__', '__module__', 'SPRING', 'SUMMER', 'AUTUMN', 'WINTER']),
+				{'__class__', '__doc__', '__members__', '__module__', 'SPRING', 'SUMMER', 'AUTUMN', 'WINTER'},
 				)
 
 	def test_dir_on_item(self):
 		Season = self.Season
 		self.assertEqual(
 				set(dir(Season.WINTER)),
-				set(['__class__', '__doc__', '__module__', 'name', 'value', 'values']),
+				{'__class__', '__doc__', '__module__', 'name', 'value', 'values'},
 				)
 
 	def test_dir_with_added_behavior(self):
@@ -3002,11 +3001,11 @@ class TestEnumV3(TestCase):
 
 		self.assertEqual(
 				set(dir(Test)),
-				set(['__class__', '__doc__', '__members__', '__module__', 'this', 'these']),
+				{'__class__', '__doc__', '__members__', '__module__', 'this', 'these'},
 				)
 		self.assertEqual(
 				set(dir(Test.this)),
-				set(['__class__', '__doc__', '__module__', 'name', 'value', 'values', 'wowser']),
+				{'__class__', '__doc__', '__module__', 'name', 'value', 'values', 'wowser'},
 				)
 
 	def test_dir_on_sub_with_behavior_on_super(self):
@@ -3021,7 +3020,7 @@ class TestEnumV3(TestCase):
 
 		self.assertEqual(
 				set(dir(SubEnum.sample)),
-				set(['__class__', '__doc__', '__module__', 'name', 'value', 'values', 'invisible']),
+				{'__class__', '__doc__', '__module__', 'name', 'value', 'values', 'invisible'},
 				)
 
 	def test_members_are_always_ordered(self):
@@ -3712,7 +3711,7 @@ class TestEnumV3(TestCase):
 			def __add__(self, other):
 				temp = int(self) + int(other)
 				if isinstance(self, NamedInt) and isinstance(other, NamedInt):
-					return NamedInt('({0} + {1})'.format(self.__name__, other.__name__), temp)
+					return NamedInt(f'({self.__name__} + {other.__name__})', temp)
 				else:
 					return temp
 

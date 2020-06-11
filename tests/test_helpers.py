@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 #
 #  test_helpers.py
 """
@@ -138,18 +137,18 @@ def test_constant():
 			primary = constant(first)
 			secondary = constant(op(primary))
 			if secondary.value != final:
-				errors.append("%s %r -> %r != %r" % (op.__name__, first, secondary.value, final), )
+				errors.append(f"{op.__name__} {first!r} -> {secondary.value!r} != {final!r}", )
 		else:
 			left = constant(first)
 			right = second
 			value = op(left, right)
 			if value != final:
-				errors.append("forward: %r %s %r -> %r != %r" % (first, op.__name__, second, value, final), )
+				errors.append(f"forward: {first!r} {op.__name__} {second!r} -> {value!r} != {final!r}", )
 			left = first
 			right = constant(second)
 			value = op(left, right)
 			if value != final:
-				errors.append("reversed: %r %s %r -> %r != %r" % (second, op.__name__, first, value, final), )
+				errors.append(f"reversed: {second!r} {op.__name__} {first!r} -> {value!r} != {final!r}", )
 
 	for args in (
 			(1, _abs_, abs(1)),

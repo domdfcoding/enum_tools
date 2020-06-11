@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 #
 #  test_flags.py
 #
@@ -571,9 +570,9 @@ def test_sub_subclass_with_new_new():
 		#
 		def __repr__(self):
 			if self._name_ is not None:
-				return '<%s.%s>' % (self.__class__.__name__, self._name_)
+				return f'<{self.__class__.__name__}.{self._name_}>'
 			else:
-				return '<%s: %s>' % (self.__class__.__name__, '|'.join([m.name for m in self]))
+				return '<{}: {}>'.format(self.__class__.__name__, '|'.join([m.name for m in self]))
 
 	assert isinstance(Color.FG_Black, Color)
 	assert isinstance(Color.FG_Black, str)
@@ -636,7 +635,7 @@ def test_extend_flag_subclass():
 				# calculate the code
 				members, _ = _decompose(cls, value)
 				code = ';'.join(m.code for m in members)
-				pseudo_member = super(Color, cls)._create_pseudo_member_(value, code)
+				pseudo_member = super()._create_pseudo_member_(value, code)
 			return pseudo_member
 
 		# FOREGROUND - 30s  BACKGROUND - 40s:
@@ -800,7 +799,7 @@ def test_ignore_with_autovalue_and_property():
 				# calculate the code
 				members, _ = _decompose(cls, value)
 				code = ';'.join(m.code for m in members)
-				pseudo_member = super(Color, cls)._create_pseudo_member_(value, code)
+				pseudo_member = super()._create_pseudo_member_(value, code)
 			return pseudo_member
 
 		#
@@ -842,7 +841,7 @@ def test_subclass():
 				# calculate the code
 				members, _ = _decompose(cls, value)
 				code = ';'.join(m.code for m in members)
-				pseudo_member = super(Color, cls)._create_pseudo_member_(value, code)
+				pseudo_member = super()._create_pseudo_member_(value, code)
 			return pseudo_member
 
 		#
