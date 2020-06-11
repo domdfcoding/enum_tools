@@ -66,9 +66,11 @@ from ._constant import AutoValue, MultiValue, NoAlias, Unique
 from .utils import _reduce_ex_by_name
 
 if TYPE_CHECKING:
+	# stdlib
 	from enum import Enum
 
 else:
+	# 3rd party
 	from aenum import AutoValue, Enum, MultiValue, NoAlias, Unique
 
 __all__ = [

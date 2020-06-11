@@ -344,6 +344,7 @@ def setup(app: Sphinx) -> Dict[str, Any]:
 	:rtype: dict
 	"""
 
+	# this package
 	from better_enum import __version__
 
 	app.add_autodocumenter(EnumDocumenter)

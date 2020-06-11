@@ -63,9 +63,11 @@ Import Enum etc. from the correct place, depending on whether mypy is running or
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-	from enum import Enum, unique, Flag, IntFlag, EnumMeta
+	# stdlib
+	from enum import Enum, EnumMeta, Flag, IntFlag, unique
 	from typing import NamedTuple
 else:
-	from aenum import Enum, NamedTuple, unique, Flag, IntFlag, EnumMeta
+	# 3rd party
+	from aenum import Enum, EnumMeta, Flag, IntFlag, NamedTuple, unique
 
 __all__ = ["Enum", "NamedTuple", "unique", "Flag", "IntFlag", "EnumMeta"]

@@ -77,6 +77,7 @@ if TYPE_CHECKING:
 	Unique = constant('unique', 'duplicate valued members are not allowed')
 
 else:
-	from aenum import constant, AutoValue, AutoNumber, MultiValue, NoAlias, Unique
+	# 3rd party
+	from aenum import AutoNumber, AutoValue, MultiValue, NoAlias, Unique, constant
 
 __all__ = ["constant", "AutoValue", "AutoNumber", "MultiValue", "NoAlias", "Unique"]

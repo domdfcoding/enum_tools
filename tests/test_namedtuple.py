@@ -44,10 +44,10 @@ from unittest import TestCase
 
 # 3rd party
 from aenum import TupleSize  # type: ignore
-from tests.demo_classes import DeathForm, LifeForm, ThatsIt
 
 # this package
 from better_enum import NamedTuple
+from tests.demo_classes import DeathForm, LifeForm, ThatsIt
 
 
 class TestNamedTuple(TestCase):

@@ -49,8 +49,6 @@ from unittest import TestCase
 
 # 3rd party
 from aenum import EnumMeta, _decompose, _high_bit, auto, enum, extend_enum, skip  # type: ignore
-from tests.conftest import tempdir
-from tests.demo_classes import IntStooges, Name
 
 # this package
 from better_enum import (
@@ -70,6 +68,8 @@ from better_enum import (
 		constant
 		)
 from better_enum.utils import _is_sunder
+from tests.conftest import tempdir
+from tests.demo_classes import IntStooges, Name
 
 
 class TestEnum(TestCase):
@@ -108,6 +108,7 @@ class TestEnum(TestCase):
 
 		self.Directional = Directional
 
+		# stdlib
 		from datetime import date
 
 		class Holiday(date, Enum):
@@ -1118,6 +1119,7 @@ class TestEnum(TestCase):
 				super(JSONEnumMeta, cls).__init__(*args)
 
 			def __new__(metacls, cls, bases, clsdict, init=None, start=None, settings=()):
+				# stdlib
 				import json
 				members = []
 				if JSONEnum is not None:
@@ -2861,6 +2863,7 @@ class TestEnumV3(TestCase):
 
 		self.Directional = Directional
 
+		# stdlib
 		from datetime import date
 
 		class Holiday(date, Enum):
