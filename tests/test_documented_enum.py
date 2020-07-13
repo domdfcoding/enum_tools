@@ -1,5 +1,7 @@
-# this package
+# stdlib
 from enum import Enum
+
+# this package
 from enum_tools.decorator import DocumentedEnum, document_enum
 
 

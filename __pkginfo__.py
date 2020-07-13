@@ -1,4 +1,4 @@
-#  This file is managed by `git_helper`. Don't edit it directly
+#  This file is managed by `repo_helper`. Don't edit it directly
 #  Copyright (C) 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 #
 #  This file is distributed under the same license terms as the program it came with.
@@ -22,6 +22,7 @@ __all__ = [
 		"py_modules",
 		"entry_points",
 		"__license__",
+		"__author__",
 		"short_desc",
 		"author",
 		"author_email",
@@ -49,12 +50,12 @@ pypi_name = "enum_tools"
 import_name = "enum_tools"
 py_modules = []
 entry_points = {
-		"console_scripts": []
+		"console_scripts": [],
 		}
 
 __license__ = "GNU Lesser General Public License v3 or later (LGPLv3+)"
 
-short_desc = "Fork of the Advanced Enumeration library with better support for mypy, docstrings and Sphinx."
+short_desc = "Alternative method for documenting enums with Sphinx."
 
 __author__ = author = "Dominic Davis-Foster"
 author_email = "dominic@davis-foster.co.uk"
@@ -69,24 +70,24 @@ project_urls = {
 repo_root = pathlib.Path(__file__).parent
 
 # Get info from files; set: long_description
-long_description = (repo_root / "README.rst").read_text().replace("0.0.1", __version__) + '\n'
+long_description = (repo_root / "README.rst").read_text(encoding="utf-8").replace("0.0.1", __version__) + '\n'
 
-install_requires = (repo_root / "requirements.txt").read_text().split('\n')
+install_requires = (repo_root / "requirements.txt").read_text(encoding="utf-8").split('\n')
 extras_require = {'sphinx': ['sphinx'], 'all': ['sphinx']}
 
 classifiers = [
 		'Development Status :: 4 - Beta',
 		'Intended Audience :: Developers',
+		'License :: OSI Approved :: GNU Lesser General Public License v3 or later (LGPLv3+)',
 		'Operating System :: OS Independent',
 		'Programming Language :: Python',
-		'Topic :: Software Development :: Libraries :: Python Modules',
+		'Programming Language :: Python :: 3 :: Only',
 		'Programming Language :: Python :: 3.6',
-		'Programming Language :: Python :: Implementation :: CPython',
 		'Programming Language :: Python :: 3.7',
 		'Programming Language :: Python :: 3.8',
-		'Programming Language :: Python :: 3 :: Only',
-		'License :: OSI Approved :: GNU Lesser General Public License v3 or later (LGPLv3+)',
+		'Programming Language :: Python :: Implementation :: CPython',
+		'Topic :: Software Development :: Libraries :: Python Modules',
 
 		]
 
-keywords = "enum documentation"
+keywords = "enum documentation sphinx-extension"

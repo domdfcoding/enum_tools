@@ -26,15 +26,13 @@ Decorators to add docstrings to enum members from comments
 # stdlib
 import inspect
 import re
+from enum import Enum, EnumMeta
 from textwrap import dedent
 from typing import Callable, List, Optional, Tuple
 
 # 3rd party
 import pygments.token  # type: ignore
 from pygments.lexers.python import PythonLexer  # type: ignore
-
-# this package
-from enum import Enum, EnumMeta
 
 lexer = PythonLexer()
 
