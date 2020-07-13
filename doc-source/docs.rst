@@ -4,7 +4,7 @@ API Reference
 
 .. contents:: Table of Contents
 
-.. automodule:: better_enum
+.. automodule:: enum_tools
     :members:
     :private-members:
     :special-members:
@@ -12,11 +12,11 @@ API Reference
     :undoc-members:
 
 ===================================
-:mod:`better_enum.__init__`
+:mod:`enum_tools.__init__`
 ===================================
 
 
-.. automodule:: better_enum.__init__
+.. automodule:: enum_tools.__init__
     :members:
     :private-members:
     :special-members:
@@ -24,11 +24,11 @@ API Reference
     :undoc-members:
 
 ===================================
-:mod:`better_enum.autoenum`
+:mod:`enum_tools.autoenum`
 ===================================
 
 
-.. automodule:: better_enum.autoenum
+.. automodule:: enum_tools.autoenum
     :members:
     :private-members:
     :special-members:
@@ -36,11 +36,11 @@ API Reference
     :undoc-members:
 
 ===================================
-:mod:`better_enum.custom_enums`
+:mod:`enum_tools.custom_enums`
 ===================================
 
 
-.. automodule:: better_enum.custom_enums
+.. automodule:: enum_tools.custom_enums
     :members:
     :private-members:
     :special-members:
@@ -48,11 +48,11 @@ API Reference
     :undoc-members:
 
 ===================================
-:mod:`better_enum.decorator`
+:mod:`enum_tools.decorator`
 ===================================
 
 
-.. automodule:: better_enum.decorator
+.. automodule:: enum_tools.decorator
     :members:
     :private-members:
     :special-members:
@@ -60,11 +60,11 @@ API Reference
     :undoc-members:
 
 ===================================
-:mod:`better_enum.utils`
+:mod:`enum_tools.utils`
 ===================================
 
 
-.. automodule:: better_enum.utils
+.. automodule:: enum_tools.utils
     :members:
     :private-members:
     :special-members:

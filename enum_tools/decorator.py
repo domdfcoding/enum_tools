@@ -34,7 +34,7 @@ import pygments.token  # type: ignore
 from pygments.lexers.python import PythonLexer  # type: ignore
 
 # this package
-from ._importer import Enum, EnumMeta
+from enum import Enum, EnumMeta
 
 lexer = PythonLexer()
 
@@ -209,7 +209,7 @@ class DocumentedEnum(Enum):
 
 	def __init__(self, value):
 		document_member(self)
-		super().__init__(value)
+		# super().__init__(value)
 
 
 def get_dedented_line(line):

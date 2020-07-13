@@ -38,7 +38,7 @@ INSUFFICIENT INFO WILL GET THE ISSUE CLOSED. IT WILL ONLY BE REOPENED AFTER SUFF
 
   * Operating System:
   * Python:
-  * better_enum:
+  * enum_tools:
 
 ## Installation source
 <!-- e.g. Github repository, Github Releases, PyPI/pip, Anaconda/conda -->

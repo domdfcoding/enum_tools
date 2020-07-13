@@ -34,7 +34,7 @@ jobs:
       deploy:
         on:
           tags: true
-          repo: domdfcoding/better_enum
+          repo: domdfcoding/enum_tools
         provider: pypi
         user: "DomDF"
         password:
@@ -50,6 +50,6 @@ jobs:
       script: skip
       deploy:
         on:
-          repo: domdfcoding/better_enum
+          repo: domdfcoding/enum_tools
         provider: script
         script: python .ci/copy_pypi_2_github.py || return 1;

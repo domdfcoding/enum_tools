@@ -1,5 +1,5 @@
 ===========================
-better_enum
+enum_tools
 ===========================
 
 .. start short_desc
@@ -23,55 +23,55 @@ better_enum
 	* - Other
 	  - |license| |language| |commits-since| |commits-latest| |maintained| 
 
-.. |docs| image:: https://img.shields.io/readthedocs/better_enum/latest?logo=read-the-docs
-	:target: https://better_enum.readthedocs.io/en/latest/?badge=latest
+.. |docs| image:: https://img.shields.io/readthedocs/enum_tools/latest?logo=read-the-docs
+	:target: https://enum_tools.readthedocs.io/en/latest/?badge=latest
 	:alt: Documentation Status
 
-.. |travis| image:: https://img.shields.io/travis/com/domdfcoding/better_enum/master?logo=travis
-	:target: https://travis-ci.com/domdfcoding/better_enum
+.. |travis| image:: https://img.shields.io/travis/com/domdfcoding/enum_tools/master?logo=travis
+	:target: https://travis-ci.com/domdfcoding/enum_tools
 	:alt: Travis Build Status
 
-.. |requires| image:: https://requires.io/github/domdfcoding/better_enum/requirements.svg?branch=master
-	:target: https://requires.io/github/domdfcoding/better_enum/requirements/?branch=master
+.. |requires| image:: https://requires.io/github/domdfcoding/enum_tools/requirements.svg?branch=master
+	:target: https://requires.io/github/domdfcoding/enum_tools/requirements/?branch=master
 	:alt: Requirements Status
 
-.. |coveralls| image:: https://shields.io/coveralls/github/domdfcoding/better_enum/master?logo=coveralls
-	:target: https://coveralls.io/github/domdfcoding/better_enum?branch=master
+.. |coveralls| image:: https://shields.io/coveralls/github/domdfcoding/enum_tools/master?logo=coveralls
+	:target: https://coveralls.io/github/domdfcoding/enum_tools?branch=master
 	:alt: Coverage
 
-.. |codefactor| image:: https://img.shields.io/codefactor/grade/github/domdfcoding/better_enum?logo=codefactor
-	:target: https://www.codefactor.io/repository/github/domdfcoding/better_enum
+.. |codefactor| image:: https://img.shields.io/codefactor/grade/github/domdfcoding/enum_tools?logo=codefactor
+	:target: https://www.codefactor.io/repository/github/domdfcoding/enum_tools
 	:alt: CodeFactor Grade
 
-.. |pypi-version| image:: https://img.shields.io/pypi/v/better_enum
-	:target: https://pypi.org/project/better_enum/
+.. |pypi-version| image:: https://img.shields.io/pypi/v/enum_tools
+	:target: https://pypi.org/project/enum_tools/
 	:alt: PyPI - Package Version
 
-.. |supported-versions| image:: https://img.shields.io/pypi/pyversions/better_enum
-	:target: https://pypi.org/project/better_enum/
+.. |supported-versions| image:: https://img.shields.io/pypi/pyversions/enum_tools
+	:target: https://pypi.org/project/enum_tools/
 	:alt: PyPI - Supported Python Versions
 
-.. |supported-implementations| image:: https://img.shields.io/pypi/implementation/better_enum
-	:target: https://pypi.org/project/better_enum/
+.. |supported-implementations| image:: https://img.shields.io/pypi/implementation/enum_tools
+	:target: https://pypi.org/project/enum_tools/
 	:alt: PyPI - Supported Implementations
 
-.. |wheel| image:: https://img.shields.io/pypi/wheel/better_enum
-	:target: https://pypi.org/project/better_enum/
+.. |wheel| image:: https://img.shields.io/pypi/wheel/enum_tools
+	:target: https://pypi.org/project/enum_tools/
 	:alt: PyPI - Wheel
 
-.. |license| image:: https://img.shields.io/github/license/domdfcoding/better_enum
+.. |license| image:: https://img.shields.io/github/license/domdfcoding/enum_tools
 	:alt: License
-	:target: https://github.com/domdfcoding/better_enum/blob/master/LICENSE
+	:target: https://github.com/domdfcoding/enum_tools/blob/master/LICENSE
 
-.. |language| image:: https://img.shields.io/github/languages/top/domdfcoding/better_enum
+.. |language| image:: https://img.shields.io/github/languages/top/domdfcoding/enum_tools
 	:alt: GitHub top language
 
-.. |commits-since| image:: https://img.shields.io/github/commits-since/domdfcoding/better_enum/v0.0.1
-	:target: https://github.com/domdfcoding/better_enum/pulse
+.. |commits-since| image:: https://img.shields.io/github/commits-since/domdfcoding/enum_tools/v0.0.1
+	:target: https://github.com/domdfcoding/enum_tools/pulse
 	:alt: GitHub commits since tagged version
 
-.. |commits-latest| image:: https://img.shields.io/github/last-commit/domdfcoding/better_enum
-	:target: https://github.com/domdfcoding/better_enum/commit/master
+.. |commits-latest| image:: https://img.shields.io/github/last-commit/domdfcoding/enum_tools
+	:target: https://github.com/domdfcoding/enum_tools/commit/master
 	:alt: GitHub last commit
 
 .. |maintained| image:: https://img.shields.io/maintenance/yes/2020
@@ -100,14 +100,14 @@ Installation
 
 		.. prompt:: bash
 
-			pip install better_enum
+			pip install enum_tools
 
 
 	.. tab:: from GitHub
 
 		.. prompt:: bash
 
-			pip install git+https://github.com//better_enum@master
+			pip install git+https://github.com//enum_tools@master
 
 .. end installation
 
@@ -128,6 +128,6 @@ Installation
 
 View the :ref:`Function Index <genindex>` or browse the `Source Code <_modules/index.html>`__.
 
-`Browse the GitHub Repository <https://github.com/domdfcoding/better_enum>`__
+`Browse the GitHub Repository <https://github.com/domdfcoding/enum_tools>`__
 
 .. end links

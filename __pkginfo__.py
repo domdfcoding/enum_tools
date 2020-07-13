@@ -44,9 +44,9 @@ __copyright__ = """
 
 __version__ = "0.0.1"
 
-modname = "better_enum"
-pypi_name = "better_enum"
-import_name = "better_enum"
+modname = "enum_tools"
+pypi_name = "enum_tools"
+import_name = "enum_tools"
 py_modules = []
 entry_points = {
 		"console_scripts": []
@@ -59,9 +59,9 @@ short_desc = "Fork of the Advanced Enumeration library with better support for m
 __author__ = author = "Dominic Davis-Foster"
 author_email = "dominic@davis-foster.co.uk"
 github_username = "domdfcoding"
-web = github_url = f"https://github.com/domdfcoding/better_enum"
+web = github_url = f"https://github.com/domdfcoding/enum_tools"
 project_urls = {
-		"Documentation": f"https://better_enum.readthedocs.io",
+		"Documentation": f"https://enum_tools.readthedocs.io",
 		"Issue Tracker": f"{github_url}/issues",
 		"Source Code": github_url,
 		}

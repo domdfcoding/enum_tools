@@ -1,6 +1,6 @@
 # this package
-from better_enum import Enum
-from better_enum.decorator import DocumentedEnum, document_enum
+from enum import Enum
+from enum_tools.decorator import DocumentedEnum, document_enum
 
 
 @document_enum

@@ -22,20 +22,20 @@ from __pkginfo__ import __version__
 
 
 
-github_url = f"https://github.com/domdfcoding/better_enum"
+github_url = f"https://github.com/domdfcoding/enum_tools"
 
-rst_prolog = f""".. |pkgname| replace:: better_enum
-.. |pkgname2| replace:: ``better_enum``
+rst_prolog = f""".. |pkgname| replace:: enum_tools
+.. |pkgname2| replace:: ``enum_tools``
 .. |browse_github| replace:: `Browse the GitHub Repository <{github_url}>`__
 """
 
 author = "Dominic Davis-Foster"
-project = "better_enum"
+project = "enum_tools"
 slug = re.sub(r'\W+', '-', project.lower())
 release = version = __version__
 copyright = "2020 Dominic Davis-Foster"  # pylint: disable=redefined-builtin
 language = 'en'
-package_root = "better_enum"
+package_root = "enum_tools"
 
 extensions = [
 		'sphinx.ext.intersphinx',
@@ -90,7 +90,7 @@ html_show_sourcelink = False  # True will show link to source
 html_context = {
 		'display_github': True,
 		'github_user': 'domdfcoding',
-		'github_repo': 'better_enum',
+		'github_repo': 'enum_tools',
 		'github_version': 'master',
 		'conf_py_path': '/',
 		}

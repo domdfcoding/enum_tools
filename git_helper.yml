@@ -1,11 +1,11 @@
-modname: better_enum
+modname: enum_tools
 copyright_years: "2020"
 author: "Dominic Davis-Foster"
 email: "dominic@davis-foster.co.uk"
 version: "0.0.1"
 username: "domdfcoding"
 license: 'LGPLv3+'
-short_desc: 'Fork of the Advanced Enumeration library with better support for mypy, docstrings and Sphinx.'
+short_desc: 'Alternative method for documenting enums with Sphinx.'
 
 #conda_channels:
 #  - domdfcoding
@@ -26,7 +26,7 @@ python_versions:
 
 # additional lines for MANIFEST.in
 manifest_additional:
-  - recursive-include better_enum/ requirements.txt
+  - recursive-include enum_tools/ requirements.txt
   - recursive-exclude tests/ *
   - prune tests*
 

@@ -2,7 +2,7 @@
 Downloading source code
 *******************************
 
-``better_enum`` source code resides on publicly accessible GitHub servers,
+``enum_tools`` source code resides on publicly accessible GitHub servers,
 and can be accessed from the following URL: |ghurl|
 
 If you have ``git`` installed, you can clone the repository with the following command:
@@ -10,7 +10,7 @@ If you have ``git`` installed, you can clone the repository with the following c
 .. code-block:: bash
 
     $ git clone |ghurl|
-    > Cloning into 'better_enum'...
+    > Cloning into 'enum_tools'...
     > remote: Enumerating objects: 47, done.
     > remote: Counting objects: 100% (47/47), done.
     > remote: Compressing objects: 100% (41/41), done.
