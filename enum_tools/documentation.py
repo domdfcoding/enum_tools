@@ -26,6 +26,7 @@ Decorators to add docstrings to enum members from comments
 # stdlib
 import inspect
 import re
+import sys
 from enum import Enum, EnumMeta
 from textwrap import dedent
 from typing import Callable, List, Optional, Tuple
@@ -35,6 +36,8 @@ import pygments.token  # type: ignore
 from pygments.lexers.python import PythonLexer  # type: ignore
 
 lexer = PythonLexer()
+
+INTERACTIVE = bool(getattr(sys, 'ps1', sys.flags.interactive))
 
 
 def get_tokens(line: str) -> List[Tuple]:
@@ -50,6 +53,9 @@ def document_enum(an_enum: Callable) -> Callable:
 
 	if not isinstance(an_enum, (EnumMeta, Enum)):
 		raise TypeError(f"'an_enum' must be an `aenum.Enum`, not {type(an_enum)}!")
+
+	if not INTERACTIVE:
+		return an_enum
 
 	func_source = inspect.getsource(an_enum)
 	func_source = dedent(func_source)
@@ -103,6 +109,9 @@ def document_member(enum_member):
 
 	if not isinstance(enum_member, (EnumMeta, Enum)):
 		raise TypeError(f"'an_enum' must be an `aenum.Enum`, not {type(enum_member)}!")
+
+	if not INTERACTIVE:
+		return enum_member
 
 	func_source = inspect.getsource(enum_member.__class__)
 	func_source = dedent(func_source)

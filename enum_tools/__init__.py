@@ -26,7 +26,7 @@ Alternative method for documenting enums with Sphinx.
 
 # this package
 from enum_tools.custom_enums import AutoNumberEnum, DuplicateFreeEnum, IntEnum, OrderedEnum, StrEnum
-from enum_tools.decorator import (
+from enum_tools.documentation import (
 		DocumentedEnum, document_enum, document_member, get_base_indent, get_dedented_line, parse_tokens
 		)
 

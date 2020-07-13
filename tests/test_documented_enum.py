@@ -2,7 +2,10 @@
 from enum import Enum
 
 # this package
-from enum_tools.decorator import DocumentedEnum, document_enum
+from enum_tools.documentation import DocumentedEnum, document_enum
+import enum_tools.documentation
+
+enum_tools.documentation.INTERACTIVE = True
 
 
 @document_enum
