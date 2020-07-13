@@ -1,23 +1,6 @@
 #!/usr/bin/env python3
 #
-#  _constant.py
-#
-#  Copyright (c) 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
-#
-#  This program is free software; you can redistribute it and/or modify
-#  it under the terms of the GNU General Public License as published by
-#  the Free Software Foundation; either version 3 of the License, or
-#  (at your option) any later version.
-#
-#  This program is distributed in the hope that it will be useful,
-#  but WITHOUT ANY WARRANTY; without even the implied warranty of
-#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#  GNU General Public License for more details.
-#
-#  You should have received a copy of the GNU General Public License
-#  along with this program; if not, write to the Free Software
-#  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-#  MA 02110-1301, USA.
+#  demo_classes.py
 #
 #  Based on aenum
 #  https://bitbucket.org/stoneleaf/aenum
@@ -56,28 +39,62 @@
 #
 
 # stdlib
-from typing import TYPE_CHECKING
+import os
+from collections import OrderedDict
+from datetime import timedelta
+from enum import Enum as StdlibEnum
+from enum import EnumMeta as StdlibEnumMeta
+from unittest import TestCase
 
-if TYPE_CHECKING:
+# 3rd party
+import pytest
+from aenum import EnumMeta, _decompose, _high_bit, auto, enum, extend_enum, skip  # type: ignore
 
-	class constant:
-		"""
-		Simple constant descriptor for NamedConstant and Enum use.
-		"""
+# this package
+from better_enum import (
+		AutoEnum,
+		AutoNumber,
+		AutoNumberEnum,
+		AutoValue,
+		Enum,
+		Flag,
+		IntEnum,
+		MultiValue,
+		MultiValueEnum,
+		NoAlias,
+		OrderedEnum,
+		Unique,
+		UniqueEnum,
+		constant
+		)
+from better_enum.utils import _is_sunder
+from tests.conftest import tempdir
+from tests.demo_classes import IntStooges, Name
 
-		def __init__(self, value, doc=None):
-			self.value = value
-			self.__doc__ = doc
 
-	AutoValue = constant('autovalue', 'values are automatically created from _generate_next_value_')
-	AutoNumber = constant('autonumber', 'integer value is prepended to members, beginning from START')
-	MultiValue = constant('multivalue', 'each member can have several values')
-	NoAlias = constant('noalias', 'duplicate valued members are distinct, not aliased')
-	Unique = constant('unique', 'duplicate valued members are not allowed')
+def test_new_repr():
 
-else:
+	class Color(Enum):
+		red = 1
+		green = 2
+		blue = 3
 
-	# 3rd party
-	from aenum import AutoNumber, AutoValue, MultiValue, NoAlias, Unique, constant
+		def __repr__(self):
+			return "don't you just love shades of %s?" % self.name
 
-__all__ = ["constant", "AutoValue", "AutoNumber", "MultiValue", "NoAlias", "Unique"]
+	assert repr(Color.blue) == "don't you just love shades of blue?"
+
+
+def test_inherited_repr():
+
+	class MyEnum(Enum):
+
+		def __repr__(self):
+			return "My name is %s." % self.name
+
+	class MyIntEnum(int, MyEnum):
+		this = 1
+		that = 2
+		theother = 3
+
+	assert repr(MyIntEnum.that) == "My name is that."

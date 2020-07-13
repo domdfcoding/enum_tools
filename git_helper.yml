@@ -49,6 +49,7 @@ classifiers:
 keywords:
   - enum
   - documentation
+  - sphinx-extension
 
 extras_require:
   sphinx:

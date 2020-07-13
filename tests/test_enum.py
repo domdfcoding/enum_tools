@@ -47,6 +47,7 @@ from enum import EnumMeta as StdlibEnumMeta
 from unittest import TestCase
 
 # 3rd party
+import pytest
 from aenum import EnumMeta, _decompose, _high_bit, auto, enum, extend_enum, skip  # type: ignore
 
 # this package
@@ -135,15 +136,10 @@ class TestEnum(TestCase):
 		assert isinstance(Unordered.__members__, OrderedDict)
 
 	def test_enum_in_enum_out(self):
-		season = self.Season
-		assert season(season.WINTER) is season.WINTER
+		assert self.Season(self.Season.WINTER) is self.Season.WINTER
 
 	def test_enum_value(self):
-		season = self.Season
-		assert season.SPRING.value == 1
-
-	def test_intenum_value(self):
-		assert IntStooges.CURLY.value == 2
+		assert self.Season.SPRING.value == 1
 
 	def test_enum(self):
 		lst = list(self.Season)
@@ -163,15 +159,6 @@ class TestEnum(TestCase):
 			assert isinstance(e, self.Season)
 			assert str(e) == 'Season.' + season
 			assert repr(e) == f'<Season.{season}: {i}>'
-
-	def test_enum_helper(self):
-		e1 = enum(1, 2, three=9)
-		e2 = enum(1, 2, three=9)
-		e3 = enum(1, 2, 9)
-		assert e1 is not e2
-		assert e1 == e2
-		assert e1 != e3
-		assert e2 != e3
 
 	def test_value_name(self):
 		assert self.Season.SPRING.name == 'SPRING'
@@ -210,52 +197,6 @@ class TestEnum(TestCase):
 		self.assertRaises(AttributeError, delattr, Season, 'DRY')
 		self.assertRaises(AttributeError, delattr, Season.SPRING, 'name')
 
-	def test_bool_of_class(self):
-
-		class Empty(Enum):
-			pass
-
-		assert bool(Empty)
-
-	def test_bool_of_member(self):
-
-		class Count(Enum):
-			zero = 0
-			one = 1
-			two = 2
-
-		for member in Count:
-			assert bool(member)
-
-	def test_invalid_names(self):
-
-		def create_bad_class_1():
-
-			class Wrong(Enum):
-				mro = 9
-
-		def create_bad_class_2():
-
-			class Wrong(Enum):
-				_reserved_ = 3
-
-		self.assertRaises(ValueError, create_bad_class_1)
-		self.assertRaises(ValueError, create_bad_class_2)
-
-	def test_bool(self):
-
-		class Logic(Enum):
-			true = True
-			false = False
-
-			def __bool__(self):
-				return bool(self.value)
-
-			__nonzero__ = __bool__
-
-		assert Logic.true
-		assert not Logic.false
-
 	def test_contains(self):
 		Season = self.Season
 		self.assertRaises(TypeError, lambda: 'AUTUMN' in Season)
@@ -292,17 +233,6 @@ class TestEnum(TestCase):
 		assert f'{Season.SPRING:^20}' == '{:^20}'.format(str(Season.SPRING))
 		assert f'{Season.SPRING:>20}' == '{:>20}'.format(str(Season.SPRING))
 		assert f'{Season.SPRING:<20}' == '{:<20}'.format(str(Season.SPRING))
-
-	def test_format_enum_custom(self):
-
-		class TestFloat(float, Enum):
-			one = 1.0
-			two = 2.0
-
-			def __format__(self, spec):
-				return 'TestFloat success!'
-
-		assert f'{TestFloat.one}' == 'TestFloat success!'
 
 	def assertFormatIsValue(self, spec, member):
 		assert spec.format(member) == spec.format(member.value)
@@ -385,75 +315,6 @@ class TestEnum(TestCase):
 		assert Season.FALL.name == 'AUTUMN'
 		assert {k for k, v in Season.__members__.items() if v.name != k} == {'FALL', 'ANOTHER_SPRING'}
 
-	def test_enum_with_value_name(self):
-
-		class Huh(Enum):
-			_order_ = 'name value'
-			name = 1
-			value = 2
-
-		assert list(Huh) == [Huh.name, Huh.value]
-		assert isinstance(Huh.name, Huh)
-		assert Huh.name.name == 'name'
-		assert Huh.name.value == 1
-
-	def test_intenum_from_scratch(self):
-
-		class phy(int, Enum):
-			pi = 3
-			tau = 2 * pi
-
-		assert phy.pi < phy.tau
-
-	def test_intenum_inherited(self):
-
-		class IntEnum(int, Enum):
-			pass
-
-		class phy(IntEnum):
-			pi = 3
-			tau = 2 * pi
-
-		assert phy.pi < phy.tau
-
-	def test_floatenum_from_scratch(self):
-
-		class phy(float, Enum):
-			pi = 3.1415926
-			tau = 2 * pi
-
-		assert phy.pi < phy.tau
-
-	def test_floatenum_inherited(self):
-
-		class FloatEnum(float, Enum):
-			pass
-
-		class phy(FloatEnum):
-			pi = 3.1415926
-			tau = 2 * pi
-
-		assert phy.pi < phy.tau
-
-	def test_strenum_from_scratch(self):
-
-		class phy(str, Enum):
-			pi = 'Pi'
-			tau = 'Tau'
-
-		assert phy.pi < phy.tau
-
-	def test_strenum_inherited(self):
-
-		class StrEnum(str, Enum):
-			pass
-
-		class phy(StrEnum):
-			pi = 'Pi'
-			tau = 'Tau'
-
-		assert phy.pi < phy.tau
-
 	def test_intenum(self):
 
 		class WeekDay(IntEnum):
@@ -504,62 +365,14 @@ class TestEnum(TestCase):
 				'TEUSDAY',
 				])
 
-	def test_string_enum(self):
-
-		class SkillLevel(str, Enum):
-			master = 'what is the sound of one hand clapping?'
-			journeyman = 'why did the chicken cross the road?'
-			apprentice = 'knock, knock!'
-
-		assert SkillLevel.apprentice, 'knock == knock!'
-
-	def test_getattr_getitem(self):
-
-		class Period(Enum):
-			morning = 1
-			noon = 2
-			evening = 3
-			night = 4
-
-		assert Period(2) is Period.noon
-		assert getattr(Period, 'night') is Period.night
-		assert Period['morning'] is Period.morning
-
 	def test_getattr_dunder(self):
 		Season = self.Season
 		assert getattr(Season, '__hash__')
-
-	def test_iteration_order(self):
-
-		class Season(Enum):
-			__order__ = 'SUMMER WINTER AUTUMN SPRING'
-			SUMMER = 2
-			WINTER = 4
-			AUTUMN = 3
-			SPRING = 1
-
-		self.assertEqual(
-				list(Season),
-				[Season.SUMMER, Season.WINTER, Season.AUTUMN, Season.SPRING],
-				)
 
 	def test_iteration_order_reversed(self):
 		self.assertEqual(
 				list(reversed(self.Season)),
 				[self.Season.WINTER, self.Season.AUTUMN, self.Season.SUMMER, self.Season.SPRING]
-				)
-
-	def test_iteration_order_with_unorderable_values(self):
-
-		class Complex(Enum):
-			a = complex(7, 9)
-			b = complex(3.14, 2)
-			c = complex(1, -1)
-			d = complex(-77, 32)
-
-		self.assertEqual(
-				list(Complex),
-				[Complex.a, Complex.b, Complex.c, Complex.d],
 				)
 
 	def test_programatic_function_string(self):
@@ -852,152 +665,6 @@ class TestEnum(TestCase):
 				assert e in SummerMonth
 				assert isinstance(e, SummerMonth)
 
-	def test_subclassing(self):
-		if isinstance(Name, Exception):
-			raise Name
-		assert Name.BDFL == 'Guido van Rossum'
-		assert Name.BDFL, Name('Guido van Rossum')
-		assert Name.BDFL is getattr(Name, 'BDFL')
-
-	def test_extending(self):
-
-		def bad_extension():
-
-			class Color(Enum):
-				red = 1
-				green = 2
-				blue = 3
-
-			class MoreColor(Color):
-				cyan = 4
-				magenta = 5
-				yellow = 6
-
-		self.assertRaises(TypeError, bad_extension)
-
-	def test_exclude_methods(self):
-
-		class whatever(Enum):
-			this = 'that'
-			these = 'those'
-
-			def really(self):
-				return 'no, not %s' % self.value
-
-		assert not isinstance(whatever.really, whatever)
-		assert whatever.this.really(), 'no == not that'
-
-	def test_wrong_inheritance_order(self):
-
-		def wrong_inherit():
-
-			class Wrong(Enum, str):
-				NotHere = 'error before this point'
-
-		self.assertRaises(TypeError, wrong_inherit)
-
-	def test_intenum_transitivity(self):
-
-		class number(IntEnum):
-			one = 1
-			two = 2
-			three = 3
-
-		class numero(IntEnum):
-			uno = 1
-			dos = 2
-			tres = 3
-
-		assert number.one == numero.uno
-		assert number.two == numero.dos
-		assert number.three == numero.tres
-
-	def test_introspection(self):
-
-		class Number(IntEnum):
-			one = 100
-			two = 200
-
-		assert Number.one._member_type_ is int
-		assert Number._member_type_ is int
-
-		class String(str, Enum):
-			yarn = 'soft'
-			rope = 'rough'
-			wire = 'hard'
-
-		assert String.yarn._member_type_ is str
-		assert String._member_type_ is str
-
-		class Plain(Enum):
-			vanilla = 'white'
-			one = 1
-
-		assert Plain.vanilla._member_type_ is object
-		assert Plain._member_type_ is object
-
-	def test_wrong_enum_in_call(self):
-
-		class Monochrome(Enum):
-			black = 0
-			white = 1
-
-		class Gender(Enum):
-			male = 0
-			female = 1
-
-		self.assertRaises(ValueError, Monochrome, Gender.male)
-
-	def test_wrong_enum_in_mixed_call(self):
-
-		class Monochrome(IntEnum):
-			black = 0
-			white = 1
-
-		class Gender(Enum):
-			male = 0
-			female = 1
-
-		self.assertRaises(ValueError, Monochrome, Gender.male)
-
-	def test_mixed_enum_in_call_1(self):
-
-		class Monochrome(IntEnum):
-			black = 0
-			white = 1
-
-		class Gender(IntEnum):
-			male = 0
-			female = 1
-
-		assert Monochrome(Gender.female) is Monochrome.white
-
-	def test_mixed_enum_in_call_2(self):
-
-		class Monochrome(Enum):
-			black = 0
-			white = 1
-
-		class Gender(IntEnum):
-			male = 0
-			female = 1
-
-		assert Monochrome(Gender.male) is Monochrome.black
-
-	def test_flufl_enum(self):
-
-		class Fluflnum(Enum):
-
-			def __int__(self):
-				return int(self.value)
-
-		class MailManOptions(Fluflnum):
-			option1 = 1
-			option2 = 2
-			option3 = 3
-
-		assert int(MailManOptions.option1) == 1
-
 	def test_no_such_enum_member(self):
 
 		class Color(Enum):
@@ -1007,35 +674,6 @@ class TestEnum(TestCase):
 
 		self.assertRaises(ValueError, Color, 4)
 		self.assertRaises(KeyError, Color.__getitem__, 'chartreuse')
-
-	def test_new_repr(self):
-
-		class Color(Enum):
-			red = 1
-			green = 2
-			blue = 3
-
-			def __repr__(self):
-				return "don't you just love shades of %s?" % self.name
-
-		self.assertEqual(
-				repr(Color.blue),
-				"don't you just love shades of blue?",
-				)
-
-	def test_inherited_repr(self):
-
-		class MyEnum(Enum):
-
-			def __repr__(self):
-				return "My name is %s." % self.name
-
-		class MyIntEnum(int, MyEnum):
-			this = 1
-			that = 2
-			theother = 3
-
-		assert repr(MyIntEnum.that) == "My name is that."
 
 	def test_multiple_mixin_mro(self):
 
@@ -1098,99 +736,6 @@ class TestEnum(TestCase):
 				[TestAutoInt.a.value, TestAutoInt.b.value, TestAutoInt.c.value],
 				[0, 3, 4],
 				)
-
-	def test_meta_reconfigure(self):
-
-		def identity(*args):
-			if len(args) == 1:
-				return args[0]
-			return args
-
-		JSONEnum = None
-
-		class JSONEnumMeta(EnumMeta):
-
-			@classmethod
-			def __prepare__(metacls, cls, bases, init=None, start=None, settings=()):
-				return {}
-
-			def __init__(cls, *args, **kwds):
-				super().__init__(*args)
-
-			def __new__(metacls, cls, bases, clsdict, init=None, start=None, settings=()):
-				# stdlib
-				import json
-				members = []
-				if JSONEnum is not None:
-					if '_file' not in clsdict:
-						raise TypeError('_file is required')
-					if '_name' not in clsdict:
-						raise TypeError('_name is required')
-					if '_value' not in clsdict:
-						raise TypeError('_value is required')
-					name_spec = clsdict.pop('_name')
-					if not isinstance(name_spec, (tuple, list)):
-						name_spec = (name_spec, )
-					value_spec = clsdict.pop('_value')
-					file = clsdict.pop('_file')
-					with open(file) as f:
-						json_data = json.load(f)
-					for data in json_data:
-						values = []
-						name = data[name_spec[0]]
-						for piece in name_spec[1:]:
-							name = name[piece]
-						for order, (value_path, func) in sorted(value_spec.items()):
-							if not isinstance(value_path, (list, tuple)):
-								value_path = (value_path, )
-							value = data[value_path[0]]
-							for piece in value_path[1:]:
-								value = value[piece]
-							if func is not None:
-								value = func(value)
-							values.append(value)
-						values = tuple(values)
-						members.append((name, identity(*values)))
-				# get the real EnumDict
-				enum_dict = super().__prepare__(cls, bases, init, start, settings)
-				# transfer the original dict content, _items first
-				items = list(clsdict.items())
-				items.sort(key=lambda p: (0 if p[0][0] == '_' else 1, p))
-				for name, value in items:
-					enum_dict[name] = value
-				# add the members
-				for name, value in members:
-					enum_dict[name] = value
-				return super().__new__(metacls, cls, bases, enum_dict, init, start, settings)
-
-		# for use with both Python 2/3
-		JSONEnum = JSONEnumMeta('JsonEnum', (Enum, ), {})
-
-		test_file = os.path.join(tempdir, 'test_json.json')
-		with open(test_file, 'w') as f:
-			f.write(
-					'[{"name":"Afghanistan","alpha-2":"AF","country-code":"004","notes":{"description":"pretty"}},'
-					'{"name":"Åland Islands","alpha-2":"AX","country-code":"248","notes":{"description":"serene"}},'
-					'{"name":"Albania","alpha-2":"AL","country-code":"008","notes":{"description":"exciting"}},'
-					'{"name":"Algeria","alpha-2":"DZ","country-code":"012","notes":{"description":"scarce"}}]'
-					)
-
-		class Country(JSONEnum):
-			_init_ = 'abbr code country_name description'
-			_file = test_file
-			_name = 'alpha-2'
-			_value = {
-					1: ('alpha-2', None),
-					2: ('country-code', lambda c: int(c)),
-					3: ('name', None),
-					4: (('notes', 'description'), lambda s: s.title()),
-					}
-
-		assert [Country.AF, Country.AX, Country.AL, Country.DZ] == list(Country)
-		assert Country.AF.abbr == 'AF'
-		assert Country.AX.code == 248
-		assert Country.AL.country_name == 'Albania'
-		assert Country.DZ.description == 'Scarce'
 
 	def test_subclasses_with_getnewargs(self):
 
@@ -1547,173 +1092,6 @@ class TestEnum(TestCase):
 		Color.blue  # pylint: disable=pointless-statement
 		assert Color.blue == 13
 
-	def test_equality(self):
-
-		class AlwaysEqual:
-
-			def __eq__(self, other):
-				return True
-
-		class OrdinaryEnum(Enum):
-			a = 1
-
-		assert AlwaysEqual() == OrdinaryEnum.a
-		assert OrdinaryEnum.a == AlwaysEqual()
-
-	def test_ordered_mixin(self):
-
-		class Grade(OrderedEnum):
-			__order__ = 'A B C D F'
-			A = 5
-			B = 4
-			C = 3
-			D = 2
-			F = 1
-
-		assert list(Grade), [Grade.A, Grade.B, Grade.C, Grade.D == Grade.F]
-		assert Grade.A > Grade.B
-		assert Grade.F <= Grade.C
-		assert Grade.D < Grade.A
-		assert Grade.B >= Grade.B
-
-	def test_missing_deprecated(self):
-
-		class Label(Enum):
-			AnyApple = 0
-			RedApple = 1
-			GreenApple = 2
-
-			@classmethod
-			def _missing_(cls, name):
-				return cls.AnyApple
-
-		assert Label.AnyApple == Label(4)
-		with self.assertRaises(AttributeError):
-			Label.redapple  # pylint: disable=pointless-statement
-		with self.assertRaises(KeyError):
-			Label['redapple']  # pylint: disable=pointless-statement
-
-	def test_missing(self):
-
-		class Label(Enum):
-			AnyApple = 0
-			RedApple = 1
-			GreenApple = 2
-
-			@classmethod
-			def _missing_value_(cls, name):
-				return cls.AnyApple
-
-		assert Label.AnyApple == Label(4)
-		with self.assertRaises(AttributeError):
-			Label.redapple  # pylint: disable=pointless-statement
-		with self.assertRaises(KeyError):
-			Label['redapple']  # pylint: disable=pointless-statement
-
-	def test_missing_name(self):
-
-		class Label(Enum):
-			RedApple = 1
-			GreenApple = 2
-
-			@classmethod
-			def _missing_name_(cls, name):
-				for member in cls:
-					if member.name.lower() == name.lower():
-						return member
-
-		Label['redapple']  # noqa  # pylint: disable=pointless-statement
-		with self.assertRaises(AttributeError):
-			Label.redapple  # noqa  # pylint: disable=pointless-statement
-		with self.assertRaises(ValueError):
-			Label('redapple')
-
-	def test_missing_name_bad_return(self):
-
-		class Label(Enum):
-			RedApple = 1
-			GreenApple = 2
-
-			@classmethod
-			def _missing_name_(cls, name):
-				return None
-
-		with self.assertRaises(AttributeError):
-			Label.redapple  # noqa  # pylint: disable=pointless-statement
-		with self.assertRaises(ValueError):
-			Label('redapple')
-		with self.assertRaises(KeyError):
-			Label['redapple']  # noqa  # pylint: disable=pointless-statement
-
-	def test_extending2(self):
-
-		def bad_extension():
-
-			class Shade(Enum):
-
-				def shade(self):
-					print(self.name)
-
-			class Color(Shade):
-				red = 1
-				green = 2
-				blue = 3
-
-			class MoreColor(Color):
-				cyan = 4
-				magenta = 5
-				yellow = 6
-
-		self.assertRaises(TypeError, bad_extension)
-
-	def test_extending3(self):
-
-		class Shade(Enum):
-
-			def shade(self):
-				return self.name
-
-		class Color(Shade):
-
-			def hex(self):
-				return f'{self.value} hexlified!'
-
-		class MoreColor(Color):
-			cyan = 4
-			magenta = 5
-			yellow = 6
-
-		assert MoreColor.magenta.hex() == '5 hexlified!'
-
-	def test_extend_enum_plain(self):
-
-		class Color(UniqueEnum):
-			red = 1
-			green = 2
-			blue = 3
-
-		extend_enum(Color, 'brown', 4)
-		assert Color.brown.name == 'brown'
-		assert Color.brown.value == 4
-		assert Color.brown in Color
-		assert Color(4) == Color.brown
-		assert Color['brown'] == Color.brown
-		assert len(Color) == 4
-
-	def test_extend_enum_alias(self):
-
-		class Color(Enum):
-			red = 1
-			green = 2
-			blue = 3
-
-		extend_enum(Color, 'rojo', 1)
-		assert Color.rojo.name == 'red'
-		assert Color.rojo.value == 1
-		assert Color.rojo in Color
-		assert Color(1) == Color.rojo
-		assert Color['rojo'] == Color.red
-		assert len(Color) == 3
 
 	def test_extend_enum_no_alias(self):
 
@@ -1738,38 +1116,6 @@ class TestEnum(TestCase):
 		assert Color.blue in Color
 		assert Color(3) == Color.blue
 		assert len(Color) == 3
-
-	def test_extend_enum_shadow(self):
-
-		class Color(UniqueEnum):
-			red = 1
-			green = 2
-			blue = 3
-
-		extend_enum(Color, 'value', 4)
-		assert Color.value.name == 'value'
-		assert Color.value.value == 4
-		assert Color.value in Color
-		assert Color(4) == Color.value
-		assert Color['value'] == Color.value
-		assert len(Color) == 4
-		assert Color.red.value == 1
-
-	def test_extend_enum_multivalue(self):
-
-		class Color(MultiValueEnum):
-			red = 1, 4, 7
-			green = 2, 5, 8
-			blue = 3, 6, 9
-
-		extend_enum(Color, 'brown', 10, 20)
-		assert Color.brown.name == 'brown'
-		assert Color.brown.value == 10
-		assert Color.brown in Color
-		assert Color(10) == Color.brown
-		assert Color(20) == Color.brown
-		assert Color['brown'] == Color.brown
-		assert len(Color) == 4
 
 	def test_extend_enum_multivalue_alias(self):
 
@@ -1800,27 +1146,6 @@ class TestEnum(TestCase):
 		assert Color(6) == Color.blue
 		assert Color(9) == Color.blue
 		assert len(Color) == 3
-
-	def test_extend_intenum(self):
-
-		class Index(IntEnum):
-			DeviceType = 0x1000
-			ErrorRegister = 0x1001
-
-		for name, value in (
-			('ControlWord', 0x6040),
-			('StatusWord', 0x6041),
-			('OperationMode', 0x6060),
-			):
-			extend_enum(Index, name, value)
-
-		assert len(Index) == 5
-		self.assertEqual(
-				list(Index),
-				[Index.DeviceType, Index.ErrorRegister, Index.ControlWord, Index.StatusWord, Index.OperationMode]
-				)
-		assert Index.DeviceType.value == 0x1000
-		assert Index.StatusWord.value == 0x6041
 
 	def test_extend_multi_init(self):
 
@@ -1860,68 +1185,13 @@ class TestEnum(TestCase):
 		assert HTTPStatus.BAD_EGGS.phrase == 'Too green'
 		assert HTTPStatus.BAD_EGGS.description == ''
 
-	def test_no_duplicates(self):
+	@skip
+	def test_init_and_autonumber(self):
+		pass
 
-		def bad_duplicates():
-
-			class Color1(UniqueEnum):
-				red = 1
-				green = 2
-				blue = 3
-
-			class Color2(UniqueEnum):
-				red = 1
-				green = 2
-				blue = 3
-				grene = 2
-
-		self.assertRaises(ValueError, bad_duplicates)
-
-	def test_no_duplicates_kinda(self):
-
-		class Silly(UniqueEnum):
-			one = 1
-			two = 'dos'
-			name = 3
-
-		class Sillier(IntEnum, UniqueEnum):
-			single = 1
-			name = 2
-			triple = 3
-			value = 4
-
-	def test_init(self):
-
-		class Planet(Enum):
-			MERCURY = (3.303e+23, 2.4397e6)
-			VENUS = (4.869e+24, 6.0518e6)
-			EARTH = (5.976e+24, 6.37814e6)
-			MARS = (6.421e+23, 3.3972e6)
-			JUPITER = (1.9e+27, 7.1492e7)
-			SATURN = (5.688e+26, 6.0268e7)
-			URANUS = (8.686e+25, 2.5559e7)
-			NEPTUNE = (1.024e+26, 2.4746e7)
-
-			def __init__(self, mass, radius):
-				self.mass = mass  # in kilograms
-				self.radius = radius  # in meters
-
-			@property
-			def surface_gravity(self):
-				# universal gravitational constant  (m3 kg-1 s-2)
-				G = 6.67300E-11
-				return G * self.mass / (self.radius * self.radius)
-
-		assert round(Planet.EARTH.surface_gravity, 2) == 9.80
-		assert Planet.EARTH.value, (5.976e+24 == 6.37814e6)
-
-		@skip
-		def test_init_and_autonumber(self):
-			pass
-
-		@skip
-		def test_init_and_autonumber_and_value(self):
-			pass
+	@skip
+	def test_init_and_autonumber_and_value(self):
+		pass
 
 	def test_no_init_and_autonumber(self):
 
@@ -1997,7 +1267,7 @@ class TestEnum(TestCase):
 		assert LabelledList(1) == LabelledList.unprocessed
 		assert list(LabelledList), [LabelledList.unprocessed == LabelledList.payment_complete]
 
-	def test_auto_number(self):
+	def test_auto_number_py2(self):
 
 		class Color(Enum):
 			_order_ = 'red blue green'
@@ -2010,7 +1280,7 @@ class TestEnum(TestCase):
 		assert Color.blue.value == 2
 		assert Color.green.value == 3
 
-	def test_auto_name(self):
+	def test_auto_name_py2(self):
 
 		class Color(Enum):
 			_order_ = 'red blue green'
@@ -2027,7 +1297,7 @@ class TestEnum(TestCase):
 		assert Color.blue.value == 'blue'
 		assert Color.green.value == 'green'
 
-	def test_auto_name_inherit(self):
+	def test_auto_name_inherit_py2(self):
 
 		class AutoNameEnum(Enum):
 
@@ -2045,7 +1315,7 @@ class TestEnum(TestCase):
 		assert Color.blue.value == 'blue'
 		assert Color.green.value == 'green'
 
-	def test_auto_garbage(self):
+	def test_auto_garbage_py2(self):
 
 		class Color(Enum):
 			_order_ = 'red blue'
@@ -2054,7 +1324,7 @@ class TestEnum(TestCase):
 
 		assert Color.blue.value == 1
 
-	def test_auto_garbage_corrected(self):
+	def test_auto_garbage_corrected_py2(self):
 
 		class Color(Enum):
 			_order_ = 'red blue green'
@@ -2067,7 +1337,7 @@ class TestEnum(TestCase):
 		assert Color.blue.value == 2
 		assert Color.green.value == 3
 
-	def test_duplicate_auto(self):
+	def test_duplicate_auto_py2(self):
 
 		class Dupes(Enum):
 			_order_ = 'first second third'
@@ -2145,7 +1415,7 @@ class TestEnum(TestCase):
 		empty = IntEnum('Foo', {})
 		assert len(empty) == 0
 
-	def test_auto_init(self):
+	def test_auto_init_py2(self):
 
 		class Planet(Enum):
 			_init_ = 'mass radius'
@@ -2167,7 +1437,7 @@ class TestEnum(TestCase):
 		assert round(Planet.EARTH.surface_gravity, 2) == 9.80
 		assert Planet.EARTH.value, (5.976e+24 == 6.37814e6)
 
-	def test_auto_init_with_value(self):
+	def test_auto_init_with_value_py2(self):
 
 		class Color(Enum):
 			_init_ = 'value, rgb'
@@ -2192,7 +1462,7 @@ class TestEnum(TestCase):
 		self.assertFalse(Settings.red is Settings.rojo)
 		self.assertRaises(TypeError, Settings, 1)
 
-	def test_auto_and_init(self):
+	def test_auto_and_init_py2(self):
 
 		class Field(IntEnum):
 			_order_ = 'TYPE START'
@@ -2206,7 +1476,7 @@ class TestEnum(TestCase):
 		assert Field.TYPE.__doc__, 'Char, Date, Logical == etc.'
 		assert Field.START.__doc__ == 'Field offset in record'
 
-	def test_auto_and_start(self):
+	def test_auto_and_start_py2(self):
 
 		class Field(IntEnum):
 			_order_ = 'TYPE START'
@@ -2220,7 +1490,7 @@ class TestEnum(TestCase):
 		assert Field.TYPE.__doc__, 'Char, Date, Logical == etc.'
 		assert Field.START.__doc__ == 'Field offset in record'
 
-	def test_auto_and_init_and_some_values(self):
+	def test_auto_and_init_and_some_values_py2(self):
 
 		class Field(IntEnum):
 			_order_ = 'TYPE START BLAH BELCH'
@@ -2519,7 +1789,7 @@ class TestEnum(TestCase):
 			two = "22", "two"
 			three = "23", "three"
 
-	def test_combine_new_settings_with_old_settings(self):
+	def test_combine_new_settings_with_old_settings_py2(self):
 
 		class Auto(Enum):
 			_settings_ = Unique
@@ -2532,7 +1802,7 @@ class TestEnum(TestCase):
 				BLUH = ()
 				ICK = 1
 
-	def test_timedelta(self):
+	def test_timedelta_py2(self):
 
 		class Period(timedelta, Enum):
 			'''
@@ -2630,7 +1900,7 @@ class TestEnum(TestCase):
 
 		# if we got here, we're good
 
-	def test_order_as_function(self):
+	def test_order_as_function_py2(self):
 		# first with _init_
 		class TestSequence(Enum):
 			_init_ = 'value, sequence'
@@ -2818,93 +2088,6 @@ class TestEnum(TestCase):
 		assert ts.inv_units.name == 'inv_units'
 		assert ts.inv_units.value == 'Qn$(7,2)'
 		assert ts.inv_units.sequence == 10
-
-	if StdlibEnumMeta is not None:
-
-		def test_stdlib_inheritence(self):
-			assert isinstance(self.Season, StdlibEnumMeta)
-			assert issubclass(self.Season, StdlibEnum)
-
-
-class TestEnumV3(TestCase):
-
-	def setUp(self):
-
-		class Season(Enum):
-			SPRING = 1
-			SUMMER = 2
-			AUTUMN = 3
-			WINTER = 4
-
-		self.Season = Season
-
-		class Konstants(float, Enum):
-			E = 2.7182818
-			PI = 3.1415926
-			TAU = 2 * PI
-
-		self.Konstants = Konstants
-
-		class Grades(IntEnum):
-			A = 5
-			B = 4
-			C = 3
-			D = 2
-			F = 0
-
-		self.Grades = Grades
-
-		class Directional(str, Enum):
-			EAST = 'east'
-			WEST = 'west'
-			NORTH = 'north'
-			SOUTH = 'south'
-
-		self.Directional = Directional
-
-		# stdlib
-		from datetime import date
-
-		class Holiday(date, Enum):
-			NEW_YEAR = 2013, 1, 1
-			IDES_OF_MARCH = 2013, 3, 15
-
-		self.Holiday = Holiday
-
-	def test_auto_init(self):
-
-		class Planet(Enum, init='mass radius'):
-			MERCURY = (3.303e+23, 2.4397e6)
-			VENUS = (4.869e+24, 6.0518e6)
-			EARTH = (5.976e+24, 6.37814e6)
-			MARS = (6.421e+23, 3.3972e6)
-			JUPITER = (1.9e+27, 7.1492e7)
-			SATURN = (5.688e+26, 6.0268e7)
-			URANUS = (8.686e+25, 2.5559e7)
-			NEPTUNE = (1.024e+26, 2.4746e7)
-
-			@property
-			def surface_gravity(self):
-				# universal gravitational constant  (m3 kg-1 s-2)
-				G = 6.67300E-11
-				return G * self.mass / (self.radius * self.radius)
-
-		assert round(Planet.EARTH.surface_gravity, 2) == 9.80
-		assert Planet.EARTH.value, (5.976e+24 == 6.37814e6)
-
-	def test_auto_init_with_value(self):
-
-		class Color(Enum, init='value, rgb'):
-			RED = 1, (1, 0, 0)
-			BLUE = 2, (0, 1, 0)
-			GREEN = 3, (0, 0, 1)
-
-		assert Color.RED.value == 1
-		assert Color.BLUE.value == 2
-		assert Color.GREEN.value == 3
-		assert Color.RED.rgb, (1, 0 == 0)
-		assert Color.BLUE.rgb, (0, 1 == 0)
-		assert Color.GREEN.rgb, (0, 0 == 1)
 
 	def test_auto_turns_off(self):
 		with self.assertRaises(NameError):
@@ -3157,46 +2340,6 @@ class TestEnumV3(TestCase):
 		self.assertIs(Color('green'), Color.green)
 		self.assertIs(Color['green'], Color.green)
 
-	def test_auto_and_init(self):
-
-		class Field(IntEnum, settings=AutoNumber, init='__doc__'):
-			TYPE = "Char, Date, Logical, etc."
-			START = "Field offset in record"
-
-		assert Field.TYPE == 1
-		assert Field.START == 2
-		assert Field.TYPE.__doc__, 'Char, Date, Logical == etc.'
-		assert Field.START.__doc__ == 'Field offset in record'
-		self.assertFalse(hasattr(Field, '_order_'))
-
-	def test_auto_and_start(self):
-
-		class Field(IntEnum, init='__doc__', start=0):
-			TYPE = "Char, Date, Logical, etc."
-			START = "Field offset in record"
-
-		assert Field.TYPE == 0
-		assert Field.START == 1
-		assert Field.TYPE.__doc__, 'Char, Date, Logical == etc.'
-		assert Field.START.__doc__ == 'Field offset in record'
-
-	def test_auto_and_init_and_some_values(self):
-
-		class Field(IntEnum, init='__doc__', settings=AutoNumber):
-			TYPE = "Char, Date, Logical, etc."
-			START = "Field offset in record"
-			BLAH = 5, "test blah"
-			BELCH = 'test belch'
-
-		assert Field.TYPE == 1
-		assert Field.START == 2
-		assert Field.BLAH == 5
-		assert Field.BELCH == 6
-		assert Field.TYPE.__doc__, 'Char, Date, Logical == etc.'
-		assert Field.START.__doc__ == 'Field offset in record'
-		assert Field.BLAH.__doc__ == 'test blah'
-		assert Field.BELCH.__doc__ == 'test belch'
-
 	def test_autonumber_sans_init(self):
 
 		class Color(MagicAutoNumberEnum):
@@ -3329,69 +2472,6 @@ class TestEnumV3(TestCase):
 
 		assert Color.blue.cap_name == 'Cyan'
 
-	def test_combine_new_settings_with_old_settings(self):
-
-		class Auto(Enum, settings=Unique):
-			pass
-
-		with self.assertRaises(ValueError):
-
-			class AutoUnique(Auto, settings=AutoValue):
-				BLAH  # noqa  # pylint: disable=pointless-statement
-				BLUH  # noqa  # pylint: disable=pointless-statement
-				ICK = 1
-
-	def test_timedelta(self):
-
-		class Period(timedelta, Enum):
-			'''
-			different lengths of time
-			'''
-			_init_ = 'value period'
-			_settings_ = NoAlias
-			_ignore_ = 'Period i'
-			Period = vars()
-			for i in range(31):
-				Period['day_%d' % i] = i, 'day'
-			for i in range(15):
-				Period['week_%d' % i] = i * 7, 'week'
-			for i in range(12):
-				Period['month_%d' % i] = i * 30, 'month'
-			OneDay = day_1  # noqa  # pylint: disable=pointless-statement
-			OneWeek = week_1  # noqa  # pylint: disable=pointless-statement
-
-		self.assertFalse(hasattr(Period, '_ignore_'))
-		self.assertFalse(hasattr(Period, 'Period'))
-		self.assertFalse(hasattr(Period, 'i'))
-		assert isinstance(Period.day_1, timedelta)
-
-	def test_extend_enum_plain(self):
-
-		class Color(UniqueEnum):
-			red = 1
-			green = 2
-			blue = 3
-
-		extend_enum(Color, 'brown', 4)
-		assert Color.brown.name == 'brown'
-		assert Color.brown.value == 4
-		assert Color.brown in Color
-		assert len(Color) == 4
-
-	def test_extend_enum_shadow(self):
-
-		class Color(UniqueEnum):
-			red = 1
-			green = 2
-			blue = 3
-
-		extend_enum(Color, 'value', 4)
-		assert Color.value.name == 'value'
-		assert Color.value.value == 4
-		assert Color.value in Color
-		assert len(Color) == 4
-		assert Color.red.value == 1
-
 	def test_extend_enum_unique_with_duplicate(self):
 		with self.assertRaises(ValueError):
 
@@ -3428,7 +2508,216 @@ class TestEnumV3(TestCase):
 		assert Color.value is not Color.blue
 		self.assertTrue(Color.value.value, 3)
 
-	def test_no_duplicates(self):
+	def test_class_nested_enum_and_pickle_protocol_four(self):
+		# would normally just have this directly in the class namespace
+		class NestedEnum(Enum):
+			twigs = 'common'
+			shiny = 'rare'
+
+		self.__class__.NestedEnum = NestedEnum
+		self.NestedEnum.__qualname__ = '%s.NestedEnum' % self.__class__.__name__
+
+	def test_subclasses_with_getnewargs_ex(self):
+
+		class NamedInt(int):
+			__qualname__ = 'NamedInt'  # needed for pickle protocol 4
+
+			def __new__(cls, *args):
+				_args = args
+				if len(args) < 2:
+					raise TypeError("name and value must be specified")
+				name, args = args[0], args[1:]
+				self = int.__new__(cls, *args)
+				self._intname = name
+				self._args = _args
+				return self
+
+			def __getnewargs_ex__(self):
+				return self._args, {}
+
+			@property
+			def __name__(self):
+				return self._intname
+
+			def __repr__(self):
+				# repr() is updated to include the name and type info
+				return "{}({!r}, {})".format(type(self).__name__, self.__name__, int.__repr__(self))
+
+			def __str__(self):
+				# str() is unchanged, even if it relies on the repr() fallback
+				base = int
+				base_str = base.__str__
+				if base_str.__objclass__ is object:
+					return base.__repr__(self)
+				return base_str(self)
+
+			# for simplicity, we only define one operator that
+			# propagates expressions
+			def __add__(self, other):
+				temp = int(self) + int(other)
+				if isinstance(self, NamedInt) and isinstance(other, NamedInt):
+					return NamedInt(f'({self.__name__} + {other.__name__})', temp)
+				else:
+					return temp
+
+		class NEI(NamedInt, Enum):
+			__qualname__ = 'NEI'  # needed for pickle protocol 4
+			x = ('the-x', 1)
+			y = ('the-y', 2)
+
+		assert NEI.__new__ is Enum.__new__
+		assert repr(NEI.x + NEI.y), "NamedInt('(the-x + the-y)' == 3)"
+		globals()['NamedInt'] = NamedInt
+		globals()['NEI'] = NEI
+		NI5 = NamedInt('test', 5)
+		assert NI5 == 5
+		assert NEI.y.value == 2
+
+	if StdlibEnumMeta is not None:
+
+		def test_stdlib_inheritence(self):
+			assert isinstance(self.Season, StdlibEnumMeta)
+			assert issubclass(self.Season, StdlibEnum)
+
+	def test_auto_init_py3(self):
+
+		class Planet(Enum, init='mass radius'):
+			MERCURY = (3.303e+23, 2.4397e6)
+			VENUS = (4.869e+24, 6.0518e6)
+			EARTH = (5.976e+24, 6.37814e6)
+			MARS = (6.421e+23, 3.3972e6)
+			JUPITER = (1.9e+27, 7.1492e7)
+			SATURN = (5.688e+26, 6.0268e7)
+			URANUS = (8.686e+25, 2.5559e7)
+			NEPTUNE = (1.024e+26, 2.4746e7)
+
+			@property
+			def surface_gravity(self):
+				# universal gravitational constant  (m3 kg-1 s-2)
+				G = 6.67300E-11
+				return G * self.mass / (self.radius * self.radius)
+
+		assert round(Planet.EARTH.surface_gravity, 2) == 9.80
+		assert Planet.EARTH.value, (5.976e+24 == 6.37814e6)
+
+	def test_auto_init_with_value_py3(self):
+
+		class Color(Enum, init='value, rgb'):
+			RED = 1, (1, 0, 0)
+			BLUE = 2, (0, 1, 0)
+			GREEN = 3, (0, 0, 1)
+
+		assert Color.RED.value == 1
+		assert Color.BLUE.value == 2
+		assert Color.GREEN.value == 3
+		assert Color.RED.rgb, (1, 0 == 0)
+		assert Color.BLUE.rgb, (0, 1 == 0)
+		assert Color.GREEN.rgb, (0, 0 == 1)
+
+	def test_auto_and_init_py3(self):
+
+		class Field(IntEnum, settings=AutoNumber, init='__doc__'):
+			TYPE = "Char, Date, Logical, etc."
+			START = "Field offset in record"
+
+		assert Field.TYPE == 1
+		assert Field.START == 2
+		assert Field.TYPE.__doc__, 'Char, Date, Logical == etc.'
+		assert Field.START.__doc__ == 'Field offset in record'
+		self.assertFalse(hasattr(Field, '_order_'))
+
+	def test_auto_and_start_py3(self):
+
+		class Field(IntEnum, init='__doc__', start=0):
+			TYPE = "Char, Date, Logical, etc."
+			START = "Field offset in record"
+
+		assert Field.TYPE == 0
+		assert Field.START == 1
+		assert Field.TYPE.__doc__, 'Char, Date, Logical == etc.'
+		assert Field.START.__doc__ == 'Field offset in record'
+
+	def test_auto_and_init_and_some_values_py3(self):
+
+		class Field(IntEnum, init='__doc__', settings=AutoNumber):
+			TYPE = "Char, Date, Logical, etc."
+			START = "Field offset in record"
+			BLAH = 5, "test blah"
+			BELCH = 'test belch'
+
+		assert Field.TYPE == 1
+		assert Field.START == 2
+		assert Field.BLAH == 5
+		assert Field.BELCH == 6
+		assert Field.TYPE.__doc__, 'Char, Date, Logical == etc.'
+		assert Field.START.__doc__ == 'Field offset in record'
+		assert Field.BLAH.__doc__ == 'test blah'
+		assert Field.BELCH.__doc__ == 'test belch'
+
+	def test_combine_new_settings_with_old_settings_py3(self):
+
+		class Auto(Enum, settings=Unique):
+			pass
+
+		with self.assertRaises(ValueError):
+
+			class AutoUnique(Auto, settings=AutoValue):
+				BLAH  # noqa  # pylint: disable=pointless-statement
+				BLUH  # noqa  # pylint: disable=pointless-statement
+				ICK = 1
+
+	def test_timedelta_py3(self):
+
+		class Period(timedelta, Enum):
+			'''
+			different lengths of time
+			'''
+			_init_ = 'value period'
+			_settings_ = NoAlias
+			_ignore_ = 'Period i'
+			Period = vars()
+			for i in range(31):
+				Period['day_%d' % i] = i, 'day'
+			for i in range(15):
+				Period['week_%d' % i] = i * 7, 'week'
+			for i in range(12):
+				Period['month_%d' % i] = i * 30, 'month'
+			OneDay = day_1  # noqa  # pylint: disable=pointless-statement
+			OneWeek = week_1  # noqa  # pylint: disable=pointless-statement
+
+		self.assertFalse(hasattr(Period, '_ignore_'))
+		self.assertFalse(hasattr(Period, 'Period'))
+		self.assertFalse(hasattr(Period, 'i'))
+		assert isinstance(Period.day_1, timedelta)
+
+	def test_extend_enum_plain_py3(self):
+
+		class Color(UniqueEnum):
+			red = 1
+			green = 2
+			blue = 3
+
+		extend_enum(Color, 'brown', 4)
+		assert Color.brown.name == 'brown'
+		assert Color.brown.value == 4
+		assert Color.brown in Color
+		assert len(Color) == 4
+
+	def test_extend_enum_shadow_py3(self):
+
+		class Color(UniqueEnum):
+			red = 1
+			green = 2
+			blue = 3
+
+		extend_enum(Color, 'value', 4)
+		assert Color.value.name == 'value'
+		assert Color.value.value == 4
+		assert Color.value in Color
+		assert len(Color) == 4
+		assert Color.red.value == 1
+
+	def test_no_duplicates_py3(self):
 
 		def bad_duplicates():
 
@@ -3445,7 +2734,7 @@ class TestEnumV3(TestCase):
 
 		self.assertRaises(ValueError, bad_duplicates)
 
-	def test_no_duplicates_kinda(self):
+	def test_no_duplicates_kinda_py3(self):
 
 		class Silly(UniqueEnum):
 			one = 1
@@ -3458,7 +2747,7 @@ class TestEnumV3(TestCase):
 			triple = 3
 			value = 4
 
-	def test_auto_number(self):
+	def test_auto_number_py3(self):
 
 		class Color(Enum, settings=AutoValue):
 			red  # noqa  # pylint: disable=pointless-statement
@@ -3470,7 +2759,7 @@ class TestEnumV3(TestCase):
 		assert Color.blue.value == 2
 		assert Color.green.value == 3
 
-	def test_auto_name(self):
+	def test_auto_name_py3(self):
 
 		class Color(Enum, settings=AutoValue):
 
@@ -3486,7 +2775,7 @@ class TestEnumV3(TestCase):
 		assert Color.blue.value == 'blue'
 		assert Color.green.value == 'green'
 
-	def test_auto_name_inherit(self):
+	def test_auto_name_inherit_py3(self):
 
 		class AutoNameEnum(Enum):
 
@@ -3503,7 +2792,7 @@ class TestEnumV3(TestCase):
 		assert Color.blue.value == 'blue'
 		assert Color.green.value == 'green'
 
-	def test_auto_garbage(self):
+	def test_auto_garbage_py3(self):
 
 		class Color(Enum):
 			_settings_ = AutoValue
@@ -3512,7 +2801,7 @@ class TestEnumV3(TestCase):
 
 		assert Color.blue.value == 1
 
-	def test_auto_garbage_corrected(self):
+	def test_auto_garbage_corrected_py3(self):
 
 		class Color(Enum, settings=AutoValue):
 			red = 'red'
@@ -3524,7 +2813,7 @@ class TestEnumV3(TestCase):
 		assert Color.blue.value == 2
 		assert Color.green.value == 3
 
-	def test_duplicate_auto(self):
+	def test_duplicate_auto_py3(self):
 
 		class Dupes(Enum, settings=AutoValue):
 			first = primero  # noqa  # pylint: disable=pointless-statement
@@ -3533,7 +2822,7 @@ class TestEnumV3(TestCase):
 
 		assert [Dupes.first, Dupes.second, Dupes.third] == list(Dupes)
 
-	def test_order_as_function(self):
+	def test_order_as_function_py3(self):
 		# first with _init_
 		class TestSequence(Enum):
 			_init_ = 'value, sequence'
@@ -3663,117 +2952,620 @@ class TestEnumV3(TestCase):
 				gl_category = 'Rn$(5,1)', 8  # G/L Category
 				warehouse_category = 'Sn$(6,1)', 9  # Warehouse Category
 
-	def test_class_nested_enum_and_pickle_protocol_four(self):
-		# would normally just have this directly in the class namespace
-		class NestedEnum(Enum):
-			twigs = 'common'
-			shiny = 'rare'
 
-		self.__class__.NestedEnum = NestedEnum
-		self.NestedEnum.__qualname__ = '%s.NestedEnum' % self.__class__.__name__
+def test_intenum_value():
+	assert IntStooges.CURLY.value == 2
 
-	def test_subclasses_with_getnewargs_ex(self):
 
-		class NamedInt(int):
-			__qualname__ = 'NamedInt'  # needed for pickle protocol 4
+def test_enum_helper():
+	e1 = enum(1, 2, three=9)
+	e2 = enum(1, 2, three=9)
+	e3 = enum(1, 2, 9)
+	assert e1 is not e2
+	assert e1 == e2
+	assert e1 != e3
+	assert e2 != e3
 
-			def __new__(cls, *args):
-				_args = args
-				if len(args) < 2:
-					raise TypeError("name and value must be specified")
-				name, args = args[0], args[1:]
-				self = int.__new__(cls, *args)
-				self._intname = name
-				self._args = _args
-				return self
 
-			def __getnewargs_ex__(self):
-				return self._args, {}
+def test_invalid_names():
 
-			@property
-			def __name__(self):
-				return self._intname
+	def create_bad_class_1():
 
-			def __repr__(self):
-				# repr() is updated to include the name and type info
-				return "{}({!r}, {})".format(type(self).__name__, self.__name__, int.__repr__(self))
+		class Wrong(Enum):
+			mro = 9
 
-			def __str__(self):
-				# str() is unchanged, even if it relies on the repr() fallback
-				base = int
-				base_str = base.__str__
-				if base_str.__objclass__ is object:
-					return base.__repr__(self)
-				return base_str(self)
+	def create_bad_class_2():
 
-			# for simplicity, we only define one operator that
-			# propagates expressions
-			def __add__(self, other):
-				temp = int(self) + int(other)
-				if isinstance(self, NamedInt) and isinstance(other, NamedInt):
-					return NamedInt(f'({self.__name__} + {other.__name__})', temp)
-				else:
-					return temp
+		class Wrong(Enum):
+			_reserved_ = 3
 
-		class NEI(NamedInt, Enum):
-			__qualname__ = 'NEI'  # needed for pickle protocol 4
-			x = ('the-x', 1)
-			y = ('the-y', 2)
+	with pytest.raises(ValueError):
+		create_bad_class_1()
+	with pytest.raises(ValueError):
+		create_bad_class_2()
 
-		assert NEI.__new__ is Enum.__new__
-		assert repr(NEI.x + NEI.y), "NamedInt('(the-x + the-y)' == 3)"
-		globals()['NamedInt'] = NamedInt
-		globals()['NEI'] = NEI
-		NI5 = NamedInt('test', 5)
-		assert NI5 == 5
-		assert NEI.y.value == 2
+
+
+def test_format_enum_custom():
+
+	class TestFloat(float, Enum):
+		one = 1.0
+		two = 2.0
+
+		def __format__(self, spec):
+			return 'TestFloat success!'
+
+	assert f'{TestFloat.one}' == 'TestFloat success!'
+
+
+def test_enum_with_value_name():
+
+	class Huh(Enum):
+		_order_ = 'name value'
+		name = 1
+		value = 2
+
+	assert list(Huh) == [Huh.name, Huh.value]
+	assert isinstance(Huh.name, Huh)
+	assert Huh.name.name == 'name'
+	assert Huh.name.value == 1
+
+
+def test_wrong_inheritance_order():
+
+	def wrong_inherit():
+
+		class Wrong(Enum, str):
+			NotHere = 'error before this point'
+
+	with pytest.raises(TypeError):
+		wrong_inherit()
+
+def test_wrong_enum_in_call():
+
+	class Monochrome(Enum):
+		black = 0
+		white = 1
+
+	class Gender(Enum):
+		male = 0
+		female = 1
+
+	with pytest.raises(ValueError):
+		Monochrome(Gender.male)
+
+def test_wrong_enum_in_mixed_call():
+
+	class Monochrome(IntEnum):
+		black = 0
+		white = 1
+
+	class Gender(Enum):
+		male = 0
+		female = 1
+
+	with pytest.raises(ValueError):
+		Monochrome(Gender.male)
+
+def test_mixed_enum_in_call_1():
+
+	class Monochrome(IntEnum):
+		black = 0
+		white = 1
+
+	class Gender(IntEnum):
+		male = 0
+		female = 1
+
+	assert Monochrome(Gender.female) is Monochrome.white
+
+def test_mixed_enum_in_call_2():
+
+	class Monochrome(Enum):
+		black = 0
+		white = 1
+
+	class Gender(IntEnum):
+		male = 0
+		female = 1
+
+	assert Monochrome(Gender.male) is Monochrome.black
+
+
+def test_getattr_getitem():
+
+	class Period(Enum):
+		morning = 1
+		noon = 2
+		evening = 3
+		night = 4
+
+	assert Period(2) is Period.noon
+	assert getattr(Period, 'night') is Period.night
+	assert Period['morning'] is Period.morning
+
+
+def test_subclassing():
+	if isinstance(Name, Exception):
+		raise Name
+	assert Name.BDFL == 'Guido van Rossum'
+	assert Name.BDFL, Name('Guido van Rossum')
+	assert Name.BDFL is getattr(Name, 'BDFL')
+
+
+def test_exclude_methods():
+
+	class whatever(Enum):
+		this = 'that'
+		these = 'those'
+
+		def really(self):
+			return f'no, not {self.value}'
+
+	assert not isinstance(whatever.really, whatever)
+	assert whatever.this.really(), 'no == not that'
+
+
+def test_intenum_transitivity():
+
+	class number(IntEnum):
+		one = 1
+		two = 2
+		three = 3
+
+	class numero(IntEnum):
+		uno = 1
+		dos = 2
+		tres = 3
+
+	assert number.one == numero.uno
+	assert number.two == numero.dos
+	assert number.three == numero.tres
+
+
+def test_introspection():
+
+	class Number(IntEnum):
+		one = 100
+		two = 200
+
+	assert Number.one._member_type_ is int
+	assert Number._member_type_ is int
+
+	class String(str, Enum):
+		yarn = 'soft'
+		rope = 'rough'
+		wire = 'hard'
+
+	assert String.yarn._member_type_ is str
+	assert String._member_type_ is str
+
+	class Plain(Enum):
+		vanilla = 'white'
+		one = 1
+
+	assert Plain.vanilla._member_type_ is object
+	assert Plain._member_type_ is object
+
+
+def test_flufl_enum():
+
+	class Fluflnum(Enum):
+
+		def __int__(self):
+			return int(self.value)
+
+	class MailManOptions(Fluflnum):
+		option1 = 1
+		option2 = 2
+		option3 = 3
+
+	assert int(MailManOptions.option1) == 1
+
+
+
+def test_meta_reconfigure():
+
+	def identity(*args):
+		if len(args) == 1:
+			return args[0]
+		return args
+
+	JSONEnum = None
+
+	class JSONEnumMeta(EnumMeta):
+
+		@classmethod
+		def __prepare__(metacls, cls, bases, init=None, start=None, settings=()):
+			return {}
+
+		def __init__(cls, *args, **kwds):
+			super().__init__(*args)
+
+		def __new__(metacls, cls, bases, clsdict, init=None, start=None, settings=()):
+
+			# stdlib
+			import json
+			members = []
+			if JSONEnum is not None:
+				if '_file' not in clsdict:
+					raise TypeError('_file is required')
+				if '_name' not in clsdict:
+					raise TypeError('_name is required')
+				if '_value' not in clsdict:
+					raise TypeError('_value is required')
+				name_spec = clsdict.pop('_name')
+				if not isinstance(name_spec, (tuple, list)):
+					name_spec = (name_spec, )
+				value_spec = clsdict.pop('_value')
+				file = clsdict.pop('_file')
+				with open(file) as f:
+					json_data = json.load(f)
+				for data in json_data:
+					values = []
+					name = data[name_spec[0]]
+					for piece in name_spec[1:]:
+						name = name[piece]
+					for order, (value_path, func) in sorted(value_spec.items()):
+						if not isinstance(value_path, (list, tuple)):
+							value_path = (value_path, )
+						value = data[value_path[0]]
+						for piece in value_path[1:]:
+							value = value[piece]
+						if func is not None:
+							value = func(value)
+						values.append(value)
+					values = tuple(values)
+					members.append((name, identity(*values)))
+			# get the real EnumDict
+			enum_dict = super().__prepare__(cls, bases, init, start, settings)
+			# transfer the original dict content, _items first
+			items = list(clsdict.items())
+			items.sort(key=lambda p: (0 if p[0][0] == '_' else 1, p))
+			for name, value in items:
+				enum_dict[name] = value
+			# add the members
+			for name, value in members:
+				enum_dict[name] = value
+			return super().__new__(metacls, cls, bases, enum_dict, init, start, settings)
+
+	# for use with both Python 2/3
+	JSONEnum = JSONEnumMeta('JsonEnum', (Enum, ), {})
+
+	test_file = os.path.join(tempdir, 'test_json.json')
+	with open(test_file, 'w') as f:
+		f.write(
+				'[{"name":"Afghanistan","alpha-2":"AF","country-code":"004","notes":{"description":"pretty"}},'
+				'{"name":"Åland Islands","alpha-2":"AX","country-code":"248","notes":{"description":"serene"}},'
+				'{"name":"Albania","alpha-2":"AL","country-code":"008","notes":{"description":"exciting"}},'
+				'{"name":"Algeria","alpha-2":"DZ","country-code":"012","notes":{"description":"scarce"}}]'
+				)
+
+	class Country(JSONEnum):
+		_init_ = 'abbr code country_name description'
+		_file = test_file
+		_name = 'alpha-2'
+		_value = {
+				1: ('alpha-2', None),
+				2: ('country-code', lambda c: int(c)),
+				3: ('name', None),
+				4: (('notes', 'description'), lambda s: s.title()),
+				}
+
+	assert [Country.AF, Country.AX, Country.AL, Country.DZ] == list(Country)
+	assert Country.AF.abbr == 'AF'
+	assert Country.AX.code == 248
+	assert Country.AL.country_name == 'Albania'
+	assert Country.DZ.description == 'Scarce'
+
+
+def test_extending():
+
+	def bad_extension():
+
+		class Color(Enum):
+			red = 1
+			green = 2
+			blue = 3
+
+		class MoreColor(Color):
+			cyan = 4
+			magenta = 5
+			yellow = 6
+
+	with pytest.raises(TypeError):
+		bad_extension()
 
 
 class MagicAutoNumberEnum(Enum, settings=AutoNumber):
 	pass
 
 
-# These are unordered here on purpose to ensure that declaration order
-# makes no difference.
-CONVERT_TEST_NAME_D = 5
-CONVERT_TEST_NAME_C = 5
-CONVERT_TEST_NAME_B = 5
-CONVERT_TEST_NAME_A = 5  # This one should sort first.
-CONVERT_TEST_NAME_E = 5
-CONVERT_TEST_NAME_F = 5
-CONVERT_TEST_SIGABRT = 4  # and this one
-CONVERT_TEST_SIGIOT = 4
-CONVERT_TEST_EIO = 7
-CONVERT_TEST_EBUS = 7  # and this one
 
 
-class TestIntEnumConvert(TestCase):
+def test_equality():
 
-	def test_convert_value_lookup_priority(self):
-		test_type = IntEnum._convert('UnittestConvert', __name__, filter=lambda x: x.startswith('CONVERT_TEST_'))
-		# We don't want the reverse lookup value to vary when there are
-		# multiple possible names for a given value.  It should always
-		# report the first lexigraphical name in that case.
-		assert test_type(5).name == 'CONVERT_TEST_NAME_A'
-		assert test_type(4).name == 'CONVERT_TEST_SIGABRT'
-		assert test_type(7).name == 'CONVERT_TEST_EBUS'
-		assert list(test_type) == [
-				test_type.CONVERT_TEST_SIGABRT,
-				test_type.CONVERT_TEST_NAME_A,
-				test_type.CONVERT_TEST_EBUS,
-				]
+	class AlwaysEqual:
 
-	def test_convert(self):
-		test_type = IntEnum._convert('UnittestConvert', __name__, filter=lambda x: x.startswith('CONVERT_TEST_'))
-		# Ensure that test_type has all of the desired names and values.
-		assert test_type.CONVERT_TEST_NAME_F == test_type.CONVERT_TEST_NAME_A
-		assert test_type.CONVERT_TEST_NAME_B == 5
-		assert test_type.CONVERT_TEST_NAME_C == 5
-		assert test_type.CONVERT_TEST_NAME_D == 5
-		assert test_type.CONVERT_TEST_NAME_E == 5
-		# Ensure that test_type only picked up names matching the filter.
-		self.assertEqual(
-				[name for name in dir(test_type) if name[0:2] not in ('CO', '__')],
-				[],
-				msg='Names other than CONVERT_TEST_* found.',
-				)
+		def __eq__(self, other):
+			return True
+
+	class OrdinaryEnum(Enum):
+		a = 1
+
+	assert AlwaysEqual() == OrdinaryEnum.a
+	assert OrdinaryEnum.a == AlwaysEqual()
+
+def test_ordered_mixin():
+
+	class Grade(OrderedEnum):
+		__order__ = 'A B C D F'
+		A = 5
+		B = 4
+		C = 3
+		D = 2
+		F = 1
+
+	assert list(Grade), [Grade.A, Grade.B, Grade.C, Grade.D == Grade.F]
+	assert Grade.A > Grade.B
+	assert Grade.F <= Grade.C
+	assert Grade.D < Grade.A
+	assert Grade.B >= Grade.B
+
+
+def test_missing_deprecated():
+
+	class Label(Enum):
+		AnyApple = 0
+		RedApple = 1
+		GreenApple = 2
+
+		@classmethod
+		def _missing_(cls, name):
+			return cls.AnyApple
+
+	assert Label.AnyApple == Label(4)
+	with pytest.raises(AttributeError):
+		Label.redapple  # pylint: disable=pointless-statement
+	with pytest.raises(KeyError):
+		Label['redapple']  # pylint: disable=pointless-statement
+
+
+def test_missing():
+
+	class Label(Enum):
+		AnyApple = 0
+		RedApple = 1
+		GreenApple = 2
+
+		@classmethod
+		def _missing_value_(cls, name):
+			return cls.AnyApple
+
+	assert Label.AnyApple == Label(4)
+	with pytest.raises(AttributeError):
+		Label.redapple  # pylint: disable=pointless-statement
+	with pytest.raises(KeyError):
+		Label['redapple']  # pylint: disable=pointless-statement
+
+
+def test_missing_name():
+
+	class Label(Enum):
+		RedApple = 1
+		GreenApple = 2
+
+		@classmethod
+		def _missing_name_(cls, name):
+			for member in cls:
+				if member.name.lower() == name.lower():
+					return member
+
+	Label['redapple']  # noqa  # pylint: disable=pointless-statement
+	with pytest.raises(AttributeError):
+		Label.redapple  # noqa  # pylint: disable=pointless-statement
+	with pytest.raises(ValueError):
+		Label('redapple')
+
+def test_missing_name_bad_return():
+
+	class Label(Enum):
+		RedApple = 1
+		GreenApple = 2
+
+		@classmethod
+		def _missing_name_(cls, name):
+			return None
+
+	with pytest.raises(AttributeError):
+		Label.redapple  # noqa  # pylint: disable=pointless-statement
+	with pytest.raises(ValueError):
+		Label('redapple')
+	with pytest.raises(KeyError):
+		Label['redapple']  # noqa  # pylint: disable=pointless-statement
+
+
+def test_extending2():
+
+	def bad_extension():
+
+		class Shade(Enum):
+
+			def shade(self):
+				print(self.name)
+
+		class Color(Shade):
+			red = 1
+			green = 2
+			blue = 3
+
+		class MoreColor(Color):
+			cyan = 4
+			magenta = 5
+			yellow = 6
+
+	with pytest.raises(TypeError):
+		bad_extension()
+
+
+def test_extending3():
+
+	class Shade(Enum):
+
+		def shade(self):
+			return self.name
+
+	class Color(Shade):
+
+		def hex(self):
+			return f'{self.value} hexlified!'
+
+	class MoreColor(Color):
+		cyan = 4
+		magenta = 5
+		yellow = 6
+
+	assert MoreColor.magenta.hex() == '5 hexlified!'
+
+
+
+def test_extend_enum_plain_py2():
+
+	class Color(UniqueEnum):
+		red = 1
+		green = 2
+		blue = 3
+
+	extend_enum(Color, 'brown', 4)
+	assert Color.brown.name == 'brown'
+	assert Color.brown.value == 4
+	assert Color.brown in Color
+	assert Color(4) == Color.brown
+	assert Color['brown'] == Color.brown
+	assert len(Color) == 4
+
+
+def test_extend_enum_alias():
+
+	class Color(Enum):
+		red = 1
+		green = 2
+		blue = 3
+
+	extend_enum(Color, 'rojo', 1)
+	assert Color.rojo.name == 'red'
+	assert Color.rojo.value == 1
+	assert Color.rojo in Color
+	assert Color(1) == Color.rojo
+	assert Color['rojo'] == Color.red
+	assert len(Color) == 3
+
+
+def test_extend_enum_shadow_py2():
+
+	class Color(UniqueEnum):
+		red = 1
+		green = 2
+		blue = 3
+
+	extend_enum(Color, 'value', 4)
+	assert Color.value.name == 'value'
+	assert Color.value.value == 4
+	assert Color.value in Color
+	assert Color(4) == Color.value
+	assert Color['value'] == Color.value
+	assert len(Color) == 4
+	assert Color.red.value == 1
+
+
+def test_extend_enum_multivalue():
+
+	class Color(MultiValueEnum):
+		red = 1, 4, 7
+		green = 2, 5, 8
+		blue = 3, 6, 9
+
+	extend_enum(Color, 'brown', 10, 20)
+	assert Color.brown.name == 'brown'
+	assert Color.brown.value == 10
+	assert Color.brown in Color
+	assert Color(10) == Color.brown
+	assert Color(20) == Color.brown
+	assert Color['brown'] == Color.brown
+	assert len(Color) == 4
+
+
+def test_extend_intenum():
+
+	class Index(IntEnum):
+		DeviceType = 0x1000
+		ErrorRegister = 0x1001
+
+	for name, value in (
+		('ControlWord', 0x6040),
+		('StatusWord', 0x6041),
+		('OperationMode', 0x6060),
+		):
+		extend_enum(Index, name, value)
+
+	assert len(Index) == 5
+	assert list(Index) == [Index.DeviceType, Index.ErrorRegister, Index.ControlWord, Index.StatusWord, Index.OperationMode]
+	assert Index.DeviceType.value == 0x1000
+	assert Index.StatusWord.value == 0x6041
+
+
+def test_no_duplicates_py2():
+
+	def bad_duplicates():
+
+		class Color1(UniqueEnum):
+			red = 1
+			green = 2
+			blue = 3
+
+		class Color2(UniqueEnum):
+			red = 1
+			green = 2
+			blue = 3
+			grene = 2
+
+	with pytest.raises(ValueError):
+		bad_duplicates()
+
+def test_no_duplicates_kinda_py2():
+
+	class Silly(UniqueEnum):
+		one = 1
+		two = 'dos'
+		name = 3
+
+	class Sillier(IntEnum, UniqueEnum):
+		single = 1
+		name = 2
+		triple = 3
+		value = 4
+
+def test_init():
+
+	class Planet(Enum):
+		MERCURY = (3.303e+23, 2.4397e6)
+		VENUS = (4.869e+24, 6.0518e6)
+		EARTH = (5.976e+24, 6.37814e6)
+		MARS = (6.421e+23, 3.3972e6)
+		JUPITER = (1.9e+27, 7.1492e7)
+		SATURN = (5.688e+26, 6.0268e7)
+		URANUS = (8.686e+25, 2.5559e7)
+		NEPTUNE = (1.024e+26, 2.4746e7)
+
+		def __init__(self, mass, radius):
+			self.mass = mass  # in kilograms
+			self.radius = radius  # in meters
+
+		@property
+		def surface_gravity(self):
+			# universal gravitational constant  (m3 kg-1 s-2)
+			G = 6.67300E-11
+			return G * self.mass / (self.radius * self.radius)
+
+	assert round(Planet.EARTH.surface_gravity, 2) == 9.80
+	assert Planet.EARTH.value, (5.976e+24 == 6.37814e6)

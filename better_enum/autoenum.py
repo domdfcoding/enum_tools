@@ -2,7 +2,7 @@
 #
 #  autoenum.py
 """
-A Sphinx directive for documented Enums in Python
+A Sphinx directive for documenting Enums in Python
 
 
 Provides the ``.. autoenum::`` directive to document an enum.
@@ -166,9 +166,11 @@ class EnumDocumenter(ClassDocumenter):
 
 		# remove members given by exclude-members
 		if self.options.exclude_members:
-			members = [(membername, member)
-						for (membername, member) in members
-						if (self.options.exclude_members is ALL or membername not in self.options.exclude_members)]
+			members = [
+					(membername, member)
+					for (membername, member) in members  # noqa
+					if (self.options.exclude_members is ALL or membername not in self.options.exclude_members)
+					]
 
 		# document non-skipped members
 		memberdocumenters: List[Tuple[Documenter, bool]] = []

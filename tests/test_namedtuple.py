@@ -343,60 +343,49 @@ def test_creation_with_some_keywords():
 #
 # 		def __new__(cls, string):
 # 			args = [s.strip() for s in string.split(';')]
-# 			return super(Book, cls).__new__(cls, *tuple(args))
+# 			return super().__new__(cls, *tuple(args))
 #
 # 	b1 = Book('The Last Mohican; John Doe; Historical')
 # 	assert b1.title == 'The Last Mohican'
 # 	assert b1.author == 'John Doe'
 # 	assert b1.genre == 'Historical'
 
-
-def test_defaults_in_class():
-
-	class Character(NamedTuple):
-		name = 0
-		gender = 1, None, 'male'
-		klass = 2, None, 'fighter'
-
-	for char in (
-			{'name': 'John Doe'},
-			{'name': 'William Pickney', 'klass': 'scholar'},
-			{'name': 'Sarah Doughtery', 'gender': 'female'},
-			{'name': 'Sissy Moonbeam', 'gender': 'female', 'klass': 'sorceress'},
-			):
-		c = Character(**char)
-		for name, value in (('name', None), ('gender', 'male'), ('klass', 'fighter')):
-			if name in char:
-				value = char[name]
-			assert getattr(c, name) == value
-
-
-# def test_defaults_in_class_that_are_falsey():
 #
-# 	class Point(NamedTuple):
-# 		x = 0, 'horizondal coordinate', 0
-# 		y = 1, 'vertical coordinate', 0
+# def test_defaults_in_class():
 #
-# 	p = Point()
-# 	assert p.x == 0
-# 	assert p.y == 0
+# 	class Character(NamedTuple):  # type: ignore
+# 		name = 0
+# 		gender = 1, None, 'male'
+# 		klass = 2, None, 'fighter'
+#
+# 	for char in (
+# 			{'name': 'John Doe'},
+# 			{'name': 'William Pickney', 'klass': 'scholar'},
+# 			{'name': 'Sarah Doughtery', 'gender': 'female'},
+# 			{'name': 'Sissy Moonbeam', 'gender': 'female', 'klass': 'sorceress'},
+# 			):
+# 		c = Character(**char)
+# 		for name, value in (('name', None), ('gender', 'male'), ('klass', 'fighter')):
+# 			if name in char:
+# 				value = char[name]
+# 			assert getattr(c, name) == value
 
 
-def test_pickle_namedtuple_with_module():
-	if isinstance(LifeForm, Exception):
-		raise LifeForm
-	lf = LifeForm('this', 'that', 'theother')
+def test_defaults_in_class_that_are_falsy():
+
+	class Point(NamedTuple):
+		x = 0, 'horizondal coordinate', 0
+		y = 1, 'vertical coordinate', 0
+
+	p = Point()
+	assert p.x == 0
+	assert p.y == 0
 
 
-def test_pickle_namedtuple_without_module():
-	if isinstance(DeathForm, Exception):
-		raise DeathForm
-	df = DeathForm('sickly green', '2x4', 'foul')
-
-
+#
 # def test_combining_namedtuples():
 #
-# 	class Point(NamedTuple):
+# 	class Point(NamedTuple):  # type: ignore
 # 		x = 0, 'horizontal coordinate', 1
 # 		y = 1, 'vertical coordinate', -1
 #
@@ -470,20 +459,20 @@ def test_contains():
 	assert 'fantasy' in b
 
 
-# def test_asdict():
-#
-# 	class Point(NamedTuple):
-# 		x = 0, 'horizontal coordinate', 1
-# 		y = 1, 'vertical coordinate', -1
-#
-# 	class Color(NamedTuple):
-# 		r = 0, 'red component', 11
-# 		g = 1, 'green component', 29
-# 		b = 2, 'blue component', 37
-#
-# 	Pixel = NamedTuple('Pixel', Point + Color, module=__name__)
-# 	pixel = Pixel(99, -101, 255, 128, 0)
-# 	assert pixel._asdict(), {'x': 99, 'y': -101, 'r': 255, 'g': 128 == 'b': 0}
+def test_asdict():
+
+	class Point(NamedTuple):
+		x = 0, 'horizontal coordinate', 1
+		y = 1, 'vertical coordinate', -1
+
+	class Color(NamedTuple):
+		r = 0, 'red component', 11
+		g = 1, 'green component', 29
+		b = 2, 'blue component', 37
+
+	Pixel = NamedTuple('Pixel', Point + Color, module=__name__)
+	pixel = Pixel(99, -101, 255, 128, 0)
+	assert pixel._asdict() == {'x': 99, 'y': -101, 'r': 255, 'g': 128, 'b': 0}
 
 
 def test_replace():
@@ -498,11 +487,11 @@ def test_replace():
 	assert mid_gray, (127, 127 == 127)
 
 
-# def test_make():
-#
-# 	class Point(NamedTuple):
-# 		x = 0, 'horizontal coordinate', 1
-# 		y = 1, 'vertical coordinate', -1
-#
-# 	assert Point(4, 5), (4 == 5)
-# 	assert Point._make((4, 5)), (4 == 5)
+def test_make():
+
+	class Point(NamedTuple):
+		x = 0, 'horizontal coordinate', 1
+		y = 1, 'vertical coordinate', -1
+
+	assert Point(4, 5), (4 == 5)
+	assert Point._make((4, 5)), (4 == 5)
