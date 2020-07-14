@@ -48,6 +48,7 @@ extensions = [
 		"sphinx_autodoc_typehints",
 		"sphinx.ext.autosummary",
 		"autodocsumm",
+		"sphinx_copybutton",
 		]
 
 sphinxemoji_style = 'twemoji'
