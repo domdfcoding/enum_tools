@@ -39,7 +39,7 @@ __copyright__ = """
 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 """
 
-__version__ = "0.1.1"
+__version__ = "0.1.2"
 modname = "enum_tools"
 pypi_name = "enum_tools"
 import_name = "enum_tools"
