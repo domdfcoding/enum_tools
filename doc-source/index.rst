@@ -139,6 +139,7 @@ Installation
 	:caption: Documentation
 
 	API Reference<docs>
+	demo
 	Source
 	Building
 
