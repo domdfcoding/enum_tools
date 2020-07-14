@@ -81,7 +81,7 @@ enum_tools
 .. |language| image:: https://img.shields.io/github/languages/top/domdfcoding/enum_tools
 	:alt: GitHub top language
 
-.. |commits-since| image:: https://img.shields.io/github/commits-since/domdfcoding/enum_tools/v0.0.1
+.. |commits-since| image:: https://img.shields.io/github/commits-since/domdfcoding/enum_tools/v0.0.2
 	:target: https://github.com/domdfcoding/enum_tools/pulse
 	:alt: GitHub commits since tagged version
 
