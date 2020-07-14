@@ -18,7 +18,7 @@ from __pkginfo__ import __version__
 # User-configurable lines
 # End of user-configurable lines
 
-github_url = f"https://github.com/domdfcoding/enum_tools"
+github_url = "https://github.com/domdfcoding/enum_tools"
 
 rst_prolog = f""".. |pkgname| replace:: enum_tools
 .. |pkgname2| replace:: ``enum_tools``
