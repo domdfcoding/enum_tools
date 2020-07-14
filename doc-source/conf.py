@@ -83,8 +83,7 @@ html_theme_options = {
 		'logo_only': False,
 		}
 html_theme_path = ["../.."]
-# html_logo = "logo/pyms.png"
-html_show_sourcelink = False  # True will show link to source
+html_show_sourcelink = True  # True will show link to source
 
 html_context = {
 		'display_github': True,
