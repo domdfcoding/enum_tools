@@ -94,7 +94,7 @@ def test_documented_enum():
 				]
 		)
 def test_document_enum_wrong_types(obj):
-	with pytest.raises(TypeError, match="'an_enum' must be an `aenum.Enum`, not .*!"):
+	with pytest.raises(TypeError, match="'an_enum' must be an 'Enum', not .*!"):
 		document_enum(obj)
 
 
@@ -117,5 +117,5 @@ def test_document_enum_wrong_types(obj):
 				]
 		)
 def test_document_member_wrong_types(obj):
-	with pytest.raises(TypeError, match="'an_enum' must be an `aenum.Enum`, not .*!"):
+	with pytest.raises(TypeError, match="'an_enum' must be an 'Enum', not .*!"):
 		enum_tools.document_member(obj)

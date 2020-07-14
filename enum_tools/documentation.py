@@ -60,7 +60,7 @@ def document_enum(an_enum: EnumMeta) -> EnumMeta:
 	"""
 
 	if not isinstance(an_enum, EnumMeta):
-		raise TypeError(f"'an_enum' must be an `Enum`, not {type(an_enum)}!")
+		raise TypeError(f"'an_enum' must be an 'Enum', not {type(an_enum)}!")
 
 	if not INTERACTIVE:
 		return an_enum
@@ -115,7 +115,7 @@ def document_member(enum_member: Enum) -> None:
 	"""
 
 	if not isinstance(enum_member, Enum):
-		raise TypeError(f"'an_enum' must be an `Enum`, not {type(enum_member)}!")
+		raise TypeError(f"'an_enum' must be an 'Enum', not {type(enum_member)}!")
 
 	if not INTERACTIVE:
 		return None
