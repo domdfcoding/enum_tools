@@ -7,11 +7,9 @@ username: "domdfcoding"
 license: 'LGPLv3+'
 short_desc: 'Alternative method for documenting enums with Sphinx.'
 
-#conda_channels:
-#  - domdfcoding
-#  - conda-forge
-
-enable_conda: false
+conda_channels:
+  - domdfcoding
+  - conda-forge
 
 python_deploy_version: 3.6
 

@@ -29,6 +29,8 @@ enum_tools
 	  - |travis| |actions_windows| |actions_macos| |coveralls| |codefactor|
 	* - PyPI
 	  - |pypi-version| |supported-versions| |supported-implementations| |wheel|
+	* - Anaconda
+	  - |conda-version| |conda-platform|
 	* - Activity
 	  - |commits-latest| |commits-since| |maintained|
 	* - Other
@@ -82,6 +84,14 @@ enum_tools
 	:target: https://pypi.org/project/enum_tools/
 	:alt: PyPI - Wheel
 
+.. |conda-version| image:: https://img.shields.io/conda/v/domdfcoding/enum_tools?logo=anaconda
+	:target: https://anaconda.org/domdfcoding/enum_tools
+	:alt: Conda - Package Version
+
+.. |conda-platform| image:: https://img.shields.io/conda/pn/domdfcoding/enum_tools?label=conda%7Cplatform
+	:target: https://anaconda.org/domdfcoding/enum_tools
+	:alt: Conda - Platform
+
 .. |license| image:: https://img.shields.io/github/license/domdfcoding/enum_tools
 	:target: https://github.com/domdfcoding/enum_tools/blob/master/LICENSE
 	:alt: License
@@ -127,6 +137,20 @@ Installation
 
 			python3 -m pip install enum_tools --user
 
+	.. tab:: from Anaconda
+
+		First add the required channels
+
+		.. prompt:: bash
+
+			conda config --add channels http://conda.anaconda.org/domdfcoding
+			conda config --add channels http://conda.anaconda.org/conda-forge
+
+		Then install
+
+		.. prompt:: bash
+
+			conda install enum_tools
 
 	.. tab:: from GitHub
 

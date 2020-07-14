@@ -51,3 +51,11 @@ web = github_url = "https://github.com/domdfcoding/enum_tools"
 repo_root = pathlib.Path(__file__).parent
 install_requires = (repo_root / "requirements.txt").read_text(encoding="utf-8").split('\n')
 extras_require = {'sphinx': ['sphinx'], 'all': ['sphinx']}
+
+
+
+conda_description = """Alternative method for documenting enums with Sphinx.
+
+
+Before installing please ensure you have added the following channels: domdfcoding, conda-forge"""
+__all__.append("conda_description")
