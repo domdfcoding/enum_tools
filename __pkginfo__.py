@@ -30,6 +30,7 @@ __all__ = [
 		"repo_root",
 		"install_requires",
 		"extras_require",
+		"project_urls",
 
 		"import_name",
 		]
@@ -59,3 +60,10 @@ conda_description = """Alternative method for documenting enums with Sphinx.
 
 Before installing please ensure you have added the following channels: domdfcoding, conda-forge"""
 __all__.append("conda_description")
+
+
+project_urls = {
+		"Documentation": "https://enum_tools.readthedocs.io",
+		"Issue Tracker": f"{github_url}/issues",
+		"Source Code": github_url,
+		}
