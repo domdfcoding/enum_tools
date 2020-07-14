@@ -93,7 +93,7 @@ def document_enum(an_enum: Callable) -> Callable:
 		# print(doc)
 
 		for var in enum_vars:
-			print(repr(var))
+			# print(repr(var))
 			if not var.startswith("@"):
 				getattr(an_enum, var).__doc__ = doc
 

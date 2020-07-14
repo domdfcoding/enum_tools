@@ -49,6 +49,7 @@ extensions = [
 		"sphinx.ext.autosummary",
 		"autodocsumm",
 		"sphinx_copybutton",
+		'enum_tools.autoenum',
 		]
 
 sphinxemoji_style = 'twemoji'

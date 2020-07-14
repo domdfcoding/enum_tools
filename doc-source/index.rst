@@ -134,10 +134,16 @@ Installation
 
 .. toctree::
 	:maxdepth: 3
+	:caption: API Reference
+	:glob:
+
+	api/*
+
+.. toctree::
+	:maxdepth: 3
 	:caption: Documentation
 
-	API Reference<docs>
-	demo
+	autoenum
 	Source
 	Building
 

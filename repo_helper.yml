@@ -56,3 +56,6 @@ extras_require:
     - sphinx
 
 tox_testenv_extras: all
+
+extra_sphinx_extensions:
+  - enum_tools.autoenum

@@ -108,7 +108,7 @@ class OrderedEnum(Enum):
 
 class DuplicateFreeEnum(Enum):
 	"""
-	Enum subclass that disallows duplicated member named
+	Enum subclass that disallows duplicated member names
 	"""
 
 	def __init__(self, *args):
