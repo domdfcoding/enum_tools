@@ -90,7 +90,7 @@ html_context = {
 		'github_user': 'domdfcoding',
 		'github_repo': 'enum_tools',
 		'github_version': 'master',
-		'conf_py_path': '/',
+		'conf_py_path': '/doc-source/',
 		}
 
 htmlhelp_basename = slug
@@ -126,3 +126,5 @@ def setup(app):
 							),
 					]
 			)
+
+html_logo = "../enum_tools.png"

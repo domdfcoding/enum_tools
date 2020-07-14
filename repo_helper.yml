@@ -59,3 +59,6 @@ tox_testenv_extras: all
 
 extra_sphinx_extensions:
   - enum_tools.autoenum
+
+sphinx_conf_epilogue:
+  - html_logo = "../enum_tools.png"

@@ -24,6 +24,7 @@
 
 # stdlib
 from enum import Enum
+from typing import Any
 
 __all__ = [
 		"IntEnum",
@@ -73,7 +74,7 @@ class AutoNumberEnum(Enum):
 	Automatically assign increasing values to members.
 	"""
 
-	def __new__(cls, *args, **kwds):
+	def __new__(cls, *args, **kwds) -> Any:
 		value = len(cls.__members__) + 1
 		obj = object.__new__(cls)
 		obj._value_ = value
@@ -85,22 +86,22 @@ class OrderedEnum(Enum):
 	Add ordering based on values of Enum members.
 	"""
 
-	def __ge__(self, other):
+	def __ge__(self, other) -> bool:
 		if self.__class__ is other.__class__:
 			return self._value_ >= other._value_
 		return NotImplemented
 
-	def __gt__(self, other):
+	def __gt__(self, other) -> bool:
 		if self.__class__ is other.__class__:
 			return self._value_ > other._value_
 		return NotImplemented
 
-	def __le__(self, other):
+	def __le__(self, other) -> bool:
 		if self.__class__ is other.__class__:
 			return self._value_ <= other._value_
 		return NotImplemented
 
-	def __lt__(self, other):
+	def __lt__(self, other) -> bool:
 		if self.__class__ is other.__class__:
 			return self._value_ < other._value_
 		return NotImplemented
@@ -111,7 +112,7 @@ class DuplicateFreeEnum(Enum):
 	Enum subclass that disallows duplicated member names
 	"""
 
-	def __init__(self, *args):
+	def __init__(self, *args) -> None:
 		cls = self.__class__
 		if any(self.value == e.value for e in cls):
 			a = self.name

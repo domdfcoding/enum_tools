@@ -29,7 +29,7 @@ import re
 import sys
 from enum import Enum, EnumMeta
 from textwrap import dedent
-from typing import Callable, List, Optional, Tuple
+from typing import Iterable, List, Optional, Tuple
 
 # 3rd party
 import pygments.token  # type: ignore
@@ -41,24 +41,31 @@ INTERACTIVE = bool(getattr(sys, 'ps1', sys.flags.interactive))
 
 
 def get_tokens(line: str) -> List[Tuple]:
+	"""
+
+	:param line: Line of Python code to tokenise
+	:type line: str
+
+	:return: List of tokens
+	"""
+
 	return list(lexer.get_tokens(line))
 
 
-def document_enum(an_enum: Callable) -> Callable:
+def document_enum(an_enum: EnumMeta) -> EnumMeta:
 	"""
 	Document all members of an enum by adding a comment to the end of each line that starts with ``doc:``
 
 	:param an_enum: An ``Enum`` subclass
 	"""
 
-	if not isinstance(an_enum, (EnumMeta, Enum)):
-		raise TypeError(f"'an_enum' must be an `aenum.Enum`, not {type(an_enum)}!")
+	if not isinstance(an_enum, EnumMeta):
+		raise TypeError(f"'an_enum' must be an `Enum`, not {type(an_enum)}!")
 
 	if not INTERACTIVE:
 		return an_enum
 
-	func_source = inspect.getsource(an_enum)
-	func_source = dedent(func_source)
+	func_source = dedent(inspect.getsource(an_enum))
 
 	in_docstring = False
 	base_indent = None
@@ -83,7 +90,7 @@ def document_enum(an_enum: Callable) -> Callable:
 		elif all_tokens[0][0] not in pygments.token.Name:
 			continue
 		else:
-			if indent > base_indent:
+			if indent > base_indent:  # type: ignore
 				continue
 
 		enum_vars, doc = parse_tokens(all_tokens)
@@ -100,26 +107,23 @@ def document_enum(an_enum: Callable) -> Callable:
 	return an_enum
 
 
-def document_member(enum_member):
+def document_member(enum_member: Enum) -> None:
 	"""
 	Document a member of an enum by adding a comment to the end of the line that starts with ``doc:``
 
-	:param enum_member: An member io an ``Enum`` subclass
+	:param enum_member: A member of an ``Enum`` subclass
 	"""
 
-	if not isinstance(enum_member, (EnumMeta, Enum)):
-		raise TypeError(f"'an_enum' must be an `aenum.Enum`, not {type(enum_member)}!")
+	if not isinstance(enum_member, Enum):
+		raise TypeError(f"'an_enum' must be an `Enum`, not {type(enum_member)}!")
 
 	if not INTERACTIVE:
-		return enum_member
+		return None
 
-	func_source = inspect.getsource(enum_member.__class__)
-	func_source = dedent(func_source)
+	func_source = dedent(inspect.getsource(enum_member.__class__))
 
 	in_docstring = False
 	base_indent = None
-
-	func_source = dedent(func_source)
 
 	for line in func_source.split("\n"):
 
@@ -144,18 +148,20 @@ def document_member(enum_member):
 		elif all_tokens[0][0] not in pygments.token.Name:
 			continue
 		else:
-			if indent > base_indent:
+			if indent > base_indent:  # type: ignore
 				continue
 		enum_vars, doc = parse_tokens(all_tokens)
 
 		for var in enum_vars:
-			print(repr(var))
+			# print(repr(var))
 			if not var.startswith("@"):
 				if var == enum_member.name:
 					enum_member.__doc__ = doc
 
+	return None
 
-def parse_tokens(all_tokens) -> Tuple[List, Optional[str]]:
+
+def parse_tokens(all_tokens: Iterable["pygments.Token"]) -> Tuple[List, Optional[str]]:
 	"""
 	Parse the tokens representing a line of code to identify Enum members and ``doc:`` comments
 
@@ -219,7 +225,16 @@ class DocumentedEnum(Enum):
 		# super().__init__(value)
 
 
-def get_dedented_line(line):
+def get_dedented_line(line: str) -> Tuple[int, str]:
+	"""
+	Returns the line without indentation, and the amount of indentation.
+
+	:param line: A line of Python source code
+	:type line: str
+
+	:return:
+	"""
+
 	dedented_line = dedent(line)
 	indent = len(line) - len(dedented_line)
 	line = dedented_line.strip()

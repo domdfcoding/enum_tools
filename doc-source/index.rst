@@ -8,6 +8,15 @@ enum_tools
 
 .. end short_desc
 
+
+.. .. code-block:: python
+
+.. 	class Tools(Enum):
+		Hammer = "🔨"
+		Spanner = "🔧"
+		Scissors = "✂️"
+
+
 .. start shields
 
 .. list-table::
@@ -97,13 +106,13 @@ enum_tools
 
 .. end shields
 
-|
 
 This package has two features:
 
 #. A decorator to add docstrings to ``Enum`` members from a comment at the end of the line.
 
 #. A ``Sphinx`` extension to document Enums better than ``autoclass`` can currently.
+
 
 Installation
 --------------
