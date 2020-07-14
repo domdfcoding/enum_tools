@@ -100,13 +100,11 @@ enum_tools
 
 |
 
-This package has three aims:
+This package has two features:
 
-#. Import from the stdlib ``enum`` module when running mypy, and from ``aenum`` when the code actually runs. This helps mypy understand type annotations, but keeps all of the ``if TYPE_CHECKING:`` code in one place.
+#. A decorator to add docstrings to ``Enum`` members from a comment at the end of the line.
 
-#. Provide a decorator to add docstrings to ``Enum`` members from a comment at the end of the line.
-
-#. Provide a ``Sphinx`` extension to document ``Enum``s better that ``autoclass`` can currently.
+#. A ``Sphinx`` extension to document ``Enum``s better than ``autoclass`` can currently.
 
 
 Installation
