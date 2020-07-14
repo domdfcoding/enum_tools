@@ -7,9 +7,6 @@ A Sphinx directive for documenting Enums in Python
 
 Provides the ``.. autoenum::`` directive to document an enum.
 It behaves much like ``.. autoclass::`` and ``.. autofunction::``.
-
-Use with ``.. automodule::`` does not currently work.
-
 """
 # See also https://www.sphinx-doc.org/en/master/usage/extensions/autodoc.html?highlight=autoclass#directive-autoclass
 #
@@ -60,7 +57,7 @@ Use with ``.. automodule::`` does not currently work.
 #
 
 # stdlib
-from enum import Enum
+from enum import Enum, EnumMeta
 from typing import Any, Dict, List, Optional, Tuple
 
 # 3rd party
@@ -71,7 +68,9 @@ from sphinx.locale import __
 from sphinx.pycode import ModuleAnalyzer
 
 # this package
-from enum_tools import __version__
+from enum_tools import __version__, documentation
+
+documentation.INTERACTIVE = True
 
 
 def _start_generate(
@@ -103,10 +102,10 @@ def _start_generate(
 		# need a module to import
 		logger.warning(
 				__(
-						'don\'t know which module to import for autodocumenting '
-						'%r (try placing a "module" or "currentmodule" directive '
+						"don't know which module to import for autodocumenting "
+						f'{documenter.name!r} (try placing a "module" or "currentmodule" directive '
 						'in the document, or giving an explicit module name)'
-						) % documenter.name,
+						),
 				type='autodoc'
 				)
 		return None
@@ -130,7 +129,7 @@ def _start_generate(
 		documenter.analyzer.find_attr_docs()
 
 	except PycodeError as err:
-		logger.debug('[autodoc] module analyzer failed: %s', err)
+		logger.debug("[autodoc] module analyzer failed: %s", err)
 		# no source file -- e.g. for builtin and C modules
 		documenter.analyzer = None
 		# at least add the module.__file__ as a dependency
@@ -165,7 +164,8 @@ class EnumDocumenter(ClassDocumenter):
 
 	@classmethod
 	def can_document_member(cls, member: Any, membername: str, isattr: bool, parent: Any) -> bool:
-		return isinstance(member, Enum)
+		# The enum itself is subclass of EnumMeta; enum members subclass Enum
+		return isinstance(member, EnumMeta)
 
 	def document_members(self, all_members: bool = False) -> None:
 		"""Generate reST for member documentation.
@@ -348,6 +348,7 @@ class EnumMemberDocumenter(AttributeDocumenter):
 		ret = _start_generate(self, real_modname, check_module)
 		if ret is None:
 			return
+
 		sourcename = ret
 
 		# generate the directive header and options, if applicable

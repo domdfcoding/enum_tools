@@ -1,7 +1,13 @@
 # stdlib
+import math
+from decimal import Decimal
 from enum import Enum
 
 # this package
+from pathlib import Path
+
+import pytest
+
 from enum_tools.documentation import DocumentedEnum, document_enum
 import enum_tools.documentation
 
@@ -67,3 +73,49 @@ class MyEnum(str, DocumentedEnum):
 def test_documented_enum():
 	assert MyEnum.a_value == "a value"
 	assert MyEnum.a_value.__doc__ == "Docstring"
+
+
+@pytest.mark.parametrize(
+		"obj",
+		[
+				"abcdefg",
+				b"abcdefg",
+				b"\x00\x01",
+				12345,
+				123.45,
+				Decimal(123.45),
+				Path("."),
+				print,
+				math.ceil,
+				Path,
+				Decimal,
+				str,
+				float,
+				]
+		)
+def test_document_enum_wrong_types(obj):
+	with pytest.raises(TypeError, match="'an_enum' must be an `aenum.Enum`, not .*!"):
+		document_enum(obj)
+
+
+@pytest.mark.parametrize(
+		"obj",
+		[
+				"abcdefg",
+				b"abcdefg",
+				b"\x00\x01",
+				12345,
+				123.45,
+				Decimal(123.45),
+				Path("."),
+				print,
+				math.ceil,
+				Path,
+				Decimal,
+				str,
+				float,
+				]
+		)
+def test_document_member_wrong_types(obj):
+	with pytest.raises(TypeError, match="'an_enum' must be an `aenum.Enum`, not .*!"):
+		enum_tools.document_member(obj)
