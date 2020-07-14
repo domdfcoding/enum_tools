@@ -78,8 +78,8 @@ def test_documented_enum():
 @pytest.mark.parametrize(
 		"obj",
 		[
-				"abcdefg",
-				b"abcdefg",
+				pytest.param("abcdefg", id="string"),
+				pytest.param(b"abcdefg", id="bytes"),
 				b"\x00\x01",
 				12345,
 				123.45,
@@ -101,8 +101,8 @@ def test_document_enum_wrong_types(obj):
 @pytest.mark.parametrize(
 		"obj",
 		[
-				"abcdefg",
-				b"abcdefg",
+				pytest.param("abcdefg", id="string"),
+				pytest.param(b"abcdefg", id="bytes"),
 				b"\x00\x01",
 				12345,
 				123.45,
