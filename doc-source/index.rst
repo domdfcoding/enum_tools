@@ -103,8 +103,7 @@ This package has two features:
 
 #. A decorator to add docstrings to ``Enum`` members from a comment at the end of the line.
 
-#. A ``Sphinx`` extension to document ``Enum``s better than ``autoclass`` can currently.
-
+#. A ``Sphinx`` extension to document Enums better than ``autoclass`` can currently.
 
 Installation
 --------------
