@@ -191,8 +191,29 @@ class EnumDocumenter(ClassDocumenter):
 			if member[0] not in self.object.__members__.keys():
 				non_enum_members.append(member)
 
-		members = [(var.name, var) for var in self.object] + non_enum_members
+		user_option_undoc_members = self.options.undoc_members
 
+		# Document enums first
+		self.options.undoc_members = True  # type: ignore
+
+		self._do_document_members(
+				[(var.name, var) for var in self.object],
+				want_all,
+				members_check_module,
+				description="Valid values are as follows:",
+				)
+
+		# Document everything else
+		self.options.undoc_members = user_option_undoc_members  # type: ignore
+
+		self._do_document_members(
+				non_enum_members,
+				want_all,
+				members_check_module,
+				description="The Enum and its members also have the following methods:",
+				)
+
+	def _do_document_members(self, members, want_all, members_check_module, description):
 		# remove members given by exclude-members
 		if self.options.exclude_members:
 			members = [
@@ -204,7 +225,13 @@ class EnumDocumenter(ClassDocumenter):
 		# document non-skipped members
 		memberdocumenters: List[Tuple[Documenter, bool]] = []
 
+		description_added = False
+
 		for (mname, member, isattr) in self.filter_members(members, want_all):
+			if not description_added:
+				self.add_line(description, self.sourcename)
+				self.add_line('', self.sourcename)
+				description_added = True
 
 			# give explicitly separated module name, so that members
 			# of inner classes can be documented
@@ -293,6 +320,9 @@ class EnumDocumenter(ClassDocumenter):
 			return
 		sourcename = ret
 
+		# Set sourcename as instance variable to avoid passing it around; it will get deleted later
+		self.sourcename = sourcename
+
 		# generate the directive header and options, if applicable
 		self.add_directive_header('(value)')
 		self.add_line('', sourcename)
@@ -303,11 +333,9 @@ class EnumDocumenter(ClassDocumenter):
 		# add all content (from docstrings, attribute docs etc.)
 		self.add_content(more_content)
 
-		self.add_line("Valid values are as follows:", sourcename)
-		self.add_line('', sourcename)
-
 		# document members, if possible
 		self.document_members(all_members)
+		del self.sourcename
 
 
 class EnumMemberDocumenter(AttributeDocumenter):

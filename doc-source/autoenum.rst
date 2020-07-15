@@ -7,7 +7,7 @@ Supports most of the options used by `autodoc <https://www.sphinx-doc.org/en/mas
 Demo
 ----------
 
-**This one has been created with** ``automodule``.
+**These two have been created with** ``automodule``.
 
 .. code-block:: rest
 

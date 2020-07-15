@@ -25,7 +25,7 @@ stages:
   - test
   - deploy_pypi
   - deploy_conda
-  - deploy_releases
+
 
 jobs:
   include:
