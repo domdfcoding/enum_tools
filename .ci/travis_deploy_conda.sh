@@ -1,5 +1,5 @@
 #!/bin/bash
-# This file is managed by `repo_helper`. Don't edit it directly
+# This file is managed by 'repo_helper'. Don't edit it directly.
 
 set -e -x
 
