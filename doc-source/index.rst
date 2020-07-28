@@ -177,8 +177,8 @@ Installation
 	:caption: Documentation
 
 	autoenum
+	contributing
 	Source
-	Building
 
 .. start links
 
