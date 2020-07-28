@@ -160,6 +160,7 @@ class EnumDocumenter(ClassDocumenter):
 
 	objtype = 'enum'
 	directivetype = 'class'
+	# TODO: make an "enum" directive that is based on class, but that says "enum" instead
 	priority = 20
 
 	@classmethod
