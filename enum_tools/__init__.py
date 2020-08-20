@@ -26,9 +26,7 @@ Alternative method for documenting enums with Sphinx.
 
 # this package
 from enum_tools.custom_enums import AutoNumberEnum, DuplicateFreeEnum, IntEnum, OrderedEnum, StrEnum
-from enum_tools.documentation import (
-		DocumentedEnum, document_enum, document_member, get_base_indent, get_dedented_line, parse_tokens
-		)
+from enum_tools.documentation import DocumentedEnum, document_enum, document_member
 
 __author__: str = "Dominic Davis-Foster"
 __copyright__: str = "2020 Dominic Davis-Foster"

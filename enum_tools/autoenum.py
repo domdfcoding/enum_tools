@@ -238,6 +238,8 @@ class EnumDocumenter(ClassDocumenter):
 			# of inner classes can be documented
 			full_mname = self.modname + '::' + '.'.join(self.objpath + [mname])
 
+			documenter: Documenter
+
 			if isinstance(member, Enum) and member in self.object:
 				documenter = EnumMemberDocumenter(self.directive, full_mname, self.indent)
 
@@ -344,9 +346,9 @@ class EnumMemberDocumenter(AttributeDocumenter):
 	Sphinx autodoc Documenter for documenting ``Enum`` members
 	"""
 
-	def import_object(self) -> Any:
+	def import_object(self, raiseerror: bool = False) -> Any:
 		self._datadescriptor = False
-		return Documenter.import_object(self)
+		return Documenter.import_object(self, raiseerror=raiseerror)
 
 	def generate(
 			self,

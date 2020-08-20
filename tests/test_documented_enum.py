@@ -2,14 +2,14 @@
 import math
 from decimal import Decimal
 from enum import Enum
-
-# this package
 from pathlib import Path
 
+# 3rd party
 import pytest
 
-from enum_tools.documentation import DocumentedEnum, document_enum
+# this package
 import enum_tools.documentation
+from enum_tools.documentation import DocumentedEnum, document_enum
 
 enum_tools.documentation.INTERACTIVE = True
 

@@ -1,8 +1,10 @@
+# stdlib
+import pathlib
+
+# 3rd party
 import pytest
 from bs4 import BeautifulSoup  # type: ignore
-
 from sphinx.testing.path import path
-import pathlib
 
 pytest_plugins = 'sphinx.testing.fixtures'
 

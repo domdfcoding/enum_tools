@@ -1,11 +1,10 @@
 # stdlib
 from enum import Enum
-
-# this package
 from typing import List
 
-from enum_tools.documentation import document_enum
+# this package
 import enum_tools.documentation
+from enum_tools.documentation import document_enum
 
 enum_tools.documentation.INTERACTIVE = True
 

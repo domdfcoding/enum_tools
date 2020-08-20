@@ -1,3 +1,4 @@
+# stdlib
 import tokenize
 from io import StringIO
 from pprint import pprint
