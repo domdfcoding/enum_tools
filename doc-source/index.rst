@@ -1,6 +1,6 @@
-===========================
-enum_tools
-===========================
+============
+Enum Tools
+============
 
 .. start short_desc
 
@@ -167,16 +167,10 @@ Installation
 
 .. toctree::
 	:maxdepth: 3
-	:caption: API Reference
-	:glob:
-
-	api/*
-
-.. toctree::
-	:maxdepth: 3
 	:caption: Documentation
 
 	autoenum
+	api/index
 	contributing
 	Source
 
