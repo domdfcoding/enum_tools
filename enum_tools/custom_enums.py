@@ -37,7 +37,7 @@ __all__ = [
 
 class IntEnum(int, Enum):  # pylint: disable=used-before-assignment
 	"""
-	Enum where members are also (and must be) ints
+	:class:`~enum.Enum` where members are also (and must be) ints.
 	"""
 
 
@@ -53,7 +53,7 @@ class IntEnum(int, Enum):  # pylint: disable=used-before-assignment
 
 class StrEnum(str, Enum):
 	"""
-	Enum where members are also (and must be) strings
+	:class:`~enum.Enum` where members are also (and must be) strings.
 	"""
 
 	def __str__(self) -> str:
@@ -71,10 +71,10 @@ class StrEnum(str, Enum):
 
 class AutoNumberEnum(Enum):
 	"""
-	Automatically assign increasing values to members.
+	:class:`~enum.Enum` that automatically assigns increasing values to members.
 	"""
 
-	def __new__(cls, *args, **kwds) -> Any:
+	def __new__(cls, *args, **kwds) -> Any:  # noqa: D102
 		value = len(cls.__members__) + 1
 		obj = object.__new__(cls)
 		obj._value_ = value
@@ -83,7 +83,7 @@ class AutoNumberEnum(Enum):
 
 class OrderedEnum(Enum):
 	"""
-	Add ordering based on values of Enum members.
+	:class:`~enum.Enum` that adds ordering based on the values of its members.
 	"""
 
 	def __ge__(self, other) -> bool:
@@ -109,7 +109,7 @@ class OrderedEnum(Enum):
 
 class DuplicateFreeEnum(Enum):
 	"""
-	Enum subclass that disallows duplicated member names
+	:class:`~enum.Enum` that disallows duplicated member names.
 	"""
 
 	def __init__(self, *args) -> None:

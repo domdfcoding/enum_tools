@@ -1,4 +1,4 @@
 extensions = [
-		'sphinx.ext.autodoc',
+		"sphinx.ext.autodoc",
 		"enum_tools.autoenum",
 		]

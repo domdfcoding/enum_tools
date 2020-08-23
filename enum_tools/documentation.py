@@ -2,7 +2,7 @@
 #
 #  decorator.py
 """
-Decorators to add docstrings to enum members from comments
+Decorators to add docstrings to enum members from comments.
 """
 #
 #  Copyright (c) 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
@@ -35,18 +35,26 @@ from typing import Iterable, List, Optional, Tuple
 import pygments.token  # type: ignore
 from pygments.lexers.python import PythonLexer  # type: ignore
 
+__all__ = [
+		"get_tokens",
+		"document_enum",
+		"document_member",
+		"parse_tokens",
+		"get_base_indent",
+		"DocumentedEnum",
+		"get_dedented_line"
+		]
+
 lexer = PythonLexer()
 
-INTERACTIVE = bool(getattr(sys, 'ps1', sys.flags.interactive))
+INTERACTIVE = bool(getattr(sys, "ps1", sys.flags.interactive))
 
 
 def get_tokens(line: str) -> List[Tuple]:
 	"""
+	Returns a list ot tokens generated from the given Python code.
 
-	:param line: Line of Python code to tokenise
-	:type line: str
-
-	:return: List of tokens
+	:param line: Line of Python code to tokenise.
 	"""
 
 	return list(lexer.get_tokens(line))
@@ -54,7 +62,7 @@ def get_tokens(line: str) -> List[Tuple]:
 
 def document_enum(an_enum: EnumMeta) -> EnumMeta:
 	"""
-	Document all members of an enum by adding a comment to the end of each line that starts with ``doc:``
+	Document all members of an enum by adding a comment to the end of each line that starts with ``doc:``.
 
 	:param an_enum: An ``Enum`` subclass
 	"""
@@ -109,7 +117,7 @@ def document_enum(an_enum: EnumMeta) -> EnumMeta:
 
 def document_member(enum_member: Enum) -> None:
 	"""
-	Document a member of an enum by adding a comment to the end of the line that starts with ``doc:``
+	Document a member of an enum by adding a comment to the end of the line that starts with ``doc:``.
 
 	:param enum_member: A member of an ``Enum`` subclass
 	"""
@@ -163,12 +171,11 @@ def document_member(enum_member: Enum) -> None:
 
 def parse_tokens(all_tokens: Iterable["pygments.Token"]) -> Tuple[List, Optional[str]]:
 	"""
-	Parse the tokens representing a line of code to identify Enum members and ``doc:`` comments
+	Parse the tokens representing a line of code to identify Enum members and ``doc:`` comments.
 
 	:param all_tokens:
-	:type all_tokens:
 
-	:return: A list of the Enum members' names, and the docstring for them
+	:return: A list of the Enum members' names, and the docstring for them.
 	"""
 
 	enum_vars = []
@@ -192,7 +199,7 @@ def parse_tokens(all_tokens: Iterable["pygments.Token"]) -> Tuple[List, Optional
 
 def get_base_indent(base_indent: Optional[int], all_tokens, indent: int) -> Optional[int]:
 	"""
-	Determine the base level of indentation (i.e. one level of indentation in from the ``c`` of ``class``)
+	Determine the base level of indentation (i.e. one level of indentation in from the ``c`` of ``class``).
 
 	:param base_indent: The current base level of indentation
 	:param all_tokens:
@@ -217,7 +224,7 @@ def get_base_indent(base_indent: Optional[int], all_tokens, indent: int) -> Opti
 
 class DocumentedEnum(Enum):
 	"""
-	An enum where docstrings are automatically added to members from comments starting with ``doc:``
+	An enum where docstrings are automatically added to members from comments starting with ``doc:``.
 	"""
 
 	def __init__(self, value):

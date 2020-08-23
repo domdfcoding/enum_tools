@@ -2,13 +2,12 @@
 #
 #  autoenum.py
 """
-A Sphinx directive for documenting Enums in Python
-
+A Sphinx directive for documenting Enums in Python.
 
 Provides the ``.. autoenum::`` directive to document an enum.
 It behaves much like ``.. autoclass::`` and ``.. autofunction::``.
 """
-# See also https://www.sphinx-doc.org/en/master/usage/extensions/autodoc.html?highlight=autoclass#directive-autoclass
+# See also https://www.sphinx-doc.org/en/master/usage/extensions/autodoc.html
 #
 #  Copyright (c) 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 #
@@ -70,23 +69,22 @@ from sphinx.pycode import ModuleAnalyzer
 # this package
 from enum_tools import __version__, documentation
 
+__all__ = ["EnumDocumenter", "EnumMemberDocumenter", "setup"]
+
 documentation.INTERACTIVE = True
 
 
 def _start_generate(
 		documenter,
-		real_modname: str = None,
+		real_modname: Optional[str] = None,
 		check_module: bool = False,
 		) -> Optional[str]:
 	"""
 	Boilerplate for the top of ``generate`` in :class:`EnumDocumenter` and :class:`EnumMemberDocumenter`.
 
 	:param documenter:
-	:type documenter:
 	:param real_modname:
-	:type real_modname: str
 	:param check_module:
-	:type check_module: bool
 
 	:return: The ``sourcename``, or None if certain conditions are met,
 		to indicate that the Documenter class should exit early.
@@ -104,9 +102,9 @@ def _start_generate(
 				__(
 						"don't know which module to import for autodocumenting "
 						f'{documenter.name!r} (try placing a "module" or "currentmodule" directive '
-						'in the document, or giving an explicit module name)'
+						"in the document, or giving an explicit module name)"
 						),
-				type='autodoc'
+				type="autodoc"
 				)
 		return None
 
@@ -133,7 +131,7 @@ def _start_generate(
 		# no source file -- e.g. for builtin and C modules
 		documenter.analyzer = None
 		# at least add the module.__file__ as a dependency
-		if hasattr(documenter.module, '__file__') and documenter.module.__file__:
+		if hasattr(documenter.module, "__file__") and documenter.module.__file__:
 			documenter.directive.filename_set.add(documenter.module.__file__)
 	else:
 		documenter.directive.filename_set.add(documenter.analyzer.srcname)
@@ -154,34 +152,44 @@ def _start_generate(
 
 
 class EnumDocumenter(ClassDocumenter):
-	"""
-	Sphinx autodoc Documenter for documenting ``Enum``s
+	r"""
+	Sphinx autodoc :class:`~sphinx.ext.autodoc.Documenter` for documenting :class:`~enum.Enum`\s.
 	"""
 
-	objtype = 'enum'
-	directivetype = 'class'
+	objtype = "enum"
+	directivetype = "class"
 	# TODO: make an "enum" directive that is based on class, but that says "enum" instead
 	priority = 20
 
 	@classmethod
 	def can_document_member(cls, member: Any, membername: str, isattr: bool, parent: Any) -> bool:
+		"""
+		Called to see if a member can be documented by this documenter.
+
+		:param member:
+		:param membername:
+		:param isattr:
+		:param parent:
+		"""
+
 		# The enum itself is subclass of EnumMeta; enum members subclass Enum
 		return isinstance(member, EnumMeta)
 
 	def document_members(self, all_members: bool = False) -> None:
-		"""Generate reST for member documentation.
+		"""
+		Generate reST for member documentation.
 
-		If *all_members* is True, do all members, else those given by
-		*self.options.members*.
+		:param all_members: If :py:obj:`True`, document all members, otherwise document those given by
+			else those given by ``self.options.members``.
 		"""
 
 		if self.doc_as_attr:
 			return
 
 		# set current namespace for finding members
-		self.env.temp_data['autodoc:module'] = self.modname
+		self.env.temp_data["autodoc:module"] = self.modname
 		if self.objpath:
-			self.env.temp_data['autodoc:class'] = self.objpath[0]
+			self.env.temp_data["autodoc:class"] = self.objpath[0]
 
 		want_all = all_members or self.options.inherited_members or self.options.members is ALL
 		# find out which members are documentable
@@ -197,8 +205,9 @@ class EnumDocumenter(ClassDocumenter):
 		# Document enums first
 		self.options.undoc_members = True  # type: ignore
 
+		enum_members = [(var.name, var) for var in self.object]
 		self._do_document_members(
-				[(var.name, var) for var in self.object],
+				enum_members,
 				want_all,
 				members_check_module,
 				description="Valid values are as follows:",
@@ -207,11 +216,13 @@ class EnumDocumenter(ClassDocumenter):
 		# Document everything else
 		self.options.undoc_members = user_option_undoc_members  # type: ignore
 
+		methods_text = f"The :class:`~enum.Enum` and its members {'also ' if enum_members else ''}have the following methods:"
+
 		self._do_document_members(
 				non_enum_members,
 				want_all,
 				members_check_module,
-				description="The Enum and its members also have the following methods:",
+				description=methods_text,
 				)
 
 	def _do_document_members(self, members, want_all, members_check_module, description):
@@ -236,7 +247,7 @@ class EnumDocumenter(ClassDocumenter):
 
 			# give explicitly separated module name, so that members
 			# of inner classes can be documented
-			full_mname = self.modname + '::' + '.'.join(self.objpath + [mname])
+			full_mname = self.modname + "::" + '.'.join(self.objpath + [mname])
 
 			documenter: Documenter
 
@@ -261,17 +272,17 @@ class EnumDocumenter(ClassDocumenter):
 
 		member_order = self.options.member_order or self.env.config.autodoc_member_order
 
-		if member_order == 'groupwise':
+		if member_order == "groupwise":
 			# sort by group; relies on stable sort to keep items in the
 			# same group sorted alphabetically
 			memberdocumenters.sort(key=lambda e: e[0].member_order)
 
-		elif member_order == 'bysource' and self.analyzer:
+		elif member_order == "bysource" and self.analyzer:
 			# sort by source order, by virtue of the module analyzer
 			tagorder = self.analyzer.tagorder
 
 			def keyfunc(entry: Tuple[Documenter, bool]) -> int:
-				fullname = entry[0].name.split('::')[1]
+				fullname = entry[0].name.split("::")[1]
 				return tagorder.get(fullname, len(tagorder))
 
 			memberdocumenters.sort(key=keyfunc)
@@ -284,38 +295,26 @@ class EnumDocumenter(ClassDocumenter):
 					)
 
 		# reset current objects
-		self.env.temp_data['autodoc:module'] = None
-		self.env.temp_data['autodoc:class'] = None
+		self.env.temp_data["autodoc:module"] = None
+		self.env.temp_data["autodoc:class"] = None
 
 	real_modname: str
 
 	def generate(
 			self,
-			more_content: Any = None,
-			real_modname: str = None,
+			more_content: Optional[Any] = None,
+			real_modname: Optional[str] = None,
 			check_module: bool = False,
 			all_members: bool = False,
 			) -> None:
 		"""
-		Generate reST for the object given by *self.name*, and possibly for
-		its members.
+		Generate reST for the object given by *self.name*, and possibly for its members.
 
-		If *more_content* is given, include that content. If *real_modname* is
-		given, use that module name to find attribute docs. If *check_module* is
-		True, only generate if the object is defined in the module name it is
-		imported from. If *all_members* is True, document all members.
-
-		:param more_content:
-		:type more_content:
-		:param real_modname:
-		:type real_modname:
-		:param check_module:
-		:type check_module:
-		:param all_members:
-		:type all_members:
-
-		:return:
-		:rtype:
+		:param more_content: Additional content to include in the reST output.
+		:param real_modname: Module name to use to find attribute documentation.
+		:param check_module: If :py:obj:`True`, only generate if the object is defined
+			in the module name it is imported from.
+		:param all_members: If :py:obj:`True`, document all members.
 		"""
 
 		ret = _start_generate(self, real_modname, check_module)
@@ -327,7 +326,7 @@ class EnumDocumenter(ClassDocumenter):
 		self.sourcename = sourcename
 
 		# generate the directive header and options, if applicable
-		self.add_directive_header('(value)')
+		self.add_directive_header("(value)")
 		self.add_line('', sourcename)
 
 		# e.g. the module directive doesn't have content
@@ -343,37 +342,36 @@ class EnumDocumenter(ClassDocumenter):
 
 class EnumMemberDocumenter(AttributeDocumenter):
 	"""
-	Sphinx autodoc Documenter for documenting ``Enum`` members
+	Sphinx autodoc :class:`~sphinx.ext.autodoc.Documenter` for documenting :class:`~enum.Enum` members.
 	"""
 
 	def import_object(self, raiseerror: bool = False) -> Any:
+		"""
+		Import the object given by ``self.modname`` and ``self.objpath`` and set it as ``self.object``.
+
+		:param raiseerror:
+
+		:returns: :py:obj:`True` if successful, :py:obj:`False` if an error occurred.
+		"""
+
 		self._datadescriptor = False
 		return Documenter.import_object(self, raiseerror=raiseerror)
 
 	def generate(
 			self,
-			more_content: Any = None,
-			real_modname: str = None,
+			more_content: Optional[Any] = None,
+			real_modname: Optional[str] = None,
 			check_module: bool = False,
 			all_members: bool = False
 			) -> None:
 		"""
-		Generate reST for the object given by ``self.name``, and possibly for
-		its members.
+		Generate reST for the object given by ``self.name``, and possibly for its members.
 
-		If ``more_content`` is given, include that content. If ``real_modname`` is
-		given, use that module name to find attribute docs. If ``check_module`` is
-		True, only generate if the object is defined in the module name it is
-		imported from. If ``all_members`` is True, document all members.
-
-		:param more_content:
-		:type more_content:
-		:param real_modname:
-		:type real_modname: str
-		:param check_module:
-		:type check_module: str
-		:param all_members:
-		:type all_members: str
+		:param more_content: Additional content to include in the reST output.
+		:param real_modname: Module name to use to find attribute documentation.
+		:param check_module: If :py:obj:`True`, only generate if the object is defined in
+			the module name it is imported from.
+		:param all_members: If :py:obj:`True`, document all members.
 		"""
 
 		ret = _start_generate(self, real_modname, check_module)
@@ -397,19 +395,15 @@ class EnumMemberDocumenter(AttributeDocumenter):
 
 def setup(app: Sphinx) -> Dict[str, Any]:
 	"""
-	Setup Sphinx Extension
+	Setup Sphinx Extension.
 
 	:param app:
-	:type app: Sphinx
-
-	:return:
-	:rtype: dict
 	"""
 
 	app.add_autodocumenter(EnumDocumenter)
 
 	return {
-			'version': __version__,
-			'parallel_read_safe': True,
-			'parallel_write_safe': True,
+			"version": __version__,
+			"parallel_read_safe": True,
+			"parallel_write_safe": True,
 			}

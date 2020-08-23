@@ -6,13 +6,15 @@ from typing import List
 import enum_tools.documentation
 from enum_tools.documentation import document_enum
 
+__all__ = ["People", "NoMethods"]
+
 enum_tools.documentation.INTERACTIVE = True
 
 
 @document_enum
 class People(int, Enum):
 	"""
-	An enumeration of people
+	An enumeration of people.
 	"""
 
 	Bob = bob = 1  # noqa  # doc: A person called Bob  # doc: another doc # isort: ignore
@@ -25,7 +27,7 @@ class People(int, Enum):
 		Iterate over the values of the Enum.
 		"""
 
-		return iter(cls)
+		return iter(cls)  # pragma: no cover
 
 	@classmethod
 	def as_list(cls) -> List:
@@ -33,7 +35,7 @@ class People(int, Enum):
 		Return the Enum's members as a list.
 		"""
 
-		return list(cls)
+		return list(cls)  # pragma: no cover
 
 
 @document_enum

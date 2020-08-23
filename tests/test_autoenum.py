@@ -49,14 +49,14 @@ def test(app):
 
 
 @pytest.mark.parametrize(
-		'page', [
-				'index.html',
+		"page", [
+				"index.html",
 				], indirect=True
 		)
 def test_index(page):
 	# Make sure the page title is what you expect
-	title = page.find('h1').contents[0].strip()
-	assert 'autoenum Demo' == title
+	title = page.find("h1").contents[0].strip()
+	assert "autoenum Demo" == title
 
 	# Now test the directive
 
@@ -70,7 +70,7 @@ def test_index(page):
 			assert class_.find("dt")["id"] == "enum_tools.demo.People"
 		elif class_count == 1:
 			assert class_.find("dt")["id"] == "id0"
-		assert class_.find("dd").findAll("p")[0].contents[0] == "An enumeration of people"
+		assert class_.find("dd").findAll("p")[0].contents[0] == "An enumeration of people."
 		assert class_.find("dd").findAll("p")[1].contents[0] == "Valid values are as follows:"
 
 		attr_count = 0
