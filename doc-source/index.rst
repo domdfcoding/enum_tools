@@ -36,52 +36,53 @@ Enum Tools
 	* - Other
 	  - |license| |language| |requires| |pre_commit|
 
-.. |docs| image:: https://img.shields.io/readthedocs/enum_tools/latest?logo=read-the-docs
-	:target: https://enum_tools.readthedocs.io/en/latest/?badge=latest
-	:alt: Documentation Status
+.. |docs| rtfd-shield::
+	:project: enum_tools
+	:alt: Documentation Build Status
 
-.. |docs_check| image:: https://github.com/domdfcoding/enum_tools/workflows/Docs%20Check/badge.svg
-	:target: https://github.com/domdfcoding/enum_tools/actions?query=workflow%3A%22Docs+Check%22
+.. |docs_check| actions-shield::
+	:workflow: Docs Check
 	:alt: Docs Check Status
 
-.. |travis| image:: https://img.shields.io/travis/com/domdfcoding/enum_tools/master?logo=travis
-	:target: https://travis-ci.com/domdfcoding/enum_tools
+.. |travis| travis-shield::
+	:travis-site: com
 	:alt: Travis Build Status
 
-.. |actions_windows| image:: https://github.com/domdfcoding/enum_tools/workflows/Windows%20Tests/badge.svg
-	:target: https://github.com/domdfcoding/enum_tools/actions?query=workflow%3A%22Windows+Tests%22
+.. |actions_windows| actions-shield::
+	:workflow: Windows Tests
 	:alt: Windows Tests Status
 
-.. |actions_macos| image:: https://github.com/domdfcoding/enum_tools/workflows/macOS%20Tests/badge.svg
-	:target: https://github.com/domdfcoding/enum_tools/actions?query=workflow%3A%22macOS+Tests%22
+.. |actions_macos| actions-shield::
+	:workflow: macOS Tests
 	:alt: macOS Tests Status
 
-.. |requires| image:: https://requires.io/github/domdfcoding/enum_tools/requirements.svg?branch=master
-	:target: https://requires.io/github/domdfcoding/enum_tools/requirements/?branch=master
+.. |requires| requires-io-shield::
 	:alt: Requirements Status
 
-.. |coveralls| image:: https://img.shields.io/coveralls/github/domdfcoding/enum_tools/master?logo=coveralls
-	:target: https://coveralls.io/github/domdfcoding/enum_tools?branch=master
+.. |coveralls| coveralls-shield::
 	:alt: Coverage
 
-.. |codefactor| image:: https://img.shields.io/codefactor/grade/github/domdfcoding/enum_tools?logo=codefactor
-	:target: https://www.codefactor.io/repository/github/domdfcoding/enum_tools
+.. |codefactor| codefactor-shield::
 	:alt: CodeFactor Grade
 
-.. |pypi-version| image:: https://img.shields.io/pypi/v/enum_tools
-	:target: https://pypi.org/project/enum_tools/
+.. |pypi-version| pypi-shield::
+	:project: enum_tools
+	:version:
 	:alt: PyPI - Package Version
 
-.. |supported-versions| image:: https://img.shields.io/pypi/pyversions/enum_tools?logo=python&logoColor=white
-	:target: https://pypi.org/project/enum_tools/
+.. |supported-versions| pypi-shield::
+	:project: enum_tools
+	:py-versions:
 	:alt: PyPI - Supported Python Versions
 
-.. |supported-implementations| image:: https://img.shields.io/pypi/implementation/enum_tools
-	:target: https://pypi.org/project/enum_tools/
+.. |supported-implementations| pypi-shield::
+	:project: enum_tools
+	:implementations:
 	:alt: PyPI - Supported Implementations
 
-.. |wheel| image:: https://img.shields.io/pypi/wheel/enum_tools
-	:target: https://pypi.org/project/enum_tools/
+.. |wheel| pypi-shield::
+	:project: enum_tools
+	:wheel:
 	:alt: PyPI - Wheel
 
 .. |conda-version| image:: https://img.shields.io/conda/v/domdfcoding/enum_tools?logo=anaconda
@@ -92,26 +93,26 @@ Enum Tools
 	:target: https://anaconda.org/domdfcoding/enum_tools
 	:alt: Conda - Platform
 
-.. |license| image:: https://img.shields.io/github/license/domdfcoding/enum_tools
-	:target: https://github.com/domdfcoding/enum_tools/blob/master/LICENSE
+.. |license| github-shield::
+	:license:
 	:alt: License
 
-.. |language| image:: https://img.shields.io/github/languages/top/domdfcoding/enum_tools
+.. |language| github-shield::
+	:top-language:
 	:alt: GitHub top language
 
-.. |commits-since| image:: https://img.shields.io/github/commits-since/domdfcoding/enum_tools/v0.1.3
-	:target: https://github.com/domdfcoding/enum_tools/pulse
+.. |commits-since| github-shield::
+	:commits-since: v0.1.3
 	:alt: GitHub commits since tagged version
 
-.. |commits-latest| image:: https://img.shields.io/github/last-commit/domdfcoding/enum_tools
-	:target: https://github.com/domdfcoding/enum_tools/commit/master
+.. |commits-latest| github-shield::
+	:last-commit:
 	:alt: GitHub last commit
 
-.. |maintained| image:: https://img.shields.io/maintenance/yes/2020
+.. |maintained| maintained-shield:: 2020
 	:alt: Maintenance
 
-.. |pre_commit| image:: https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white
-	:target: https://github.com/pre-commit/pre-commit
+.. |pre_commit| pre-commit-shield::
 	:alt: pre-commit
 
 .. end shields
@@ -129,34 +130,11 @@ Installation
 
 .. start installation
 
-.. tabs::
-
-	.. tab:: from PyPI
-
-		.. prompt:: bash
-
-			python3 -m pip install enum_tools --user
-
-	.. tab:: from Anaconda
-
-		First add the required channels
-
-		.. prompt:: bash
-
-			conda config --add channels http://conda.anaconda.org/domdfcoding
-			conda config --add channels http://conda.anaconda.org/conda-forge
-
-		Then install
-
-		.. prompt:: bash
-
-			conda install enum_tools
-
-	.. tab:: from GitHub
-
-		.. prompt:: bash
-
-			python3 -m pip install git+https://github.com/domdfcoding/enum_tools@master --user
+.. installation:: enum_tools
+	:pypi:
+	:github:
+	:anaconda:
+	:conda-channels: domdfcoding, conda-forge
 
 .. end installation
 
