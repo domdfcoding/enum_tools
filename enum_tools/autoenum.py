@@ -214,8 +214,8 @@ class EnumDocumenter(ClassDocumenter):
 		if self.doc_as_attr:
 			return
 
-		print(self.directive.result)
-		input("> ")
+		# print(self.directive.result)
+		# input("> ")
 
 		# set current namespace for finding members
 		self.env.temp_data["autodoc:module"] = self.modname

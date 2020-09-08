@@ -60,12 +60,14 @@ def test_index(page: BeautifulSoup, file_regression: FileRegressionFixture):
 	title = page.find("h1").contents[0].strip()
 	assert "autoenum Demo" == title
 
+	check_html_regression(page, file_regression)
+
 	# Now test the directive
 
 	class_count = 0
 
 	for class_ in page.findAll("dl"):
-		if "class" not in class_["class"]:
+		if "enum" not in class_["class"]:
 			continue
 
 		if class_count == 0:
@@ -73,7 +75,12 @@ def test_index(page: BeautifulSoup, file_regression: FileRegressionFixture):
 		elif class_count == 1:
 			assert class_.find("dt")["id"] == "id0"
 		assert class_.find("dd").findAll("p")[0].contents[0] == "An enumeration of people."
-		assert class_.find("dd").findAll("p")[1].contents[0] == "Valid values are as follows:"
+
+		assert str(class_.find("dd").findAll("p")[1].contents[0]) == (
+				'<code class="xref py py-class docutils literal notranslate">'
+				'<span class="pre">int</span></code>'
+		)
+		assert class_.find("dd").findAll("p")[2].contents[0] == "Valid values are as follows:"
 
 		attr_count = 0
 
@@ -110,7 +117,6 @@ def test_index(page: BeautifulSoup, file_regression: FileRegressionFixture):
 	# print(page)
 
 	assert class_count == 2
-	check_html_regression(page, file_regression)
 
 
 @pytest.mark.parametrize(
@@ -123,17 +129,24 @@ def test_flag(page: BeautifulSoup, file_regression: FileRegressionFixture):
 	title = page.find("h1").contents[0].strip()
 	assert "autoenum Demo - Flag" == title
 
+	check_html_regression(page, file_regression)
+
 	# Now test the directive
 
 	class_count = 0
 
 	for class_ in page.findAll("dl"):
-		if "class" not in class_["class"]:
+		if "enum" not in class_["class"]:
 			continue
 
 		assert class_.find("dt")["id"] == "enum_tools.demo.StatusFlags"
 		assert class_.find("dd").findAll("p")[0].contents[0] == "An enumeration of status codes."
-		assert class_.find("dd").findAll("p")[1].contents[0] == "Valid values are as follows:"
+
+		assert str(class_.find("dd").findAll("p")[1].contents[0]) == (
+				'<code class="xref py py-class docutils literal notranslate">'
+				'<span class="pre">int</span></code>'
+		)
+		assert class_.find("dd").findAll("p")[2].contents[0] == "Valid values are as follows:"
 
 		attr_count = 0
 
@@ -170,7 +183,6 @@ def test_flag(page: BeautifulSoup, file_regression: FileRegressionFixture):
 	# print(page)
 
 	assert class_count == 1
-	check_html_regression(page, file_regression)
 
 
 @pytest.mark.parametrize(
@@ -183,18 +195,28 @@ def test_no_member_doc(page: BeautifulSoup, file_regression: FileRegressionFixtu
 	title = page.find("h1").contents[0].strip()
 	assert "autoenum Demo - Members without docstrings" == title
 
+	check_html_regression(page, file_regression)
+
 	# Now test the directive
 
 	class_count = 0
 
 	for class_ in page.findAll("dl"):
-		if "class" not in class_["class"]:
+		if "enum" not in class_["class"]:
 			continue
 
 		assert class_.find("dt")["id"] == "enum_tools.demo.NoMemberDoc"
 		assert class_.find("dd").findAll("p")[0].contents[
 				0] == "An enumeration of people without any member docstrings."
-		assert class_.find("dd").findAll("p")[1].contents[0] == "Valid values are as follows:"
+
+		if class_count == 0:
+			assert str(class_.find("dd").findAll("p")[1].contents[0]) == (
+					'<code class="xref py py-class docutils literal notranslate">'
+					'<span class="pre">int</span></code>'
+			)
+			assert class_.find("dd").findAll("p")[2].contents[0] == "Valid values are as follows:"
+		else:
+			assert class_.find("dd").findAll("p")[1].contents[0] == "Valid values are as follows:"
 
 		attr_count = 0
 
@@ -231,7 +253,6 @@ def test_no_member_doc(page: BeautifulSoup, file_regression: FileRegressionFixtu
 	# print(page)
 
 	assert class_count == 1
-	check_html_regression(page, file_regression)
 
 
 def remove_html_footer(page: BeautifulSoup) -> BeautifulSoup:

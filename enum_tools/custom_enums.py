@@ -117,4 +117,4 @@ class DuplicateFreeEnum(Enum):
 		if any(self.value == e.value for e in cls):
 			a = self.name
 			e = cls(self.value).name
-			raise ValueError(f"aliases not allowed in DuplicateFreeEnum:  {a!r} --> {e!r}")
+			raise ValueError(f"aliases are not allowed in DuplicateFreeEnum:  {a!r} --> {e!r}")

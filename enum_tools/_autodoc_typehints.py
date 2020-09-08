@@ -26,7 +26,7 @@ import inspect
 from typing import AnyStr, TypeVar
 
 # 3rd party
-import sphinx_autodoc_typehints
+import sphinx_autodoc_typehints  # type: ignore
 from sphinx.util.inspect import signature as Signature
 from sphinx.util.inspect import stringify_signature
 
@@ -40,7 +40,7 @@ def format_annotation(annotation, fully_qualified: bool = False) -> str:
 
 	# Type variables are also handled specially
 	try:
-		if isinstance(annotation, TypeVar) and annotation is not AnyStr:
+		if isinstance(annotation, TypeVar) and annotation is not AnyStr:  # type: ignore
 			return f':py:data:`\\{annotation!r}`'
 	except TypeError:
 		pass
