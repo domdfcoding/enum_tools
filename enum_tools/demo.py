@@ -6,7 +6,7 @@ from typing import List
 import enum_tools.documentation
 from enum_tools.documentation import document_enum
 
-__all__ = ["People", "NoMethods"]
+__all__ = ["People", "NoMethods", "NoMemberDoc", "StatusFlags"]
 
 enum_tools.documentation.INTERACTIVE = True
 

@@ -2,7 +2,8 @@
 :mod:`~enum_tools.autoenum` Sphinx Extension
 ======================================================
 
-Supports most of the options used by `autodoc <https://www.sphinx-doc.org/en/master/usage/extensions/autodoc.html>`_.
+Supports most of the options used by
+`autodoc <https://www.sphinx-doc.org/en/master/usage/extensions/autodoc.html>`_.
 
 Demo
 ----------
@@ -16,6 +17,7 @@ Demo
 
 .. automodule:: enum_tools.demo
 	:members:
+	:exclude-members: NoMemberDoc,StatusFlags
 	:noindex:
 	:no-autosummary:
 

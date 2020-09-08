@@ -54,6 +54,7 @@ extras_require:
   sphinx:
     - sphinx
     - sphinx-autodoc-typehints
+    - sphinx-toolbox>=0.2.1
 
 tox_testenv_extras: all
 

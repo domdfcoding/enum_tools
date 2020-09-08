@@ -35,10 +35,10 @@
          ¶
         </a>
        </h1>
-       <dl class="py enum">
+       <dl class="py flag">
         <dt id="enum_tools.demo.StatusFlags">
          <em class="property">
-          enum
+          flag
          </em>
          <code class="sig-prename descclassname">
           enum_tools.demo.
@@ -140,7 +140,7 @@
           The
           <code class="xref py py-class docutils literal notranslate">
            <span class="pre">
-            Enum
+            Flag
            </span>
           </code>
           and its members also have the following methods:
@@ -158,6 +158,142 @@
            </span>
            → bool
            <a class="headerlink" href="#enum_tools.demo.StatusFlags.has_errored" title="Permalink to this definition">
+            ¶
+           </a>
+          </dt>
+          <dd>
+           <p>
+            Returns whether the operation has errored:
+           </p>
+          </dd>
+         </dl>
+        </dd>
+       </dl>
+       <span class="target" id="module-enum_tools.demo">
+       </span>
+       <dl class="py flag">
+        <dt id="id0">
+         <em class="property">
+          flag
+         </em>
+         <code class="sig-prename descclassname">
+          enum_tools.demo.
+         </code>
+         <code class="sig-name descname">
+          StatusFlags
+         </code>
+         <span class="sig-paren">
+          (
+         </span>
+         <em class="sig-param">
+          <span class="n">
+           value
+          </span>
+         </em>
+         <span class="sig-paren">
+          )
+         </span>
+         <a class="headerlink" href="#id0" title="Permalink to this definition">
+          ¶
+         </a>
+        </dt>
+        <dd>
+         <p>
+          An enumeration of status codes.
+         </p>
+         <dl class="field-list simple">
+          <dt class="field-odd">
+           Member Type
+          </dt>
+          <dd class="field-odd">
+           <p>
+            <code class="xref py py-class docutils literal notranslate">
+             <span class="pre">
+              int
+             </span>
+            </code>
+           </p>
+          </dd>
+         </dl>
+         <p>
+          Valid values are as follows:
+         </p>
+         <dl class="py attribute">
+          <dt id="id1">
+           <code class="sig-name descname">
+            Running
+           </code>
+           <em class="property">
+            = &lt;StatusFlags.Running: 1&gt;
+           </em>
+           <a class="headerlink" href="#id1" title="Permalink to this definition">
+            ¶
+           </a>
+          </dt>
+          <dd>
+           <p>
+            The system is running.
+           </p>
+          </dd>
+         </dl>
+         <dl class="py attribute">
+          <dt id="id2">
+           <code class="sig-name descname">
+            Stopped
+           </code>
+           <em class="property">
+            = &lt;StatusFlags.Stopped: 2&gt;
+           </em>
+           <a class="headerlink" href="#id2" title="Permalink to this definition">
+            ¶
+           </a>
+          </dt>
+          <dd>
+           <p>
+            The system has stopped.
+           </p>
+          </dd>
+         </dl>
+         <dl class="py attribute">
+          <dt id="id3">
+           <code class="sig-name descname">
+            Error
+           </code>
+           <em class="property">
+            = &lt;StatusFlags.Error: 4&gt;
+           </em>
+           <a class="headerlink" href="#id3" title="Permalink to this definition">
+            ¶
+           </a>
+          </dt>
+          <dd>
+           <p>
+            An error has occurred.
+           </p>
+          </dd>
+         </dl>
+         <p>
+          The
+          <code class="xref py py-class docutils literal notranslate">
+           <span class="pre">
+            Flag
+           </span>
+          </code>
+          and its members also have the following methods:
+         </p>
+         <dl class="py method">
+          <dt id="id4">
+           <code class="sig-name descname">
+            has_errored
+           </code>
+           <span class="sig-paren">
+            (
+           </span>
+           <span class="sig-paren">
+            )
+           </span>
+           → bool
+           <a class="headerlink" href="#id4" title="Permalink to this definition">
             ¶
            </a>
           </dt>

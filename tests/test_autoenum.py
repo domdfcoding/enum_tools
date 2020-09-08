@@ -136,10 +136,14 @@ def test_flag(page: BeautifulSoup, file_regression: FileRegressionFixture):
 	class_count = 0
 
 	for class_ in page.findAll("dl"):
-		if "enum" not in class_["class"]:
+		if "flag" not in class_["class"]:
 			continue
 
-		assert class_.find("dt")["id"] == "enum_tools.demo.StatusFlags"
+		if class_count == 0:
+			assert class_.find("dt")["id"] == "enum_tools.demo.StatusFlags"
+		elif class_count == 1:
+			assert class_.find("dt")["id"] == "id0"
+
 		assert class_.find("dd").findAll("p")[0].contents[0] == "An enumeration of status codes."
 
 		assert str(class_.find("dd").findAll("p")[1].contents[0]) == (
@@ -182,7 +186,7 @@ def test_flag(page: BeautifulSoup, file_regression: FileRegressionFixture):
 
 	# print(page)
 
-	assert class_count == 1
+	assert class_count == 2
 
 
 @pytest.mark.parametrize(

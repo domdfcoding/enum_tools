@@ -42,7 +42,7 @@ __all__ = [
 		"parse_tokens",
 		"get_base_indent",
 		"DocumentedEnum",
-		"get_dedented_line"
+		"get_dedented_line",
 		]
 
 lexer = PythonLexer()

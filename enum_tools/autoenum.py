@@ -56,127 +56,26 @@ It behaves much like ``.. autoclass::`` and ``.. autofunction::``.
 #
 
 # stdlib
-import inspect
-from enum import Enum, EnumMeta, Flag
-from typing import Any, Dict, List, Optional, Tuple, Type
+from enum import Enum
+from typing import Any, Dict, List, Optional, Tuple
 
 # 3rd party
 from sphinx.application import Sphinx
 from sphinx.domains import ObjType
 from sphinx.domains.python import PyClasslike, PyXRefRole
-from sphinx.errors import PycodeError
-from sphinx.ext.autodoc import ALL, AttributeDocumenter, ClassDocumenter, Documenter, logger
-from sphinx.locale import _, __
-from sphinx.pycode import ModuleAnalyzer
+from sphinx.ext.autodoc import ALL, AttributeDocumenter, ClassDocumenter, Documenter
+from sphinx.locale import _
 
 # this package
-from enum_tools import __version__, documentation
-from enum_tools._autodoc_typehints import format_annotation
+from sphinx_autodoc_typehints import format_annotation  # type: ignore
+from sphinx_toolbox.autodoc_helpers import begin_generate
 
-__all__ = ["EnumDocumenter", "EnumMemberDocumenter", "setup"]
+from enum_tools import __version__, documentation
+from enum_tools.utils import get_base_object, is_enum, is_flag
+
+__all__ = ["EnumDocumenter", "EnumMemberDocumenter", "setup", "FlagDocumenter"]
 
 documentation.INTERACTIVE = True
-
-
-def get_base_object(enum: EnumMeta) -> Type:
-	"""
-	Returns the object type of the enum's members
-
-	If the members are of indeterminate type :class`object` is returned.
-	"""
-
-	mro = inspect.getmro(enum)
-	if Flag in mro:
-		mro = mro[:mro.index(Flag)]
-	elif Enum in mro:
-		mro = mro[:mro.index(Enum)]
-	else:
-		raise TypeError("not an Enum")
-
-	mro = mro[1:]
-
-	for obj in mro:
-		if not isinstance(obj, EnumMeta):
-			return obj
-
-	return object
-
-
-def _start_generate(
-		documenter,
-		real_modname: Optional[str] = None,
-		check_module: bool = False,
-		) -> Optional[str]:
-	"""
-	Boilerplate for the top of ``generate`` in :class:`EnumDocumenter` and :class:`EnumMemberDocumenter`.
-
-	:param documenter:
-	:param real_modname:
-	:param check_module:
-
-	:return: The ``sourcename``, or None if certain conditions are met,
-		to indicate that the Documenter class should exit early.
-	"""
-
-	# Do not pass real_modname and use the name from the __module__
-	# attribute of the class.
-	# If a class gets imported into the module real_modname
-	# the analyzer won't find the source of the class, if
-	# it looks in real_modname.
-
-	if not documenter.parse_name():
-		# need a module to import
-		logger.warning(
-				__(
-						"don't know which module to import for autodocumenting "
-						f'{documenter.name!r} (try placing a "module" or "currentmodule" directive '
-						"in the document, or giving an explicit module name)"
-						),
-				type="autodoc"
-				)
-		return None
-
-	# now, import the module and get object to document
-	if not documenter.import_object():
-		return None
-
-	# If there is no real module defined, figure out which to use.
-	# The real module is used in the module analyzer to look up the module
-	# where the attribute documentation would actually be found in.
-	# This is used for situations where you have a module that collects the
-	# functions and classes of internal submodules.
-	documenter.real_modname = real_modname or documenter.get_real_modname()
-
-	# try to also get a source code analyzer for attribute docs
-	try:
-		documenter.analyzer = ModuleAnalyzer.for_module(documenter.real_modname)
-		# parse right now, to get PycodeErrors on parsing (results will
-		# be cached anyway)
-		documenter.analyzer.find_attr_docs()
-
-	except PycodeError as err:
-		logger.debug("[autodoc] module analyzer failed: %s", err)
-		# no source file -- e.g. for builtin and C modules
-		documenter.analyzer = None
-		# at least add the module.__file__ as a dependency
-		if hasattr(documenter.module, "__file__") and documenter.module.__file__:
-			documenter.directive.filename_set.add(documenter.module.__file__)
-	else:
-		documenter.directive.filename_set.add(documenter.analyzer.srcname)
-
-	# check __module__ of object (for members not given explicitly)
-	if check_module:
-		if not documenter.check_module():
-			return None
-
-	sourcename = documenter.get_sourcename()
-
-	# make sure that the result starts with an empty line.  This is
-	# necessary for some situations where another directive preprocesses
-	# reST and no starting newline is present
-	documenter.add_line('', sourcename)
-
-	return sourcename
 
 
 class EnumDocumenter(ClassDocumenter):
@@ -200,8 +99,7 @@ class EnumDocumenter(ClassDocumenter):
 		:param parent:
 		"""
 
-		# The enum itself is subclass of EnumMeta; enum members subclass Enum
-		return isinstance(member, EnumMeta)
+		return is_enum(member) and not is_flag(member)
 
 	def document_members(self, all_members: bool = False) -> None:
 		"""
@@ -250,7 +148,7 @@ class EnumDocumenter(ClassDocumenter):
 		methods_text = (
 				f"The {self.class_xref} and its members "
 				f"{'also ' if enum_members else ''}have the following methods:"
-				)
+		)
 
 		self._do_document_members(
 				non_enum_members,
@@ -351,7 +249,7 @@ class EnumDocumenter(ClassDocumenter):
 		:param all_members: If :py:obj:`True`, document all members.
 		"""
 
-		ret = _start_generate(self, real_modname, check_module)
+		ret = begin_generate(self, real_modname, check_module)
 		if ret is None:
 			return
 		sourcename = ret
@@ -387,7 +285,7 @@ class FlagDocumenter(EnumDocumenter):
 
 	objtype = "flag"
 	directivetype = "flag"
-	priority = 19
+	priority = 15
 	class_xref = ":class:`~enum.Flag`"
 
 	@classmethod
@@ -401,15 +299,7 @@ class FlagDocumenter(EnumDocumenter):
 		:param parent:
 		"""
 
-		# The enum itself is subclass of EnumMeta; enum members subclass Enum
-		if isinstance(member, EnumMeta):
-			for attr in {"__or__", "__and__", "__xor__", "__invert__"}:
-				if not hasattr(member, attr):
-					return False
-
-			return True
-		else:
-			return False
+		return is_flag(member)
 
 
 class EnumMemberDocumenter(AttributeDocumenter):
@@ -446,7 +336,7 @@ class EnumMemberDocumenter(AttributeDocumenter):
 		:param all_members: If :py:obj:`True`, document all members.
 		"""
 
-		ret = _start_generate(self, real_modname, check_module)
+		ret = begin_generate(self, real_modname, check_module)
 		if ret is None:
 			return
 
