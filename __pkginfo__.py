@@ -51,7 +51,7 @@ github_username = "domdfcoding"
 web = github_url = "https://github.com/domdfcoding/enum_tools"
 repo_root = pathlib.Path(__file__).parent
 install_requires = (repo_root / "requirements.txt").read_text(encoding="utf-8").split('\n')
-extras_require = {'sphinx': ['sphinx', 'sphinx_autodoc_typehints'], 'all': ['sphinx', 'sphinx_autodoc_typehints']}
+extras_require = {'sphinx': ['sphinx', 'sphinx-autodoc-typehints'], 'all': ['sphinx', 'sphinx-autodoc-typehints']}
 
 
 
