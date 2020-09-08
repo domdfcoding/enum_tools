@@ -79,7 +79,7 @@ def test_index(page: BeautifulSoup, file_regression: FileRegressionFixture):
 		assert str(class_.find("dd").findAll("p")[1].contents[0]) == (
 				'<code class="xref py py-class docutils literal notranslate">'
 				'<span class="pre">int</span></code>'
-		)
+				)
 		assert class_.find("dd").findAll("p")[2].contents[0] == "Valid values are as follows:"
 
 		attr_count = 0
@@ -145,7 +145,7 @@ def test_flag(page: BeautifulSoup, file_regression: FileRegressionFixture):
 		assert str(class_.find("dd").findAll("p")[1].contents[0]) == (
 				'<code class="xref py py-class docutils literal notranslate">'
 				'<span class="pre">int</span></code>'
-		)
+				)
 		assert class_.find("dd").findAll("p")[2].contents[0] == "Valid values are as follows:"
 
 		attr_count = 0
@@ -213,7 +213,7 @@ def test_no_member_doc(page: BeautifulSoup, file_regression: FileRegressionFixtu
 			assert str(class_.find("dd").findAll("p")[1].contents[0]) == (
 					'<code class="xref py py-class docutils literal notranslate">'
 					'<span class="pre">int</span></code>'
-			)
+					)
 			assert class_.find("dd").findAll("p")[2].contents[0] == "Valid values are as follows:"
 		else:
 			assert class_.find("dd").findAll("p")[1].contents[0] == "Valid values are as follows:"

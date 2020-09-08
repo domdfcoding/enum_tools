@@ -68,10 +68,10 @@ from sphinx.errors import PycodeError
 from sphinx.ext.autodoc import ALL, AttributeDocumenter, ClassDocumenter, Documenter, logger
 from sphinx.locale import _, __
 from sphinx.pycode import ModuleAnalyzer
-from enum_tools._autodoc_typehints import format_annotation
 
 # this package
 from enum_tools import __version__, documentation
+from enum_tools._autodoc_typehints import format_annotation
 
 __all__ = ["EnumDocumenter", "EnumMemberDocumenter", "setup"]
 
