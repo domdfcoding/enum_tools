@@ -16,6 +16,7 @@ Demo
 
 .. automodule:: enum_tools.demo
 	:members:
+	:noindex:
 	:no-autosummary:
 
 
