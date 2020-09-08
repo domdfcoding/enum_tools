@@ -16,13 +16,27 @@ Demo
 
 .. automodule:: enum_tools.demo
 	:members:
+	:no-autosummary:
+
 
 **This one has been created with** ``autoenum``.
 
-.. code-block:: rest
+.. rest-example::
 
 	.. autoenum:: enum_tools.demo.People
 		:members:
 
-.. autoenum:: enum_tools.demo.People
-	:members:
+
+**If members don't have their own docstrings no docstring is shown:**
+
+.. rest-example::
+
+	.. autoenum:: enum_tools.demo.NoMemberDoc
+		:members:
+
+:class:`enum.Flag`\s **can also be documented:**
+
+.. rest-example::
+
+	.. autoflag:: enum_tools.demo.StatusFlags
+		:members:

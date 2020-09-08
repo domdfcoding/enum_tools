@@ -3,5 +3,3 @@
 ===================================
 
 .. automodule:: enum_tools.documentation
-	:autosummary:
-	:members:

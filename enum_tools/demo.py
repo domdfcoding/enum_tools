@@ -1,5 +1,5 @@
 # stdlib
-from enum import Enum
+from enum import IntEnum, IntFlag
 from typing import List
 
 # this package
@@ -12,7 +12,7 @@ enum_tools.documentation.INTERACTIVE = True
 
 
 @document_enum
-class People(int, Enum):
+class People(IntEnum):
 	"""
 	An enumeration of people.
 	"""
@@ -39,7 +39,7 @@ class People(int, Enum):
 
 
 @document_enum
-class NoMethods(int, Enum):
+class NoMethods(IntEnum):
 	"""
 	An enumeration of people without any methods.
 	"""
@@ -47,3 +47,32 @@ class NoMethods(int, Enum):
 	Bob = bob = 1  # noqa  # doc: A person called Bob  # doc: another doc # isort: ignore
 	Alice = 2  # doc: A person called Alice
 	Carol = 3  # doc: A person called Carol
+
+
+@document_enum
+class NoMemberDoc(IntEnum):
+	"""
+	An enumeration of people without any member docstrings.
+	"""
+
+	Bob = bob = 1
+	Alice = 2
+	Carol = 3
+
+
+@document_enum
+class StatusFlags(IntFlag):
+	"""
+	An enumeration of status codes.
+	"""
+
+	Running = 1  # doc: The system is running.
+	Stopped = 2  # doc: The system has stopped.
+	Error = 4  # doc: An error has occurred.
+
+	def has_errored(self) -> bool:
+		"""
+		Returns whether the operation has errored:
+		"""
+
+		return (self & 4) == self.Error

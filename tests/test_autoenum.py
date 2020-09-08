@@ -8,6 +8,8 @@ from pathlib import Path
 
 # 3rd party
 import pytest
+from bs4 import BeautifulSoup  # type: ignore
+from pytest_regressions.file_regression import FileRegressionFixture  # type: ignore
 
 # this package
 from enum_tools.autoenum import EnumDocumenter
@@ -53,7 +55,7 @@ def test(app):
 				"index.html",
 				], indirect=True
 		)
-def test_index(page):
+def test_index(page: BeautifulSoup, file_regression: FileRegressionFixture):
 	# Make sure the page title is what you expect
 	title = page.find("h1").contents[0].strip()
 	assert "autoenum Demo" == title
@@ -108,3 +110,136 @@ def test_index(page):
 	# print(page)
 
 	assert class_count == 2
+	check_html_regression(page, file_regression)
+
+
+@pytest.mark.parametrize(
+		"page", [
+				"flag.html",
+				], indirect=True
+		)
+def test_flag(page: BeautifulSoup, file_regression: FileRegressionFixture):
+	# Make sure the page title is what you expect
+	title = page.find("h1").contents[0].strip()
+	assert "autoenum Demo - Flag" == title
+
+	# Now test the directive
+
+	class_count = 0
+
+	for class_ in page.findAll("dl"):
+		if "class" not in class_["class"]:
+			continue
+
+		assert class_.find("dt")["id"] == "enum_tools.demo.StatusFlags"
+		assert class_.find("dd").findAll("p")[0].contents[0] == "An enumeration of status codes."
+		assert class_.find("dd").findAll("p")[1].contents[0] == "Valid values are as follows:"
+
+		attr_count = 0
+
+		for attr in class_.findAll("dl"):
+			if "attribute" not in attr["class"]:
+				continue
+
+			if attr_count == 0:
+				if class_count == 0:
+					assert attr.find("dt")["id"] == "enum_tools.demo.StatusFlags.Running"
+				elif class_count == 1:
+					assert attr.find("dt")["id"] == "id1"
+				assert attr.find("dt").em.contents[0] == " = <StatusFlags.Running: 1>"
+				assert str(attr.find("dd").contents[0]) == "<p>The system is running.</p>"
+			elif attr_count == 1:
+				if class_count == 0:
+					assert attr.find("dt")["id"] == "enum_tools.demo.StatusFlags.Stopped"
+				elif class_count == 1:
+					assert attr.find("dt")["id"] == "id2"
+				assert attr.find("dt").em.contents[0] == " = <StatusFlags.Stopped: 2>"
+				assert str(attr.find("dd").contents[0]) == "<p>The system has stopped.</p>"
+			elif attr_count == 2:
+				if class_count == 0:
+					assert attr.find("dt")["id"] == "enum_tools.demo.StatusFlags.Error"
+				elif class_count == 1:
+					assert attr.find("dt")["id"] == "id3"
+				assert attr.find("dt").em.contents[0] == " = <StatusFlags.Error: 4>"
+				assert str(attr.find("dd").contents[0]) == "<p>An error has occurred.</p>"
+
+			attr_count += 1
+
+		class_count += 1
+
+	# print(page)
+
+	assert class_count == 1
+	check_html_regression(page, file_regression)
+
+
+@pytest.mark.parametrize(
+		"page", [
+				"no-member-doc.html",
+				], indirect=True
+		)
+def test_no_member_doc(page: BeautifulSoup, file_regression: FileRegressionFixture):
+	# Make sure the page title is what you expect
+	title = page.find("h1").contents[0].strip()
+	assert "autoenum Demo - Members without docstrings" == title
+
+	# Now test the directive
+
+	class_count = 0
+
+	for class_ in page.findAll("dl"):
+		if "class" not in class_["class"]:
+			continue
+
+		assert class_.find("dt")["id"] == "enum_tools.demo.NoMemberDoc"
+		assert class_.find("dd").findAll("p")[0].contents[
+				0] == "An enumeration of people without any member docstrings."
+		assert class_.find("dd").findAll("p")[1].contents[0] == "Valid values are as follows:"
+
+		attr_count = 0
+
+		for attr in class_.findAll("dl"):
+			if "attribute" not in attr["class"]:
+				continue
+
+			if attr_count == 0:
+				if class_count == 0:
+					assert attr.find("dt")["id"] == "enum_tools.demo.NoMemberDoc.Bob"
+				elif class_count == 1:
+					assert attr.find("dt")["id"] == "id1"
+				assert attr.find("dt").em.contents[0] == " = <NoMemberDoc.Bob: 1>"
+				assert not attr.find("dd").contents
+			elif attr_count == 1:
+				if class_count == 0:
+					assert attr.find("dt")["id"] == "enum_tools.demo.NoMemberDoc.Alice"
+				elif class_count == 1:
+					assert attr.find("dt")["id"] == "id2"
+				assert attr.find("dt").em.contents[0] == " = <NoMemberDoc.Alice: 2>"
+				assert not attr.find("dd").contents
+			elif attr_count == 2:
+				if class_count == 0:
+					assert attr.find("dt")["id"] == "enum_tools.demo.NoMemberDoc.Carol"
+				elif class_count == 1:
+					assert attr.find("dt")["id"] == "id3"
+				assert attr.find("dt").em.contents[0] == " = <NoMemberDoc.Carol: 3>"
+				assert not attr.find("dd").contents
+
+			attr_count += 1
+
+		class_count += 1
+
+	# print(page)
+
+	assert class_count == 1
+	check_html_regression(page, file_regression)
+
+
+def remove_html_footer(page: BeautifulSoup) -> BeautifulSoup:
+	for div in page.select("div.footer"):
+		div.extract()
+
+	return page
+
+
+def check_html_regression(page: BeautifulSoup, file_regression: FileRegressionFixture):
+	file_regression.check(contents=remove_html_footer(page).prettify(), extension=".html", encoding="UTF-8")

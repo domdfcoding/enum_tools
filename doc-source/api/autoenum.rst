@@ -3,6 +3,4 @@
 ===================================
 
 .. automodule:: enum_tools.autoenum
-	:autosummary:
-	:members:
 	:inherited-members:

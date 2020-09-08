@@ -24,21 +24,29 @@ Alternative method for documenting enums with Sphinx.
 #
 #
 
+# stdlib
+from enum import Enum, Flag, IntFlag
+
 # this package
 from enum_tools.custom_enums import AutoNumberEnum, DuplicateFreeEnum, IntEnum, OrderedEnum, StrEnum
 from enum_tools.documentation import DocumentedEnum, document_enum, document_member
 
 __author__: str = "Dominic Davis-Foster"
 __copyright__: str = "2020 Dominic Davis-Foster"
-
 __license__: str = "GNU Lesser General Public License v3 or later (LGPLv3+)"
 __version__: str = "0.1.3"
 __email__: str = "dominic@davis-foster.co.uk"
 
 __all__ = [
+		"Enum",
 		"IntEnum",
 		"StrEnum",
 		"AutoNumberEnum",
 		"OrderedEnum",
 		"DuplicateFreeEnum",
+		"Flag",
+		"IntFlag",
+		"DocumentedEnum",
+		"document_enum",
+		"document_member",
 		]

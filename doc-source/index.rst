@@ -148,7 +148,18 @@ Installation
 	:caption: Documentation
 
 	autoenum
-	api/index
+
+.. toctree::
+	:maxdepth: 3
+	:caption: API Reference
+	:glob:
+
+	api/*
+
+.. toctree::
+	:maxdepth: 3
+	:caption: Contributing
+
 	contributing
 	Source
 

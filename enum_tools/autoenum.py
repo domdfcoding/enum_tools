@@ -56,15 +56,19 @@ It behaves much like ``.. autoclass::`` and ``.. autofunction::``.
 #
 
 # stdlib
-from enum import Enum, EnumMeta
-from typing import Any, Dict, List, Optional, Tuple
+import inspect
+from enum import Enum, EnumMeta, Flag
+from typing import Any, Dict, List, Optional, Tuple, Type
 
 # 3rd party
 from sphinx.application import Sphinx
+from sphinx.domains import ObjType
+from sphinx.domains.python import PyClasslike, PyXRefRole
 from sphinx.errors import PycodeError
 from sphinx.ext.autodoc import ALL, AttributeDocumenter, ClassDocumenter, Documenter, logger
-from sphinx.locale import __
+from sphinx.locale import _, __
 from sphinx.pycode import ModuleAnalyzer
+from enum_tools._autodoc_typehints import format_annotation
 
 # this package
 from enum_tools import __version__, documentation
@@ -72,6 +76,30 @@ from enum_tools import __version__, documentation
 __all__ = ["EnumDocumenter", "EnumMemberDocumenter", "setup"]
 
 documentation.INTERACTIVE = True
+
+
+def get_base_object(enum: EnumMeta) -> Type:
+	"""
+	Returns the object type of the enum's members
+
+	If the members are of indeterminate type :class`object` is returned.
+	"""
+
+	mro = inspect.getmro(enum)
+	if Flag in mro:
+		mro = mro[:mro.index(Flag)]
+	elif Enum in mro:
+		mro = mro[:mro.index(Enum)]
+	else:
+		raise TypeError("not an Enum")
+
+	mro = mro[1:]
+
+	for obj in mro:
+		if not isinstance(obj, EnumMeta):
+			return obj
+
+	return object
 
 
 def _start_generate(
@@ -157,9 +185,9 @@ class EnumDocumenter(ClassDocumenter):
 	"""
 
 	objtype = "enum"
-	directivetype = "class"
-	# TODO: make an "enum" directive that is based on class, but that says "enum" instead
+	directivetype = "enum"
 	priority = 20
+	class_xref = ":class:`~enum.Enum`"
 
 	@classmethod
 	def can_document_member(cls, member: Any, membername: str, isattr: bool, parent: Any) -> bool:
@@ -185,6 +213,9 @@ class EnumDocumenter(ClassDocumenter):
 
 		if self.doc_as_attr:
 			return
+
+		print(self.directive.result)
+		input("> ")
 
 		# set current namespace for finding members
 		self.env.temp_data["autodoc:module"] = self.modname
@@ -216,7 +247,10 @@ class EnumDocumenter(ClassDocumenter):
 		# Document everything else
 		self.options.undoc_members = user_option_undoc_members  # type: ignore
 
-		methods_text = f"The :class:`~enum.Enum` and its members {'also ' if enum_members else ''}have the following methods:"
+		methods_text = (
+				f"The {self.class_xref} and its members "
+				f"{'also ' if enum_members else ''}have the following methods:"
+				)
 
 		self._do_document_members(
 				non_enum_members,
@@ -329,15 +363,53 @@ class EnumDocumenter(ClassDocumenter):
 		self.add_directive_header("(value)")
 		self.add_line('', sourcename)
 
-		# e.g. the module directive doesn't have content
 		self.indent += self.content_indent
 
 		# add all content (from docstrings, attribute docs etc.)
 		self.add_content(more_content)
 
+		member_type = get_base_object(self.object)
+
+		if member_type is not object:
+			# Show the type of the members
+			self.add_line(f":Member Type: {format_annotation(member_type)}", self.sourcename)
+			self.add_line('', self.sourcename)
+
 		# document members, if possible
 		self.document_members(all_members)
 		del self.sourcename
+
+
+class FlagDocumenter(EnumDocumenter):
+	r"""
+	Sphinx autodoc :class:`~sphinx.ext.autodoc.Documenter` for documenting :class:`~enum.Flag`\s.
+	"""
+
+	objtype = "flag"
+	directivetype = "flag"
+	priority = 19
+	class_xref = ":class:`~enum.Flag`"
+
+	@classmethod
+	def can_document_member(cls, member: Any, membername: str, isattr: bool, parent: Any) -> bool:
+		"""
+		Called to see if a member can be documented by this documenter.
+
+		:param member:
+		:param membername:
+		:param isattr:
+		:param parent:
+		"""
+
+		# The enum itself is subclass of EnumMeta; enum members subclass Enum
+		if isinstance(member, EnumMeta):
+			for attr in {"__or__", "__and__", "__xor__", "__invert__"}:
+				if not hasattr(member, attr):
+					return False
+
+			return True
+		else:
+			return False
 
 
 class EnumMemberDocumenter(AttributeDocumenter):
@@ -388,7 +460,7 @@ class EnumMemberDocumenter(AttributeDocumenter):
 		self.indent += self.content_indent
 
 		# Add the value's docstring
-		if self.object.__doc__:
+		if self.object.__doc__ and self.object.__doc__ != self.object.__class__:
 			self.add_line(self.object.__doc__, sourcename)
 			self.add_line('', sourcename)
 
@@ -400,7 +472,16 @@ def setup(app: Sphinx) -> Dict[str, Any]:
 	:param app:
 	"""
 
+	app.registry.domains["py"].object_types["enum"] = ObjType(_("enum"), "enum", "class", "obj")
+	app.add_directive_to_domain("py", "enum", PyClasslike)
+	app.add_role_to_domain("py", "enum", PyXRefRole())
+
+	app.registry.domains["py"].object_types["flag"] = ObjType(_("flag"), "flag", "enum", "class", "obj")
+	app.add_directive_to_domain("py", "flag", PyClasslike)
+	app.add_role_to_domain("py", "flag", PyXRefRole())
+
 	app.add_autodocumenter(EnumDocumenter)
+	app.add_autodocumenter(FlagDocumenter)
 
 	return {
 			"version": __version__,

@@ -1,9 +1,10 @@
-bs4
+bs4>=0.0.1
 coverage>=5.1
 coverage_pyver_pragma>=0.0.5
-html5lib
+html5lib>=1.1
 pytest>=6.0.0
 pytest-cov>=2.8.1
 pytest-randomly>=3.3.1
 pytest-rerunfailures>=9.0
-sphinx
+pytest_regressions>=2.0.1
+sphinx>=3.2.1

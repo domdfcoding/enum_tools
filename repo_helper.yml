@@ -53,6 +53,7 @@ keywords:
 extras_require:
   sphinx:
     - sphinx
+    - sphinx_autodoc_typehints
 
 tox_testenv_extras: all
 
