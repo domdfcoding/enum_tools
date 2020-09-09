@@ -65,11 +65,10 @@ from sphinx.domains import ObjType
 from sphinx.domains.python import PyClasslike, PyXRefRole
 from sphinx.ext.autodoc import ALL, AttributeDocumenter, ClassDocumenter, Documenter
 from sphinx.locale import _
-
-# this package
 from sphinx_autodoc_typehints import format_annotation  # type: ignore
 from sphinx_toolbox.autodoc_helpers import begin_generate
 
+# this package
 from enum_tools import __version__, documentation
 from enum_tools.utils import get_base_object, is_enum, is_flag
 
@@ -148,7 +147,7 @@ class EnumDocumenter(ClassDocumenter):
 		methods_text = (
 				f"The {self.class_xref} and its members "
 				f"{'also ' if enum_members else ''}have the following methods:"
-		)
+				)
 
 		self._do_document_members(
 				non_enum_members,

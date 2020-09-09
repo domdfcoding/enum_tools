@@ -10,10 +10,10 @@ from pathlib import Path
 import pytest
 from bs4 import BeautifulSoup  # type: ignore
 from pytest_regressions.file_regression import FileRegressionFixture  # type: ignore
+from sphinx_toolbox.testing import check_html_regression
 
 # this package
 from enum_tools.autoenum import EnumDocumenter
-from sphinx_toolbox.testing import check_html_regression
 
 
 @pytest.mark.parametrize("obj", [
