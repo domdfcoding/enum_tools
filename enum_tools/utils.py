@@ -31,7 +31,7 @@ from typing import Tuple, Type
 # 3rd party
 from typing_extensions import Protocol, runtime_checkable
 
-__all__ = ["HasMRO", "is_enum", "is_enum_member", "is_flag", "get_base_object", "HasLessThan"]
+__all__ = ["HasMRO", "is_enum", "is_enum_member", "is_flag", "get_base_object"]
 
 
 @runtime_checkable
@@ -43,11 +43,6 @@ class HasMRO(Protocol):
 	@property
 	def __mro__(self) -> Tuple[Type]:
 		...  # pragma: no cover
-
-
-class HasLessThan(Protocol):
-
-	def __lt__(self, other) -> bool: ...
 
 
 def is_enum(obj: Type) -> bool:
