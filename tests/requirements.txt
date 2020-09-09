@@ -1,4 +1,4 @@
-bs4>=0.0.1
+beautifulsoup4>=4.9.1
 coverage>=5.1
 coverage_pyver_pragma>=0.0.5
 html5lib>=1.1
@@ -8,3 +8,4 @@ pytest-randomly>=3.3.1
 pytest-rerunfailures>=9.0
 pytest_regressions>=2.0.1
 sphinx>=3.2.1
+sphinx-toolbox[testing]>=0.3.0

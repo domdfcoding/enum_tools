@@ -13,6 +13,7 @@ from pytest_regressions.file_regression import FileRegressionFixture  # type: ig
 
 # this package
 from enum_tools.autoenum import EnumDocumenter
+from sphinx_toolbox.testing import check_html_regression
 
 
 @pytest.mark.parametrize("obj", [
@@ -257,14 +258,3 @@ def test_no_member_doc(page: BeautifulSoup, file_regression: FileRegressionFixtu
 	# print(page)
 
 	assert class_count == 1
-
-
-def remove_html_footer(page: BeautifulSoup) -> BeautifulSoup:
-	for div in page.select("div.footer"):
-		div.extract()
-
-	return page
-
-
-def check_html_regression(page: BeautifulSoup, file_regression: FileRegressionFixture):
-	file_regression.check(contents=remove_html_footer(page).prettify(), extension=".html", encoding="UTF-8")
