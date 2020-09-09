@@ -5,6 +5,9 @@
 Supports most of the options used by
 `autodoc <https://www.sphinx-doc.org/en/master/usage/extensions/autodoc.html>`_.
 
+.. extensions:: enum_tools.autoenum
+
+
 Demo
 ----------
 

@@ -129,3 +129,4 @@ autodoc_default_options = {
 
 
 html_logo = "../enum_tools.png"
+toctree_plus_types = {"class", "function", "method", "data", "enum", "flag", "protocol", "role", "directive", "confval"}
