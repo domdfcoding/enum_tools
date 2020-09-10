@@ -42,8 +42,8 @@ def format_annotation(annotation, fully_qualified: bool = False) -> str:
 
 	# Type variables are also handled specially
 	try:
-		if isinstance(annotation, TypeVar) and annotation is not AnyStr:  # type: ignore
-			return f':py:data:`\\{annotation!r}`'
+		if isinstance(annotation, TypeVar) and annotation is not AnyStr:
+			return f'\\:py:data:`{annotation!r}`'
 	except TypeError:
 		pass
 
@@ -80,9 +80,7 @@ def format_annotation(annotation, fully_qualified: bool = False) -> str:
 	if args and not formatted_args:
 		formatted_args = args_format.format(', '.join(format_annotation(arg, fully_qualified) for arg in args))
 
-	return ':py:{role}:`{prefix}{full_name}`{formatted_args}'.format(
-			role=role, prefix=prefix, full_name=full_name, formatted_args=formatted_args
-			)
+	return f':py:{role}:`{prefix}{full_name}`{formatted_args}'
 
 
 def process_signature(app, what: str, name: str, obj, options, signature, return_annotation):
@@ -134,7 +132,7 @@ def process_signature(app, what: str, name: str, obj, options, signature, return
 
 	signature = signature.replace(parameters=parameters, return_annotation=inspect.Signature.empty)
 
-	return stringify_signature(signature).replace('\\', '\\\\'), None
+	return stringify_signature(signature), None  # .replace('\\', '\\\\')
 
 
 sphinx_autodoc_typehints.format_annotation = format_annotation
