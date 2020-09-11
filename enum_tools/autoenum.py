@@ -65,8 +65,8 @@ from sphinx.domains import ObjType
 from sphinx.domains.python import PyClasslike, PyXRefRole
 from sphinx.ext.autodoc import ALL, AttributeDocumenter, ClassDocumenter, Documenter
 from sphinx.locale import _
-from sphinx_autodoc_typehints import format_annotation  # type: ignore
 from sphinx_toolbox.autodoc_helpers import begin_generate
+from sphinx_toolbox.autodoc_typehints import format_annotation
 
 # this package
 from enum_tools import __version__, documentation
