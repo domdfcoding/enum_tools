@@ -2,12 +2,15 @@
 #
 #  autoenum.py
 """
-A Sphinx directive for documenting Enums in Python.
+A Sphinx directive for documenting :class:`Enums <enum.Enum>` in Python.
 
-Provides the ``.. autoenum::`` directive to document an enum.
-It behaves much like ``.. autoclass::`` and ``.. autofunction::``.
+Provides the :rst:dir:`autoenum` directive for documenting :class:`Enums <enum.Enum>`,
+and :rst:dir:`autoflag` for documenting :class:`Flags <enum.Flag>`.
+
+It behaves much like :rst:dir:`autoclass` and :rst:dir:`autofunction`.
+
+See also https://www.sphinx-doc.org/en/master/usage/extensions/autodoc.html.
 """
-# See also https://www.sphinx-doc.org/en/master/usage/extensions/autodoc.html
 #
 #  Copyright (c) 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 #

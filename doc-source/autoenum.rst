@@ -2,8 +2,21 @@
 :mod:`~enum_tools.autoenum` Sphinx Extension
 ======================================================
 
-Supports most of the options used by
-`autodoc <https://www.sphinx-doc.org/en/master/usage/extensions/autodoc.html>`_.
+.. rst:directive:: autoenum
+.. rst:directive:: autoflag
+
+	Used to document `Enums <enum.Enum>` and :class:`Flags <enum.Flag>` respectively.
+
+	The directives support the same options as :rst:dir:`autoclass`, but with a few changes to the behaviour:
+
+	* Enum members are always shown regardless of whether they are documented or not.
+	* Enum members are grouped separately from methods.
+
+	The docstrings of the Enum members are taken from their ``__doc__`` attributes.
+	This can be set during initialisation of the enum (see an example `here <https://stackoverflow.com/a/50473952>`_),
+	with the :class:`DocumentedEnum` class, or with the :func:`document_enum` decorator.
+
+	See https://www.sphinx-doc.org/en/master/usage/extensions/autodoc.html for further details.
 
 .. extensions:: enum_tools.autoenum
 
