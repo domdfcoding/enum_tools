@@ -2,7 +2,7 @@ modname: enum_tools
 copyright_years: "2020"
 author: "Dominic Davis-Foster"
 email: "dominic@davis-foster.co.uk"
-version: "0.2.1"
+version: "0.3.0"
 username: "domdfcoding"
 license: 'LGPLv3+'
 short_desc: 'Alternative method for documenting enums with Sphinx.'
