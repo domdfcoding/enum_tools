@@ -5,7 +5,7 @@
 .. rst:directive:: autoenum
 .. rst:directive:: autoflag
 
-	Used to document `Enums <enum.Enum>` and :class:`Flags <enum.Flag>` respectively.
+	Used to document :class:`Enums <enum.Enum>` and :class:`Flags <enum.Flag>` respectively.
 
 	The directives support the same options as :rst:dir:`autoclass`, but with a few changes to the behaviour:
 
@@ -14,7 +14,7 @@
 
 	The docstrings of the Enum members are taken from their ``__doc__`` attributes.
 	This can be set during initialisation of the enum (see an example `here <https://stackoverflow.com/a/50473952>`_),
-	with the :class:`DocumentedEnum` class, or with the :func:`document_enum` decorator.
+	with the :class:`~enum_tools.documentation.DocumentedEnum` class, or with the :func:`~enum_tools.documentation.document_enum` decorator.
 
 	See https://www.sphinx-doc.org/en/master/usage/extensions/autodoc.html for further details.
 

@@ -77,7 +77,7 @@ from sphinx_toolbox.autodoc_typehints import format_annotation
 from enum_tools import __version__, documentation
 from enum_tools.utils import get_base_object, is_enum, is_flag
 
-__all__ = ["EnumDocumenter", "EnumMemberDocumenter", "setup", "FlagDocumenter"]
+__all__ = ["EnumDocumenter", "EnumMemberDocumenter", "setup", "FlagDocumenter", "PyEnumXRefRole"]
 
 documentation.INTERACTIVE = True
 

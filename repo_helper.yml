@@ -61,4 +61,3 @@ extra_sphinx_extensions:
 
 sphinx_conf_epilogue:
   - html_logo = "../enum_tools.png"
-  - toctree_plus_types = {"class", "function", "method", "data", "enum", "flag", "protocol", "role", "directive", "confval"}
