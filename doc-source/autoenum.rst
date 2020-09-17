@@ -18,6 +18,28 @@
 
 	See https://www.sphinx-doc.org/en/master/usage/extensions/autodoc.html for further details.
 
+.. rst:role:: py:enum:mem
+              py:enum:member
+              py:flag:mem
+              py:flag:member
+
+	Provides cross-references to Enum/Flag members.
+
+	Unlike a standard ``:class:`` or ``:enum:`` xref the default behaviour of the
+	``~`` prefix is to show both the Enum's name and the member's name, e.g.
+
+	.. rest-example::
+
+		:py:enum:mem:`~enum_tools.demo.StatusFlags.Running`
+
+	The original behaviour can be restored by using the ``+`` prefix, e.g.
+
+	.. rest-example::
+
+		:py:enum:mem:`+enum_tools.demo.StatusFlags.Running`
+
+-------
+
 .. extensions:: enum_tools.autoenum
 
 

@@ -63,9 +63,11 @@ from enum import Enum
 from typing import Any, Dict, List, Optional, Tuple
 
 # 3rd party
+from docutils.nodes import Element
 from sphinx.application import Sphinx
 from sphinx.domains import ObjType
 from sphinx.domains.python import PyClasslike, PyXRefRole
+from sphinx.environment import BuildEnvironment
 from sphinx.ext.autodoc import ALL, AttributeDocumenter, ClassDocumenter, Documenter
 from sphinx.locale import _
 from sphinx_toolbox.autodoc_helpers import begin_generate
@@ -357,6 +359,47 @@ class EnumMemberDocumenter(AttributeDocumenter):
 			self.add_line('', sourcename)
 
 
+class PyEnumXRefRole(PyXRefRole):
+	"""
+	XRefRole for Enum/Flag members.
+	"""
+
+	def process_link(
+			self,
+			env: BuildEnvironment,
+			refnode: Element,
+			has_explicit_title: bool,
+			title: str,
+			target: str,
+			) -> Tuple[str, str]:
+
+		refnode['py:module'] = env.ref_context.get('py:module')
+		refnode['py:class'] = env.ref_context.get('py:class')
+
+		if not has_explicit_title:
+			title = title.lstrip('.')  # only has a meaning for the target
+			target = target.lstrip('~+')  # only has a meaning for the title
+			# if the first character is a tilde, don't display the module/class
+			# parts of the contents
+
+			if title[0:1] == '~':
+				title = ".".join(title[1:].split(".")[-2:])
+
+			elif title[0:1] == '+':
+				title = title[1:]
+				dot = title.rfind('.')
+				if dot != -1:
+					title = title[dot + 1:]
+
+		# if the first character is a dot, search more specific namespaces first
+		# else search builtins first
+		if target[0:1] == '.':
+			target = target[1:]
+			refnode['refspecific'] = True
+
+		return title, target
+
+
 def setup(app: Sphinx) -> Dict[str, Any]:
 	"""
 	Setup Sphinx Extension.
@@ -371,6 +414,11 @@ def setup(app: Sphinx) -> Dict[str, Any]:
 	app.registry.domains["py"].object_types["flag"] = ObjType(_("flag"), "flag", "enum", "class", "obj")
 	app.add_directive_to_domain("py", "flag", PyClasslike)
 	app.add_role_to_domain("py", "flag", PyXRefRole())
+
+	app.add_role_to_domain("py", "enum:mem", PyEnumXRefRole())
+	app.add_role_to_domain("py", "enum:member", PyEnumXRefRole())
+	app.add_role_to_domain("py", "flag:mem", PyEnumXRefRole())
+	app.add_role_to_domain("py", "flag:member", PyEnumXRefRole())
 
 	app.add_autodocumenter(EnumDocumenter)
 	app.add_autodocumenter(FlagDocumenter)
