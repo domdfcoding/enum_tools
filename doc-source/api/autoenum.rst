@@ -3,4 +3,4 @@
 ===================================
 
 .. automodule:: enum_tools.autoenum
-	:inherited-members:
+	:exclude-members: innernodeclass
