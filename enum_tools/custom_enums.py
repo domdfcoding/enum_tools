@@ -20,10 +20,12 @@
 #  MA 02110-1301, USA.
 #
 #  Parts based on https://docs.python.org/3/library/enum.html
+#  and https://github.com/python/cpython/pull/22221
+#  PSF License 2.0
 #
 
 # stdlib
-from enum import Enum
+from enum import Enum, Flag, IntFlag, _decompose  # type: ignore
 from typing import Any
 
 __all__ = [
@@ -32,6 +34,8 @@ __all__ = [
 		"AutoNumberEnum",
 		"OrderedEnum",
 		"DuplicateFreeEnum",
+		"IterableFlag",
+		"IterableIntFlag",
 		]
 
 
@@ -118,3 +122,31 @@ class DuplicateFreeEnum(Enum):
 			a = self.name
 			e = cls(self.value).name
 			raise ValueError(f"aliases are not allowed in DuplicateFreeEnum:  {a!r} --> {e!r}")
+
+
+class IterableFlag(Flag):
+	"""
+	:class:`enum.Flag` with support for iterating over members and member combinations.
+
+	This functionality was added to Python 3.10's :mod:`enum` module in :pull:`22221 <python/cpython>`.
+
+	.. versionadded:: 0.5.0
+	"""
+
+	def __iter__(self):
+		members, extra_flags = _decompose(self.__class__, self.value)
+		return (m for m in members if m._value_ != 0)
+
+
+class IterableIntFlag(IntFlag):
+	"""
+	:class:`enum.IntFlag` with support for iterating over members and member combinations.
+
+	This functionality was added to Python 3.10's :mod:`enum` module in :pull:`22221 <python/cpython>`.
+
+	.. versionadded:: 0.5.0
+	"""
+
+	def __iter__(self):
+		members, extra_flags = _decompose(self.__class__, self.value)
+		return (m for m in members if m._value_ != 0)

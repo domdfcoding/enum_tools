@@ -5,6 +5,7 @@ test_enums
 
 # this package
 from enum_tools import IntEnum, StrEnum
+from enum_tools.custom_enums import IterableFlag, IterableIntFlag
 
 
 class DramatisPersonae(StrEnum):
@@ -38,3 +39,35 @@ def test_int_enum():
 	assert int(Numbers.Four) == 4
 	assert Numbers(5) == Numbers.Five == 5
 	assert isinstance(Numbers(5), int)
+
+
+# The following from https://github.com/python/cpython/pull/22221/files
+# PSF Licsense 2.0
+
+
+def test_member_iter_int_flag():
+
+	class Color(IterableIntFlag):
+		BLACK = 0
+		RED = 1
+		GREEN = 2
+		BLUE = 4
+		PURPLE = RED | BLUE
+
+	assert list(Color.PURPLE) == [Color.BLUE, Color.RED]
+	assert list(Color.BLUE) == [Color.BLUE]
+	assert list(Color.GREEN) == [Color.GREEN]
+
+
+def test_member_iter_flag():
+
+	class Color(IterableFlag):
+		BLACK = 0
+		RED = 1
+		GREEN = 2
+		BLUE = 4
+		PURPLE = RED | BLUE
+
+	assert list(Color.PURPLE) == [Color.BLUE, Color.RED]
+	assert list(Color.BLUE) == [Color.BLUE]
+	assert list(Color.GREEN) == [Color.GREEN]
