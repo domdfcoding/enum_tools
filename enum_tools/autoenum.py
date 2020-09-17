@@ -10,6 +10,10 @@ and :rst:dir:`autoflag` for documenting :class:`Flags <enum.Flag>`.
 It behaves much like :rst:dir:`autoclass` and :rst:dir:`autofunction`.
 
 See also https://www.sphinx-doc.org/en/master/usage/extensions/autodoc.html.
+
+.. versionchanged:: 0.4.0
+
+	Added :class:`~.PyEnumXRefRole` and :rst:role:`py:enum:mem`.
 """
 #
 #  Copyright (c) 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
@@ -362,6 +366,8 @@ class EnumMemberDocumenter(AttributeDocumenter):
 class PyEnumXRefRole(PyXRefRole):
 	"""
 	XRefRole for Enum/Flag members.
+
+	.. versionadded:: 0.4.0
 	"""
 
 	def process_link(
