@@ -35,21 +35,15 @@ package_root = "enum_tools"
 
 extensions = [
 	'sphinx_toolbox',
-	'sphinx_toolbox.autodoc_augment_defaults',
-	'sphinx_toolbox.autodoc_typehints',
+	'sphinx_toolbox.more_autodoc',
+	'sphinx_toolbox.more_autosummary',
 	'sphinx.ext.intersphinx',
-	'sphinx.ext.autodoc',
 	'sphinx.ext.mathjax',
-	'sphinx.ext.viewcode',
 	'sphinxcontrib.httpdomain',
 	'sphinxcontrib.extras_require',
 	'sphinx.ext.todo',
 	'sphinxemoji.sphinxemoji',
 	'notfound.extension',
-	'sphinx_tabs.tabs',
-	'sphinx-prompt',
-	'sphinx.ext.autosummary',
-	'autodocsumm',
 	'sphinx_copybutton',
 	'sphinxcontrib.default_values',
 	'sphinxcontrib.toctree_plus',
@@ -100,13 +94,30 @@ latex_documents = [('index', f'{slug}.tex', project, author, 'manual')]
 man_pages = [('index', slug, project, [author], 1)]
 texinfo_documents = [('index', slug, project, author, slug, project, 'Miscellaneous')]
 
-toctree_plus_types = {"class", "function", "method", "data"}
+toctree_plus_types = {
+		"class",
+		"function",
+		"method",
+		"data",
+		"enum",
+		"flag",
+		"confval",
+		"directive",
+		"role",
+		"confval",
+		"protocol",
+		"typeddict",
+		"namedtuple",
+		}
+
+add_module_names = False
 
 
 autodoc_default_options = {
 		'members': None,  # Include all members (methods).
 		'special-members': None,
 		"autosummary": None,
+		"show-inheritance": None,
 		'exclude-members': ','.join([   # Exclude "standard" methods.
 				"__dict__",
 				"__class__",
