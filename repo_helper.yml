@@ -52,7 +52,7 @@ keywords:
 extras_require:
   sphinx:
     - sphinx
-    - sphinx-toolbox>=0.4.0
+    - sphinx-toolbox>=0.8.1
 
 tox_testenv_extras: all
 
