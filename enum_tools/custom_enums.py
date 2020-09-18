@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 #
-#  _custom_enums.py
+#  custom_enums.py
+"""
+Custom subclasses of :class:`enum.Enum` and :class:`enum.Flag`.
+"""
 #
 #  Copyright (c) 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 #
@@ -39,7 +42,7 @@ __all__ = [
 		]
 
 
-class IntEnum(int, Enum):  # pylint: disable=used-before-assignment
+class IntEnum(int, Enum):
 	"""
 	:class:`~enum.Enum` where members are also (and must be) ints.
 	"""

@@ -72,7 +72,7 @@ class StatusFlags(IntFlag):
 
 	def has_errored(self) -> bool:
 		"""
-		Returns whether the operation has errored:
+		Returns whether the operation has errored.
 		"""
 
 		return (self & 4) == self.Error

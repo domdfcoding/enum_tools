@@ -77,7 +77,7 @@ def is_flag(obj: Type) -> bool:
 
 def get_base_object(enum: Type[HasMRO]) -> Type:
 	"""
-	Returns the object type of the enum's members
+	Returns the object type of the enum's members.
 
 	If the members are of indeterminate type :class:`object` is returned.
 	"""

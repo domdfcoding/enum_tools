@@ -22,7 +22,6 @@ Alternative method for documenting enums with Sphinx.
 #  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 #  MA 02110-1301, USA.
 #
-#
 
 # stdlib
 from enum import Enum, Flag, IntFlag

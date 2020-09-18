@@ -379,12 +379,12 @@ class PyEnumXRefRole(PyXRefRole):
 			target: str,
 			) -> Tuple[str, str]:
 
-		refnode['py:module'] = env.ref_context.get('py:module')
-		refnode['py:class'] = env.ref_context.get('py:class')
+		refnode["py:module"] = env.ref_context.get("py:module")
+		refnode["py:class"] = env.ref_context.get("py:class")
 
 		if not has_explicit_title:
 			title = title.lstrip('.')  # only has a meaning for the target
-			target = target.lstrip('~+')  # only has a meaning for the title
+			target = target.lstrip("~+")  # only has a meaning for the title
 			# if the first character is a tilde, don't display the module/class
 			# parts of the contents
 
@@ -401,7 +401,7 @@ class PyEnumXRefRole(PyXRefRole):
 		# else search builtins first
 		if target[0:1] == '.':
 			target = target[1:]
-			refnode['refspecific'] = True
+			refnode["refspecific"] = True
 
 		return title, target
 
