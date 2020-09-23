@@ -3,6 +3,12 @@ test_enums
 ~~~~~~~~~~~~~~~
 """
 
+# stdlib
+import sys
+
+# 3rd party
+import pytest
+
 # this package
 from enum_tools import IntEnum, StrEnum
 from enum_tools.custom_enums import IterableFlag, IterableIntFlag
@@ -71,3 +77,45 @@ def test_member_iter_flag():
 	assert list(Color.PURPLE) == [Color.BLUE, Color.RED]
 	assert list(Color.BLUE) == [Color.BLUE]
 	assert list(Color.GREEN) == [Color.GREEN]
+
+
+def test_strenum():
+	# From https://github.com/python/cpython/pull/22337
+	# PDF License
+
+	class GoodStrEnum(StrEnum):
+		one = '1'
+		two = '2'
+		three = b'3', 'ascii'
+		four = b'4', 'latin1', 'strict'
+
+	with pytest.raises(TypeError, match="1 is not a string"):
+
+		class FirstFailedStrEnum(StrEnum):
+			one = 1
+			two = '2'
+
+	with pytest.raises(TypeError, match="2 is not a string"):
+
+		class SecondFailedStrEnum(StrEnum):
+			one = '1'
+			two = 2,
+			three = '3'
+
+	with pytest.raises(TypeError, match="2 is not a string"):
+
+		class ThirdFailedStrEnum(StrEnum):
+			one = '1'
+			two = 2
+
+	with pytest.raises(TypeError, match=f"encoding must be a string, not {sys.getdefaultencoding!r}"):
+
+		class FourthFailedStrEnum(StrEnum):
+			one = '1'
+			two = b'2', sys.getdefaultencoding
+
+	with pytest.raises(TypeError, match="errors must be a string, not 9"):
+
+		class FifthFailedStrEnum(StrEnum):
+			one = '1'
+			two = b'2', 'ascii', 9

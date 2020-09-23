@@ -24,6 +24,7 @@ Custom subclasses of :class:`enum.Enum` and :class:`enum.Flag`.
 #
 #  Parts based on https://docs.python.org/3/library/enum.html
 #  and https://github.com/python/cpython/pull/22221
+#  and https://github.com/python/cpython/pull/22337
 #  PSF License 2.0
 #
 
@@ -32,6 +33,7 @@ from enum import Enum, Flag, IntFlag, _decompose  # type: ignore
 from typing import Any
 
 __all__ = [
+		"MemberDirEnum",
 		"IntEnum",
 		"StrEnum",
 		"AutoNumberEnum",
@@ -40,6 +42,21 @@ __all__ = [
 		"IterableFlag",
 		"IterableIntFlag",
 		]
+
+
+class MemberDirEnum(Enum):
+	"""
+	:class:`~enum.Enum` which includes attributes as well as methods.
+
+	This will be part of the :mod:`enum` module starting with Python 3.10.
+
+	.. seealso:: Pull request :pull:`19219 <python/cpython>` by Angelin BOOZ, which added this to CPython.
+
+	.. versionadded:: 0.6.0
+	"""
+
+	def __dir__(self):
+		return super().__dir__() + [m for m in self.__dict__ if m[0] != '_']
 
 
 class IntEnum(int, Enum):
@@ -65,6 +82,26 @@ class StrEnum(str, Enum):
 
 	def __str__(self) -> str:
 		return self.value
+
+	def __new__(cls, *values):
+		if len(values) > 3:
+			raise TypeError(f'too many arguments for str(): {values!r}')
+		if len(values) == 1:
+			# it must be a string
+			if not isinstance(values[0], str):
+				raise TypeError(f'{values[0]!r} is not a string')
+		if len(values) > 1:
+			# check that encoding argument is a string
+			if not isinstance(values[1], str):
+				raise TypeError(f'encoding must be a string, not {values[1]!r}')
+			if len(values) > 2:
+				# check that errors argument is a string
+				if not isinstance(values[2], str):
+					raise TypeError(f'errors must be a string, not {values[2]!r}')
+		value = str(*values)
+		member = str.__new__(cls, value)  # type: ignore
+		member._value_ = value
+		return member
 
 	# def __repr__(self):
 	# 	return self.value
