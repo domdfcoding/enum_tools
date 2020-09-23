@@ -74,8 +74,8 @@ from sphinx.domains.python import PyClasslike, PyXRefRole
 from sphinx.environment import BuildEnvironment
 from sphinx.ext.autodoc import ALL, AttributeDocumenter, ClassDocumenter, Documenter
 from sphinx.locale import _
-from sphinx_toolbox.autodoc_helpers import begin_generate
-from sphinx_toolbox.autodoc_typehints import format_annotation
+from sphinx_toolbox.more_autodoc.typehints import format_annotation
+from sphinx_toolbox.utils import begin_generate
 
 # this package
 from enum_tools import __version__, documentation
