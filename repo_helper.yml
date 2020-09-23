@@ -5,7 +5,7 @@ email: "dominic@davis-foster.co.uk"
 version: "0.5.0"
 username: "domdfcoding"
 license: 'LGPLv3+'
-short_desc: 'Alternative method for documenting enums with Sphinx.'
+short_desc: "Tools to expand Python's enum module."
 
 conda_channels:
   - domdfcoding

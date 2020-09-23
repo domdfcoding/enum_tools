@@ -44,7 +44,7 @@ modname = "enum_tools"
 pypi_name = "enum_tools"
 import_name = "enum_tools"
 __license__ = "GNU Lesser General Public License v3 or later (LGPLv3+)"
-short_desc = 'Alternative method for documenting enums with Sphinx.'
+short_desc = "Tools to expand Python's enum module."
 __author__ = author = 'Dominic Davis-Foster'
 author_email = 'dominic@davis-foster.co.uk'
 github_username = "domdfcoding"
@@ -55,7 +55,7 @@ extras_require = {'sphinx': ['sphinx', 'sphinx-toolbox>=1.2.0'], 'all': ['sphinx
 
 
 
-conda_description = """Alternative method for documenting enums with Sphinx.
+conda_description = """Tools to expand Python's enum module.
 
 
 Before installing please ensure you have added the following channels: domdfcoding, conda-forge"""

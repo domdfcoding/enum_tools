@@ -4,7 +4,7 @@ Enum Tools
 
 .. start short_desc
 
-**Alternative method for documenting enums with Sphinx.**
+**Tools to expand Python's enum module.**
 
 .. end short_desc
 

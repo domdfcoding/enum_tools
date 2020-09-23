@@ -4,7 +4,7 @@ Enum Tools
 
 .. start short_desc
 
-**Alternative method for documenting enums with Sphinx.**
+**Tools to expand Python's enum module.**
 
 .. end short_desc
 
@@ -118,11 +118,13 @@ Enum Tools
 .. end shields
 
 
-This package has two features:
+This library provides the following:
 
 #. A decorator to add docstrings to ``Enum`` members from a comment at the end of the line.
 
-#. A ``Sphinx`` extension to document Enums better than ``autoclass`` can currently.
+#. A ``Sphinx`` extension to document Enums better than :rst:dir:`autoclass` can currently.
+
+#. Additional ``Enum`` classes with different functionality.
 
 
 Installation

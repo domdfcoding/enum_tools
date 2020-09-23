@@ -15,7 +15,7 @@ from __pkginfo__ import *  # pylint: disable=wildcard-import
 
 
 setup(
-		description='Alternative method for documenting enums with Sphinx.',
+		description="Tools to expand Python's enum module.",
 		extras_require=extras_require,
 		install_requires=install_requires,
 		py_modules=[],

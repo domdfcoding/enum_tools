@@ -2,7 +2,7 @@
 #
 #  __init__.py
 """
-Alternative method for documenting enums with Sphinx.
+Tools to expand Python's enum module.
 """
 #
 #  Copyright (c) 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
