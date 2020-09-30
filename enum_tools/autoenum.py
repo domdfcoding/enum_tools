@@ -358,7 +358,7 @@ class EnumMemberDocumenter(AttributeDocumenter):
 		self.indent += self.content_indent
 
 		# Add the value's docstring
-		if self.object.__doc__ and self.object.__doc__ != self.object.__class__:
+		if self.object.__doc__ and self.object.__doc__ != self.object.__class__.__doc__:
 			self.add_line(self.object.__doc__, sourcename)
 			self.add_line('', sourcename)
 
