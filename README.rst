@@ -18,7 +18,7 @@ Enum Tools
 	* - Docs
 	  - |docs| |docs_check|
 	* - Tests
-	  - |travis| |actions_windows| |actions_macos| |coveralls| |codefactor|
+	  - |travis| |actions_windows| |actions_macos| |coveralls| |codefactor| |pre_commit_ci|
 	* - PyPI
 	  - |pypi-version| |supported-versions| |supported-implementations| |wheel|
 	* - Anaconda
@@ -105,6 +105,10 @@ Enum Tools
 .. |pre_commit| image:: https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white
 	:target: https://github.com/pre-commit/pre-commit
 	:alt: pre-commit
+
+.. |pre_commit_ci| image:: https://results.pre-commit.ci/badge/github/domdfcoding/enum_tools/master.svg
+	:target: https://results.pre-commit.ci/latest/github/domdfcoding/enum_tools/master
+	:alt: pre-commit.ci status
 
 .. end shields
 
