@@ -67,15 +67,15 @@ from enum import Enum
 from typing import Any, Dict, List, Optional, Tuple
 
 # 3rd party
-from docutils.nodes import Element
-from sphinx.application import Sphinx
-from sphinx.domains import ObjType
-from sphinx.domains.python import PyClasslike, PyXRefRole
-from sphinx.environment import BuildEnvironment
-from sphinx.ext.autodoc import ALL, AttributeDocumenter, ClassDocumenter, Documenter
-from sphinx.locale import _
-from sphinx_toolbox.more_autodoc.typehints import format_annotation
-from sphinx_toolbox.utils import begin_generate
+from docutils.nodes import Element  # nodep
+from sphinx.application import Sphinx  # nodep
+from sphinx.domains import ObjType  # nodep
+from sphinx.domains.python import PyClasslike, PyXRefRole  # nodep
+from sphinx.environment import BuildEnvironment  # nodep
+from sphinx.ext.autodoc import ALL, AttributeDocumenter, ClassDocumenter, Documenter  # nodep
+from sphinx.locale import _  # nodep
+from sphinx_toolbox.more_autodoc.typehints import format_annotation  # nodep
+from sphinx_toolbox.utils import begin_generate  # nodep
 
 # this package
 from enum_tools import __version__, documentation
@@ -389,7 +389,7 @@ class PyEnumXRefRole(PyXRefRole):
 			# parts of the contents
 
 			if title[0:1] == '~':
-				title = ".".join(title[1:].split(".")[-2:])
+				title = '.'.join(title[1:].split('.')[-2:])
 
 			elif title[0:1] == '+':
 				title = title[1:]

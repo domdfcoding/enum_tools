@@ -86,8 +86,8 @@ def test_strenum():
 	class GoodStrEnum(StrEnum):
 		one = '1'
 		two = '2'
-		three = b'3', 'ascii'
-		four = b'4', 'latin1', 'strict'
+		three = b'3', "ascii"
+		four = b'4', "latin1", "strict"
 
 	with pytest.raises(TypeError, match="1 is not a string"):
 
@@ -118,4 +118,4 @@ def test_strenum():
 
 		class FifthFailedStrEnum(StrEnum):
 			one = '1'
-			two = b'2', 'ascii', 9
+			two = b'2', "ascii", 9

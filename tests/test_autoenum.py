@@ -23,7 +23,7 @@ from enum_tools.autoenum import EnumDocumenter
 		12345,
 		123.45,
 		Decimal(123.45),
-		Path("."),
+		Path('.'),
 		])
 def test_cannot_document_member(obj):
 	assert not EnumDocumenter.can_document_member(obj, '', True, '')
@@ -75,13 +75,13 @@ def test_index(page: BeautifulSoup, file_regression: FileRegressionFixture):
 			assert class_.find("dt")["id"] == "enum_tools.demo.People"
 		elif class_count == 1:
 			assert class_.find("dt")["id"] == "id0"
-		assert class_.find("dd").findAll("p")[0].contents[0] == "An enumeration of people."
+		assert class_.find("dd").findAll('p')[0].contents[0] == "An enumeration of people."
 
-		assert str(class_.find("dd").findAll("p")[1].contents[0]) == (
+		assert str(class_.find("dd").findAll('p')[1].contents[0]) == (
 				'<code class="xref py py-class docutils literal notranslate">'
 				'<span class="pre">int</span></code>'
 				)
-		assert class_.find("dd").findAll("p")[2].contents[0] == "Valid values are as follows:"
+		assert class_.find("dd").findAll('p')[2].contents[0] == "Valid values are as follows:"
 
 		attr_count = 0
 
@@ -145,13 +145,13 @@ def test_flag(page: BeautifulSoup, file_regression: FileRegressionFixture):
 		elif class_count == 1:
 			assert class_.find("dt")["id"] == "id0"
 
-		assert class_.find("dd").findAll("p")[0].contents[0] == "An enumeration of status codes."
+		assert class_.find("dd").findAll('p')[0].contents[0] == "An enumeration of status codes."
 
-		assert str(class_.find("dd").findAll("p")[1].contents[0]) == (
+		assert str(class_.find("dd").findAll('p')[1].contents[0]) == (
 				'<code class="xref py py-class docutils literal notranslate">'
 				'<span class="pre">int</span></code>'
 				)
-		assert class_.find("dd").findAll("p")[2].contents[0] == "Valid values are as follows:"
+		assert class_.find("dd").findAll('p')[2].contents[0] == "Valid values are as follows:"
 
 		attr_count = 0
 
@@ -211,17 +211,17 @@ def test_no_member_doc(page: BeautifulSoup, file_regression: FileRegressionFixtu
 			continue
 
 		assert class_.find("dt")["id"] == "enum_tools.demo.NoMemberDoc"
-		assert class_.find("dd").findAll("p")[0].contents[
+		assert class_.find("dd").findAll('p')[0].contents[
 				0] == "An enumeration of people without any member docstrings."
 
 		if class_count == 0:
-			assert str(class_.find("dd").findAll("p")[1].contents[0]) == (
+			assert str(class_.find("dd").findAll('p')[1].contents[0]) == (
 					'<code class="xref py py-class docutils literal notranslate">'
 					'<span class="pre">int</span></code>'
 					)
-			assert class_.find("dd").findAll("p")[2].contents[0] == "Valid values are as follows:"
+			assert class_.find("dd").findAll('p')[2].contents[0] == "Valid values are as follows:"
 		else:
-			assert class_.find("dd").findAll("p")[1].contents[0] == "Valid values are as follows:"
+			assert class_.find("dd").findAll('p')[1].contents[0] == "Valid values are as follows:"
 
 		attr_count = 0
 

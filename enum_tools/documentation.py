@@ -78,7 +78,7 @@ def document_enum(an_enum: EnumMeta) -> EnumMeta:
 	in_docstring = False
 	base_indent = None
 
-	for line in func_source.split("\n"):
+	for line in func_source.split('\n'):
 
 		indent, line = get_dedented_line(line)
 
@@ -109,7 +109,7 @@ def document_enum(an_enum: EnumMeta) -> EnumMeta:
 
 		for var in enum_vars:
 			# print(repr(var))
-			if not var.startswith("@"):
+			if not var.startswith('@'):
 				getattr(an_enum, var).__doc__ = doc
 
 	return an_enum
@@ -133,7 +133,7 @@ def document_member(enum_member: Enum) -> None:
 	in_docstring = False
 	base_indent = None
 
-	for line in func_source.split("\n"):
+	for line in func_source.split('\n'):
 
 		indent, line = get_dedented_line(line)
 
@@ -162,7 +162,7 @@ def document_member(enum_member: Enum) -> None:
 
 		for var in enum_vars:
 			# print(repr(var))
-			if not var.startswith("@"):
+			if not var.startswith('@'):
 				if var == enum_member.name:
 					enum_member.__doc__ = doc
 
