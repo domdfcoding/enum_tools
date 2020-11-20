@@ -61,3 +61,5 @@ extra_sphinx_extensions:
 
 sphinx_conf_epilogue:
   - html_logo = "../enum_tools.png"
+
+use_travis: false

@@ -3,7 +3,7 @@ Downloading source code
 =========================
 
 The ``enum_tools`` source code is available on GitHub,
-and can be accessed from the following URL: https://github.com/domdfcoding/enum_tools"
+and can be accessed from the following URL: https://github.com/domdfcoding/enum_tools
 
 If you have ``git`` installed, you can clone the repository with the following command:
 
