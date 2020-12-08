@@ -83,7 +83,7 @@ class StrEnum(str, Enum):
 	def __str__(self) -> str:
 		return self.value
 
-	def __new__(cls, *values):
+	def __new__(cls, *values):  # noqa: D102
 		if len(values) > 3:
 			raise TypeError(f'too many arguments for str(): {values!r}')
 		if len(values) == 1:

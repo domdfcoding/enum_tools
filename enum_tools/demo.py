@@ -1,3 +1,5 @@
+# noqa: D100
+
 # stdlib
 from enum import IntEnum, IntFlag
 from typing import List
