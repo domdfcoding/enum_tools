@@ -378,6 +378,18 @@ class PyEnumXRefRole(PyXRefRole):
 			title: str,
 			target: str,
 			) -> Tuple[str, str]:
+		"""
+		Called after parsing title and target text, and creating the reference node (given in ``refnode``).
+
+		This method can alter the reference node and must return a new (or the same)
+		``(title, target)`` tuple.
+
+		:param env:
+		:param refnode:
+		:param has_explicit_title:
+		:param title:
+		:param target:
+		"""
 
 		refnode["py:module"] = env.ref_context.get("py:module")
 		refnode["py:class"] = env.ref_context.get("py:class")
