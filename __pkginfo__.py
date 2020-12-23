@@ -30,4 +30,7 @@ __version__ = "0.6.2"
 
 repo_root = pathlib.Path(__file__).parent
 install_requires = (repo_root / "requirements.txt").read_text(encoding="utf-8").split('\n')
-extras_require = {"sphinx": ["sphinx", "sphinx-toolbox>=1.2.0"], "all": ["sphinx", "sphinx-toolbox>=1.2.0"]}
+extras_require = {
+		"sphinx": ["sphinx<3.4.0,>=3.0.3", "sphinx-toolbox>=1.2.0"],
+		"all": ["sphinx-toolbox>=1.2.0", "sphinx<3.4.0,>=3.0.3"]
+		}
