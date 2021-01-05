@@ -1,5 +1,5 @@
 modname: enum_tools
-copyright_years: "2020"
+copyright_years: "2020-2021"
 author: "Dominic Davis-Foster"
 email: "dominic@davis-foster.co.uk"
 version: "0.6.2"
@@ -18,7 +18,8 @@ python_versions:
   - '3.6'
   - '3.7'
   - "3.8"
-  - "3.9-dev"
+  - "3.9"
+  - "3.10-dev"
 
 # travis secure password for PyPI
 
@@ -32,16 +33,10 @@ manifest_additional:
 tests_dir: "tests"
 
 classifiers:
-#  - 'Development Status :: 3 - Alpha'
   - 'Development Status :: 4 - Beta'
-#  - "Development Status :: 5 - Production/Stable"
-#  - "Development Status :: 6 - Mature"
-#  - "Development Status :: 7 - Inactive"
   - 'Intended Audience :: Developers'
-  - 'Operating System :: OS Independent'
   - 'Programming Language :: Python'
   - 'Topic :: Software Development :: Libraries :: Python Modules'
-
 
 keywords:
   - enum
