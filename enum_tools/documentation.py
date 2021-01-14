@@ -80,7 +80,7 @@ def document_enum(an_enum: EnumMeta) -> EnumMeta:
 
 	source_lines = func_source.split('\n')
 
-	while source_lines[0].startswith("@"):
+	while source_lines[0].startswith('@'):
 		# Remove class decorators
 		source_lines.pop(0)
 
