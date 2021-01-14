@@ -6,14 +6,13 @@ from typing import List
 
 # this package
 import enum_tools.documentation
-from enum_tools.documentation import document_enum
 
 __all__ = ["People", "NoMethods", "NoMemberDoc", "StatusFlags"]
 
 enum_tools.documentation.INTERACTIVE = True
 
 
-@document_enum
+@enum_tools.documentation.document_enum
 class People(IntEnum):
 	"""
 	An enumeration of people.
@@ -40,7 +39,7 @@ class People(IntEnum):
 		return list(cls)  # pragma: no cover
 
 
-@document_enum
+@enum_tools.documentation.document_enum
 class NoMethods(IntEnum):
 	"""
 	An enumeration of people without any methods.
@@ -51,7 +50,7 @@ class NoMethods(IntEnum):
 	Carol = 3  # doc: A person called Carol
 
 
-@document_enum
+@enum_tools.documentation.document_enum
 class NoMemberDoc(IntEnum):
 	"""
 	An enumeration of people without any member docstrings.
@@ -62,7 +61,7 @@ class NoMemberDoc(IntEnum):
 	Carol = 3
 
 
-@document_enum
+@enum_tools.documentation.document_enum
 class StatusFlags(IntFlag):
 	"""
 	An enumeration of status codes.

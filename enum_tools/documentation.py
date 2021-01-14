@@ -78,7 +78,13 @@ def document_enum(an_enum: EnumMeta) -> EnumMeta:
 	in_docstring = False
 	base_indent = None
 
-	for line in func_source.split('\n'):
+	source_lines = func_source.split('\n')
+
+	while source_lines[0].startswith("@"):
+		# Remove class decorators
+		source_lines.pop(0)
+
+	for line in source_lines:
 
 		indent, line = get_dedented_line(line)
 
