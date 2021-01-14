@@ -8,20 +8,17 @@ license: 'LGPLv3+'
 short_desc: "Tools to expand Python's enum module."
 
 conda_channels:
-  - domdfcoding
   - conda-forge
 
 python_deploy_version: 3.6
 
 # Versions to run tests for
 python_versions:
-  - '3.6'
-  - '3.7'
-  - "3.8"
-  - "3.9"
-  - "3.10-dev"
-
-# travis secure password for PyPI
+  - 3.6
+  - 3.7
+  - 3.8
+  - 3.9
+  - 3.10-dev
 
 # additional lines for MANIFEST.in
 manifest_additional:
@@ -33,14 +30,22 @@ manifest_additional:
 tests_dir: "tests"
 
 classifiers:
-  - 'Development Status :: 4 - Beta'
-  - 'Intended Audience :: Developers'
-  - 'Programming Language :: Python'
-  - 'Topic :: Software Development :: Libraries :: Python Modules'
+ - 'Development Status :: 4 - Beta'
+ - 'Intended Audience :: Developers'
+ - 'Programming Language :: Python'
+ - 'Topic :: Software Development :: Libraries :: Python Modules'
+ - "Framework :: Sphinx :: Extension"
+ - 'Intended Audience :: Developers'
+ - 'Programming Language :: Python'
+ - "Topic :: Documentation"
+ - 'Topic :: Documentation :: Sphinx'
+ - 'Topic :: Software Development :: Documentation'
+ - "Topic :: Utilities"
 
 keywords:
   - enum
   - documentation
+  - sphinx
   - sphinx-extension
 
 extras_require:
