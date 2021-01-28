@@ -41,8 +41,7 @@ class HasMRO(Protocol):
 	"""
 
 	@property
-	def __mro__(self) -> Tuple[Type]:
-		...  # pragma: no cover
+	def __mro__(self) -> Tuple[Type]: ...  # pragma: no cover
 
 
 def is_enum(obj: Type) -> bool:
