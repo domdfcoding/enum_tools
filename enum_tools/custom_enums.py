@@ -44,7 +44,7 @@ __all__ = [
 		"IterableIntFlag",
 		]
 
-if sys.version_info >= (3, 10):
+if sys.version_info >= (3, 10):  # pragma: no cover
 
 	# stdlib
 	from enum import _power_of_two
@@ -94,7 +94,8 @@ if sys.version_info >= (3, 10):
 
 		return members, not_covered
 
-else:
+else:  # pragma: no cover (py310+)
+
 	# stdlib
 	from enum import _decompose  # type: ignore
 
