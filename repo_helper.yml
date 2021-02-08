@@ -1,3 +1,5 @@
+# Configuration for 'repo_helper' (https://github.com/domdfcoding/repo_helper)
+---
 modname: enum_tools
 copyright_years: "2020-2021"
 author: "Dominic Davis-Foster"
@@ -8,23 +10,24 @@ license: 'LGPLv3+'
 short_desc: "Tools to expand Python's enum module."
 
 conda_channels:
-  - conda-forge
+ - conda-forge
 
 python_deploy_version: 3.6
 
 # Versions to run tests for
 python_versions:
-  - 3.6
-  - 3.7
-  - 3.8
-  - 3.9
-  - 3.10-dev
+ - '3.6'
+ - '3.7'
+ - '3.8'
+ - '3.9'
+ - 3.10-dev
+ - pypy3
+ - rustpython
 
-# additional lines for MANIFEST.in
 manifest_additional:
-  - recursive-include enum_tools/ requirements.txt
-  - recursive-exclude tests/ *
-  - prune tests*
+ - recursive-include enum_tools/ requirements.txt
+ - recursive-exclude tests/ *
+ - prune tests*
 
 # directory that contains tests
 tests_dir: "tests"
@@ -43,20 +46,20 @@ classifiers:
  - "Topic :: Utilities"
 
 keywords:
-  - enum
-  - documentation
-  - sphinx
-  - sphinx-extension
+ - enum
+ - documentation
+ - sphinx
+ - sphinx-extension
 
 extras_require:
   sphinx:
-    - sphinx<3.4.0,>=3.0.3
-    - sphinx-toolbox>=1.2.0
+   - sphinx<3.4.0,>=3.0.3
+   - sphinx-toolbox>=1.2.0
 
 tox_testenv_extras: all
 
 extra_sphinx_extensions:
-  - enum_tools.autoenum
+ - enum_tools.autoenum
 
 sphinx_conf_epilogue:
-  - html_logo = "../enum_tools.png"
+ - html_logo = "../enum_tools.png"
