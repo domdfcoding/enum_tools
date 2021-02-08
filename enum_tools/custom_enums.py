@@ -29,7 +29,8 @@ Custom subclasses of :class:`enum.Enum` and :class:`enum.Flag`.
 #
 
 # stdlib
-from enum import Enum, Flag, IntFlag, _decompose  # type: ignore
+import sys
+from enum import Enum, Flag, IntFlag
 from typing import Any
 
 __all__ = [
@@ -42,6 +43,60 @@ __all__ = [
 		"IterableFlag",
 		"IterableIntFlag",
 		]
+
+if sys.version_info >= (3, 10):
+
+	# stdlib
+	from enum import _power_of_two
+
+	def _decompose(flag, value):
+		"""
+		Extract all members from the value.
+		"""
+
+		# From CPython. Removed in https://github.com/python/cpython/pull/24215
+
+		# _decompose is only called if the value is not named
+		not_covered = value
+
+		# issue29167: wrap accesses to _value2member_map_ in a list to avoid race
+		#             conditions between iterating over it and having more pseudo-
+		#             members added to it
+
+		flags_to_check = []
+
+		if value < 0:
+			# only check for named flags
+			for v, m in list(flag._value2member_map_.items()):
+				if m.name is not None:
+					flags_to_check.append((m, v))
+		else:
+			# check for named flags and powers-of-two flags
+			for v, m in list(flag._value2member_map_.items()):
+				if m.name is not None or _power_of_two(v):
+					flags_to_check.append((m, v))
+
+		members = []
+
+		for member, member_value in flags_to_check:
+			if member_value and member_value & value == member_value:
+				members.append(member)
+				not_covered &= ~member_value
+
+		if not members and value in flag._value2member_map_:
+			members.append(flag._value2member_map_[value])
+
+		members.sort(key=lambda m: m._value_, reverse=True)
+
+		if len(members) > 1 and members[0].value == value:
+			# we have the breakdown, don't need the value member itself
+			members.pop(0)
+
+		return members, not_covered
+
+else:
+	# stdlib
+	from enum import _decompose  # type: ignore
 
 
 class MemberDirEnum(Enum):
