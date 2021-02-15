@@ -155,7 +155,7 @@ class StrEnum(str, Enum):
 				if not isinstance(values[2], str):
 					raise TypeError(f'errors must be a string, not {values[2]!r}')
 		value = str(*values)
-		member = str.__new__(cls, value)  # type: ignore
+		member = str.__new__(cls, value)
 		member._value_ = value
 		return member
 
