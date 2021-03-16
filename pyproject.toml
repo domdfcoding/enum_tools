@@ -1,3 +1,27 @@
 [build-system]
 requires = [ "setuptools>=40.6.0", "wheel>=0.34.2",]
 build-backend = "setuptools.build_meta"
+
+[project]
+name = "enum_tools"
+version = "0.6.4"
+description = "Tools to expand Python's enum module."
+readme = "README.rst"
+keywords = [ "enum", "documentation", "sphinx", "sphinx-extension",]
+dynamic = [ "requires-python", "classifiers", "dependencies",]
+[[project.authors]]
+email = "dominic@davis-foster.co.uk"
+name = "Dominic Davis-Foster"
+
+[project.license]
+file = "LICENSE"
+
+[project.urls]
+Homepage = "https://github.com/domdfcoding/enum_tools"
+"Issue Tracker" = "https://github.com/domdfcoding/enum_tools/issues"
+"Source Code" = "https://github.com/domdfcoding/enum_tools"
+Documentation = "https://enum_tools.readthedocs.io/en/latest"
+
+[project.optional-dependencies]
+sphinx = [ "sphinx<3.4.0,>=3.0.3", "sphinx-toolbox>=1.2.0",]
+all = [ "sphinx<3.4.0,>=3.0.3", "sphinx-toolbox>=1.2.0",]
