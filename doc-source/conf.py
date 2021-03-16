@@ -23,7 +23,7 @@ rst_prolog = f""".. |pkgname| replace:: enum_tools
 """
 
 author = "Dominic Davis-Foster"
-project = "enum_tools"
+project = "enum_tools".replace('_', '-')
 slug = re.sub(r'\W+', '-', project.lower())
 release = version = __version__
 copyright = "2020-2021 Dominic Davis-Foster"  # pylint: disable=redefined-builtin
@@ -35,6 +35,7 @@ extensions = [
 		"sphinx_toolbox.more_autodoc",
 		"sphinx_toolbox.more_autosummary",
 		"sphinx_toolbox.tweaks.param_dash",
+		"sphinx_toolbox.tweaks.latex_toc",
 		"sphinx.ext.intersphinx",
 		"sphinx.ext.mathjax",
 		"sphinxcontrib.httpdomain",
@@ -45,6 +46,7 @@ extensions = [
 		"sphinx_copybutton",
 		"sphinxcontrib.default_values",
 		"sphinxcontrib.toctree_plus",
+		"sphinx_debuginfo",
 		"seed_intersphinx_mapping",
 		"enum_tools.autoenum",
 		]
