@@ -9,10 +9,11 @@ username: "domdfcoding"
 license: 'LGPLv3+'
 short_desc: "Tools to expand Python's enum module."
 
+use_whey: true
+tox_testenv_extras: all
+
 conda_channels:
  - conda-forge
-
-python_deploy_version: 3.6
 
 # Versions to run tests for
 python_versions:
@@ -28,9 +29,6 @@ manifest_additional:
  - recursive-include enum_tools/ requirements.txt
  - recursive-exclude tests/ *
  - prune tests*
-
-# directory that contains tests
-tests_dir: "tests"
 
 classifiers:
  - 'Development Status :: 4 - Beta'
@@ -55,8 +53,6 @@ extras_require:
   sphinx:
    - sphinx<3.4.0,>=3.0.3
    - sphinx-toolbox>=1.2.0
-
-tox_testenv_extras: all
 
 extra_sphinx_extensions:
  - enum_tools.autoenum

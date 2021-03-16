@@ -1,9 +1,0 @@
-include __pkginfo__.py
-include LICENSE
-include requirements.txt
-prune **/__pycache__
-recursive-include enum_tools/ requirements.txt
-recursive-exclude tests/ *
-prune tests*
-recursive-include enum_tools *.pyi
-include enum_tools/py.typed

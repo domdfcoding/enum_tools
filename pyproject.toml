@@ -1,6 +1,6 @@
 [build-system]
-requires = [ "setuptools>=40.6.0", "wheel>=0.34.2",]
-build-backend = "setuptools.build_meta"
+requires = [ "whey",]
+build-backend = "whey"
 
 [project]
 name = "enum_tools"
@@ -25,3 +25,22 @@ Documentation = "https://enum_tools.readthedocs.io/en/latest"
 [project.optional-dependencies]
 sphinx = [ "sphinx<3.4.0,>=3.0.3", "sphinx-toolbox>=1.2.0",]
 all = [ "sphinx<3.4.0,>=3.0.3", "sphinx-toolbox>=1.2.0",]
+
+[tool.whey]
+base-classifiers = [
+    "Development Status :: 4 - Beta",
+    "Framework :: Sphinx :: Extension",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python",
+    "Topic :: Documentation",
+    "Topic :: Documentation :: Sphinx",
+    "Topic :: Software Development :: Documentation",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Utilities",
+    "Typing :: Typed",
+]
+python-versions = [ "3.6", "3.7", "3.8", "3.9",]
+python-implementations = [ "CPython", "PyPy",]
+platforms = [ "Windows", "macOS", "Linux",]
+license-key = "LGPL-3.0-or-later"
+additional-files = [ "recursive-include enum_tools/ requirements.txt", "recursive-exclude tests/ *", "prune tests*",]
