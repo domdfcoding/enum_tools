@@ -42,6 +42,7 @@ known_third_party = [
     "extras_require",
     "github",
     "html5lib",
+    "importlib_metadata",
     "pygments",
     "pytest",
     "pytest_cov",
