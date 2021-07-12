@@ -11,12 +11,8 @@
 # This script based on https://github.com/rocky/python-uncompyle6/blob/master/__pkginfo__.py
 #
 
-__all__ = [
-		"__version__",
-		"extras_require",
-		]
+__all__ = ["extras_require"]
 
-__version__ = "0.6.4"
 extras_require = {
 		"sphinx": ["sphinx<3.4.0,>=3.0.3", "sphinx-toolbox>=1.2.0"],
 		"all": ["sphinx<3.4.0,>=3.0.3", "sphinx-toolbox>=1.2.0"]

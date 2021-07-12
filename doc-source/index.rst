@@ -5,6 +5,7 @@ Enum Tools
 .. start short_desc
 
 .. documentation-summary::
+	:meta:
 
 .. end short_desc
 
@@ -178,6 +179,12 @@ Installation
 
 	contributing
 	Source
+
+.. sidebar-links::
+	:caption: Links
+	:github:
+	:pypi: enum_tools
+
 
 .. start links
 
