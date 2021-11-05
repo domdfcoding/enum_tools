@@ -1,3 +1,4 @@
+{% set NEW_ENUM_REPR = python_version >= (3, 11) -%}
 <!DOCTYPE html>
 <html>
  <head>
@@ -83,7 +84,7 @@
             Bob
            </code>
            <em class="property">
-            = &lt;People.Bob: 1&gt;
+            = {% if NEW_ENUM_REPR %}People.Bob{% else %}&lt;People.Bob: 1&gt;{% endif %}
            </em>
            <a class="headerlink" href="#enum_tools.demo.People.Bob" title="Permalink to this definition">
             ¶
@@ -101,7 +102,7 @@
             Alice
            </code>
            <em class="property">
-            = &lt;People.Alice: 2&gt;
+            = {% if NEW_ENUM_REPR %}People.Alice{% else %}&lt;People.Alice: 2&gt;{% endif %}
            </em>
            <a class="headerlink" href="#enum_tools.demo.People.Alice" title="Permalink to this definition">
             ¶
@@ -119,7 +120,7 @@
             Carol
            </code>
            <em class="property">
-            = &lt;People.Carol: 3&gt;
+            = {% if NEW_ENUM_REPR %}People.Carol{% else %}&lt;People.Carol: 3&gt;{% endif %}
            </em>
            <a class="headerlink" href="#enum_tools.demo.People.Carol" title="Permalink to this definition">
             ¶
@@ -244,7 +245,7 @@
             Bob
            </code>
            <em class="property">
-            = &lt;People.Bob: 1&gt;
+            = {% if NEW_ENUM_REPR %}People.Bob{% else %}&lt;People.Bob: 1&gt;{% endif %}
            </em>
            <a class="headerlink" href="#id1" title="Permalink to this definition">
             ¶
@@ -262,7 +263,7 @@
             Alice
            </code>
            <em class="property">
-            = &lt;People.Alice: 2&gt;
+            = {% if NEW_ENUM_REPR %}People.Alice{% else %}&lt;People.Alice: 2&gt;{% endif %}
            </em>
            <a class="headerlink" href="#id2" title="Permalink to this definition">
             ¶
@@ -280,7 +281,7 @@
             Carol
            </code>
            <em class="property">
-            = &lt;People.Carol: 3&gt;
+            = {% if NEW_ENUM_REPR %}People.Carol{% else %}&lt;People.Carol: 3&gt;{% endif %}
            </em>
            <a class="headerlink" href="#id3" title="Permalink to this definition">
             ¶
@@ -354,46 +355,6 @@
        </dl>
       </div>
      </div>
-    </div>
-   </div>
-   <div aria-label="main navigation" class="sphinxsidebar" role="navigation">
-    <div class="sphinxsidebarwrapper">
-     <h1 class="logo">
-      <a href="#">
-       Python
-      </a>
-     </h1>
-     <h3>
-      Navigation
-     </h3>
-     <div class="relations">
-      <h3>
-       Related Topics
-      </h3>
-      <ul>
-       <li>
-        <a href="#">
-         Documentation overview
-        </a>
-        <ul>
-        </ul>
-       </li>
-      </ul>
-     </div>
-     <div id="searchbox" role="search" style="display: none">
-      <h3 id="searchlabel">
-       Quick search
-      </h3>
-      <div class="searchformwrapper">
-       <form action="search.html" class="search" method="get">
-        <input aria-labelledby="searchlabel" name="q" type="text"/>
-        <input type="submit" value="Go"/>
-       </form>
-      </div>
-     </div>
-     <script>
-      $('#searchbox').show(0);
-     </script>
     </div>
    </div>
    <div class="clearer">

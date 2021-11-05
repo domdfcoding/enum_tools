@@ -6,7 +6,7 @@ import pytest
 from bs4 import BeautifulSoup  # type: ignore
 from sphinx.testing.path import path
 
-pytest_plugins = "sphinx.testing.fixtures"
+pytest_plugins = ("coincidence", "sphinx.testing.fixtures", "sphinx_toolbox.testing")
 
 
 @pytest.fixture(scope="session")

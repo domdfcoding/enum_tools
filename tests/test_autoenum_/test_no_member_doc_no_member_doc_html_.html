@@ -1,3 +1,4 @@
+{% set NEW_ENUM_REPR = python_version >= (3, 11) -%}
 <!DOCTYPE html>
 <html>
  <head>
@@ -81,7 +82,7 @@
             Bob
            </code>
            <em class="property">
-            = &lt;NoMemberDoc.Bob: 1&gt;
+            = {% if NEW_ENUM_REPR %}NoMemberDoc.Bob{% else %}&lt;NoMemberDoc.Bob: 1&gt;{% endif %}
            </em>
            <a class="headerlink" href="#enum_tools.demo.NoMemberDoc.Bob" title="Permalink to this definition">
             ¶
@@ -96,7 +97,7 @@
             Alice
            </code>
            <em class="property">
-            = &lt;NoMemberDoc.Alice: 2&gt;
+            = {% if NEW_ENUM_REPR %}NoMemberDoc.Alice{% else %}&lt;NoMemberDoc.Alice: 2&gt;{% endif %}
            </em>
            <a class="headerlink" href="#enum_tools.demo.NoMemberDoc.Alice" title="Permalink to this definition">
             ¶
@@ -111,7 +112,7 @@
             Carol
            </code>
            <em class="property">
-            = &lt;NoMemberDoc.Carol: 3&gt;
+            = {% if NEW_ENUM_REPR %}NoMemberDoc.Carol{% else %}&lt;NoMemberDoc.Carol: 3&gt;{% endif %}
            </em>
            <a class="headerlink" href="#enum_tools.demo.NoMemberDoc.Carol" title="Permalink to this definition">
             ¶
@@ -124,46 +125,6 @@
        </dl>
       </div>
      </div>
-    </div>
-   </div>
-   <div aria-label="main navigation" class="sphinxsidebar" role="navigation">
-    <div class="sphinxsidebarwrapper">
-     <h1 class="logo">
-      <a href="index.html">
-       Python
-      </a>
-     </h1>
-     <h3>
-      Navigation
-     </h3>
-     <div class="relations">
-      <h3>
-       Related Topics
-      </h3>
-      <ul>
-       <li>
-        <a href="index.html">
-         Documentation overview
-        </a>
-        <ul>
-        </ul>
-       </li>
-      </ul>
-     </div>
-     <div id="searchbox" role="search" style="display: none">
-      <h3 id="searchlabel">
-       Quick search
-      </h3>
-      <div class="searchformwrapper">
-       <form action="search.html" class="search" method="get">
-        <input aria-labelledby="searchlabel" name="q" type="text"/>
-        <input type="submit" value="Go"/>
-       </form>
-      </div>
-     </div>
-     <script>
-      $('#searchbox').show(0);
-     </script>
     </div>
    </div>
    <div class="clearer">

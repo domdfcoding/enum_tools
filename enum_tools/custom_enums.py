@@ -44,7 +44,7 @@ __all__ = [
 		"IterableIntFlag",
 		]
 
-if sys.version_info >= (3, 10):  # pragma: no cover
+if sys.version_info >= (3, 11):  # pragma: no cover
 
 	# stdlib
 	from enum import _power_of_two

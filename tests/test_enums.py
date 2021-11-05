@@ -13,6 +13,8 @@ import pytest
 from enum_tools import IntEnum, StrEnum
 from enum_tools.custom_enums import IterableFlag, IterableIntFlag
 
+NEW_ENUM_REPR = sys.version_info >= (3, 11)
+
 
 class DramatisPersonae(StrEnum):
 	Message = "a secret message"
@@ -28,7 +30,11 @@ def test_str_enum():
 	assert DramatisPersonae.Alice != "An eavesdropper"
 	assert str(DramatisPersonae.Craig) == "A password cracker"
 	assert DramatisPersonae("The sender") == DramatisPersonae.Bob == "The sender"
-	assert repr(DramatisPersonae.Bob) == "<DramatisPersonae.Bob: 'The sender'>"
+
+	if NEW_ENUM_REPR:
+		assert repr(DramatisPersonae.Bob) == "DramatisPersonae.Bob"
+	else:
+		assert repr(DramatisPersonae.Bob) == "<DramatisPersonae.Bob: 'The sender'>"
 
 
 class Numbers(IntEnum):

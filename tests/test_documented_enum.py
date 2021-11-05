@@ -1,5 +1,6 @@
 # stdlib
 import math
+import sys
 from decimal import Decimal
 from enum import Enum
 from pathlib import Path
@@ -12,6 +13,7 @@ import enum_tools.documentation
 from enum_tools.documentation import DocumentedEnum, document_enum
 
 enum_tools.documentation.INTERACTIVE = True
+NEW_ENUM_REPR = sys.version_info >= (3, 11)
 
 
 @document_enum
@@ -45,19 +47,19 @@ def test_people():
 	assert People.Bob == 1
 	assert isinstance(People.Bob, People)
 	assert isinstance(People.Bob, int)
-	assert repr(People.Bob) == "<People.Bob: 1>"
+	assert repr(People.Bob) == "People.Bob" if NEW_ENUM_REPR else "<People.Bob: 1>"
 	assert People.Bob.__doc__ == "A person called Bob"
 
 	assert People.Alice == 2
 	assert isinstance(People.Alice, People)
 	assert isinstance(People.Alice, int)
-	assert repr(People.Alice) == "<People.Alice: 2>"
+	assert repr(People.Alice) == "People.Alice" if NEW_ENUM_REPR else "<People.Alice: 2>"
 	assert People.Alice.__doc__ == "A person called Alice"
 
 	assert People.Carol == 3
 	assert isinstance(People.Carol, People)
 	assert isinstance(People.Carol, int)
-	assert repr(People.Carol) == "<People.Carol: 3>"
+	assert repr(People.Carol) == "People.Carol" if NEW_ENUM_REPR else "<People.Carol: 3>"
 	assert People.Carol.__doc__ == "A person called Carol"
 
 	assert list(iter(People)) == [People.Bob, People.Alice, People.Carol]
@@ -143,19 +145,19 @@ def test_document_enum_not_interactive():
 	assert People.Bob == 1
 	assert isinstance(People.Bob, People)
 	assert isinstance(People.Bob, int)
-	assert repr(People.Bob) == "<People.Bob: 1>"
+	assert repr(People.Bob) == "People.Bob" if NEW_ENUM_REPR else "<People.Bob: 1>"
 	assert People.Bob.__doc__ == "\n\t\tAn enumeration of people\n\t\t"  # The default
 
 	assert People.Alice == 2
 	assert isinstance(People.Alice, People)
 	assert isinstance(People.Alice, int)
-	assert repr(People.Alice) == "<People.Alice: 2>"
+	assert repr(People.Alice) == "People.Alice" if NEW_ENUM_REPR else "<People.Alice: 2>"
 	assert People.Alice.__doc__ == "\n\t\tAn enumeration of people\n\t\t"  # The default
 
 	assert People.Carol == 3
 	assert isinstance(People.Carol, People)
 	assert isinstance(People.Carol, int)
-	assert repr(People.Carol) == "<People.Carol: 3>"
+	assert repr(People.Carol) == "People.Carol" if NEW_ENUM_REPR else "<People.Carol: 3>"
 	assert People.Carol.__doc__ == "\n\t\tAn enumeration of people\n\t\t"  # The default
 
 	assert list(iter(People)) == [People.Bob, People.Alice, People.Carol]

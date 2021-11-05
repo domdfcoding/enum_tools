@@ -1,3 +1,4 @@
+{% set NEW_ENUM_REPR = python_version >= (3, 11) -%}
 <!DOCTYPE html>
 <html>
  <head>
@@ -81,7 +82,7 @@
             Running
            </code>
            <em class="property">
-            = &lt;StatusFlags.Running: 1&gt;
+            = {% if NEW_ENUM_REPR %}StatusFlags.Running{% else %}&lt;StatusFlags.Running: 1&gt;{% endif %}
            </em>
            <a class="headerlink" href="#enum_tools.demo.StatusFlags.Running" title="Permalink to this definition">
             ¶
@@ -99,7 +100,7 @@
             Stopped
            </code>
            <em class="property">
-            = &lt;StatusFlags.Stopped: 2&gt;
+            = {% if NEW_ENUM_REPR %}StatusFlags.Stopped{% else %}&lt;StatusFlags.Stopped: 2&gt;{% endif %}
            </em>
            <a class="headerlink" href="#enum_tools.demo.StatusFlags.Stopped" title="Permalink to this definition">
             ¶
@@ -117,7 +118,7 @@
             Error
            </code>
            <em class="property">
-            = &lt;StatusFlags.Error: 4&gt;
+            = {% if NEW_ENUM_REPR %}StatusFlags.Error{% else %}&lt;StatusFlags.Error: 4&gt;{% endif %}
            </em>
            <a class="headerlink" href="#enum_tools.demo.StatusFlags.Error" title="Permalink to this definition">
             ¶
@@ -217,7 +218,7 @@
             Running
            </code>
            <em class="property">
-            = &lt;StatusFlags.Running: 1&gt;
+            = {% if NEW_ENUM_REPR %}StatusFlags.Running{% else %}&lt;StatusFlags.Running: 1&gt;{% endif %}
            </em>
            <a class="headerlink" href="#id1" title="Permalink to this definition">
             ¶
@@ -235,7 +236,7 @@
             Stopped
            </code>
            <em class="property">
-            = &lt;StatusFlags.Stopped: 2&gt;
+            = {% if NEW_ENUM_REPR %}StatusFlags.Stopped{% else %}&lt;StatusFlags.Stopped: 2&gt;{% endif %}
            </em>
            <a class="headerlink" href="#id2" title="Permalink to this definition">
             ¶
@@ -253,7 +254,7 @@
             Error
            </code>
            <em class="property">
-            = &lt;StatusFlags.Error: 4&gt;
+            = {% if NEW_ENUM_REPR %}StatusFlags.Error{% else %}&lt;StatusFlags.Error: 4&gt;{% endif %}
            </em>
            <a class="headerlink" href="#id3" title="Permalink to this definition">
             ¶
@@ -300,46 +301,6 @@
        </dl>
       </div>
      </div>
-    </div>
-   </div>
-   <div aria-label="main navigation" class="sphinxsidebar" role="navigation">
-    <div class="sphinxsidebarwrapper">
-     <h1 class="logo">
-      <a href="index.html">
-       Python
-      </a>
-     </h1>
-     <h3>
-      Navigation
-     </h3>
-     <div class="relations">
-      <h3>
-       Related Topics
-      </h3>
-      <ul>
-       <li>
-        <a href="index.html">
-         Documentation overview
-        </a>
-        <ul>
-        </ul>
-       </li>
-      </ul>
-     </div>
-     <div id="searchbox" role="search" style="display: none">
-      <h3 id="searchlabel">
-       Quick search
-      </h3>
-      <div class="searchformwrapper">
-       <form action="search.html" class="search" method="get">
-        <input aria-labelledby="searchlabel" name="q" type="text"/>
-        <input type="submit" value="Go"/>
-       </form>
-      </div>
-     </div>
-     <script>
-      $('#searchbox').show(0);
-     </script>
     </div>
    </div>
    <div class="clearer">
