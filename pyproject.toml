@@ -45,7 +45,7 @@ python-versions = [ "3.6", "3.7", "3.8", "3.9",]
 python-implementations = [ "CPython", "PyPy",]
 platforms = [ "Windows", "macOS", "Linux",]
 license-key = "LGPL-3.0-or-later"
-additional-files = [ "recursive-include enum_tools/ requirements.txt", "recursive-exclude tests/ *", "prune tests*",]
+additional-files = [ "recursive-include enum_tools/ requirements.txt", "recursive-exclude tests/ *",]
 
 [tool.mkrecipe]
 conda-channels = [ "conda-forge", "domdfcoding",]

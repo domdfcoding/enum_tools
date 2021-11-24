@@ -28,7 +28,6 @@ python_versions:
 manifest_additional:
  - recursive-include enum_tools/ requirements.txt
  - recursive-exclude tests/ *
- - prune tests*
 
 classifiers:
  - 'Development Status :: 4 - Beta'
