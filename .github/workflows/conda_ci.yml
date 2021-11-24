@@ -4,13 +4,15 @@ name: Conda Tests
 
 on:
   push:
-  pull_request:
     branches: ["master"]
+
+permissions:
+  contents: read
 
 jobs:
   tests:
     name: "Conda"
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
 
     steps:
       - name: Checkout 🛎️
@@ -26,7 +28,7 @@ jobs:
           python -VV
           python -m site
           python -m pip install --upgrade pip setuptools wheel
-          python -m pip install --upgrade repo_helper
+          python -m pip install --upgrade whey-conda
           # $CONDA is an environment variable pointing to the root of the miniconda directory
           $CONDA/bin/conda update -q conda
           $CONDA/bin/conda install conda-build=3.21.0
@@ -34,11 +36,22 @@ jobs:
           $CONDA/bin/conda config --add channels conda-forge
           $CONDA/bin/conda config --add channels domdfcoding
 
-      - name: "Build and install package"
+      - name: "Build and index channel"
         run: |
-          # This mess is only necessary because conda won't fix it themselves
-          # https://github.com/conda/conda/issues/1884
-
-          python -m repo_helper build --conda --out-dir conda-bld/noarch
+          python -m whey --builder whey_conda --out-dir conda-bld/noarch
           $CONDA/bin/conda index ./conda-bld || exit 1
-          $CONDA/bin/conda install -c file://$(pwd)/conda-bld enum_tools -y || exit 1
+
+      - name: "Search for package"
+        run: |
+          $CONDA/bin/conda search -c file://$(pwd)/conda-bld enum_tools
+          $CONDA/bin/conda search -c file://$(pwd)/conda-bld --override-channels enum_tools
+
+      - name: "Install package"
+        run: |
+          $CONDA/bin/conda install -c file://$(pwd)/conda-bld enum_tools=0.6.4=py_1 -y || exit 1
+
+      - name: "Run Tests"
+        run: |
+          rm -rf enum_tools
+          $CONDA/bin/pip install -r tests/requirements.txt
+          $CONDA/bin/pytest tests/

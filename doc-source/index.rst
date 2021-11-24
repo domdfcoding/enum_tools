@@ -4,7 +4,8 @@ Enum Tools
 
 .. start short_desc
 
-**Tools to expand Python's enum module.**
+.. documentation-summary::
+	:meta:
 
 .. end short_desc
 
@@ -36,7 +37,7 @@ Enum Tools
 		* - Activity
 		  - |commits-latest| |commits-since| |maintained| |pypi-downloads|
 		* - QA
-		  - |codefactor| |actions_flake8| |actions_mypy| |pre_commit_ci|
+		  - |codefactor| |actions_flake8| |actions_mypy|
 		* - Other
 		  - |license| |language| |requires|
 
@@ -68,7 +69,8 @@ Enum Tools
 		:workflow: mypy
 		:alt: mypy status
 
-	.. |requires| requires-io-shield::
+	.. |requires| image:: https://dependency-dash.herokuapp.com/github/domdfcoding/enum_tools/badge.svg
+		:target: https://dependency-dash.herokuapp.com/github/domdfcoding/enum_tools/
 		:alt: Requirements Status
 
 	.. |coveralls| coveralls-shield::
@@ -129,9 +131,6 @@ Enum Tools
 		:downloads: month
 		:alt: PyPI - Downloads
 
-	.. |pre_commit_ci| pre-commit-ci-shield::
-		:alt: pre-commit.ci status
-
 .. end shields
 
 
@@ -182,13 +181,19 @@ Installation
 	contributing
 	Source
 
+.. sidebar-links::
+	:caption: Links
+	:github:
+	:pypi: enum_tools
+
+
 .. start links
 
 .. only:: html
 
 	View the :ref:`Function Index <genindex>` or browse the `Source Code <_modules/index.html>`__.
 
-	`Browse the GitHub Repository <https://github.com/domdfcoding/enum_tools>`__
+	:github:repo:`Browse the GitHub Repository <domdfcoding/enum_tools>`
 
 .. end links
 

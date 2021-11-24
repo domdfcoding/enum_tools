@@ -26,7 +26,7 @@ Enum Tools
 	* - Activity
 	  - |commits-latest| |commits-since| |maintained| |pypi-downloads|
 	* - QA
-	  - |codefactor| |actions_flake8| |actions_mypy| |pre_commit_ci|
+	  - |codefactor| |actions_flake8| |actions_mypy|
 	* - Other
 	  - |license| |language| |requires|
 
@@ -58,8 +58,8 @@ Enum Tools
 	:target: https://github.com/domdfcoding/enum_tools/actions?query=workflow%3A%22mypy%22
 	:alt: mypy status
 
-.. |requires| image:: https://requires.io/github/domdfcoding/enum_tools/requirements.svg?branch=master
-	:target: https://requires.io/github/domdfcoding/enum_tools/requirements/?branch=master
+.. |requires| image:: https://dependency-dash.herokuapp.com/github/domdfcoding/enum_tools/badge.svg
+	:target: https://dependency-dash.herokuapp.com/github/domdfcoding/enum_tools/
 	:alt: Requirements Status
 
 .. |coveralls| image:: https://img.shields.io/coveralls/github/domdfcoding/enum_tools/master?logo=coveralls
@@ -116,10 +116,6 @@ Enum Tools
 	:target: https://pypi.org/project/enum_tools/
 	:alt: PyPI - Downloads
 
-.. |pre_commit_ci| image:: https://results.pre-commit.ci/badge/github/domdfcoding/enum_tools/master.svg
-	:target: https://results.pre-commit.ci/latest/github/domdfcoding/enum_tools/master
-	:alt: pre-commit.ci status
-
 .. end shields
 
 |
@@ -150,8 +146,8 @@ To install with ``conda``:
 
 	.. code-block:: bash
 
-		$ conda config --add channels http://conda.anaconda.org/conda-forge
-		$ conda config --add channels http://conda.anaconda.org/domdfcoding
+		$ conda config --add channels https://conda.anaconda.org/conda-forge
+		$ conda config --add channels https://conda.anaconda.org/domdfcoding
 
 	* Then install
 
