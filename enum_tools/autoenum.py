@@ -3,20 +3,9 @@
 #  autoenum.py
 """
 A Sphinx directive for documenting :class:`Enums <enum.Enum>` in Python.
-
-Provides the :rst:dir:`autoenum` directive for documenting :class:`Enums <enum.Enum>`,
-and :rst:dir:`autoflag` for documenting :class:`Flags <enum.Flag>`.
-
-It behaves much like :rst:dir:`autoclass` and :rst:dir:`autofunction`.
-
-See also https://www.sphinx-doc.org/en/master/usage/extensions/autodoc.html.
-
-.. versionchanged:: 0.4.0
-
-	Added :class:`~.PyEnumXRefRole` and :rst:role:`py:enum:mem`.
 """
 #
-#  Copyright (c) 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
+#  Copyright (c) 2020-2021 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -115,6 +104,8 @@ class EnumDocumenter(ClassDocumenter):
 
 		:param all_members: If :py:obj:`True`, document all members, otherwise document those given by
 			else those given by ``self.options.members``.
+
+		.. latex:clearpage::
 		"""
 
 		if self.doc_as_attr:
@@ -289,6 +280,8 @@ class EnumDocumenter(ClassDocumenter):
 class FlagDocumenter(EnumDocumenter):
 	r"""
 	Sphinx autodoc :class:`~sphinx.ext.autodoc.Documenter` for documenting :class:`~enum.Flag`\s.
+
+	.. autosummary-widths:: 55/100
 	"""
 
 	objtype = "flag"
@@ -315,13 +308,15 @@ class EnumMemberDocumenter(AttributeDocumenter):
 	Sphinx autodoc :class:`~sphinx.ext.autodoc.Documenter` for documenting :class:`~enum.Enum` members.
 	"""
 
-	def import_object(self, raiseerror: bool = False) -> Any:
+	def import_object(self, raiseerror: bool = False) -> bool:
 		"""
 		Import the object given by ``self.modname`` and ``self.objpath`` and set it as ``self.object``.
 
 		:param raiseerror:
 
 		:returns: :py:obj:`True` if successful, :py:obj:`False` if an error occurred.
+
+		.. latex:clearpage::
 		"""
 
 		self._datadescriptor = False
@@ -368,6 +363,7 @@ class PyEnumXRefRole(PyXRefRole):
 	XRefRole for Enum/Flag members.
 
 	.. versionadded:: 0.4.0
+	.. autosummary-widths:: 40/100
 	"""
 
 	def process_link(
@@ -389,6 +385,10 @@ class PyEnumXRefRole(PyXRefRole):
 		:param has_explicit_title:
 		:param title:
 		:param target:
+
+		:rtype:
+
+		.. latex:clearpage::
 		"""
 
 		refnode["py:module"] = env.ref_context.get("py:module")

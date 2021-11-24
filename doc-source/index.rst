@@ -134,13 +134,19 @@ Enum Tools
 .. end shields
 
 
+Overview
+------------
+
+.. latex-section::
+
+
 This library provides the following:
 
-#. A decorator to add docstrings to ``Enum`` members from a comment at the end of the line.
-
-#. A ``Sphinx`` extension to document Enums better than :rst:dir:`autoclass` can currently.
-
-#. Additional ``Enum`` classes with different functionality.
+#. :mod:`enum_tools.autoenum` -- A `Sphinx <https://www.sphinx-doc.org>`_ extension to document Enums better than :rst:dir:`autoclass`
+   can currently.
+#. :deco:`enum_tools.documentation.document_enum` -- A decorator to add docstrings to :class:`~enum.Enum` members
+   from a comment at the end of the line.
+#. :mod:`enum_tools.custom_enums` -- Additional :class:`~enum.Enum` classes with different functionality.
 
 
 Installation
@@ -156,6 +162,13 @@ Installation
 
 .. end installation
 
+
+Contents
+------------
+
+.. html-section::
+
+
 .. toctree::
 	:hidden:
 
@@ -163,23 +176,20 @@ Installation
 
 .. toctree::
 	:maxdepth: 3
-	:caption: Documentation
-
-	autoenum
-
-.. toctree::
-	:maxdepth: 3
-	:caption: API Reference
 	:glob:
 
 	api/*
 
-.. toctree::
-	:maxdepth: 3
-	:caption: Contributing
 
-	contributing
-	Source
+.. only:: html
+
+	.. toctree::
+		:maxdepth: 3
+		:glob:
+
+		contributing
+		Source
+		license
 
 .. sidebar-links::
 	:caption: Links
@@ -195,16 +205,17 @@ Installation
 
 	:github:repo:`Browse the GitHub Repository <domdfcoding/enum_tools>`
 
-.. end links
 
 
 Further Reading
 -----------------------
 
-#. https://docs.python.org/3/library/enum.html
+.. html-section::
 
-#. `Is it possible to define a class constant inside an Enum? <https://stackoverflow.com/q/17911188/3092681>`_
 
-#. `Enums with Attributes <https://stackoverflow.com/a/19300424/3092681>`_
+.. only:: html
 
-#. `When should I subclass EnumMeta instead of Enum? <https://stackoverflow.com/a/43730306/3092681>`_
+	* https://docs.python.org/3/library/enum.html
+	* `Is it possible to define a class constant inside an Enum? <https://stackoverflow.com/q/17911188/3092681>`_
+	* `Enums with Attributes <https://stackoverflow.com/a/19300424/3092681>`_
+	* `When should I subclass EnumMeta instead of Enum? <https://stackoverflow.com/a/43730306/3092681>`_

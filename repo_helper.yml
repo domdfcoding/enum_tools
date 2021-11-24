@@ -11,6 +11,7 @@ short_desc: "Tools to expand Python's enum module."
 
 use_whey: true
 tox_testenv_extras: all
+standalone_contrib_guide: true
 
 conda_channels:
  - conda-forge
@@ -56,6 +57,23 @@ extras_require:
 
 extra_sphinx_extensions:
  - enum_tools.autoenum
+ - sphinx_toolbox_experimental.html_section
+ - sphinx_toolbox_experimental.needspace
+ - sphinx_toolbox_experimental.autosummary_widths
+ - sphinx_toolbox_experimental.succinct_seealso
+ - sphinx_toolbox_experimental.missing_xref
+
 
 sphinx_conf_epilogue:
  - html_logo = "../enum_tools.png"
+ - autosummary_widths_builders = ["latex"]
+ - nitpicky = True
+ - needspace_amount = "1\\baselineskip"
+ - ignore_missing_xrefs = ["^sphinx.ext.autodoc.(Class|Attribute)?Documenter$", "^enum.EnumMeta$", "^docutils.nodes.Element$", "^sphinx.domains"]
+ - from typing import Type
+ - import enum_tools.autoenum
+ - from sphinx.ext.autodoc.directive import DocumenterBridge
+ - enum_tools.autoenum.DocumenterBridge = DocumenterBridge
+ - enum_tools.autoenum.Type = Type
+
+preserve_custom_theme: true

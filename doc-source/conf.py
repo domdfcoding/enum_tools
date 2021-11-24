@@ -73,3 +73,21 @@ def setup(app):
 
 
 html_logo = "../enum_tools.png"
+autosummary_widths_builders = ["latex"]
+nitpicky = True
+needspace_amount = "1\\baselineskip"
+ignore_missing_xrefs = [
+		"^sphinx.ext.autodoc.(Class|Attribute)?Documenter$",
+		"^enum.EnumMeta$",
+		"^docutils.nodes.Element$",
+		"^sphinx.domains"
+		]
+# stdlib
+from typing import Type
+
+# 3rd party
+import enum_tools.autoenum
+from sphinx.ext.autodoc.directive import DocumenterBridge
+
+enum_tools.autoenum.DocumenterBridge = DocumenterBridge
+enum_tools.autoenum.Type = Type
