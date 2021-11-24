@@ -1,10 +1,15 @@
 # stdlib
 import pathlib
+import sys
+import types
 
 # 3rd party
 import pytest
 from bs4 import BeautifulSoup  # type: ignore
 from sphinx.testing.path import path
+
+if sys.version_info >= (3, 10):
+	types.Union = types.UnionType
 
 pytest_plugins = ("coincidence", "sphinx.testing.fixtures", "sphinx_toolbox.testing")
 

@@ -63,6 +63,7 @@ See also https://www.sphinx-doc.org/en/master/usage/extensions/autodoc.html.
 #
 
 # stdlib
+from contextlib import suppress
 from enum import Enum
 from typing import Any, Dict, List, Optional, Tuple
 
@@ -72,8 +73,9 @@ from sphinx.application import Sphinx  # nodep
 from sphinx.domains import ObjType  # nodep
 from sphinx.domains.python import PyClasslike, PyXRefRole  # nodep
 from sphinx.environment import BuildEnvironment  # nodep
-from sphinx.ext.autodoc import ALL, AttributeDocumenter, ClassDocumenter, Documenter  # nodep
+from sphinx.ext.autodoc import ALL, INSTANCEATTR, AttributeDocumenter, ClassDocumenter, Documenter  # nodep
 from sphinx.locale import _  # nodep
+from sphinx.util.inspect import object_description  # nodep
 from sphinx_toolbox.more_autodoc.typehints import format_annotation  # nodep
 from sphinx_toolbox.utils import begin_generate  # nodep
 
@@ -361,6 +363,15 @@ class EnumMemberDocumenter(AttributeDocumenter):
 		if self.object.__doc__ and self.object.__doc__ != self.object.__class__.__doc__:
 			self.add_line(self.object.__doc__, sourcename)
 			self.add_line('', sourcename)
+
+	def add_directive_header(self, sig: str) -> None:
+		super().add_directive_header(sig)
+
+		if not self.options.annotation:
+			with suppress(ValueError):
+				if self.object is not INSTANCEATTR:
+					objrepr = object_description(self.object)
+					self.add_line(f'   :value: {objrepr}', self.get_sourcename())
 
 
 class PyEnumXRefRole(PyXRefRole):
