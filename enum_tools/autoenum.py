@@ -365,6 +365,12 @@ class EnumMemberDocumenter(AttributeDocumenter):
 			self.add_line('', sourcename)
 
 	def add_directive_header(self, sig: str) -> None:
+		"""
+		Add the directive header for the Enum member.
+
+		:param sig:
+		"""
+
 		super().add_directive_header(sig)
 
 		if not self.options.annotation:
