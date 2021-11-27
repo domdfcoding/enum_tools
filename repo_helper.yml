@@ -36,8 +36,6 @@ classifiers:
  - 'Programming Language :: Python'
  - 'Topic :: Software Development :: Libraries :: Python Modules'
  - "Framework :: Sphinx :: Extension"
- - 'Intended Audience :: Developers'
- - 'Programming Language :: Python'
  - "Topic :: Documentation"
  - 'Topic :: Documentation :: Sphinx'
  - 'Topic :: Software Development :: Documentation'
