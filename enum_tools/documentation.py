@@ -29,7 +29,7 @@ import re
 import sys
 from enum import Enum, EnumMeta
 from textwrap import dedent
-from typing import Iterable, List, Optional, Tuple
+from typing import Iterable, List, Optional, Tuple, TypeVar
 
 # 3rd party
 import pygments.token  # type: ignore
@@ -49,6 +49,8 @@ lexer = PythonLexer()
 
 INTERACTIVE = bool(getattr(sys, "ps1", sys.flags.interactive))
 
+EnumType = TypeVar("EnumType", bound=EnumMeta)
+
 
 def get_tokens(line: str) -> List[Tuple]:
 	"""
@@ -60,7 +62,7 @@ def get_tokens(line: str) -> List[Tuple]:
 	return list(lexer.get_tokens(line))
 
 
-def document_enum(an_enum: EnumMeta) -> EnumMeta:
+def document_enum(an_enum: EnumType) -> EnumType:
 	"""
 	Document all members of an enum by adding a comment to the end of each line that starts with ``doc:``.
 
