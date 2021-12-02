@@ -5,7 +5,7 @@
 Custom subclasses of :class:`enum.Enum` and :class:`enum.Flag`.
 """
 #
-#  Copyright (c) 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
+#  Copyright (c) 2020-2021 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -31,7 +31,7 @@ Custom subclasses of :class:`enum.Enum` and :class:`enum.Flag`.
 # stdlib
 import sys
 from enum import Enum, Flag, IntFlag
-from typing import Any
+from typing import Any, Iterator
 
 __all__ = [
 		"MemberDirEnum",
@@ -222,27 +222,39 @@ class DuplicateFreeEnum(Enum):
 
 class IterableFlag(Flag):
 	"""
-	:class:`enum.Flag` with support for iterating over members and member combinations.
+	:class:`~enum.Flag` with support for iterating over members and member combinations.
 
 	This functionality was added to Python 3.10's :mod:`enum` module in :pull:`22221 <python/cpython>`.
 
 	.. versionadded:: 0.5.0
 	"""
 
-	def __iter__(self):
+	def __iter__(self) -> Iterator[Flag]:
+		"""
+		Returns members in definition order.
+
+		:rtype:
+
+		.. latex:clearpage::
+		"""
+
 		members, extra_flags = _decompose(self.__class__, self.value)
 		return (m for m in members if m._value_ != 0)
 
 
 class IterableIntFlag(IntFlag):
 	"""
-	:class:`enum.IntFlag` with support for iterating over members and member combinations.
+	:class:`~enum.IntFlag` with support for iterating over members and member combinations.
 
 	This functionality was added to Python 3.10's :mod:`enum` module in :pull:`22221 <python/cpython>`.
 
 	.. versionadded:: 0.5.0
 	"""
 
-	def __iter__(self):
+	def __iter__(self) -> Iterator[IntFlag]:
+		"""
+		Returns members in definition order.
+		"""
+
 		members, extra_flags = _decompose(self.__class__, self.value)
 		return (m for m in members if m._value_ != 0)

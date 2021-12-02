@@ -2,6 +2,8 @@
 :mod:`enum_tools.documentation`
 ===================================
 
+.. module:: enum_tools.documentation
+.. autosummary-widths:: 35/100
 
 Core Functionality
 --------------------
@@ -18,13 +20,13 @@ Core Functionality
 .. autofunction:: enum_tools.documentation.document_member
 
 
-
+.. latex:clearpage::
 
 Utilities
 --------------------
 
 .. automodulesumm:: enum_tools.documentation
-	:exclude-members: DocumentedEnum,document_enum,document_member
+	:autosummary-exclude-members: DocumentedEnum,document_enum,document_member
 
 .. autofunction:: enum_tools.documentation.get_base_indent
 

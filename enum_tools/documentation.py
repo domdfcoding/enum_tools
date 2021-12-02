@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 #
-#  decorator.py
+#  documentation.py
 """
 Decorators to add docstrings to enum members from comments.
 """
 #
-#  Copyright (c) 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
+#  Copyright (c) 2020-2021 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@ import re
 import sys
 from enum import Enum, EnumMeta
 from textwrap import dedent
-from typing import Iterable, List, Optional, Tuple
+from typing import Iterable, List, Optional, Sequence, Tuple
 
 # 3rd party
 import pygments.token  # type: ignore
@@ -45,7 +45,7 @@ __all__ = [
 		"get_dedented_line",
 		]
 
-lexer = PythonLexer()
+_lexer = PythonLexer()
 
 INTERACTIVE = bool(getattr(sys, "ps1", sys.flags.interactive))
 
@@ -57,14 +57,14 @@ def get_tokens(line: str) -> List[Tuple]:
 	:param line: Line of Python code to tokenise.
 	"""
 
-	return list(lexer.get_tokens(line))
+	return list(_lexer.get_tokens(line))
 
 
 def document_enum(an_enum: EnumMeta) -> EnumMeta:
 	"""
 	Document all members of an enum by adding a comment to the end of each line that starts with ``doc:``.
 
-	:param an_enum: An ``Enum`` subclass
+	:param an_enum: An :class:`~enum.Enum` subclass
 	"""
 
 	if not isinstance(an_enum, EnumMeta):
@@ -125,7 +125,7 @@ def document_member(enum_member: Enum) -> None:
 	"""
 	Document a member of an enum by adding a comment to the end of the line that starts with ``doc:``.
 
-	:param enum_member: A member of an ``Enum`` subclass
+	:param enum_member: A member of an :class:`~enum.Enum` subclass
 	"""
 
 	if not isinstance(enum_member, Enum):
@@ -203,17 +203,19 @@ def parse_tokens(all_tokens: Iterable["pygments.Token"]) -> Tuple[List, Optional
 	return enum_vars, doc
 
 
-def get_base_indent(base_indent: Optional[int], all_tokens, indent: int) -> Optional[int]:
+def get_base_indent(
+		base_indent: Optional[int],
+		all_tokens: Sequence[Sequence],
+		indent: int,
+		) -> Optional[int]:
 	"""
 	Determine the base level of indentation (i.e. one level of indentation in from the ``c`` of ``class``).
 
 	:param base_indent: The current base level of indentation
 	:param all_tokens:
-	:type all_tokens:
 	:param indent: The current level of indentation
-	:type indent: int
 
-	:return: The base level of indentation
+	:returns: The base level of indentation
 	"""
 
 	if not base_indent:
@@ -243,9 +245,6 @@ def get_dedented_line(line: str) -> Tuple[int, str]:
 	Returns the line without indentation, and the amount of indentation.
 
 	:param line: A line of Python source code
-	:type line: str
-
-	:return:
 	"""
 
 	dedented_line = dedent(line)

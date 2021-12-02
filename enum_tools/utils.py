@@ -5,7 +5,7 @@
 General utility functions.
 """
 #
-#  Copyright (c) 2020 Dominic Davis-Foster <dominic@davis-foster.co.uk>
+#  Copyright (c) 2020-2021 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -37,16 +37,18 @@ __all__ = ["HasMRO", "is_enum", "is_enum_member", "is_flag", "get_base_object"]
 @runtime_checkable
 class HasMRO(Protocol):
 	"""
-	:class:`typing.Protocol` for classes that have a Method Resolution Order magic method.
+	:class:`typing.Protocol` for classes that have a method resolution order magic method (``__mro__``).
 	"""
 
 	@property
-	def __mro__(self) -> Tuple[Type]: ...  # pragma: no cover
+	def __mro__(self) -> Tuple[Type]: ...
 
 
 def is_enum(obj: Type) -> bool:
 	"""
 	Returns :py:obj:`True` if ``obj`` is an :class:`enum.Enum`.
+
+	:param obj:
 	"""
 
 	# The enum itself is subclass of EnumMeta; enum members subclass Enum
@@ -56,6 +58,8 @@ def is_enum(obj: Type) -> bool:
 def is_enum_member(obj: Type) -> bool:
 	"""
 	Returns :py:obj:`True` if ``obj`` is an :class:`enum.Enum` member.
+
+	:param obj:
 	"""
 
 	# The enum itself is subclass of EnumMeta; enum members subclass Enum
@@ -65,6 +69,8 @@ def is_enum_member(obj: Type) -> bool:
 def is_flag(obj: Type) -> bool:
 	"""
 	Returns :py:obj:`True` if ``obj`` is an :class:`enum.Flag`.
+
+	:param obj:
 	"""
 
 	# The enum itself is subclass of EnumMeta; enum members subclass Enum
@@ -78,7 +84,9 @@ def get_base_object(enum: Type[HasMRO]) -> Type:
 	"""
 	Returns the object type of the enum's members.
 
-	If the members are of indeterminate type :class:`object` is returned.
+	If the members are of indeterminate type then the :class:`object` class is returned.
+
+	:param enum:
 	"""
 
 	mro = inspect.getmro(enum)
