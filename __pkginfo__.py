@@ -14,6 +14,6 @@
 __all__ = ["extras_require"]
 
 extras_require = {
-		"sphinx": ["sphinx<3.4.0,>=3.0.3", "sphinx-toolbox>=1.2.0"],
-		"all": ["sphinx<3.4.0,>=3.0.3", "sphinx-toolbox>=1.2.0"]
+		"sphinx": ["sphinx<3.5.0,>=3.0.3", "sphinx-toolbox>=1.2.0"],
+		"all": ["sphinx<3.5.0,>=3.0.3", "sphinx-toolbox>=1.2.0"]
 		}

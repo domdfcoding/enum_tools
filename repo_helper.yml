@@ -12,6 +12,7 @@ short_desc: "Tools to expand Python's enum module."
 use_whey: true
 tox_testenv_extras: all
 standalone_contrib_guide: true
+min_coverage: 85
 
 conda_channels:
  - conda-forge
@@ -29,7 +30,6 @@ python_versions:
 manifest_additional:
  - recursive-include enum_tools/ requirements.txt
  - recursive-exclude tests/ *
- - prune tests*
 
 classifiers:
  - 'Development Status :: 4 - Beta'
@@ -37,8 +37,6 @@ classifiers:
  - 'Programming Language :: Python'
  - 'Topic :: Software Development :: Libraries :: Python Modules'
  - "Framework :: Sphinx :: Extension"
- - 'Intended Audience :: Developers'
- - 'Programming Language :: Python'
  - "Topic :: Documentation"
  - 'Topic :: Documentation :: Sphinx'
  - 'Topic :: Software Development :: Documentation'
@@ -52,7 +50,7 @@ keywords:
 
 extras_require:
   sphinx:
-   - sphinx<3.4.0,>=3.0.3
+   - sphinx<3.5.0,>=3.0.3
    - sphinx-toolbox>=1.2.0
 
 extra_sphinx_extensions:

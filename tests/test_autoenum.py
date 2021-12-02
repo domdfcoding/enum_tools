@@ -76,9 +76,10 @@ def test_index(page: BeautifulSoup, html_regression: HTMLRegressionFixture):
 
 		if class_count == 0:
 			assert class_.find("dt")["id"] == "enum_tools.demo.People"
+			assert class_.find("dd").findAll('p')[0].contents[0] == "An enumeration of people."
 		elif class_count == 1:
-			assert class_.find("dt")["id"] == "id0"
-		assert class_.find("dd").findAll('p')[0].contents[0] == "An enumeration of people."
+			assert class_.find("dt")["id"] == "enum_tools.demo.NoMethods"
+			assert class_.find("dd").findAll('p')[0].contents[0] == "An enumeration of people without any methods."
 
 		assert str(class_.find("dd").findAll('p')[1].contents[0]) == (
 				'<code class="xref py py-class docutils literal notranslate">'
@@ -92,35 +93,38 @@ def test_index(page: BeautifulSoup, html_regression: HTMLRegressionFixture):
 			if "attribute" not in attr["class"]:
 				continue
 
+			if class_count == 0:
+				class_name = "People"
+			else:
+				class_name = "NoMethods"
+
 			if attr_count == 0:
-				if class_count == 0:
-					assert attr.find("dt")["id"] == "enum_tools.demo.People.Bob"
-				elif class_count == 1:
-					assert attr.find("dt")["id"] == "id1"
-				assert attr.find("dt").em.contents[0] == " = People.Bob" if NEW_ENUM_REPR else " = <People.Bob: 1>"
-				assert str(attr.find("dd").contents[0]) == "<p>A person called Bob</p>"
-			elif attr_count == 1:
-				if class_count == 0:
-					assert attr.find("dt")["id"] == "enum_tools.demo.People.Alice"
-				elif class_count == 1:
-					assert attr.find("dt")["id"] == "id2"
+				assert attr.find("dt")["id"] == f"enum_tools.demo.{class_name}.Bob"
 
 				if NEW_ENUM_REPR:
-					assert attr.find("dt").em.contents[0] == " = People.Alice"
+					assert attr.find("dt").em.contents[0] == f" = {class_name}.Bob"
 				else:
-					assert attr.find("dt").em.contents[0] == " = <People.Alice: 2>"
+					assert attr.find("dt").em.contents[0] == f" = <{class_name}.Bob: 1>"
+
+				assert str(attr.find("dd").contents[0]) == "<p>A person called Bob</p>"
+
+			elif attr_count == 1:
+				assert attr.find("dt")["id"] == f"enum_tools.demo.{class_name}.Alice"
+
+				if NEW_ENUM_REPR:
+					assert attr.find("dt").em.contents[0] == f" = {class_name}.Alice"
+				else:
+					assert attr.find("dt").em.contents[0] == f" = <{class_name}.Alice: 2>"
 
 				assert str(attr.find("dd").contents[0]) == "<p>A person called Alice</p>"
+
 			elif attr_count == 2:
-				if class_count == 0:
-					assert attr.find("dt")["id"] == "enum_tools.demo.People.Carol"
-				elif class_count == 1:
-					assert attr.find("dt")["id"] == "id3"
+				assert attr.find("dt")["id"] == f"enum_tools.demo.{class_name}.Carol"
 
 				if NEW_ENUM_REPR:
-					assert attr.find("dt").em.contents[0] == " = People.Carol"
+					assert attr.find("dt").em.contents[0] == f" = {class_name}.Carol"
 				else:
-					assert attr.find("dt").em.contents[0] == " = <People.Carol: 3>"
+					assert attr.find("dt").em.contents[0] == f" = <{class_name}.Carol: 3>"
 
 				assert str(attr.find("dd").contents[0]) == "<p>A person called Carol</p>"
 
