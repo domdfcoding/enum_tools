@@ -20,7 +20,12 @@ class People(IntEnum):
 
 	Bob = bob = 1  # noqa  # doc: A person called Bob  # doc: another doc # isort: ignore
 	Alice = 2  # doc: A person called Alice
-	Carol = 3  # doc: A person called Carol
+	Carol = 3
+	"""
+	A person called Carol.
+
+	This is a multiline docstring.
+	"""
 
 	@classmethod
 	def iter_values(cls):
@@ -29,6 +34,10 @@ class People(IntEnum):
 		"""
 
 		return iter(cls)  # pragma: no cover
+
+	#: A person called Dennis
+
+	Dennis = 4
 
 	@classmethod
 	def as_list(cls) -> List:

@@ -24,11 +24,20 @@ class People(int, Enum):
 
 	Bob = bob = 1  # noqa  # doc: A person called Bob  # doc: another doc # isort: ignore
 	Alice = 2  # doc: A person called Alice
-	Carol = 3  # doc: A person called Carol
+	Carol = 3
+	"""
+	A person called Carol.
+
+	This is a multiline docstring.
+	"""
 
 	@classmethod
 	def iter_values(cls):
 		return iter(cls)
+
+	#: A person called Dennis
+
+	Dennis = 4
 
 
 # This is a dummy function to test mypy
@@ -60,12 +69,18 @@ def test_people():
 	assert isinstance(People.Carol, People)
 	assert isinstance(People.Carol, int)
 	assert repr(People.Carol) == "People.Carol" if NEW_ENUM_REPR else "<People.Carol: 3>"
-	assert People.Carol.__doc__ == "A person called Carol"
+	assert People.Carol.__doc__ == "A person called Carol.\n\nThis is a multiline docstring."
 
-	assert list(iter(People)) == [People.Bob, People.Alice, People.Carol]
-	assert list(iter(People)) == [1, 2, 3]
-	assert list(People.iter_values()) == [People.Bob, People.Alice, People.Carol]
-	assert list(People.iter_values()) == [1, 2, 3]
+	assert People.Dennis == 4
+	assert isinstance(People.Dennis, People)
+	assert isinstance(People.Dennis, int)
+	assert repr(People.Dennis) == "People.Dennis" if NEW_ENUM_REPR else "<People.Dennis: 4>"
+	assert People.Dennis.__doc__ == "A person called Dennis"
+
+	assert list(iter(People)) == [People.Bob, People.Alice, People.Carol, People.Dennis]
+	assert list(iter(People)) == [1, 2, 3, 4]
+	assert list(People.iter_values()) == [People.Bob, People.Alice, People.Carol, People.Dennis]
+	assert list(People.iter_values()) == [1, 2, 3, 4]
 
 
 class MyEnum(str, DocumentedEnum):

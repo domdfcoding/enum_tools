@@ -24,12 +24,14 @@ Decorators to add docstrings to enum members from comments.
 #
 
 # stdlib
+import ast
 import inspect
 import re
 import sys
+import tokenize
 from enum import Enum, EnumMeta
 from textwrap import dedent
-from typing import Iterable, List, Optional, Sequence, Tuple, TypeVar
+from typing import Iterable, List, Optional, Sequence, Tuple, TypeVar, Union
 
 # 3rd party
 import pygments.token  # type: ignore
@@ -62,15 +64,131 @@ def get_tokens(line: str) -> List[Tuple]:
 	return list(_lexer.get_tokens(line))
 
 
+def _docstring_from_expr(expr: ast.Expr) -> Optional[str]:
+	"""
+	Check if the expression is a docstring.
+
+	:param expr:
+
+	:returns: The cleaned docstring text if it is a docstring, or :py:obj:`None` if it isn't.
+	"""
+
+	# might be docstring
+	docstring_node = expr.value
+	if isinstance(docstring_node, ast.Str):
+		text = docstring_node.s
+	elif isinstance(docstring_node, ast.Constant) and isinstance(docstring_node.value, str):
+		text = docstring_node.value
+	else:
+		# not a docstring
+		return None
+
+	return inspect.cleandoc(text)
+
+
+def _docstring_from_eol_comment(
+		source: str,
+		node: Union[ast.Assign, ast.AnnAssign],
+		) -> Optional[str]:
+	"""
+	Search for an end-of-line docstring comment (starts with ``# doc:``).
+
+	:param source: The source of the Enum class.
+	:param node: The AST node for the Enum member.
+	"""
+
+	toks = _tokenize_line(source.split('\n')[node.lineno - 1])
+	comment_toks = [x for x in list(toks) if x.type == tokenize.COMMENT]
+	if comment_toks:
+		for match in re.finditer(r"(doc:\s*)([^#]*)(#|$)", comment_toks[0].string):
+			if match.group(2):
+				return match.group(2).rstrip()
+	return None
+
+
+def _docstring_from_sphinx_comment(
+		source: str,
+		node: Union[ast.Assign, ast.AnnAssign],
+		) -> Optional[str]:
+	"""
+	Search for a Sphinx-style docstring comment (starts with ``#:``).
+
+	:param source: The source of the Enum class.
+	:param node: The AST node for the Enum member.
+	"""
+
+	for offset in range(node.lineno - 1, 0, -1):
+		line = source.split('\n')[offset - 1]
+		if line.strip():
+			# contains non-whitespace
+
+			try:
+				toks = _tokenize_line(line)
+			except (tokenize.TokenError, SyntaxError):
+				return None
+
+			# print(list(toks))
+			comment_toks = [x for x in list(toks) if x.type == tokenize.COMMENT]
+			if comment_toks:
+				for match in re.finditer(r"(#:\s*)(.*)", comment_toks[0].string):
+					if match.group(2):
+						return match.group(2).rstrip()
+
+			return None
+
+	return None
+
+
+def _tokenize_line(line: str) -> List[tokenize.TokenInfo]:
+	"""
+	Tokenize a single line of Python source code.
+
+	:param line:
+	"""
+
+	def yielder():
+		yield line
+
+	return list(tokenize.generate_tokens(yielder().__next__))
+
+
 def document_enum(an_enum: EnumType) -> EnumType:
 	"""
-	Document all members of an enum by adding a comment to the end of each line that starts with ``doc:``.
+	Document all members of an enum by parsing a docstring from the Python source..
+
+	The docstring can be added in several ways:
+
+	#. A comment at the end the line, starting with ``doc:``:
+
+	   .. code-block:: python
+
+	       Running = 1  # doc: The system is running.
+
+	#. A comment on the previous line, starting with ``#:``. This is the format used by Sphinx.
+
+	   .. code-block:: python
+
+	       #: The system is running.
+	       Running = 1
+
+	#. A string on the next line. This can be used for multiline docstrings.
+
+	   .. code-block:: python
+
+	       Running = 1
+	       \"\"\"
+	       The system is running.
+
+	       Hello World
+	       \"\"\"
 
 	:param an_enum: An :class:`~enum.Enum` subclass
 	:type an_enum: :class:`enum.Enum`
 
 	:returns: The same object passed as ``an_enum``. This allows this function to be used as a decorator.
 	:rtype: :class:`enum.Enum`
+
+	.. versionchanged:: $VERSION  Added support for other docstring formats and multiline docstrings.
 	"""
 
 	if not isinstance(an_enum, EnumMeta):
@@ -80,49 +198,51 @@ def document_enum(an_enum: EnumType) -> EnumType:
 		return an_enum
 
 	func_source = dedent(inspect.getsource(an_enum))
+	func_source_tree = ast.parse(func_source)
 
-	in_docstring = False
-	base_indent = None
+	assert len(func_source_tree.body) == 1
+	module_body = func_source_tree.body[0]
+	assert isinstance(module_body, ast.ClassDef)
+	class_body = module_body.body
 
-	source_lines = func_source.split('\n')
+	for idx, node in enumerate(class_body):
+		docstring = None
+		targets = []
 
-	while source_lines[0].startswith('@'):
-		# Remove class decorators
-		source_lines.pop(0)
+		if isinstance(node, ast.Assign):
+			for t in node.targets:
+				assert isinstance(t, ast.Name)
+				targets.append(t.id)
 
-	for line in source_lines:
-
-		indent, line = get_dedented_line(line)
-
-		if line.startswith("class") or not line:
-			continue
-
-		all_tokens = get_tokens(line)
-		base_indent = get_base_indent(base_indent, all_tokens, indent)
-		# print(all_tokens)
-
-		if all_tokens[0][0] in pygments.token.Literal.String:
-			if all_tokens[0][1] in {'"""', "'''"}:  # TODO: handle the other quotes appearing in docstring
-				in_docstring = not in_docstring
-
-		if all_tokens[0][0] in pygments.token.Name and in_docstring:
-			continue
-		elif all_tokens[0][0] not in pygments.token.Name:
-			continue
+		elif isinstance(node, ast.AnnAssign):
+			assert isinstance(node.target, ast.Name)
+			targets.append(node.target.id)
 		else:
-			if indent > base_indent:  # type: ignore
-				continue
+			continue
 
-		enum_vars, doc = parse_tokens(all_tokens)
+		assert isinstance(node, (ast.Assign, ast.AnnAssign))
+		# print(targets)
 
-		# print(line)
-		# print(enum_vars)
-		# print(doc)
+		if idx + 1 == len(class_body):
+			next_node = None
+		else:
+			next_node = class_body[idx + 1]
 
-		for var in enum_vars:
-			# print(repr(var))
-			if not var.startswith('@'):
-				getattr(an_enum, var).__doc__ = doc
+		if isinstance(next_node, ast.Expr):
+			# might be docstring
+			docstring = _docstring_from_expr(next_node)
+
+		if docstring is None:
+			# no luck with """ docstring, look for EOL comment.
+			docstring = _docstring_from_eol_comment(func_source, node)
+
+		if docstring is None:
+			# check non-whitespace lines above for Sphinx-style comment.
+			docstring = _docstring_from_sphinx_comment(func_source, node)
+
+		if docstring is not None:
+			for target in targets:
+				getattr(an_enum, target).__doc__ = docstring
 
 	return an_enum
 
@@ -239,6 +359,8 @@ def get_base_indent(
 class DocumentedEnum(Enum):
 	"""
 	An enum where docstrings are automatically added to members from comments starting with ``doc:``.
+
+	.. note:: This class does not (yet) support the other docstring formats :deco:`~.document_enum` does.
 	"""
 
 	def __init__(self, value):

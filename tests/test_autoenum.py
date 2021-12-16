@@ -154,7 +154,22 @@ def test_index(page: BeautifulSoup, html_regression: HTMLRegressionFixture):
 				else:
 					assert attr.find("dt").em.contents[0] == f" = <{class_name}.Carol: 3>"
 
-				assert str(attr.find("dd").contents[0]) == "<p>A person called Carol</p>"
+				if class_count == 0:
+					assert str(attr.find("dd").contents[0]) == "<p>A person called Carol.</p>"
+					assert str(attr.find("dd").contents[1]) == '\n'
+					assert str(attr.find("dd").contents[2]) == "<p>This is a multiline docstring.</p>"
+				else:
+					assert str(attr.find("dd").contents[0]) == "<p>A person called Carol</p>"
+
+			elif attr_count == 3:
+				assert attr.find("dt")["id"] == f"enum_tools.demo.{class_name}.Dennis"
+
+				if NEW_ENUM_REPR:
+					assert attr.find("dt").em.contents[0] == f" = {class_name}.Dennis"
+				else:
+					assert attr.find("dt").em.contents[0] == f" = <{class_name}.Dennis: 4>"
+
+				assert str(attr.find("dd").contents[0]) == "<p>A person called Dennis</p>"
 
 			attr_count += 1
 
