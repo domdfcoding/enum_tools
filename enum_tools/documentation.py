@@ -67,6 +67,10 @@ def document_enum(an_enum: EnumType) -> EnumType:
 	Document all members of an enum by adding a comment to the end of each line that starts with ``doc:``.
 
 	:param an_enum: An :class:`~enum.Enum` subclass
+	:type an_enum: :class:`enum.Enum`
+
+	:returns: The same object passed as ``an_enum``. This allows this function to be used as a decorator.
+	:rtype: :class:`enum.Enum`
 	"""
 
 	if not isinstance(an_enum, EnumMeta):
