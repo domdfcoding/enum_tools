@@ -88,7 +88,7 @@ def test_member_iter_flag():
 
 def test_strenum():
 	# From https://github.com/python/cpython/pull/22337
-	# PDF License
+	# PSF License
 
 	class GoodStrEnum(StrEnum):
 		one = '1'
@@ -163,5 +163,5 @@ def test_ordered_enum():
 		apple = 1
 		orange = 2
 
-	with pytest.raises(TypeError, match="'<' not supported between instances of 'MyEnum' and 'MyEnum'"):
+	with pytest.raises(TypeError, match="'<' not supported between instances of 'MyEnum2' and 'MyEnum2'"):
 		MyEnum2.apple < MyEnum2.orange  # type: ignore[operator]
