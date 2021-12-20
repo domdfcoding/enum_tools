@@ -87,9 +87,16 @@ def get_base_object(enum: Type[HasMRO]) -> Type:
 	If the members are of indeterminate type then the :class:`object` class is returned.
 
 	:param enum:
+
+	:rtype:
+
+	:raises TypeError: If ``enum`` is not an Enum.
 	"""
 
-	mro = inspect.getmro(enum)
+	try:
+		mro = inspect.getmro(enum)
+	except AttributeError:
+		raise TypeError("not an Enum")
 
 	if Flag in mro:
 		mro = mro[:mro.index(Flag)]

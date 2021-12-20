@@ -71,7 +71,7 @@ class StatusFlags(IntFlag):
 	Stopped = 2  # doc: The system has stopped.
 	Error = 4  # doc: An error has occurred.
 
-	def has_errored(self) -> bool:
+	def has_errored(self) -> bool:  # pragma: no cover
 		"""
 		Returns whether the operation has errored.
 		"""
