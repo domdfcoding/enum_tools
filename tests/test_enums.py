@@ -5,13 +5,14 @@ test_enums
 
 # stdlib
 import sys
+from enum import Enum
 
 # 3rd party
 import pytest
 
 # this package
 from enum_tools import IntEnum, StrEnum
-from enum_tools.custom_enums import IterableFlag, IterableIntFlag
+from enum_tools.custom_enums import AutoNumberEnum, IterableFlag, IterableIntFlag, MemberDirEnum, OrderedEnum
 
 NEW_ENUM_REPR = sys.version_info >= (3, 11)
 
@@ -125,3 +126,42 @@ def test_strenum():
 		class FifthFailedStrEnum(StrEnum):
 			one = '1'
 			two = b'2', "ascii", 9
+
+
+def test_member_dir_enum():
+
+	class MyEnum(int, MemberDirEnum):
+		apple = 1
+		orange = 2
+
+	assert dir(MyEnum) == ["__class__", "__doc__", "__members__", "__module__", "apple", "orange"]
+
+
+def test_auto_number_enum():
+
+	class MyEnum(AutoNumberEnum):
+		apple = 1
+		orange = 1
+
+	assert MyEnum.apple._value_ == 1
+	assert MyEnum.orange._value_ == 2
+
+
+def test_ordered_enum():
+
+	class MyEnum(OrderedEnum):
+		apple = 1
+		orange = 2
+		strawberry = 0
+
+	assert MyEnum.apple < MyEnum.orange
+	assert MyEnum.apple <= MyEnum.orange
+	assert MyEnum.apple > MyEnum.strawberry
+	assert MyEnum.apple >= MyEnum.strawberry
+
+	class MyEnum2(Enum):
+		apple = 1
+		orange = 2
+
+	with pytest.raises(TypeError, match="'<' not supported between instances of 'MyEnum' and 'MyEnum'"):
+		MyEnum2.apple < MyEnum2.orange  # type: ignore[operator]

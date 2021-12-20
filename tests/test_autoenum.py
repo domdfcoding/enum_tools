@@ -9,7 +9,8 @@ from pathlib import Path
 
 # 3rd party
 import pytest
-from bs4 import BeautifulSoup  # type: ignore
+import sphinx
+from bs4 import BeautifulSoup, NavigableString  # type: ignore
 from pytest_regressions.file_regression import FileRegressionFixture  # type: ignore
 from sphinx_toolbox.testing import HTMLRegressionFixture
 
@@ -53,6 +54,33 @@ def test(app):
 
 # pytestmark = pytest.mark.sphinx('html', testroot='root')
 
+return_arrow = " → "
+
+
+def preprocess_soup(soup: BeautifulSoup):
+
+	if sphinx.version_info >= (3, 5):  # pragma: no cover
+		for em in soup.select("em.property"):
+			child = ''.join(c.string for c in em.contents)
+			for c in em.children:
+				c.extract()
+			em.contents = []
+			em.insert(0, child)
+
+		for dl in soup.select("dl.py.method dt"):  # .sig.sig-object.py
+			if return_arrow in dl.contents:
+				arrow_idx = dl.contents.index(return_arrow)
+				dl.contents[arrow_idx] = NavigableString(
+						dl.contents[arrow_idx] + dl.contents[arrow_idx + 1].contents[0]
+						)
+				dl.contents[arrow_idx + 1].extract()
+
+	for dt in soup.select("span.pre"):
+		dt.replace_with_children()
+
+	for dt in soup.select("span.sig-return"):
+		dt.replace_with(NavigableString(dt.get_text()))
+
 
 @pytest.mark.parametrize(
 		"page", [
@@ -63,6 +91,8 @@ def test_index(page: BeautifulSoup, html_regression: HTMLRegressionFixture):
 	# Make sure the page title is what you expect
 	title = page.find("h1").contents[0].strip()
 	assert "autoenum Demo" == title
+
+	preprocess_soup(page)
 
 	html_regression.check(page, jinja2=True)
 
@@ -81,10 +111,8 @@ def test_index(page: BeautifulSoup, html_regression: HTMLRegressionFixture):
 			assert class_.find("dt")["id"] == "enum_tools.demo.NoMethods"
 			assert class_.find("dd").findAll('p')[0].contents[0] == "An enumeration of people without any methods."
 
-		assert str(class_.find("dd").findAll('p')[1].contents[0]) == (
-				'<code class="xref py py-class docutils literal notranslate">'
-				'<span class="pre">int</span></code>'
-				)
+		tag = '<code class="xref py py-class docutils literal notranslate">int</code>'
+		assert str(class_.find("dd").findAll('p')[1].contents[0]) == tag
 		assert class_.find("dd").findAll('p')[2].contents[0] == "Valid values are as follows:"
 
 		attr_count = 0
@@ -147,6 +175,8 @@ def test_flag(page: BeautifulSoup, html_regression: HTMLRegressionFixture):
 	title = page.find("h1").contents[0].strip()
 	assert "autoenum Demo - Flag" == title
 
+	preprocess_soup(page)
+
 	html_regression.check(page, jinja2=True)
 
 	# Now test the directive
@@ -164,10 +194,8 @@ def test_flag(page: BeautifulSoup, html_regression: HTMLRegressionFixture):
 
 		assert class_.find("dd").findAll('p')[0].contents[0] == "An enumeration of status codes."
 
-		assert str(class_.find("dd").findAll('p')[1].contents[0]) == (
-				'<code class="xref py py-class docutils literal notranslate">'
-				'<span class="pre">int</span></code>'
-				)
+		tag = '<code class="xref py py-class docutils literal notranslate">int</code>'
+		assert str(class_.find("dd").findAll('p')[1].contents[0]) == tag
 		assert class_.find("dd").findAll('p')[2].contents[0] == "Valid values are as follows:"
 
 		attr_count = 0
@@ -232,6 +260,8 @@ def test_no_member_doc(page: BeautifulSoup, html_regression: HTMLRegressionFixtu
 	title = page.find("h1").contents[0].strip()
 	assert "autoenum Demo - Members without docstrings" == title
 
+	preprocess_soup(page)
+
 	html_regression.check(page, jinja2=True)
 
 	# Now test the directive
@@ -247,10 +277,8 @@ def test_no_member_doc(page: BeautifulSoup, html_regression: HTMLRegressionFixtu
 				0] == "An enumeration of people without any member docstrings."
 
 		if class_count == 0:
-			assert str(class_.find("dd").findAll('p')[1].contents[0]) == (
-					'<code class="xref py py-class docutils literal notranslate">'
-					'<span class="pre">int</span></code>'
-					)
+			tag = '<code class="xref py py-class docutils literal notranslate">int</code>'
+			assert str(class_.find("dd").findAll('p')[1].contents[0]) == tag
 			assert class_.find("dd").findAll('p')[2].contents[0] == "Valid values are as follows:"
 		else:
 			assert class_.find("dd").findAll('p')[1].contents[0] == "Valid values are as follows:"
