@@ -54,7 +54,7 @@ A Sphinx directive for documenting :class:`Enums <enum.Enum>` in Python.
 # stdlib
 from contextlib import suppress
 from enum import Enum
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, List, Optional, Tuple, get_type_hints
 
 # 3rd party
 from docutils.nodes import Element  # nodep
@@ -62,9 +62,18 @@ from sphinx.application import Sphinx  # nodep
 from sphinx.domains import ObjType  # nodep
 from sphinx.domains.python import PyClasslike, PyXRefRole  # nodep
 from sphinx.environment import BuildEnvironment  # nodep
-from sphinx.ext.autodoc import ALL, INSTANCEATTR, AttributeDocumenter, ClassDocumenter, Documenter  # nodep
+from sphinx.ext.autodoc import (  # nodep
+		ALL,
+		INSTANCEATTR,
+		SUPPRESS,
+		AttributeDocumenter,
+		ClassDocumenter,
+		ClassLevelDocumenter,
+		Documenter
+		)
 from sphinx.locale import _  # nodep
-from sphinx.util.inspect import object_description  # nodep
+from sphinx.util.inspect import memory_address_re, safe_getattr  # nodep
+from sphinx.util.typing import stringify as stringify_typehint  # nodep
 from sphinx_toolbox.more_autodoc.typehints import format_annotation  # nodep
 from sphinx_toolbox.utils import begin_generate  # nodep
 
@@ -321,7 +330,6 @@ class EnumMemberDocumenter(AttributeDocumenter):
 		.. latex:clearpage::
 		"""
 
-		self._datadescriptor = False
 		return Documenter.import_object(self, raiseerror=raiseerror)
 
 	def generate(
@@ -366,12 +374,40 @@ class EnumMemberDocumenter(AttributeDocumenter):
 		:param sig:
 		"""
 
-		super().add_directive_header(sig)
+		ClassLevelDocumenter.add_directive_header(self, sig)
+		sourcename = self.get_sourcename()
+		if not self.options.annotation:
+			# obtain type annotation for this attribute
+			try:
+				annotations = get_type_hints(self.parent)
+			except NameError:
+				# Failed to evaluate ForwardRef (maybe TYPE_CHECKING)
+				annotations = safe_getattr(self.parent, "__annotations__", {})
+			except (TypeError, KeyError, AttributeError):
+				# KeyError = a broken class found (refs: https://github.com/sphinx-doc/sphinx/issues/8084)
+				# AttributeError is raised on 3.5.2 (fixed by 3.5.3)
+				annotations = {}
+
+			if self.objpath[-1] in annotations:
+				objrepr = stringify_typehint(annotations.get(self.objpath[-1]))
+				self.add_line("   :type: " + objrepr, sourcename)
+			else:
+				key = ('.'.join(self.objpath[:-1]), self.objpath[-1])
+				if self.analyzer and key in self.analyzer.annotations:
+					self.add_line("   :type: " + self.analyzer.annotations[key], sourcename)
+
+		elif self.options.annotation is SUPPRESS:
+			pass
+		else:
+			self.add_line("   :annotation: %s" % self.options.annotation, sourcename)
 
 		if not self.options.annotation:
-			with suppress(ValueError):
+			with suppress(Exception):
 				if self.object is not INSTANCEATTR:
-					objrepr = object_description(self.object)
+
+					# Workaround for https://github.com/sphinx-doc/sphinx/issues/9272
+					# which broke Enum displays in 4.1.0
+					objrepr = memory_address_re.sub('', repr(self.object)).replace('\n', ' ')
 					self.add_line(f'   :value: {objrepr}', self.get_sourcename())
 
 

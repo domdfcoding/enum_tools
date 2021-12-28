@@ -1,4 +1,5 @@
-{% set NEW_ENUM_REPR = python_version >= (3, 11) -%}
+{% set sig_prename_tag=("span" if sphinx_version >= (4, 0) else 'code') -%}
+{% set sig_object_class=(' class="sig sig-object py"' if sphinx_version >= (4, 0) else '') -%}
 <!DOCTYPE html>
 <html>
  <head>
@@ -30,16 +31,16 @@
         </a>
        </h1>
        <dl class="py flag">
-        <dt id="enum_tools.demo.StatusFlags">
+        <dt{{ sig_object_class }} id="enum_tools.demo.StatusFlags">
          <em class="property">
           flag
          </em>
-         <code class="sig-prename descclassname">
+         <{{ sig_prename_tag }} class="sig-prename descclassname">
           enum_tools.demo.
-         </code>
-         <code class="sig-name descname">
+         </{{ sig_prename_tag }}>
+         <{{ sig_prename_tag }} class="sig-name descname">
           StatusFlags
-         </code>
+         </{{ sig_prename_tag }}>
          <span class="sig-paren">
           (
          </span>
@@ -66,9 +67,7 @@
           <dd class="field-odd">
            <p>
             <code class="xref py py-class docutils literal notranslate">
-             <span class="pre">
-              int
-             </span>
+             int
             </code>
            </p>
           </dd>
@@ -77,10 +76,10 @@
           Valid values are as follows:
          </p>
          <dl class="py attribute">
-          <dt id="enum_tools.demo.StatusFlags.Running">
-           <code class="sig-name descname">
+          <dt{{ sig_object_class }} id="enum_tools.demo.StatusFlags.Running">
+           <{{ sig_prename_tag }} class="sig-name descname">
             Running
-           </code>
+           </{{ sig_prename_tag }}>
            <em class="property">
             = {% if NEW_ENUM_REPR %}StatusFlags.Running{% else %}&lt;StatusFlags.Running: 1&gt;{% endif %}
            </em>
@@ -95,10 +94,10 @@
           </dd>
          </dl>
          <dl class="py attribute">
-          <dt id="enum_tools.demo.StatusFlags.Stopped">
-           <code class="sig-name descname">
+          <dt{{ sig_object_class }} id="enum_tools.demo.StatusFlags.Stopped">
+           <{{ sig_prename_tag }} class="sig-name descname">
             Stopped
-           </code>
+           </{{ sig_prename_tag }}>
            <em class="property">
             = {% if NEW_ENUM_REPR %}StatusFlags.Stopped{% else %}&lt;StatusFlags.Stopped: 2&gt;{% endif %}
            </em>
@@ -113,10 +112,10 @@
           </dd>
          </dl>
          <dl class="py attribute">
-          <dt id="enum_tools.demo.StatusFlags.Error">
-           <code class="sig-name descname">
+          <dt{{ sig_object_class }} id="enum_tools.demo.StatusFlags.Error">
+           <{{ sig_prename_tag }} class="sig-name descname">
             Error
-           </code>
+           </{{ sig_prename_tag }}>
            <em class="property">
             = {% if NEW_ENUM_REPR %}StatusFlags.Error{% else %}&lt;StatusFlags.Error: 4&gt;{% endif %}
            </em>
@@ -133,17 +132,15 @@
          <p>
           The
           <code class="xref py py-class docutils literal notranslate">
-           <span class="pre">
-            Flag
-           </span>
+           Flag
           </code>
           and its members also have the following methods:
          </p>
          <dl class="py method">
-          <dt id="enum_tools.demo.StatusFlags.has_errored">
-           <code class="sig-name descname">
+          <dt{{ sig_object_class }} id="enum_tools.demo.StatusFlags.has_errored">
+           <{{ sig_prename_tag }} class="sig-name descname">
             has_errored
-           </code>
+           </{{ sig_prename_tag }}>
            <span class="sig-paren">
             (
            </span>
@@ -166,16 +163,16 @@
        <span class="target" id="module-enum_tools.demo">
        </span>
        <dl class="py flag">
-        <dt id="id0">
+        <dt{{ sig_object_class }} id="id0">
          <em class="property">
           flag
          </em>
-         <code class="sig-prename descclassname">
+         <{{ sig_prename_tag }} class="sig-prename descclassname">
           enum_tools.demo.
-         </code>
-         <code class="sig-name descname">
+         </{{ sig_prename_tag }}>
+         <{{ sig_prename_tag }} class="sig-name descname">
           StatusFlags
-         </code>
+         </{{ sig_prename_tag }}>
          <span class="sig-paren">
           (
          </span>
@@ -202,9 +199,7 @@
           <dd class="field-odd">
            <p>
             <code class="xref py py-class docutils literal notranslate">
-             <span class="pre">
-              int
-             </span>
+             int
             </code>
            </p>
           </dd>
@@ -213,10 +208,10 @@
           Valid values are as follows:
          </p>
          <dl class="py attribute">
-          <dt id="id1">
-           <code class="sig-name descname">
+          <dt{{ sig_object_class }} id="id1">
+           <{{ sig_prename_tag }} class="sig-name descname">
             Running
-           </code>
+           </{{ sig_prename_tag }}>
            <em class="property">
             = {% if NEW_ENUM_REPR %}StatusFlags.Running{% else %}&lt;StatusFlags.Running: 1&gt;{% endif %}
            </em>
@@ -231,10 +226,10 @@
           </dd>
          </dl>
          <dl class="py attribute">
-          <dt id="id2">
-           <code class="sig-name descname">
+          <dt{{ sig_object_class }} id="id2">
+           <{{ sig_prename_tag }} class="sig-name descname">
             Stopped
-           </code>
+           </{{ sig_prename_tag }}>
            <em class="property">
             = {% if NEW_ENUM_REPR %}StatusFlags.Stopped{% else %}&lt;StatusFlags.Stopped: 2&gt;{% endif %}
            </em>
@@ -249,10 +244,10 @@
           </dd>
          </dl>
          <dl class="py attribute">
-          <dt id="id3">
-           <code class="sig-name descname">
+          <dt{{ sig_object_class }} id="id3">
+           <{{ sig_prename_tag }} class="sig-name descname">
             Error
-           </code>
+           </{{ sig_prename_tag }}>
            <em class="property">
             = {% if NEW_ENUM_REPR %}StatusFlags.Error{% else %}&lt;StatusFlags.Error: 4&gt;{% endif %}
            </em>
@@ -269,17 +264,15 @@
          <p>
           The
           <code class="xref py py-class docutils literal notranslate">
-           <span class="pre">
-            Flag
-           </span>
+           Flag
           </code>
           and its members also have the following methods:
          </p>
          <dl class="py method">
-          <dt id="id4">
-           <code class="sig-name descname">
+          <dt{{ sig_object_class }} id="id4">
+           <{{ sig_prename_tag }} class="sig-name descname">
             has_errored
-           </code>
+           </{{ sig_prename_tag }}>
            <span class="sig-paren">
             (
            </span>

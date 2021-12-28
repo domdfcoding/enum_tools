@@ -1,4 +1,5 @@
-{% set NEW_ENUM_REPR = python_version >= (3, 11) -%}
+{% set sig_prename_tag=("span" if sphinx_version >= (4, 0) else 'code') -%}
+{% set sig_object_class=(' class="sig sig-object py"' if sphinx_version >= (4, 0) else '') -%}
 <!DOCTYPE html>
 <html>
  <head>
@@ -30,16 +31,16 @@
         </a>
        </h1>
        <dl class="py enum">
-        <dt id="enum_tools.demo.NoMemberDoc">
+        <dt{{ sig_object_class }} id="enum_tools.demo.NoMemberDoc">
          <em class="property">
           enum
          </em>
-         <code class="sig-prename descclassname">
+         <{{ sig_prename_tag }} class="sig-prename descclassname">
           enum_tools.demo.
-         </code>
-         <code class="sig-name descname">
+         </{{ sig_prename_tag }}>
+         <{{ sig_prename_tag }} class="sig-name descname">
           NoMemberDoc
-         </code>
+         </{{ sig_prename_tag }}>
          <span class="sig-paren">
           (
          </span>
@@ -66,9 +67,7 @@
           <dd class="field-odd">
            <p>
             <code class="xref py py-class docutils literal notranslate">
-             <span class="pre">
-              int
-             </span>
+             int
             </code>
            </p>
           </dd>
@@ -77,10 +76,10 @@
           Valid values are as follows:
          </p>
          <dl class="py attribute">
-          <dt id="enum_tools.demo.NoMemberDoc.Bob">
-           <code class="sig-name descname">
+          <dt{{ sig_object_class }} id="enum_tools.demo.NoMemberDoc.Bob">
+           <{{ sig_prename_tag }} class="sig-name descname">
             Bob
-           </code>
+           </{{ sig_prename_tag }}>
            <em class="property">
             = {% if NEW_ENUM_REPR %}NoMemberDoc.Bob{% else %}&lt;NoMemberDoc.Bob: 1&gt;{% endif %}
            </em>
@@ -92,10 +91,10 @@
           </dd>
          </dl>
          <dl class="py attribute">
-          <dt id="enum_tools.demo.NoMemberDoc.Alice">
-           <code class="sig-name descname">
+          <dt{{ sig_object_class }} id="enum_tools.demo.NoMemberDoc.Alice">
+           <{{ sig_prename_tag }} class="sig-name descname">
             Alice
-           </code>
+           </{{ sig_prename_tag }}>
            <em class="property">
             = {% if NEW_ENUM_REPR %}NoMemberDoc.Alice{% else %}&lt;NoMemberDoc.Alice: 2&gt;{% endif %}
            </em>
@@ -107,10 +106,10 @@
           </dd>
          </dl>
          <dl class="py attribute">
-          <dt id="enum_tools.demo.NoMemberDoc.Carol">
-           <code class="sig-name descname">
+          <dt{{ sig_object_class }} id="enum_tools.demo.NoMemberDoc.Carol">
+           <{{ sig_prename_tag }} class="sig-name descname">
             Carol
-           </code>
+           </{{ sig_prename_tag }}>
            <em class="property">
             = {% if NEW_ENUM_REPR %}NoMemberDoc.Carol{% else %}&lt;NoMemberDoc.Carol: 3&gt;{% endif %}
            </em>
@@ -126,9 +125,7 @@
        <p>
         <a class="reference internal" href="#enum_tools.demo.NoMemberDoc.Alice" title="enum_tools.demo.NoMemberDoc.Alice">
          <code class="xref py py-enum:mem docutils literal notranslate">
-          <span class="pre">
-           enum_tools.demo.NoMemberDoc.Alice
-          </span>
+          enum_tools.demo.NoMemberDoc.Alice
          </code>
         </a>
        </p>
