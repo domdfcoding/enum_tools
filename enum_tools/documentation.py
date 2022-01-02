@@ -29,6 +29,7 @@ import inspect
 import re
 import sys
 import tokenize
+import warnings
 from enum import Enum, EnumMeta
 from textwrap import dedent
 from typing import Iterable, List, Optional, Sequence, Tuple, TypeVar, Union
@@ -45,6 +46,7 @@ __all__ = [
 		"get_base_indent",
 		"DocumentedEnum",
 		"get_dedented_line",
+		"MultipleDocstringsWarning",
 		]
 
 _lexer = PythonLexer()
@@ -152,6 +154,35 @@ def _tokenize_line(line: str) -> List[tokenize.TokenInfo]:
 	return list(tokenize.generate_tokens(yielder().__next__))
 
 
+class MultipleDocstringsWarning(UserWarning):
+	"""
+	Warning emitted when multiple docstrings are found for a single Enum member.
+
+	.. versionadded:: $VERSION
+
+	:param member:
+	:param docstrings: The list of docstrings found for the member.
+	"""
+
+	#: The member with multiple docstrings.
+	member: Enum
+
+	#: The list of docstrings found for the member.
+	docstrings: Iterable[str]
+
+	def __init__(self, member: Enum, docstrings: Iterable[str] = ()):
+		self.member = member
+		self.docstrings = docstrings
+
+	def __str__(self) -> str:
+		member_full_name = '.'.join([
+				self.member.__class__.__module__,
+				self.member.__class__.__name__,
+				self.member.name,
+				])
+		return f"Found multiple docstrings for enum member <{member_full_name}>"
+
+
 def document_enum(an_enum: EnumType) -> EnumType:
 	"""
 	Document all members of an enum by parsing a docstring from the Python source..
@@ -171,7 +202,7 @@ def document_enum(an_enum: EnumType) -> EnumType:
 	       #: The system is running.
 	       Running = 1
 
-	#. A string on the next line. This can be used for multiline docstrings.
+	#. A string on the line *after* the attribute. This can be used for multiline docstrings.
 
 	   .. code-block:: python
 
@@ -181,6 +212,9 @@ def document_enum(an_enum: EnumType) -> EnumType:
 
 	       Hello World
 	       \"\"\"
+
+	If more than one docstring format is found for an enum member
+	a :exc:`MultipleDocstringsWarning` is emitted.
 
 	:param an_enum: An :class:`~enum.Enum` subclass
 	:type an_enum: :class:`enum.Enum`
@@ -206,7 +240,6 @@ def document_enum(an_enum: EnumType) -> EnumType:
 	class_body = module_body.body
 
 	for idx, node in enumerate(class_body):
-		docstring = None
 		targets = []
 
 		if isinstance(node, ast.Assign):
@@ -228,19 +261,26 @@ def document_enum(an_enum: EnumType) -> EnumType:
 		else:
 			next_node = class_body[idx + 1]
 
+		docstring_candidates = []
+
 		if isinstance(next_node, ast.Expr):
 			# might be docstring
-			docstring = _docstring_from_expr(next_node)
+			docstring_candidates.append(_docstring_from_expr(next_node))
 
-		if docstring is None:
-			# no luck with """ docstring, look for EOL comment.
-			docstring = _docstring_from_eol_comment(func_source, node)
+		# maybe no luck with """ docstring? look for EOL comment.
+		docstring_candidates.append(_docstring_from_eol_comment(func_source, node))
 
-		if docstring is None:
-			# check non-whitespace lines above for Sphinx-style comment.
-			docstring = _docstring_from_sphinx_comment(func_source, node)
+		# check non-whitespace lines above for Sphinx-style comment.
+		docstring_candidates.append(_docstring_from_sphinx_comment(func_source, node))
 
-		if docstring is not None:
+		docstring_candidates_nn = list(filter(None, docstring_candidates))
+		if len(docstring_candidates_nn) > 1:
+			# Multiple docstrings found, warn
+			warnings.warn(MultipleDocstringsWarning(getattr(an_enum, targets[0]), docstring_candidates_nn))
+
+		if docstring_candidates_nn:
+			docstring = docstring_candidates_nn[0]
+
 			for target in targets:
 				getattr(an_enum, target).__doc__ = docstring
 

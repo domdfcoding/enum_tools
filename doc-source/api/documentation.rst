@@ -35,3 +35,8 @@ Utilities
 .. autofunction:: enum_tools.documentation.get_tokens
 
 .. autofunction:: enum_tools.documentation.parse_tokens
+
+Warnings
+--------------------
+
+.. autoexception:: enum_tools.documentation.MultipleDocstringsWarning

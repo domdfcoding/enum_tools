@@ -1,6 +1,7 @@
 # stdlib
 import math
 import sys
+import warnings
 from decimal import Decimal
 from enum import Enum
 from pathlib import Path
@@ -10,7 +11,7 @@ import pytest
 
 # this package
 import enum_tools.documentation
-from enum_tools.documentation import DocumentedEnum, document_enum
+from enum_tools.documentation import DocumentedEnum, MultipleDocstringsWarning, document_enum
 
 enum_tools.documentation.INTERACTIVE = True
 NEW_ENUM_REPR = sys.version_info >= (3, 11)
@@ -181,3 +182,37 @@ def test_document_enum_not_interactive():
 	assert list(People.iter_values()) == [1, 2, 3]
 
 	enum_tools.documentation.INTERACTIVE = interactive_last_value
+
+
+# yapf: disable
+def test_multiple_docstring_warning():
+	with pytest.warns(UserWarning) as record:
+
+		@document_enum
+		class ModeOfTransport(Enum):
+			feeder = "feeder"  # doc: A feeder vessel is a rather small vessel sent by a ship operator and moves in the region
+
+			"""A deep sea vessel is a rather large vessel sent by a ship operator and moves between distant regions, e.g.
+			continents."""
+			deep_sea_vessel = "deep_sea_vessel"
+
+# yapf: enable
+
+	assert len(record) == 1
+	warningmsg: warnings.WarningMessage = record[0]
+	assert isinstance(warningmsg.message, MultipleDocstringsWarning)
+	assert warningmsg.message.member is ModeOfTransport.feeder
+	assert warningmsg.message.docstrings == [
+			"A deep sea vessel is a rather large vessel sent by a ship operator and moves between distant regions, "
+			"e.g.\ncontinents.",
+			"A feeder vessel is a rather small vessel sent by a ship operator and moves in the region",
+			]
+
+	# Strictly this is indeterminate and the order shouldn't be relied on;
+	# it's an implementation detail that the priority is what it is
+	assert ModeOfTransport.feeder.__doc__ == (
+			"A deep sea vessel is a rather large vessel sent by a ship operator and moves between distant regions, "
+			"e.g.\ncontinents."
+			)
+
+	assert ModeOfTransport.deep_sea_vessel.__doc__ == "An enumeration."
