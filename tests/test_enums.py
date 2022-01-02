@@ -164,4 +164,4 @@ def test_ordered_enum():
 		orange = 2
 
 	with pytest.raises(TypeError, match="'<' not supported between instances of 'MyEnum2' and 'MyEnum2'"):
-		MyEnum2.apple < MyEnum2.orange  # type: ignore[operator]
+		MyEnum2.apple < MyEnum2.orange  # type: ignore[operator]  # pylint: disable=pointless-statement
