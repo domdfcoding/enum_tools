@@ -347,6 +347,11 @@ class EnumMemberDocumenter(AttributeDocumenter):
 		:param check_module: If :py:obj:`True`, only generate if the object is defined in
 			the module name it is imported from.
 		:param all_members: If :py:obj:`True`, document all members.
+
+
+		.. versionchanged:: $VERSION
+
+			Multiline docstrings are now correctly represented in the generated output.
 		"""
 
 		ret = begin_generate(self, real_modname, check_module)
@@ -364,7 +369,9 @@ class EnumMemberDocumenter(AttributeDocumenter):
 
 		# Add the value's docstring
 		if self.object.__doc__ and self.object.__doc__ != self.object.__class__.__doc__:
-			self.add_line(self.object.__doc__, sourcename)
+			# Lines of multiline docstrings need to be added one by one.
+			for line in self.object.__doc__.splitlines():
+				self.add_line(line, sourcename)
 			self.add_line('', sourcename)
 
 	def add_directive_header(self, sig: str) -> None:

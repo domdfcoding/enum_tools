@@ -1,6 +1,7 @@
 # stdlib
 import math
 import sys
+import warnings
 from decimal import Decimal
 from enum import Enum
 from pathlib import Path
@@ -10,7 +11,7 @@ import pytest
 
 # this package
 import enum_tools.documentation
-from enum_tools.documentation import DocumentedEnum, document_enum
+from enum_tools.documentation import DocumentedEnum, MultipleDocstringsWarning, document_enum
 
 enum_tools.documentation.INTERACTIVE = True
 NEW_ENUM_REPR = sys.version_info >= (3, 11)
@@ -24,11 +25,20 @@ class People(int, Enum):
 
 	Bob = bob = 1  # noqa  # doc: A person called Bob  # doc: another doc # isort: ignore
 	Alice = 2  # doc: A person called Alice
-	Carol = 3  # doc: A person called Carol
+	Carol = 3
+	"""
+	A person called Carol.
+
+	This is a multiline docstring.
+	"""
 
 	@classmethod
 	def iter_values(cls):
 		return iter(cls)
+
+	#: A person called Dennis
+
+	Dennis = 4
 
 
 # This is a dummy function to test mypy
@@ -60,12 +70,18 @@ def test_people():
 	assert isinstance(People.Carol, People)
 	assert isinstance(People.Carol, int)
 	assert repr(People.Carol) == "People.Carol" if NEW_ENUM_REPR else "<People.Carol: 3>"
-	assert People.Carol.__doc__ == "A person called Carol"
+	assert People.Carol.__doc__ == "A person called Carol.\n\nThis is a multiline docstring."
 
-	assert list(iter(People)) == [People.Bob, People.Alice, People.Carol]
-	assert list(iter(People)) == [1, 2, 3]
-	assert list(People.iter_values()) == [People.Bob, People.Alice, People.Carol]
-	assert list(People.iter_values()) == [1, 2, 3]
+	assert People.Dennis == 4
+	assert isinstance(People.Dennis, People)
+	assert isinstance(People.Dennis, int)
+	assert repr(People.Dennis) == "People.Dennis" if NEW_ENUM_REPR else "<People.Dennis: 4>"
+	assert People.Dennis.__doc__ == "A person called Dennis"
+
+	assert list(iter(People)) == [People.Bob, People.Alice, People.Carol, People.Dennis]
+	assert list(iter(People)) == [1, 2, 3, 4]
+	assert list(People.iter_values()) == [People.Bob, People.Alice, People.Carol, People.Dennis]
+	assert list(People.iter_values()) == [1, 2, 3, 4]
 
 
 class MyEnum(str, DocumentedEnum):
@@ -166,3 +182,37 @@ def test_document_enum_not_interactive():
 	assert list(People.iter_values()) == [1, 2, 3]
 
 	enum_tools.documentation.INTERACTIVE = interactive_last_value
+
+
+# yapf: disable
+def test_multiple_docstring_warning():
+	with pytest.warns(UserWarning) as record:
+
+		@document_enum
+		class ModeOfTransport(Enum):
+			feeder = "feeder"  # doc: A feeder vessel is a rather small vessel sent by a ship operator and moves in the region
+
+			"""A deep sea vessel is a rather large vessel sent by a ship operator and moves between distant regions, e.g.
+			continents."""
+			deep_sea_vessel = "deep_sea_vessel"
+
+# yapf: enable
+
+	assert len(record) == 1
+	warningmsg: warnings.WarningMessage = record[0]
+	assert isinstance(warningmsg.message, MultipleDocstringsWarning)
+	assert warningmsg.message.member is ModeOfTransport.feeder
+	assert warningmsg.message.docstrings == [
+			"A deep sea vessel is a rather large vessel sent by a ship operator and moves between distant regions, "
+			"e.g.\ncontinents.",
+			"A feeder vessel is a rather small vessel sent by a ship operator and moves in the region",
+			]
+
+	# Strictly this is indeterminate and the order shouldn't be relied on;
+	# it's an implementation detail that the priority is what it is
+	assert ModeOfTransport.feeder.__doc__ == (
+			"A deep sea vessel is a rather large vessel sent by a ship operator and moves between distant regions, "
+			"e.g.\ncontinents."
+			)
+
+	assert ModeOfTransport.deep_sea_vessel.__doc__ == "An enumeration."
