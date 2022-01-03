@@ -349,7 +349,7 @@ class EnumMemberDocumenter(AttributeDocumenter):
 		:param all_members: If :py:obj:`True`, document all members.
 
 
-		.. versionchanged:: $VERSION
+		.. versionchanged:: 0.8.0
 
 			Multiline docstrings are now correctly represented in the generated output.
 		"""

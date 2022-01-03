@@ -158,7 +158,7 @@ class MultipleDocstringsWarning(UserWarning):
 	"""
 	Warning emitted when multiple docstrings are found for a single Enum member.
 
-	.. versionadded:: $VERSION
+	.. versionadded:: 0.8.0
 
 	:param member:
 	:param docstrings: The list of docstrings found for the member.
@@ -222,7 +222,7 @@ def document_enum(an_enum: EnumType) -> EnumType:
 	:returns: The same object passed as ``an_enum``. This allows this function to be used as a decorator.
 	:rtype: :class:`enum.Enum`
 
-	.. versionchanged:: $VERSION  Added support for other docstring formats and multiline docstrings.
+	.. versionchanged:: 0.8.0  Added support for other docstring formats and multiline docstrings.
 	"""
 
 	if not isinstance(an_enum, EnumMeta):
