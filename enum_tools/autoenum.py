@@ -62,6 +62,7 @@ from sphinx.application import Sphinx  # nodep
 from sphinx.domains import ObjType  # nodep
 from sphinx.domains.python import PyClasslike, PyXRefRole  # nodep
 from sphinx.environment import BuildEnvironment  # nodep
+from sphinx.errors import PycodeError  # nodep
 from sphinx.ext.autodoc import (  # nodep
 		ALL,
 		INSTANCEATTR,
@@ -69,13 +70,15 @@ from sphinx.ext.autodoc import (  # nodep
 		AttributeDocumenter,
 		ClassDocumenter,
 		ClassLevelDocumenter,
-		Documenter
+		Documenter,
+		logger
 		)
 from sphinx.locale import _  # nodep
+from sphinx.pycode import ModuleAnalyzer  # nodep
 from sphinx.util.inspect import memory_address_re, safe_getattr  # nodep
 from sphinx.util.typing import stringify as stringify_typehint  # nodep
 from sphinx_toolbox.more_autodoc.typehints import format_annotation  # nodep
-from sphinx_toolbox.utils import begin_generate  # nodep
+from sphinx_toolbox.utils import unknown_module_warning  # nodep
 
 # this package
 from enum_tools import __version__, documentation
@@ -84,6 +87,83 @@ from enum_tools.utils import get_base_object, is_enum, is_flag
 __all__ = ["EnumDocumenter", "EnumMemberDocumenter", "setup", "FlagDocumenter", "PyEnumXRefRole"]
 
 documentation.INTERACTIVE = True
+
+
+def _begin_generate(
+		documenter: Documenter,
+		real_modname: Optional[str] = None,
+		check_module: bool = False,
+		) -> Optional[str]:
+	"""
+	Boilerplate for the top of ``generate`` in :class:`sphinx.ext.autodoc.Documenter` subclasses.
+
+	:param documenter:
+	:param real_modname:
+	:param check_module:
+
+	:return: The ``sourcename``, or :py:obj:`None` if certain conditions are met,
+		to indicate that the Documenter class should exit early.
+	"""
+
+	# Do not pass real_modname and use the name from the __module__
+	# attribute of the class.
+	# If a class gets imported into the module real_modname
+	# the analyzer won't find the source of the class, if
+	# it looks in real_modname.
+
+	if not documenter.parse_name():
+		# need a module to import
+		unknown_module_warning(documenter)
+		return None
+
+	# now, import the module and get object to document
+	if not documenter.import_object():
+		return None
+
+	# If there is no real module defined, figure out which to use.
+	# The real module is used in the module analyzer to look up the module
+	# where the attribute documentation would actually be found in.
+	# This is used for situations where you have a module that collects the
+	# functions and classes of internal submodules.
+	guess_modname = documenter.get_real_modname()
+	documenter.real_modname = real_modname or guess_modname
+
+	# try to also get a source code analyzer for attribute docs
+	try:
+		documenter.analyzer = ModuleAnalyzer.for_module(documenter.real_modname)
+		# parse right now, to get PycodeErrors on parsing (results will
+		# be cached anyway)
+		documenter.analyzer.find_attr_docs()
+
+	except PycodeError as err:  # pragma: no cover
+		logger.debug("[autodoc] module analyzer failed: %s", err)
+		# no source file -- e.g. for builtin and C modules
+		documenter.analyzer = None  # type: ignore
+		# at least add the module.__file__ as a dependency
+		if hasattr(documenter.module, "__file__") and documenter.module.__file__:
+			documenter.directive.filename_set.add(documenter.module.__file__)
+	else:
+		documenter.directive.filename_set.add(documenter.analyzer.srcname)
+
+	if documenter.real_modname != guess_modname:
+		# Add module to dependency list if target object is defined in other module.
+		with suppress(PycodeError):
+			analyzer = ModuleAnalyzer.for_module(guess_modname)
+			documenter.directive.filename_set.add(analyzer.srcname)
+
+	# check __module__ of object (for members not given explicitly)
+	if check_module:
+		if not documenter.check_module():
+			return None
+
+	sourcename = documenter.get_sourcename()
+
+	# make sure that the result starts with an empty line.  This is
+	# necessary for some situations where another directive preprocesses
+	# reST and no starting newline is present
+	documenter.add_line('', sourcename)
+
+	return sourcename
 
 
 class EnumDocumenter(ClassDocumenter):
@@ -259,9 +339,10 @@ class EnumDocumenter(ClassDocumenter):
 		:param all_members: If :py:obj:`True`, document all members.
 		"""
 
-		ret = begin_generate(self, real_modname, check_module)
+		ret = _begin_generate(self, real_modname, check_module)
 		if ret is None:
 			return
+
 		sourcename = ret
 
 		# Set sourcename as instance variable to avoid passing it around; it will get deleted later
@@ -354,7 +435,7 @@ class EnumMemberDocumenter(AttributeDocumenter):
 			Multiline docstrings are now correctly represented in the generated output.
 		"""
 
-		ret = begin_generate(self, real_modname, check_module)
+		ret = _begin_generate(self, real_modname, check_module)
 		if ret is None:
 			return
 
