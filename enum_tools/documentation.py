@@ -25,6 +25,8 @@ Decorators to add docstrings to enum members from comments.
 
 # stdlib
 import ast
+import enum
+import functools
 import inspect
 import re
 import sys
@@ -35,6 +37,7 @@ from textwrap import dedent
 from typing import Iterable, List, Optional, Sequence, Tuple, TypeVar, Union
 
 # 3rd party
+import deprecation
 import pygments.token  # type: ignore
 from pygments.lexers.python import PythonLexer  # type: ignore
 
@@ -55,12 +58,17 @@ INTERACTIVE = bool(getattr(sys, "ps1", sys.flags.interactive))
 
 EnumType = TypeVar("EnumType", bound=EnumMeta)
 
+_version = "0.9.0"
 
-def get_tokens(line: str) -> List[Tuple]:
+
+@deprecation.deprecated("v0.9.0", "v1.0.0", _version)
+def get_tokens(line: str) -> List[Tuple]:  # pragma: no cover
 	"""
 	Returns a list ot tokens generated from the given Python code.
 
 	:param line: Line of Python code to tokenise.
+
+	:rtype:
 	"""
 
 	return list(_lexer.get_tokens(line))
@@ -141,6 +149,7 @@ def _docstring_from_sphinx_comment(
 	return None
 
 
+@functools.lru_cache()
 def _tokenize_line(line: str) -> List[tokenize.TokenInfo]:
 	"""
 	Tokenize a single line of Python source code.
@@ -181,6 +190,53 @@ class MultipleDocstringsWarning(UserWarning):
 				self.member.name,
 				])
 		return f"Found multiple docstrings for enum member <{member_full_name}>"
+
+
+def _find_docstring(
+		func_source,
+		node: Union[ast.Assign, ast.AnnAssign],
+		next_node: ast.stmt,
+		):
+	docstring_candidates = []
+
+	if isinstance(next_node, ast.Expr):
+		# might be docstring
+		docstring_candidates.append(_docstring_from_expr(next_node))
+
+	# maybe no luck with """ docstring? look for EOL comment.
+	docstring_candidates.append(_docstring_from_eol_comment(func_source, node))
+
+	# check non-whitespace lines above for Sphinx-style comment.
+	docstring_candidates.append(_docstring_from_sphinx_comment(func_source, node))
+
+	return list(filter(None, docstring_candidates))
+
+
+def _get_func_source(enum_class: enum.EnumMeta):
+	func_source = dedent(inspect.getsource(enum_class))
+	func_source_tree = ast.parse(func_source)
+
+	assert len(func_source_tree.body) == 1
+	module_body = func_source_tree.body[0]
+	assert isinstance(module_body, ast.ClassDef)
+	class_body = module_body.body
+
+	return func_source, class_body
+
+
+def _get_targets(node: ast.stmt):
+	targets = []
+
+	if isinstance(node, ast.Assign):
+		for t in node.targets:
+			assert isinstance(t, ast.Name)
+			targets.append(t.id)
+
+	elif isinstance(node, ast.AnnAssign):
+		assert isinstance(node.target, ast.Name)
+		targets.append(node.target.id)
+
+	return targets
 
 
 def document_enum(an_enum: EnumType) -> EnumType:
@@ -228,29 +284,14 @@ def document_enum(an_enum: EnumType) -> EnumType:
 	if not isinstance(an_enum, EnumMeta):
 		raise TypeError(f"'an_enum' must be an 'Enum', not {type(an_enum)}!")
 
-	if not INTERACTIVE:
+	if not INTERACTIVE:  # pragma: no cover
 		return an_enum
 
-	func_source = dedent(inspect.getsource(an_enum))
-	func_source_tree = ast.parse(func_source)
-
-	assert len(func_source_tree.body) == 1
-	module_body = func_source_tree.body[0]
-	assert isinstance(module_body, ast.ClassDef)
-	class_body = module_body.body
+	func_source, class_body = _get_func_source(an_enum)
 
 	for idx, node in enumerate(class_body):
-		targets = []
-
-		if isinstance(node, ast.Assign):
-			for t in node.targets:
-				assert isinstance(t, ast.Name)
-				targets.append(t.id)
-
-		elif isinstance(node, ast.AnnAssign):
-			assert isinstance(node.target, ast.Name)
-			targets.append(node.target.id)
-		else:
+		targets = _get_targets(node)
+		if not targets:
 			continue
 
 		assert isinstance(node, (ast.Assign, ast.AnnAssign))
@@ -261,19 +302,8 @@ def document_enum(an_enum: EnumType) -> EnumType:
 		else:
 			next_node = class_body[idx + 1]
 
-		docstring_candidates = []
+		docstring_candidates_nn = _find_docstring(func_source, node, next_node)
 
-		if isinstance(next_node, ast.Expr):
-			# might be docstring
-			docstring_candidates.append(_docstring_from_expr(next_node))
-
-		# maybe no luck with """ docstring? look for EOL comment.
-		docstring_candidates.append(_docstring_from_eol_comment(func_source, node))
-
-		# check non-whitespace lines above for Sphinx-style comment.
-		docstring_candidates.append(_docstring_from_sphinx_comment(func_source, node))
-
-		docstring_candidates_nn = list(filter(None, docstring_candidates))
 		if len(docstring_candidates_nn) > 1:
 			# Multiple docstrings found, warn
 			warnings.warn(MultipleDocstringsWarning(getattr(an_enum, targets[0]), docstring_candidates_nn))
@@ -297,51 +327,41 @@ def document_member(enum_member: Enum) -> None:
 	if not isinstance(enum_member, Enum):
 		raise TypeError(f"'an_enum' must be an 'Enum', not {type(enum_member)}!")
 
-	if not INTERACTIVE:
+	if not INTERACTIVE:  # pragma: no cover
 		return None
 
-	func_source = dedent(inspect.getsource(enum_member.__class__))
+	func_source, class_body = _get_func_source(enum_member.__class__)
 
-	in_docstring = False
-	base_indent = None
-
-	for line in func_source.split('\n'):
-
-		indent, line = get_dedented_line(line)
-
-		if line.startswith("class") or not line:
+	for idx, node in enumerate(class_body):
+		targets = _get_targets(node)
+		if not targets:
 			continue
 
-		all_tokens = get_tokens(line)
-		base_indent = get_base_indent(base_indent, all_tokens, indent)
-		# print(all_tokens)
-
-		if enum_member.name not in line:
+		if enum_member.name not in targets:
 			continue
 
-		if all_tokens[0][0] in pygments.token.Literal.String:
-			if all_tokens[0][1] in {'"""', "'''"}:  # TODO: handle the other quotes appearing in docstring
-				in_docstring = not in_docstring
+		assert isinstance(node, (ast.Assign, ast.AnnAssign))
+		# print(targets)
 
-		if all_tokens[0][0] in pygments.token.Name and in_docstring:
-			continue
-		elif all_tokens[0][0] not in pygments.token.Name:
-			continue
+		if idx + 1 == len(class_body):
+			next_node = None
 		else:
-			if indent > base_indent:  # type: ignore
-				continue
-		enum_vars, doc = parse_tokens(all_tokens)
+			next_node = class_body[idx + 1]
 
-		for var in enum_vars:
-			# print(repr(var))
-			if not var.startswith('@'):
-				if var == enum_member.name:
-					enum_member.__doc__ = doc
+		docstring_candidates_nn = _find_docstring(func_source, node, next_node)
+
+		if len(docstring_candidates_nn) > 1:
+			# Multiple docstrings found, warn
+			warnings.warn(MultipleDocstringsWarning(enum_member, docstring_candidates_nn))
+
+		if docstring_candidates_nn:
+			enum_member.__doc__ = docstring_candidates_nn[0]
 
 	return None
 
 
-def parse_tokens(all_tokens: Iterable["pygments.Token"]) -> Tuple[List, Optional[str]]:
+@deprecation.deprecated("0.9.0", "1.0.0", _version)
+def parse_tokens(all_tokens: Iterable["pygments.Token"]) -> Tuple[List, Optional[str]]:  # pragma: no cover
 	"""
 	Parse the tokens representing a line of code to identify Enum members and ``doc:`` comments.
 
@@ -369,11 +389,12 @@ def parse_tokens(all_tokens: Iterable["pygments.Token"]) -> Tuple[List, Optional
 	return enum_vars, doc
 
 
+@deprecation.deprecated("v0.9.0", "v1.0.0", _version)
 def get_base_indent(
 		base_indent: Optional[int],
 		all_tokens: Sequence[Sequence],
 		indent: int,
-		) -> Optional[int]:
+		) -> Optional[int]:  # pragma: no cover
 	"""
 	Determine the base level of indentation (i.e. one level of indentation in from the ``c`` of ``class``).
 
@@ -408,11 +429,14 @@ class DocumentedEnum(Enum):
 		# super().__init__(value)
 
 
-def get_dedented_line(line: str) -> Tuple[int, str]:
+@deprecation.deprecated("v0.9.0", "v1.0.0", _version)
+def get_dedented_line(line: str) -> Tuple[int, str]:  # pragma: no cover
 	"""
 	Returns the line without indentation, and the amount of indentation.
 
 	:param line: A line of Python source code
+
+	:rtype:
 	"""
 
 	dedented_line = dedent(line)

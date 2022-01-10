@@ -22,11 +22,20 @@ Core Functionality
 
 .. latex:clearpage::
 
+
+Warnings
+--------------------
+
+.. autoexception:: enum_tools.documentation.MultipleDocstringsWarning
+	:exclude-members: __str__
+
 Utilities
 --------------------
 
+.. deprecated:: v0.9.0  These utilities will be removed in v1.0.0.
+
 .. automodulesumm:: enum_tools.documentation
-	:autosummary-exclude-members: DocumentedEnum,document_enum,document_member
+	:autosummary-exclude-members: DocumentedEnum,document_enum,document_member,MultipleDocstringsWarning
 
 .. autofunction:: enum_tools.documentation.get_base_indent
 
@@ -35,8 +44,3 @@ Utilities
 .. autofunction:: enum_tools.documentation.get_tokens
 
 .. autofunction:: enum_tools.documentation.parse_tokens
-
-Warnings
---------------------
-
-.. autoexception:: enum_tools.documentation.MultipleDocstringsWarning
