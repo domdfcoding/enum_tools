@@ -57,6 +57,7 @@ from enum import Enum
 from typing import Any, Dict, List, Optional, Tuple, get_type_hints
 
 # 3rd party
+import sphinx
 from docutils.nodes import Element  # nodep
 from sphinx.application import Sphinx  # nodep
 from sphinx.domains import ObjType  # nodep
@@ -87,6 +88,8 @@ from enum_tools.utils import get_base_object, is_enum, is_flag
 __all__ = ["EnumDocumenter", "EnumMemberDocumenter", "setup", "FlagDocumenter", "PyEnumXRefRole"]
 
 documentation.INTERACTIVE = True
+
+_filename_set_attribute = "filename_set" if sphinx.version_info < (4, 0) else "record_dependencies"
 
 
 def _begin_generate(
@@ -141,15 +144,18 @@ def _begin_generate(
 		documenter.analyzer = None  # type: ignore
 		# at least add the module.__file__ as a dependency
 		if hasattr(documenter.module, "__file__") and documenter.module.__file__:
-			documenter.directive.filename_set.add(documenter.module.__file__)
+			filename_set = getattr(documenter.directive, _filename_set_attribute)
+			filename_set.add(documenter.module.__file__)
 	else:
-		documenter.directive.filename_set.add(documenter.analyzer.srcname)
+		filename_set = getattr(documenter.directive, _filename_set_attribute)
+		filename_set.add(documenter.analyzer.srcname)
 
 	if documenter.real_modname != guess_modname:
 		# Add module to dependency list if target object is defined in other module.
 		with suppress(PycodeError):
 			analyzer = ModuleAnalyzer.for_module(guess_modname)
-			documenter.directive.filename_set.add(analyzer.srcname)
+			filename_set = getattr(documenter.directive, _filename_set_attribute)
+			filename_set.add(analyzer.srcname)
 
 	# check __module__ of object (for members not given explicitly)
 	if check_module:
