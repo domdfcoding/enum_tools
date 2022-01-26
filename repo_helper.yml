@@ -58,7 +58,6 @@ extras_require:
 
 extra_sphinx_extensions:
  - enum_tools.autoenum
- - sphinx_toolbox_experimental.html_section
  - sphinx_toolbox_experimental.needspace
  - sphinx_toolbox_experimental.autosummary_widths
  - sphinx_toolbox_experimental.succinct_seealso
