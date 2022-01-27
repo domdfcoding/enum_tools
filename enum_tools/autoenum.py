@@ -80,11 +80,11 @@ from sphinx.util.inspect import memory_address_re, safe_getattr  # nodep
 from sphinx.util.typing import stringify as stringify_typehint  # nodep
 from sphinx_toolbox.more_autodoc.typehints import format_annotation  # nodep
 from sphinx_toolbox.utils import unknown_module_warning  # nodep
+from sphinx_toolbox.utils import add_fallback_css_class
 
 # this package
 from enum_tools import __version__, documentation
 from enum_tools.utils import get_base_object, is_enum, is_flag
-from sphinx_toolbox.utils import add_fallback_css_class
 
 __all__ = ["EnumDocumenter", "EnumMemberDocumenter", "setup", "FlagDocumenter", "PyEnumXRefRole"]
 
