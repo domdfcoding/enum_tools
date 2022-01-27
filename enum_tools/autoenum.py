@@ -84,6 +84,7 @@ from sphinx_toolbox.utils import unknown_module_warning  # nodep
 # this package
 from enum_tools import __version__, documentation
 from enum_tools.utils import get_base_object, is_enum, is_flag
+from sphinx_toolbox.utils import add_fallback_css_class
 
 __all__ = ["EnumDocumenter", "EnumMemberDocumenter", "setup", "FlagDocumenter", "PyEnumXRefRole"]
 
@@ -587,6 +588,8 @@ def setup(app: Sphinx) -> Dict[str, Any]:
 
 	app.add_autodocumenter(EnumDocumenter)
 	app.add_autodocumenter(FlagDocumenter)
+
+	app.connect("object-description-transform", add_fallback_css_class({"enum": "class", "flag": "class"}))
 
 	return {
 			"version": __version__,
