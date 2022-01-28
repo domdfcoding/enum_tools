@@ -1,5 +1,6 @@
-{% set sig_prename_tag=("span" if sphinx_version >= (4, 0) else 'code') -%}
-{% set sig_object_class=(' class="sig sig-object py"' if sphinx_version >= (4, 0) else '') -%}
+{% set sig_prename_tag = ("span" if sphinx_version >= (4, 0) else 'code') -%}
+{% set sig_object_class = (' class="sig sig-object py"' if sphinx_version >= (4, 0) else '') -%}
+{% set NEW_ENUM_REPR = python_version >= (3, 11) -%}
 <!DOCTYPE html>
 <html>
  <head>
