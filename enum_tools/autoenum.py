@@ -5,7 +5,7 @@
 A Sphinx directive for documenting :class:`Enums <enum.Enum>` in Python.
 """
 #
-#  Copyright (c) 2020-2021 Dominic Davis-Foster <dominic@davis-foster.co.uk>
+#  Copyright (c) 2020-2022 Dominic Davis-Foster <dominic@davis-foster.co.uk>
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -57,7 +57,7 @@ from enum import Enum
 from typing import Any, Dict, List, Optional, Tuple, get_type_hints
 
 # 3rd party
-import sphinx
+import sphinx  # nodep
 from docutils.nodes import Element  # nodep
 from sphinx.application import Sphinx  # nodep
 from sphinx.domains import ObjType  # nodep
@@ -79,8 +79,8 @@ from sphinx.pycode import ModuleAnalyzer  # nodep
 from sphinx.util.inspect import memory_address_re, safe_getattr  # nodep
 from sphinx.util.typing import stringify as stringify_typehint  # nodep
 from sphinx_toolbox.more_autodoc.typehints import format_annotation  # nodep
+from sphinx_toolbox.utils import add_fallback_css_class  # nodep
 from sphinx_toolbox.utils import unknown_module_warning  # nodep
-from sphinx_toolbox.utils import add_fallback_css_class
 
 # this package
 from enum_tools import __version__, documentation
