@@ -20,15 +20,33 @@ conda_channels:
 
 # Versions to run tests for
 python_versions:
- - '3.6'
- - '3.7'
- - '3.8'
- - '3.9'
- - "3.10"
- - 3.11-dev
- - pypy36
- - pypy37
- - pypy38
+ 3.6:
+ 3.7:
+ 3.8:
+ 3.9:
+ "3.10":
+ 3.11-dev:
+ pypy36:
+  matrix_exclude:
+   sphinx:
+    - 3.2
+    - 3.3
+    - 3.4
+    - 3.5
+ pypy37:
+  matrix_exclude:
+   sphinx:
+    - 3.2
+    - 3.3
+    - 3.4
+    - 3.5
+ pypy38:
+  matrix_exclude:
+   sphinx:
+    - 3.2
+    - 3.3
+    - 3.4
+    - 3.5
 
 manifest_additional:
  - recursive-include enum_tools/ requirements.txt
