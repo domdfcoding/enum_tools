@@ -26,6 +26,13 @@ class DramatisPersonae(StrEnum):
 	Eve = "An eavesdropper"
 
 
+xfail_311 = pytest.mark.xfail(
+		reason="Python 3.11 behaviour has not been finalised yet.",
+		condition=sys.version_info[:2] == (3, 11) and sys.version_info.releaselevel == "alpha"
+		)
+
+
+@xfail_311
 def test_str_enum():
 	assert DramatisPersonae.Message == "a secret message"
 	assert DramatisPersonae.Alice != "An eavesdropper"
@@ -128,6 +135,7 @@ def test_strenum():
 			two = b'2', "ascii", 9
 
 
+@xfail_311
 def test_member_dir_enum():
 
 	class MyEnum(int, MemberDirEnum):

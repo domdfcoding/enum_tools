@@ -14,9 +14,6 @@ enum_tools.documentation.INTERACTIVE = True
 
 @enum_tools.documentation.document_enum
 class People(IntEnum):
-	"""
-	An enumeration of people.
-	"""
 
 	Bob = bob = 1  # noqa  # doc: A person called Bob  # doc: another doc # isort: ignore
 	Alice = 2  # doc: A person called Alice
@@ -54,9 +51,9 @@ class NoMethods(IntEnum):
 	An enumeration of people without any methods.
 	"""
 
-	Bob = bob = 1  # noqa  # doc: A person called Bob  # doc: another doc # isort: ignore
-	Alice = 2  # doc: A person called Alice
-	Carol = 3  # doc: A person called Carol
+	Bob = bob = "1"  # noqa  # doc: A person called Bob  # doc: another doc # isort: ignore
+	Alice = "2"  # doc: A person called Alice
+	Carol = "3"  # doc: A person called Carol
 
 
 @enum_tools.documentation.document_enum

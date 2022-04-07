@@ -54,6 +54,7 @@ A Sphinx directive for documenting :class:`Enums <enum.Enum>` in Python.
 # stdlib
 from contextlib import suppress
 from enum import Enum
+from textwrap import dedent
 from typing import Any, Dict, List, Optional, Tuple, get_type_hints
 
 # 3rd party
@@ -238,6 +239,64 @@ class EnumDocumenter(ClassDocumenter):
 				members_check_module,
 				description="Valid values are as follows:",
 				)
+
+		# Document member access
+
+		if len(self.object):
+
+			member = list(self.object)[0]
+			cls_name = self.object.__name__
+			enum_length = len(self.object)
+
+			if enum_length < 4:
+				list_line = f"list({cls_name})"
+				list_repr = repr(list(self.object))
+			else:
+				list_line = f"list({cls_name})[:3]"
+				list_repr = repr(list(self.object)[:3])
+
+			body = f"""
+
+			Members can be accessed by:
+
+
+			- attribute access:
+
+			.. code-block:: python
+
+				>>> {cls_name}.{member.name}
+				<{cls_name}.{member.name}: {member.value!r}>
+
+
+			- value lookup:
+
+			.. code-block:: python
+
+				>>> {cls_name}({member.value!r})
+				<{cls_name}.{member.name}: {member.value!r}>
+
+
+			- name lookup:
+
+			.. code-block:: python
+
+				>>> {cls_name}[{member.name!r}]
+				<{cls_name}.{member.name}: {member.value!r}>
+
+
+			Enumerations can be iterated over, and know how many members they have:
+
+			.. code-block:: python
+
+				>>> len({cls_name})
+				{enum_length!r}
+				>>> {list_line}
+				{list_repr}
+
+			"""
+
+			for line in dedent(body).expandtabs(4).splitlines():
+				self.add_line(line, self.sourcename)
 
 		# Document everything else
 		self.options.undoc_members = user_option_undoc_members  # type: ignore

@@ -52,6 +52,13 @@ def get_name(person: People = People.Bob) -> str:
 	return "Unknown"
 
 
+xfail_311 = pytest.mark.xfail(
+		reason="Python 3.11 behaviour has not been finalised yet.",
+		condition=sys.version_info[:2] == (3, 11) and sys.version_info.releaselevel == "alpha"
+		)
+
+
+@xfail_311
 def test_people():
 
 	assert People.Bob == 1
@@ -139,6 +146,7 @@ def test_document_member_wrong_types(obj):
 		enum_tools.document_member(obj)
 
 
+@xfail_311
 def test_document_enum_not_interactive():
 	interactive_last_value = enum_tools.documentation.INTERACTIVE
 
