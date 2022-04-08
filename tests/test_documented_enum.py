@@ -16,6 +16,11 @@ from enum_tools.documentation import DocumentedEnum, MultipleDocstringsWarning, 
 enum_tools.documentation.INTERACTIVE = True
 NEW_ENUM_REPR = sys.version_info >= (3, 11)
 
+xfail_311 = pytest.mark.xfail(
+		reason="Python 3.11 behaviour has not been finalised yet.",
+		condition=sys.version_info[:2] == (3, 11) and sys.version_info.releaselevel == "alpha"
+		)
+
 
 @document_enum
 class People(int, Enum):
@@ -52,6 +57,7 @@ def get_name(person: People = People.Bob) -> str:
 	return "Unknown"
 
 
+@xfail_311
 def test_people():
 
 	assert People.Bob == 1
@@ -139,6 +145,7 @@ def test_document_member_wrong_types(obj):
 		enum_tools.document_member(obj)
 
 
+@xfail_311
 def test_document_enum_not_interactive():
 	interactive_last_value = enum_tools.documentation.INTERACTIVE
 
@@ -184,6 +191,7 @@ def test_document_enum_not_interactive():
 	enum_tools.documentation.INTERACTIVE = interactive_last_value
 
 
+@xfail_311
 # yapf: disable
 def test_multiple_docstring_warning():
 	with pytest.warns(UserWarning) as record:

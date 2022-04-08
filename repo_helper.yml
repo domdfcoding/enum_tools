@@ -12,7 +12,7 @@ short_desc: "Tools to expand Python's enum module."
 use_whey: true
 tox_testenv_extras: all
 standalone_contrib_guide: true
-min_coverage: 87
+min_coverage: 86
 docs_fail_on_warning: true
 mypy_version: "0.931"
 
