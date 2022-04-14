@@ -502,7 +502,7 @@ class EnumMemberDocumenter(AttributeDocumenter):
 
 					# Workaround for https://github.com/sphinx-doc/sphinx/issues/9272
 					# which broke Enum displays in 4.1.0
-					objrepr = memory_address_re.sub('', repr(self.object)).replace('\n', ' ')
+					objrepr = memory_address_re.sub('', repr(self.object.value)).replace('\n', ' ')
 					self.add_line(f'   :value: {objrepr}', self.get_sourcename())
 
 
