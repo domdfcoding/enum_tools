@@ -22,7 +22,7 @@ Enum Tools
 	* - PyPI
 	  - |pypi-version| |supported-versions| |supported-implementations| |wheel|
 	* - Anaconda
-	  - |conda-version| |conda-platform|
+	  - |conda-forge-version| |conda-private-version| |conda-platform|
 	* - Activity
 	  - |commits-latest| |commits-since| |maintained| |pypi-downloads|
 	* - QA
@@ -86,7 +86,11 @@ Enum Tools
 	:target: https://pypi.org/project/enum_tools/
 	:alt: PyPI - Wheel
 
-.. |conda-version| image:: https://img.shields.io/conda/v/domdfcoding/enum_tools?logo=anaconda
+.. |conda-private-version| image:: https://img.shields.io/conda/v/domdfcoding/enum_tools?logo=anaconda
+	:target: https://anaconda.org/domdfcoding/enum_tools
+	:alt: Conda - Package Version
+
+.. |conda-forge-version| image:: https://img.shields.io/conda/v/conda-forge/enum_tools?logo=anaconda
 	:target: https://anaconda.org/domdfcoding/enum_tools
 	:alt: Conda - Package Version
 
