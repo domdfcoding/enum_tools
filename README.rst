@@ -143,18 +143,9 @@ To install with ``pip``:
 
 To install with ``conda``:
 
-	* First add the required channels
+.. code-block:: bash
 
-	.. code-block:: bash
-
-		$ conda config --add channels https://conda.anaconda.org/conda-forge
-		$ conda config --add channels https://conda.anaconda.org/domdfcoding
-
-	* Then install
-
-	.. code-block:: bash
-
-		$ conda install enum_tools
+	$ conda install -c conda-forge enum_tools
 
 .. end installation
 
