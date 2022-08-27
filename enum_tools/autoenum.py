@@ -201,7 +201,7 @@ class EnumDocumenter(ClassDocumenter):
 		Generate reST for member documentation.
 
 		:param all_members: If :py:obj:`True`, document all members, otherwise document those given by
-			else those given by ``self.options.members``.
+			``self.options.members``.
 
 		.. latex:clearpage::
 		"""
