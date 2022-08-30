@@ -1,11 +1,14 @@
+{% set heading = ("heading" if sphinx_version >= (5, 0) else 'headline') -%}
 {% set sig_prename_tag = ("span" if sphinx_version >= (4, 0) else 'code') -%}
 {% set sig_object_class = (' class="sig sig-object py"' if sphinx_version >= (4, 0) else '') -%}
 {% set NEW_ENUM_REPR = python_version >= (3, 11) -%}
 <!DOCTYPE html>
-<html>
+<html{% if sphinx_version >= (5, 0) %} lang="en"{% endif %}>
  <head>
   <meta charset="utf-8"/>
-  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>{% if docutils_version > (0, 18) %}
+  <meta content="Docutils 0.18.1: http://docutils.sourceforge.net/" name="generator"/>{% elif docutils_version > (0, 17) %}
+  <meta content="Docutils 0.17.1: http://docutils.sourceforge.net/" name="generator"/>{% endif %}
   <title>
    autoenum Demo — Python  documentation
   </title>
@@ -14,7 +17,9 @@
   <script src="_static/jquery.js">
   </script>
   <script src="_static/underscore.js">
-  </script>
+  </script>{% if sphinx_version >= (5, 0) %}
+  <script src="_static/_sphinx_javascript_frameworks_compat.js">
+  </script>{% endif %}
   <script src="_static/doctools.js">
   </script>
   <meta content="width=device-width, initial-scale=0.9, maximum-scale=0.9" name="viewport"/>
@@ -24,12 +29,12 @@
    <div class="documentwrapper">
     <div class="bodywrapper">
      <div class="body" role="main">
-      <div class="section" id="module-enum_tools.demo">
+      <{% if docutils_version >= (0, 17) %}section{% else %}div class="section"{% endif %} id="module-enum_tools.demo">
        <span id="autoenum-demo">
        </span>
        <h1>
         autoenum Demo
-        <a class="headerlink" href="#module-enum_tools.demo" title="Permalink to this headline">
+        <a class="headerlink" href="#module-enum_tools.demo" title="Permalink to this {{ heading }}">
          ¶
         </a>
        </h1>
@@ -65,7 +70,10 @@
          </p>
          <dl class="field-list simple">
           <dt class="field-odd">
-           Member Type
+           Member Type{% if docutils_version >= (0, 18) %}
+           <span class="colon">
+            :
+           </span>{% endif %}
           </dt>
           <dd class="field-odd">
            <p>
@@ -243,7 +251,10 @@
          </p>
          <dl class="field-list simple">
           <dt class="field-odd">
-           Member Type
+           Member Type{% if docutils_version >= (0, 18) %}
+           <span class="colon">
+            :
+           </span>{% endif %}
           </dt>
           <dd class="field-odd">
            <p>
@@ -333,7 +344,7 @@
          </code>
         </a>
        </p>
-      </div>
+      </{% if docutils_version >= (0, 17) %}section{% else %}div{% endif %}>
      </div>
     </div>
    </div>
