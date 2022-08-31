@@ -17,11 +17,11 @@ from sphinx_toolbox.testing import HTMLRegressionFixture
 # this package
 from enum_tools.autoenum import EnumDocumenter
 
-NEW_ENUM_REPR = sys.version_info >= (3, 11)
+NEW_ENUM_REPR = sys.version_info >= (3, 12)
 
-xfail_311 = pytest.mark.xfail(
-		reason="Python 3.11 behaviour has not been finalised yet.",
-		condition=sys.version_info[:2] == (3, 11) and sys.version_info.releaselevel == "alpha"
+xfail_312 = pytest.mark.xfail(
+		reason="Python 3.12 behaviour has not been finalised yet.",
+		condition=sys.version_info[:2] == (3, 12) and sys.version_info.releaselevel == "alpha"
 		)
 
 
@@ -87,7 +87,7 @@ def preprocess_soup(soup: BeautifulSoup):
 		dt.replace_with(NavigableString(dt.get_text()))
 
 
-@xfail_311
+@xfail_312
 @pytest.mark.parametrize(
 		"page", [
 				"index.html",
@@ -186,7 +186,7 @@ def test_index(page: BeautifulSoup, html_regression: HTMLRegressionFixture):
 	assert class_count == 2
 
 
-@xfail_311
+@xfail_312
 @pytest.mark.parametrize(
 		"page", [
 				"flag.html",
@@ -272,7 +272,7 @@ def test_flag(page: BeautifulSoup, html_regression: HTMLRegressionFixture):
 	assert class_count == 2
 
 
-@xfail_311
+@xfail_312
 @pytest.mark.parametrize(
 		"page", [
 				"no-member-doc.html",

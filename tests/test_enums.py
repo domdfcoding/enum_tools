@@ -14,11 +14,11 @@ import pytest
 from enum_tools import IntEnum, StrEnum
 from enum_tools.custom_enums import AutoNumberEnum, IterableFlag, IterableIntFlag, MemberDirEnum, OrderedEnum
 
-NEW_ENUM_REPR = sys.version_info >= (3, 11)
+NEW_ENUM_REPR = sys.version_info >= (3, 12)
 
-xfail_311 = pytest.mark.xfail(
-		reason="Python 3.11 behaviour has not been finalised yet.",
-		condition=sys.version_info[:2] == (3, 11) and sys.version_info.releaselevel == "alpha"
+xfail_312 = pytest.mark.xfail(
+		reason="Python 3.12 behaviour has not been finalised yet.",
+		condition=sys.version_info[:2] == (3, 12) and sys.version_info.releaselevel == "alpha"
 		)
 
 
@@ -31,7 +31,7 @@ class DramatisPersonae(StrEnum):
 	Eve = "An eavesdropper"
 
 
-@xfail_311
+@xfail_312
 def test_str_enum():
 	assert DramatisPersonae.Message == "a secret message"
 	assert DramatisPersonae.Alice != "An eavesdropper"
@@ -134,7 +134,7 @@ def test_strenum():
 			two = b'2', "ascii", 9
 
 
-@xfail_311
+@xfail_312
 def test_member_dir_enum():
 
 	class MyEnum(int, MemberDirEnum):
@@ -151,7 +151,8 @@ def test_member_dir_enum():
 				"__bool__",
 				"__ceil__",
 				"__class__",
-				"__dict__",
+				"__contains__",
+				"__delattr__",
 				"__dir__",
 				"__divmod__",
 				"__doc__",
@@ -159,29 +160,42 @@ def test_member_dir_enum():
 				"__float__",
 				"__floor__",
 				"__floordiv__",
+				"__format__",
 				"__ge__",
 				"__getattribute__",
+				"__getitem__",
 				"__getnewargs__",
+				"__getstate__",
 				"__gt__",
 				"__hash__",
 				"__index__",
+				"__init__",
+				"__init_subclass__",
 				"__int__",
 				"__invert__",
+				"__iter__",
 				"__le__",
+				"__len__",
 				"__lshift__",
 				"__lt__",
 				"__members__",
 				"__mod__",
 				"__module__",
 				"__mul__",
+				"__name__",
 				"__ne__",
 				"__neg__",
+				"__new__",
 				"__or__",
 				"__pos__",
 				"__pow__",
+				"__qualname__",
 				"__radd__",
 				"__rand__",
 				"__rdivmod__",
+				"__reduce__",
+				"__reduce_ex__",
+				"__repr__",
 				"__rfloordiv__",
 				"__rlshift__",
 				"__rmod__",
@@ -194,8 +208,11 @@ def test_member_dir_enum():
 				"__rsub__",
 				"__rtruediv__",
 				"__rxor__",
+				"__setattr__",
 				"__sizeof__",
+				"__str__",
 				"__sub__",
+				"__subclasshook__",
 				"__truediv__",
 				"__trunc__",
 				"__xor__",
