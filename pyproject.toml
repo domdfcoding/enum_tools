@@ -22,7 +22,7 @@ file = "LICENSE"
 Homepage = "https://github.com/domdfcoding/enum_tools"
 "Issue Tracker" = "https://github.com/domdfcoding/enum_tools/issues"
 "Source Code" = "https://github.com/domdfcoding/enum_tools"
-Documentation = "https://enum_tools.readthedocs.io/en/latest"
+Documentation = "https://enum-tools.readthedocs.io/en/latest"
 
 [project.optional-dependencies]
 sphinx = [ "sphinx>=3.2.0", "sphinx-jinja2-compat>=0.1.1", "sphinx-toolbox>=2.16.0",]
@@ -136,7 +136,7 @@ autodoc_exclude_members = [
 ]
 
 [tool.mypy]
-python_version = "3.6"
+python_version = "3.8"
 namespace_packages = true
 check_untyped_defs = true
 warn_unused_ignores = true

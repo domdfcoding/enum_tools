@@ -30,8 +30,8 @@ Enum Tools
 	* - Other
 	  - |license| |language| |requires|
 
-.. |docs| image:: https://img.shields.io/readthedocs/enum_tools/latest?logo=read-the-docs
-	:target: https://enum_tools.readthedocs.io/en/latest
+.. |docs| image:: https://img.shields.io/readthedocs/enum-tools/latest?logo=read-the-docs
+	:target: https://enum-tools.readthedocs.io/en/latest
 	:alt: Documentation Build Status
 
 .. |docs_check| image:: https://github.com/domdfcoding/enum_tools/workflows/Docs%20Check/badge.svg
@@ -109,7 +109,7 @@ Enum Tools
 	:target: https://github.com/domdfcoding/enum_tools/commit/master
 	:alt: GitHub last commit
 
-.. |maintained| image:: https://img.shields.io/maintenance/yes/2022
+.. |maintained| image:: https://img.shields.io/maintenance/yes/2023
 	:alt: Maintenance
 
 .. |pypi-downloads| image:: https://img.shields.io/pypi/dm/enum_tools
@@ -143,17 +143,9 @@ To install with ``pip``:
 
 To install with ``conda``:
 
-	* First add the required channels
+.. code-block:: bash
 
-	.. code-block:: bash
-
-		$ conda config --add channels https://conda.anaconda.org/conda-forge
-
-	* Then install
-
-	.. code-block:: bash
-
-		$ conda install enum_tools
+	$ conda install -c conda-forge enum_tools
 
 .. end installation
 
