@@ -11,7 +11,6 @@ from pathlib import Path
 import pytest
 import sphinx
 from bs4 import BeautifulSoup, NavigableString  # type: ignore
-from pytest_regressions.file_regression import FileRegressionFixture  # type: ignore
 from sphinx_toolbox.testing import HTMLRegressionFixture
 
 # this package
