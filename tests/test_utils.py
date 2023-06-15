@@ -59,7 +59,7 @@ PURPLE = Colours.RED | Colours.BLUE
 				(PURPLE, False),
 				]
 		)
-def test_is_flag(obj, result):
+def test_is_flag(obj, result: bool):
 	assert is_flag(obj) == result
 
 

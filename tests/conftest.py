@@ -6,6 +6,7 @@ import types
 # 3rd party
 import pytest
 from bs4 import BeautifulSoup  # type: ignore
+from sphinx.application import Sphinx
 from sphinx.testing.path import path
 
 if sys.version_info >= (3, 10):
@@ -23,7 +24,7 @@ def rootdir():
 
 
 @pytest.fixture()
-def content(app):
+def content(app: Sphinx):
 	app.build()
 	yield app
 
