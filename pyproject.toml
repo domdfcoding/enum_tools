@@ -4,7 +4,7 @@ build-backend = "whey"
 
 [project]
 name = "enum_tools"
-version = "0.9.0.post1"
+version = "0.10.0"
 description = "Tools to expand Python's enum module."
 readme = "README.rst"
 keywords = [ "documentation", "enum", "sphinx", "sphinx-extension",]
