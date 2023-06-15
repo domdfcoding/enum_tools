@@ -47,7 +47,13 @@ __all__ = [
 if sys.version_info >= (3, 11):  # pragma: no cover
 
 	# stdlib
-	from enum import _power_of_two
+	from enum import _high_bit
+
+	def _power_of_two(value):
+		# From CPython. Removed in https://github.com/python/cpython/commit/8cef9c0f92720f6810be1c74e00f611acb4b8b1e
+		if value < 1:
+			return False
+		return value == 2**_high_bit(value)
 
 	def _decompose(flag, value):
 		"""
