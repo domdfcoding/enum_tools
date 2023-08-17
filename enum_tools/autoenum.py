@@ -77,10 +77,14 @@ from sphinx.ext.autodoc import (  # nodep
 from sphinx.locale import _  # nodep
 from sphinx.pycode import ModuleAnalyzer  # nodep
 from sphinx.util.inspect import memory_address_re, safe_getattr  # nodep
+
 try:
+	# 3rd party
 	from sphinx.util.typing import stringify_annotation as stringify_typehint  # nodep
 except ImportError:
 	from sphinx.util.typing import stringify as stringify_typehint  # nodep
+
+# 3rd party
 from sphinx_toolbox.more_autodoc.typehints import format_annotation  # nodep
 from sphinx_toolbox.utils import add_fallback_css_class  # nodep
 from sphinx_toolbox.utils import unknown_module_warning  # nodep
