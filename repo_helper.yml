@@ -14,102 +14,112 @@ tox_testenv_extras: all
 standalone_contrib_guide: true
 min_coverage: 86
 docs_fail_on_warning: true
-mypy_version: "0.931"
+mypy_version: "1.5.1"
 on_conda_forge: true
 
 conda_channels:
- - conda-forge
+  - conda-forge
 
 # Versions to run tests for
 python_versions:
- 3.6:
-  matrix_exclude:
-   sphinx:
-    - 5.0
-    - 5.1
- 3.7:
- 3.8:
- 3.9:
- "3.10":
- "3.11":
- 3.12-dev:
- pypy36:
-  matrix_exclude:
-   sphinx:
-    - 3.2
-    - 3.3
-    - 3.4
-    - 3.5
-    - 5.0
-    - 5.1
- pypy37:
-  matrix_exclude:
-   sphinx:
-    - 3.2
-    - 3.3
-    - 3.4
-    - 3.5
- pypy38:
-  matrix_exclude:
-   sphinx:
-    - 3.2
-    - 3.3
-    - 3.4
-    - 3.5
- pypy39:
-  matrix_exclude:
-   sphinx:
-    - 3.2
-    - 3.3
-    - 3.4
-    - 3.5
+  3.6:
+    matrix_exclude:
+    sphinx:
+      - 5.0
+      - 5.1
+      - 6.0
+      - 6.1
+      - 6.2
+      - 7.0
+      - 7.1
+  3.7:
+  3.8:
+  3.9:
+  "3.10":
+  "3.11":
+  3.12-dev:
+  pypy36:
+    matrix_exclude:
+    sphinx:
+      - 3.2
+      - 3.3
+      - 3.4
+      - 3.5
+      - 5.0
+      - 5.1
+      - 6.0
+      - 6.1
+      - 6.2
+      - 7.0
+      - 7.1
+  pypy37:
+    matrix_exclude:
+    sphinx:
+      - 3.2
+      - 3.3
+      - 3.4
+      - 3.5
+  pypy38:
+    matrix_exclude:
+    sphinx:
+      - 3.2
+      - 3.3
+      - 3.4
+      - 3.5
+  pypy39:
+    matrix_exclude:
+    sphinx:
+      - 3.2
+      - 3.3
+      - 3.4
+      - 3.5
 
 manifest_additional:
- - recursive-include enum_tools/ requirements.txt
- - recursive-exclude tests/ *
+  - recursive-include enum_tools/ requirements.txt
+  - recursive-exclude tests/ *
 
 classifiers:
- - 'Development Status :: 4 - Beta'
- - 'Intended Audience :: Developers'
- - 'Programming Language :: Python'
- - 'Topic :: Software Development :: Libraries :: Python Modules'
- - "Framework :: Sphinx :: Extension"
- - "Topic :: Documentation"
- - 'Topic :: Documentation :: Sphinx'
- - 'Topic :: Software Development :: Documentation'
- - "Topic :: Utilities"
+  - 'Development Status :: 4 - Beta'
+  - 'Intended Audience :: Developers'
+  - 'Programming Language :: Python'
+  - 'Topic :: Software Development :: Libraries :: Python Modules'
+  - "Framework :: Sphinx :: Extension"
+  - "Topic :: Documentation"
+  - 'Topic :: Documentation :: Sphinx'
+  - 'Topic :: Software Development :: Documentation'
+  - "Topic :: Utilities"
 
 keywords:
- - enum
- - documentation
- - sphinx
- - sphinx-extension
+  - enum
+  - documentation
+  - sphinx
+  - sphinx-extension
 
 extras_require:
   sphinx:
-   - sphinx>=3.2.0
-   - sphinx-toolbox>=2.16.0
-   - sphinx-jinja2-compat>=0.1.1
+    - sphinx>=3.2.0,<7.2.0
+    - sphinx-toolbox>=2.16.0
+    - sphinx-jinja2-compat>=0.1.1
 
 extra_sphinx_extensions:
- - enum_tools.autoenum
- - sphinx_toolbox_experimental.needspace
- - sphinx_toolbox_experimental.autosummary_widths
- - sphinx_toolbox_experimental.succinct_seealso
- - sphinx_toolbox_experimental.missing_xref
+  - enum_tools.autoenum
+  - sphinx_toolbox_experimental.needspace
+  - sphinx_toolbox_experimental.autosummary_widths
+  - sphinx_toolbox_experimental.succinct_seealso
+  - sphinx_toolbox_experimental.missing_xref
 
 
 sphinx_conf_epilogue:
- - html_logo = "../enum_tools.png"
- - autosummary_widths_builders = ["latex"]
- - nitpicky = True
- - needspace_amount = "1\\baselineskip"
- - ignore_missing_xrefs = ["^sphinx.ext.autodoc.(Class|Attribute)?Documenter$", "^enum.EnumMeta$", "^docutils.nodes.Element$", "^sphinx.domains"]
- - from typing import Type
- - import enum_tools.autoenum
- - from sphinx.ext.autodoc.directive import DocumenterBridge
- - enum_tools.autoenum.DocumenterBridge = DocumenterBridge
- - enum_tools.autoenum.Type = Type
+  - html_logo = "../enum_tools.png"
+  - autosummary_widths_builders = ["latex"]
+  - nitpicky = True
+  - needspace_amount = "1\\baselineskip"
+  - ignore_missing_xrefs = ["^sphinx.ext.autodoc.(Class|Attribute)?Documenter$", "^enum.EnumMeta$", "^docutils.nodes.Element$", "^sphinx.domains"]
+  - from typing import Type
+  - import enum_tools.autoenum
+  - from sphinx.ext.autodoc.directive import DocumenterBridge
+  - enum_tools.autoenum.DocumenterBridge = DocumenterBridge
+  - enum_tools.autoenum.Type = Type
 
 preserve_custom_theme: true
 
@@ -128,4 +138,9 @@ third_party_version_matrix:
     - 4.5
     - 5.0
     - 5.1
+    - 6.0
+    - 6.1
+    - 6.2
+    - 7.0
+    - 7.1
     # - latest
