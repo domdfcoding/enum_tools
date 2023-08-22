@@ -25,8 +25,8 @@ Homepage = "https://github.com/domdfcoding/enum_tools"
 Documentation = "https://enum-tools.readthedocs.io/en/latest"
 
 [project.optional-dependencies]
-sphinx = [ "sphinx>=3.2.0", "sphinx-jinja2-compat>=0.1.1", "sphinx-toolbox>=2.16.0",]
-all = [ "sphinx>=3.2.0", "sphinx-jinja2-compat>=0.1.1", "sphinx-toolbox>=2.16.0",]
+sphinx = [ "sphinx>=3.4.0", "sphinx-jinja2-compat>=0.1.1", "sphinx-toolbox>=2.16.0",]
+all = [ "sphinx>=3.4.0", "sphinx-jinja2-compat>=0.1.1", "sphinx-toolbox>=2.16.0",]
 
 [tool.whey]
 base-classifiers = [

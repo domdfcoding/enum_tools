@@ -55,8 +55,6 @@ python_versions:
  pypy36:
   matrix_exclude:
    sphinx:
-    - 3.2
-    - 3.3
     - 3.4
     - 3.5
     - 4.0
@@ -75,8 +73,6 @@ python_versions:
  pypy37:
   matrix_exclude:
    sphinx:
-    - 3.2
-    - 3.3
     - 3.4
     - 3.5
     - 4.0
@@ -91,8 +87,6 @@ python_versions:
  pypy38:
   matrix_exclude:
    sphinx:
-    - 3.2
-    - 3.3
     - 3.4
     - 3.5
     - 4.0
@@ -102,8 +96,6 @@ python_versions:
  pypy39:
   matrix_exclude:
    sphinx:
-    - 3.2
-    - 3.3
     - 3.4
     - 3.5
     - 4.0
@@ -133,7 +125,7 @@ keywords:
 
 extras_require:
   sphinx:
-   - sphinx>=3.2.0
+   - sphinx>=3.4.0
    - sphinx-toolbox>=2.16.0
    - sphinx-jinja2-compat>=0.1.1
 
@@ -162,8 +154,6 @@ preserve_custom_theme: true
 
 third_party_version_matrix:
   sphinx:
-    - 3.2
-    - 3.3
     - 3.4
     - 3.5
     - 4.0
