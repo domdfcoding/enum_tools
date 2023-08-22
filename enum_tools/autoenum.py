@@ -87,7 +87,6 @@ try:
 except ImportError:
 	from sphinx.util.typing import stringify as stringify_typehint
 
-
 # this package
 from enum_tools import __version__, documentation
 from enum_tools.utils import get_base_object, is_enum, is_flag
