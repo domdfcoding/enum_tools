@@ -14,11 +14,11 @@ import enum_tools.documentation
 from enum_tools.documentation import DocumentedEnum, MultipleDocstringsWarning, document_enum
 
 enum_tools.documentation.INTERACTIVE = True
-NEW_ENUM_REPR = sys.version_info >= (3, 12)
+NEW_ENUM_REPR = sys.version_info >= (3, 13)
 
-xfail_312 = pytest.mark.xfail(
-		reason="Python 3.12 behaviour has not been finalised yet.",
-		condition=sys.version_info[:2] == (3, 12) and sys.version_info.releaselevel == "alpha"
+xfail_313 = pytest.mark.xfail(
+		reason="Python 3.13 behaviour has not been finalised yet.",
+		condition=sys.version_info[:2] == (3, 13) and sys.version_info.releaselevel == "alpha"
 		)
 
 
@@ -38,7 +38,7 @@ class People(int, Enum):
 	"""
 
 	@classmethod
-	def iter_values(cls):
+	def iter_values(cls):  # noqa: MAN001,MAN002
 		return iter(cls)
 
 	#: A person called Dennis
@@ -57,7 +57,7 @@ def get_name(person: People = People.Bob) -> str:
 	return "Unknown"
 
 
-@xfail_312
+@xfail_313
 def test_people():
 
 	assert People.Bob == 1
@@ -117,7 +117,7 @@ def test_documented_enum():
 				float,
 				]
 		)
-def test_document_enum_wrong_types(obj):
+def test_document_enum_wrong_types(obj: object):
 	with pytest.raises(TypeError, match="'an_enum' must be an 'Enum', not .*!"):
 		document_enum(obj)
 
@@ -140,12 +140,12 @@ def test_document_enum_wrong_types(obj):
 				float,
 				]
 		)
-def test_document_member_wrong_types(obj):
+def test_document_member_wrong_types(obj: object):
 	with pytest.raises(TypeError, match="'an_enum' must be an 'Enum', not .*!"):
 		enum_tools.document_member(obj)
 
 
-@xfail_312
+@xfail_313
 def test_document_enum_not_interactive():
 	interactive_last_value = enum_tools.documentation.INTERACTIVE
 
@@ -162,7 +162,7 @@ def test_document_enum_not_interactive():
 		Carol = 3  # doc: A person called Carol
 
 		@classmethod
-		def iter_values(cls):
+		def iter_values(cls):  # noqa: MAN001,MAN002
 			return iter(cls)
 
 	assert People.Bob == 1
@@ -191,7 +191,7 @@ def test_document_enum_not_interactive():
 	enum_tools.documentation.INTERACTIVE = interactive_last_value
 
 
-@xfail_312
+@xfail_313
 # yapf: disable
 def test_multiple_docstring_warning():
 	with pytest.warns(UserWarning) as record:

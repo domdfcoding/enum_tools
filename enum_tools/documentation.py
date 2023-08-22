@@ -32,7 +32,7 @@ import tokenize
 import warnings
 from enum import Enum, EnumMeta
 from textwrap import dedent
-from typing import Iterable, List, Optional, Sequence, Tuple, TypeVar, Union
+from typing import Iterable, Iterator, List, Optional, Sequence, Tuple, TypeVar, Union
 
 # 3rd party
 import pygments.token  # type: ignore
@@ -77,10 +77,10 @@ def _docstring_from_expr(expr: ast.Expr) -> Optional[str]:
 
 	# might be docstring
 	docstring_node = expr.value
-	if isinstance(docstring_node, ast.Str):
-		text = docstring_node.s
-	elif isinstance(docstring_node, ast.Constant) and isinstance(docstring_node.value, str):
+	if isinstance(docstring_node, ast.Constant) and isinstance(docstring_node.value, str):
 		text = docstring_node.value
+	elif isinstance(docstring_node, ast.Str):
+		text = docstring_node.s
 	else:
 		# not a docstring
 		return None
@@ -148,7 +148,7 @@ def _tokenize_line(line: str) -> List[tokenize.TokenInfo]:
 	:param line:
 	"""
 
-	def yielder():
+	def yielder() -> Iterator[str]:
 		yield line
 
 	return list(tokenize.generate_tokens(yielder().__next__))
@@ -403,7 +403,7 @@ class DocumentedEnum(Enum):
 	.. note:: This class does not (yet) support the other docstring formats :deco:`~.document_enum` does.
 	"""
 
-	def __init__(self, value):
+	def __init__(self, value):  # noqa: MAN001
 		document_member(self)
 		# super().__init__(value)
 

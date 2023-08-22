@@ -1,7 +1,7 @@
 {% set heading = ("heading" if sphinx_version >= (5, 0) else 'headline') -%}
 {% set sig_prename_tag = ("span" if sphinx_version >= (4, 0) else 'code') -%}
 {% set sig_object_class = (' class="sig sig-object py"' if sphinx_version >= (4, 0) else '') -%}
-{% set NEW_ENUM_REPR = python_version >= (3, 12) -%}
+{% set NEW_ENUM_REPR = python_version >= (3, 13) -%}
 <!DOCTYPE html>
 <html{% if sphinx_version >= (5, 0) %} lang="en"{% endif %}>
  <head>

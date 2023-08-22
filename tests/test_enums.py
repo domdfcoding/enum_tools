@@ -14,11 +14,11 @@ import pytest
 from enum_tools import IntEnum, StrEnum
 from enum_tools.custom_enums import AutoNumberEnum, IterableFlag, IterableIntFlag, MemberDirEnum, OrderedEnum
 
-NEW_ENUM_REPR = sys.version_info >= (3, 12)
+NEW_ENUM_REPR = sys.version_info >= (3, 13)
 
-xfail_312 = pytest.mark.xfail(
+xfail_313 = pytest.mark.xfail(
 		reason="Python 3.12 behaviour has not been finalised yet.",
-		condition=sys.version_info[:2] == (3, 12) and sys.version_info.releaselevel == "alpha"
+		condition=sys.version_info[:2] == (3, 13) and sys.version_info.releaselevel == "alpha"
 		)
 
 
@@ -31,7 +31,7 @@ class DramatisPersonae(StrEnum):
 	Eve = "An eavesdropper"
 
 
-@xfail_312
+@xfail_313
 def test_str_enum():
 	assert DramatisPersonae.Message == "a secret message"
 	assert DramatisPersonae.Alice != "An eavesdropper"
@@ -134,7 +134,7 @@ def test_strenum():
 			two = b'2', "ascii", 9
 
 
-@xfail_312
+@xfail_313
 def test_member_dir_enum():
 
 	class MyEnum(int, MemberDirEnum):
@@ -144,7 +144,7 @@ def test_member_dir_enum():
 	if sys.version_info < (3, 11):
 		assert dir(MyEnum) == ["__class__", "__doc__", "__members__", "__module__", "apple", "orange"]
 	else:
-		assert dir(MyEnum) == [
+		expected_dir = [
 				"__abs__",
 				"__add__",
 				"__and__",
@@ -229,6 +229,9 @@ def test_member_dir_enum():
 				"real",
 				"to_bytes",
 				]
+		if sys.version_info > (3, 12):
+			expected_dir.insert(79, "is_integer")
+		assert dir(MyEnum) == expected_dir
 
 
 def test_auto_number_enum():

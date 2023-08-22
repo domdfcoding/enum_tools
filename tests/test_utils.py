@@ -20,7 +20,7 @@ from enum_tools.utils import get_base_object, is_enum, is_enum_member, is_flag
 				("abc", False),
 				]
 		)
-def test_is_enum(obj, result):
+def test_is_enum(obj: object, result: bool):
 	assert is_enum(obj) == result
 
 
@@ -34,7 +34,7 @@ def test_is_enum(obj, result):
 				("abc", False),
 				]
 		)
-def test_is_enum_member(obj, result):
+def test_is_enum_member(obj: object, result: bool):
 	assert is_enum_member(obj) == result
 
 
@@ -59,7 +59,7 @@ PURPLE = Colours.RED | Colours.BLUE
 				(PURPLE, False),
 				]
 		)
-def test_is_flag(obj, result: bool):
+def test_is_flag(obj: object, result: bool):
 	assert is_flag(obj) == result
 
 

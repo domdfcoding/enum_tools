@@ -12,15 +12,16 @@ import pytest
 import sphinx
 from bs4 import BeautifulSoup, NavigableString  # type: ignore
 from sphinx_toolbox.testing import HTMLRegressionFixture
+from sphinx.application import Sphinx
 
 # this package
 from enum_tools.autoenum import EnumDocumenter
 
-NEW_ENUM_REPR = sys.version_info >= (3, 12)
+NEW_ENUM_REPR = sys.version_info >= (3, 13)
 
 xfail_312 = pytest.mark.xfail(
 		reason="Python 3.12 behaviour has not been finalised yet.",
-		condition=sys.version_info[:2] == (3, 12) and sys.version_info.releaselevel == "alpha"
+		condition=sys.version_info[:2] == (3, 13) and sys.version_info.releaselevel == "alpha"
 		)
 
 
@@ -33,7 +34,7 @@ xfail_312 = pytest.mark.xfail(
 		Decimal(123.45),
 		Path('.'),
 		])
-def test_cannot_document_member(obj):
+def test_cannot_document_member(obj: object):
 	assert not EnumDocumenter.can_document_member(obj, '', True, '')
 
 
@@ -45,8 +46,7 @@ class MyEnum(Enum):
 def test_can_document_member():
 	assert EnumDocumenter.can_document_member(MyEnum, '', True, '')
 
-
-def test(app):
+def test(app: Sphinx) -> None:
 	# app is a Sphinx application object for default sphinx project (`tests/roots/test-root`).
 	app.build()
 
@@ -61,7 +61,7 @@ def test(app):
 return_arrow = " → "
 
 
-def preprocess_soup(soup: BeautifulSoup):
+def preprocess_soup(soup: BeautifulSoup) -> None:
 
 	if sphinx.version_info >= (3, 5):  # pragma: no cover
 		for em in soup.select("em.property"):
