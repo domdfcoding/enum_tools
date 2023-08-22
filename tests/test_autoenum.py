@@ -90,6 +90,7 @@ def preprocess_soup(soup: BeautifulSoup):
 			div["src"] = div["src"].split("?v=")[0]
 			print(div["src"])
 
+
 @xfail_312
 @pytest.mark.parametrize(
 		"page", [
