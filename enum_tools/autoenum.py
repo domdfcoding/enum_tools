@@ -72,8 +72,8 @@ from sphinx.ext.autodoc import (  # nodep
 		ClassDocumenter,
 		ClassLevelDocumenter,
 		Documenter,
-		logger,
-        ObjectMember,
+		ObjectMember,
+		logger
 		)
 from sphinx.locale import _  # nodep
 from sphinx.pycode import ModuleAnalyzer  # nodep
@@ -262,7 +262,6 @@ class EnumDocumenter(ClassDocumenter):
 
 	def _do_document_members(self, members, want_all, members_check_module, description):
 		# remove members given by exclude-members
-		breakpoint()
 		if self.options.exclude_members:
 			members = [
 					ObjectMember(name=membername, obj=member)
