@@ -11,8 +11,8 @@ from pathlib import Path
 import pytest
 import sphinx
 from bs4 import BeautifulSoup, NavigableString  # type: ignore
-from sphinx_toolbox.testing import HTMLRegressionFixture
 from sphinx.application import Sphinx
+from sphinx_toolbox.testing import HTMLRegressionFixture
 
 # this package
 from enum_tools.autoenum import EnumDocumenter
@@ -45,6 +45,7 @@ class MyEnum(Enum):
 
 def test_can_document_member():
 	assert EnumDocumenter.can_document_member(MyEnum, '', True, '')
+
 
 def test(app: Sphinx) -> None:
 	# app is a Sphinx application object for default sphinx project (`tests/roots/test-root`).

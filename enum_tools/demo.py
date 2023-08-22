@@ -28,7 +28,7 @@ class People(IntEnum):
 	"""
 
 	@classmethod
-	def iter_values(cls):
+	def iter_values(cls):  # noqa: MAN002
 		"""
 		Iterate over the values of the Enum.
 		"""

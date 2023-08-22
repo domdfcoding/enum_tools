@@ -38,7 +38,7 @@ class People(int, Enum):
 	"""
 
 	@classmethod
-	def iter_values(cls):  # noqa: MAN001,MAN002
+	def iter_values(cls):  # noqa: MAN002
 		return iter(cls)
 
 	#: A person called Dennis
@@ -119,7 +119,7 @@ def test_documented_enum():
 		)
 def test_document_enum_wrong_types(obj: object):
 	with pytest.raises(TypeError, match="'an_enum' must be an 'Enum', not .*!"):
-		document_enum(obj)
+		document_enum(obj)  # type: ignore[type-var]
 
 
 @pytest.mark.parametrize(
@@ -142,7 +142,7 @@ def test_document_enum_wrong_types(obj: object):
 		)
 def test_document_member_wrong_types(obj: object):
 	with pytest.raises(TypeError, match="'an_enum' must be an 'Enum', not .*!"):
-		enum_tools.document_member(obj)
+		enum_tools.document_member(obj)  # type: ignore[arg-type]
 
 
 @xfail_313
@@ -162,7 +162,7 @@ def test_document_enum_not_interactive():
 		Carol = 3  # doc: A person called Carol
 
 		@classmethod
-		def iter_values(cls):  # noqa: MAN001,MAN002
+		def iter_values(cls):  # noqa: MAN002
 			return iter(cls)
 
 	assert People.Bob == 1

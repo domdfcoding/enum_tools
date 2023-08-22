@@ -31,7 +31,7 @@ Custom subclasses of :class:`enum.Enum` and :class:`enum.Flag`.
 # stdlib
 import sys
 from enum import Enum, Flag, IntFlag
-from typing import Any, Iterator
+from typing import Any, Iterator, List
 
 __all__ = [
 		"MemberDirEnum",
@@ -49,13 +49,13 @@ if sys.version_info >= (3, 11):  # pragma: no cover
 	# stdlib
 	from enum import _high_bit
 
-	def _power_of_two(value):
+	def _power_of_two(value: int) -> bool:
 		# From CPython. Removed in https://github.com/python/cpython/commit/8cef9c0f92720f6810be1c74e00f611acb4b8b1e
 		if value < 1:
 			return False
 		return value == 2**_high_bit(value)
 
-	def _decompose(flag, value):
+	def _decompose(flag, value):  # noqa: MAN001,MAN002
 		"""
 		Extract all members from the value.
 		"""
@@ -117,7 +117,7 @@ class MemberDirEnum(Enum):
 	.. versionadded:: 0.6.0
 	"""
 
-	def __dir__(self):
+	def __dir__(self) -> List[str]:
 		return super().__dir__() + [m for m in self.__dict__ if m[0] != '_']
 
 
@@ -192,22 +192,22 @@ class OrderedEnum(Enum):
 	:class:`~enum.Enum` that adds ordering based on the values of its members.
 	"""
 
-	def __ge__(self, other) -> bool:
+	def __ge__(self, other) -> bool:  # noqa: MAN001
 		if self.__class__ is other.__class__:
 			return self._value_ >= other._value_
 		return NotImplemented
 
-	def __gt__(self, other) -> bool:
+	def __gt__(self, other) -> bool:  # noqa: MAN001
 		if self.__class__ is other.__class__:
 			return self._value_ > other._value_
 		return NotImplemented
 
-	def __le__(self, other) -> bool:
+	def __le__(self, other) -> bool:  # noqa: MAN001
 		if self.__class__ is other.__class__:
 			return self._value_ <= other._value_
 		return NotImplemented
 
-	def __lt__(self, other) -> bool:
+	def __lt__(self, other) -> bool:  # noqa: MAN001
 		if self.__class__ is other.__class__:
 			return self._value_ < other._value_
 		return NotImplemented

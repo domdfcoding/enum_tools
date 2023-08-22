@@ -2,6 +2,7 @@
 import pathlib
 import sys
 import types
+from typing import Iterator
 
 # 3rd party
 import pytest
@@ -16,7 +17,7 @@ pytest_plugins = ("coincidence", "sphinx.testing.fixtures", "sphinx_toolbox.test
 
 
 @pytest.fixture(scope="session")
-def rootdir():
+def rootdir() -> path:
 	rdir = pathlib.Path(__file__).parent.absolute() / "doc-test"
 	if not (rdir / "test-root").is_dir():
 		(rdir / "test-root").mkdir(parents=True)
@@ -24,13 +25,13 @@ def rootdir():
 
 
 @pytest.fixture()
-def content(app: Sphinx):
+def content(app: Sphinx) -> Iterator[Sphinx]:
 	app.build()
 	yield app
 
 
 @pytest.fixture()
-def page(content, request) -> BeautifulSoup:
+def page(content, request) -> BeautifulSoup:  # noqa: MAN001
 	pagename = request.param
 	c = (content.outdir / pagename).read_text()
 

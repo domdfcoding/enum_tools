@@ -21,7 +21,7 @@ from enum_tools.utils import get_base_object, is_enum, is_enum_member, is_flag
 				]
 		)
 def test_is_enum(obj: object, result: bool):
-	assert is_enum(obj) == result
+	assert is_enum(obj) == result  # type: ignore[arg-type]
 
 
 @pytest.mark.parametrize(
@@ -35,7 +35,7 @@ def test_is_enum(obj: object, result: bool):
 				]
 		)
 def test_is_enum_member(obj: object, result: bool):
-	assert is_enum_member(obj) == result
+	assert is_enum_member(obj) == result  # type: ignore[arg-type]
 
 
 class Colours(enum.Flag):
@@ -60,7 +60,7 @@ PURPLE = Colours.RED | Colours.BLUE
 				]
 		)
 def test_is_flag(obj: object, result: bool):
-	assert is_flag(obj) == result
+	assert is_flag(obj) == result  # type: ignore[arg-type]
 
 
 def test_get_base_object():
