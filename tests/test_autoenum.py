@@ -85,6 +85,10 @@ def preprocess_soup(soup: BeautifulSoup):
 	for dt in soup.select("span.sig-return"):
 		dt.replace_with(NavigableString(dt.get_text()))
 
+	for div in soup.findAll("script"):
+		if div.get("src"):
+			div["src"] = div["src"].split("?v=")[0]
+			print(div["src"])
 
 @xfail_312
 @pytest.mark.parametrize(
