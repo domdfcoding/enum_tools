@@ -229,7 +229,11 @@ class EnumDocumenter(ClassDocumenter):
 
 		non_enum_members = []
 		for member in members:
-			if member.__name__ not in self.object.__members__.keys():
+			if isinstance(member, ObjectMember):
+				member_name = member.__name__
+			else:
+				member_name = member[0]
+			if member_name not in self.object.__members__.keys():
 				non_enum_members.append(member)
 
 		user_option_undoc_members = self.options.undoc_members
