@@ -72,6 +72,7 @@ from sphinx.ext.autodoc import (  # nodep
 		ClassDocumenter,
 		ClassLevelDocumenter,
 		Documenter,
+		ObjectMember,
 		logger
 		)
 from sphinx.locale import _  # nodep
@@ -228,7 +229,11 @@ class EnumDocumenter(ClassDocumenter):
 
 		non_enum_members = []
 		for member in members:
-			if member[0] not in self.object.__members__.keys():
+			if isinstance(member, ObjectMember):
+				member_name = member.__name__
+			else:
+				member_name = member[0]
+			if member_name not in self.object.__members__.keys():
 				non_enum_members.append(member)
 
 		user_option_undoc_members = self.options.undoc_members
@@ -236,7 +241,7 @@ class EnumDocumenter(ClassDocumenter):
 		# Document enums first
 		self.options.undoc_members = True  # type: ignore
 
-		enum_members = [(var.name, var) for var in self.object]
+		enum_members = [ObjectMember(name=var.name, obj=var) for var in self.object]
 		self._do_document_members(
 				enum_members,
 				want_all,
@@ -263,7 +268,7 @@ class EnumDocumenter(ClassDocumenter):
 		# remove members given by exclude-members
 		if self.options.exclude_members:
 			members = [
-					(membername, member)
+					ObjectMember(name=membername, obj=member)
 					for (membername, member) in members  # noqa
 					if (self.options.exclude_members is ALL or membername not in self.options.exclude_members)
 					]
