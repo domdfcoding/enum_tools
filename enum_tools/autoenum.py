@@ -78,6 +78,7 @@ from sphinx.ext.autodoc import (  # nodep
 from sphinx.locale import _  # nodep
 from sphinx.pycode import ModuleAnalyzer  # nodep
 from sphinx.util.inspect import memory_address_re, safe_getattr  # nodep
+from sphinx_toolbox.more_autodoc import ObjectMembers  # nodep
 from sphinx_toolbox.more_autodoc.typehints import format_annotation  # nodep
 from sphinx_toolbox.utils import add_fallback_css_class  # nodep
 from sphinx_toolbox.utils import unknown_module_warning  # nodep
@@ -227,14 +228,15 @@ class EnumDocumenter(ClassDocumenter):
 		# find out which members are documentable
 		members_check_module, members = self.get_object_members(want_all)
 
-		non_enum_members = []
+		non_enum_members: List[ObjectMember] = []
 		for member in members:
 			if isinstance(member, ObjectMember):
-				member_name = member.__name__
+				if member.__name__ not in self.object.__members__.keys():
+					non_enum_members.append(member)
 			else:
 				member_name = member[0]
-			if member_name not in self.object.__members__.keys():
-				non_enum_members.append(member)
+				if member_name not in self.object.__members__.keys():
+					non_enum_members.append(ObjectMember(*member))
 
 		user_option_undoc_members = self.options.undoc_members
 
@@ -264,14 +266,23 @@ class EnumDocumenter(ClassDocumenter):
 				description=methods_text,
 				)
 
-	def _do_document_members(self, members, want_all, members_check_module, description):
+	def _do_document_members(
+			self,
+			members: ObjectMembers,
+			want_all: bool,
+			members_check_module: bool,
+			description: str,
+			) -> None:
 		# remove members given by exclude-members
 		if self.options.exclude_members:
-			members = [
-					ObjectMember(name=membername, obj=member)
-					for (membername, member) in members  # noqa
-					if (self.options.exclude_members is ALL or membername not in self.options.exclude_members)
-					]
+			new_members = []
+			for member in members:
+				if not isinstance(member, ObjectMember):
+					member = ObjectMember(*member)
+				if (self.options.exclude_members is ALL or member.__name__ not in self.options.exclude_members):
+					new_members.append(member)
+
+			members = new_members
 
 		# document non-skipped members
 		memberdocumenters: List[Tuple[Documenter, bool]] = []
