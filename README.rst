@@ -121,11 +121,11 @@ Enum Tools
 
 This library provides the following:
 
-#. ``enum_tools.autoenum`` -- A `Sphinx <https://www.sphinx-doc.org>`_ extension to document Enums better than ``autoclass``
+#. ``enum_tools.autoenum`` – A `Sphinx <https://www.sphinx-doc.org>`_ extension to document Enums better than ``autoclass``
    can currently.
-#. ``@enum_tools.documentation.document_enum`` -- A decorator to add docstrings to ``Enum`` members
+#. ``@enum_tools.documentation.document_enum`` – A decorator to add docstrings to ``Enum`` members
    from a comment at the end of the line.
-#. ``enum_tools.custom_enums`` -- Additional ``Enum`` classes with different functionality.
+#. ``enum_tools.custom_enums`` – Additional ``Enum`` classes with different functionality.
 
 
 Installation
