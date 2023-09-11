@@ -1,9 +1,10 @@
 {% set heading = ("heading" if sphinx_version >= (5, 0) else 'headline') -%}
 {% set sig_prename_tag = ("span" if sphinx_version >= (4, 0) else 'code') -%}
 {% set sig_object_class = (' class="sig sig-object py"' if sphinx_version >= (4, 0) else '') -%}
+{% set permalink = ('Link' if sphinx_version >= (7, 2) else 'Permalink') -%}
 {% set NEW_ENUM_REPR = python_version >= (3, 13) -%}
 <!DOCTYPE html>
-<html{% if sphinx_version >= (5, 0) %} lang="en"{% endif %}>
+<html{% if sphinx_version >= (7, 2) %} data-content_root="./"{% endif %}{% if sphinx_version >= (5, 0) %} lang="en"{% endif %}>
  <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1.0" name="viewport"/>{% if docutils_version > (0, 18) %}
@@ -12,7 +13,7 @@
   <title>
    autoenum Demo — Python  documentation
   </title>
-  <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js">
+  <script{% if sphinx_version < (7, 2) %} data-url_root="./" id="documentation_options"{% endif %} src="_static/documentation_options.js">
   </script>{% if sphinx_version < (6, 0) %}
   <script src="_static/jquery.js">
   </script>
@@ -36,7 +37,7 @@
        </span>
        <h1>
         autoenum Demo
-        <a class="headerlink" href="#module-enum_tools.demo" title="Permalink to this {{ heading }}">
+        <a class="headerlink" href="#module-enum_tools.demo" title="{{ permalink }} to this {{ heading }}">
          ¶
         </a>
        </h1>
@@ -62,7 +63,7 @@
          <span class="sig-paren">
           )
          </span>
-         <a class="headerlink" href="#enum_tools.demo.People" title="Permalink to this definition">
+         <a class="headerlink" href="#enum_tools.demo.People" title="{{ permalink }} to this definition">
           ¶
          </a>
         </dt>
@@ -96,7 +97,7 @@
            <em class="property">
             = {% if NEW_ENUM_REPR %}People.Bob{% else %}&lt;People.Bob: 1&gt;{% endif %}
            </em>
-           <a class="headerlink" href="#enum_tools.demo.People.Bob" title="Permalink to this definition">
+           <a class="headerlink" href="#enum_tools.demo.People.Bob" title="{{ permalink }} to this definition">
             ¶
            </a>
           </dt>
@@ -114,7 +115,7 @@
            <em class="property">
             = {% if NEW_ENUM_REPR %}People.Alice{% else %}&lt;People.Alice: 2&gt;{% endif %}
            </em>
-           <a class="headerlink" href="#enum_tools.demo.People.Alice" title="Permalink to this definition">
+           <a class="headerlink" href="#enum_tools.demo.People.Alice" title="{{ permalink }} to this definition">
             ¶
            </a>
           </dt>
@@ -132,7 +133,7 @@
            <em class="property">
             = {% if NEW_ENUM_REPR %}People.Carol{% else %}&lt;People.Carol: 3&gt;{% endif %}
            </em>
-           <a class="headerlink" href="#enum_tools.demo.People.Carol" title="Permalink to this definition">
+           <a class="headerlink" href="#enum_tools.demo.People.Carol" title="{{ permalink }} to this definition">
             ¶
            </a>
           </dt>
@@ -153,7 +154,7 @@
            <em class="property">
             = {% if NEW_ENUM_REPR %}People.Dennis{% else %}&lt;People.Dennis: 4&gt;{% endif %}
            </em>
-           <a class="headerlink" href="#enum_tools.demo.People.Dennis" title="Permalink to this definition">
+           <a class="headerlink" href="#enum_tools.demo.People.Dennis" title="{{ permalink }} to this definition">
             ¶
            </a>
           </dt>
@@ -184,7 +185,7 @@
            <span class="sig-paren">
             )
            </span>
-           <a class="headerlink" href="#enum_tools.demo.People.iter_values" title="Permalink to this definition">
+           <a class="headerlink" href="#enum_tools.demo.People.iter_values" title="{{ permalink }} to this definition">
             ¶
            </a>
           </dt>
@@ -209,7 +210,7 @@
             )
            </span>
            → List
-           <a class="headerlink" href="#enum_tools.demo.People.as_list" title="Permalink to this definition">
+           <a class="headerlink" href="#enum_tools.demo.People.as_list" title="{{ permalink }} to this definition">
             ¶
            </a>
           </dt>
@@ -243,7 +244,7 @@
          <span class="sig-paren">
           )
          </span>
-         <a class="headerlink" href="#enum_tools.demo.NoMethods" title="Permalink to this definition">
+         <a class="headerlink" href="#enum_tools.demo.NoMethods" title="{{ permalink }} to this definition">
           ¶
          </a>
         </dt>
@@ -277,7 +278,7 @@
            <em class="property">
             = {% if NEW_ENUM_REPR %}NoMethods.Bob{% else %}&lt;NoMethods.Bob: 1&gt;{% endif %}
            </em>
-           <a class="headerlink" href="#enum_tools.demo.NoMethods.Bob" title="Permalink to this definition">
+           <a class="headerlink" href="#enum_tools.demo.NoMethods.Bob" title="{{ permalink }} to this definition">
             ¶
            </a>
           </dt>
@@ -295,7 +296,7 @@
            <em class="property">
             = {% if NEW_ENUM_REPR %}NoMethods.Alice{% else %}&lt;NoMethods.Alice: 2&gt;{% endif %}
            </em>
-           <a class="headerlink" href="#enum_tools.demo.NoMethods.Alice" title="Permalink to this definition">
+           <a class="headerlink" href="#enum_tools.demo.NoMethods.Alice" title="{{ permalink }} to this definition">
             ¶
            </a>
           </dt>
@@ -313,7 +314,7 @@
            <em class="property">
             = {% if NEW_ENUM_REPR %}NoMethods.Carol{% else %}&lt;NoMethods.Carol: 3&gt;{% endif %}
            </em>
-           <a class="headerlink" href="#enum_tools.demo.NoMethods.Carol" title="Permalink to this definition">
+           <a class="headerlink" href="#enum_tools.demo.NoMethods.Carol" title="{{ permalink }} to this definition">
             ¶
            </a>
           </dt>

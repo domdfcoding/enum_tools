@@ -171,5 +171,5 @@ third_party_version_matrix:
     - 6.2
     - 7.0
     - 7.1
-    # - 7.2
+    - 7.2
 #    - latest

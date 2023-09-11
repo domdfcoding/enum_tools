@@ -1,9 +1,10 @@
 {% set heading = ("heading" if sphinx_version >= (5, 0) else 'headline') -%}
 {% set sig_prename_tag = ("span" if sphinx_version >= (4, 0) else 'code') -%}
 {% set sig_object_class = (' class="sig sig-object py"' if sphinx_version >= (4, 0) else '') -%}
+{% set permalink = ('Link' if sphinx_version >= (7, 2) else 'Permalink') -%}
 {% set NEW_ENUM_REPR = python_version >= (3, 13) -%}
 <!DOCTYPE html>
-<html{% if sphinx_version >= (5, 0) %} lang="en"{% endif %}>
+<html{% if sphinx_version >= (7, 2) %} data-content_root="./"{% endif %}{% if sphinx_version >= (5, 0) %} lang="en"{% endif %}>
  <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1.0" name="viewport"/>{% if docutils_version > (0, 18) %}
@@ -12,7 +13,7 @@
   <title>
    autoenum Demo - Flag — Python  documentation
   </title>
-  <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js">
+  <script{% if sphinx_version < (7, 2) %} data-url_root="./" id="documentation_options"{% endif %} src="_static/documentation_options.js">
   </script>{% if sphinx_version < (6, 0) %}
   <script src="_static/jquery.js">
   </script>
@@ -34,7 +35,7 @@
       <{% if docutils_version >= (0, 17) %}section{% else %}div class="section"{% endif %} id="autoenum-demo-flag">
        <h1>
         autoenum Demo - Flag
-        <a class="headerlink" href="#autoenum-demo-flag" title="Permalink to this {{ heading }}">
+        <a class="headerlink" href="#autoenum-demo-flag" title="{{ permalink }} to this {{ heading }}">
          ¶
         </a>
        </h1>
@@ -60,7 +61,7 @@
          <span class="sig-paren">
           )
          </span>
-         <a class="headerlink" href="#enum_tools.demo.StatusFlags" title="Permalink to this definition">
+         <a class="headerlink" href="#enum_tools.demo.StatusFlags" title="{{ permalink }} to this definition">
           ¶
          </a>
         </dt>
@@ -94,7 +95,7 @@
            <em class="property">
             = {% if NEW_ENUM_REPR %}StatusFlags.Running{% else %}&lt;StatusFlags.Running: 1&gt;{% endif %}
            </em>
-           <a class="headerlink" href="#enum_tools.demo.StatusFlags.Running" title="Permalink to this definition">
+           <a class="headerlink" href="#enum_tools.demo.StatusFlags.Running" title="{{ permalink }} to this definition">
             ¶
            </a>
           </dt>
@@ -112,7 +113,7 @@
            <em class="property">
             = {% if NEW_ENUM_REPR %}StatusFlags.Stopped{% else %}&lt;StatusFlags.Stopped: 2&gt;{% endif %}
            </em>
-           <a class="headerlink" href="#enum_tools.demo.StatusFlags.Stopped" title="Permalink to this definition">
+           <a class="headerlink" href="#enum_tools.demo.StatusFlags.Stopped" title="{{ permalink }} to this definition">
             ¶
            </a>
           </dt>
@@ -130,7 +131,7 @@
            <em class="property">
             = {% if NEW_ENUM_REPR %}StatusFlags.Error{% else %}&lt;StatusFlags.Error: 4&gt;{% endif %}
            </em>
-           <a class="headerlink" href="#enum_tools.demo.StatusFlags.Error" title="Permalink to this definition">
+           <a class="headerlink" href="#enum_tools.demo.StatusFlags.Error" title="{{ permalink }} to this definition">
             ¶
            </a>
           </dt>
@@ -159,7 +160,7 @@
             )
            </span>
            → bool
-           <a class="headerlink" href="#enum_tools.demo.StatusFlags.has_errored" title="Permalink to this definition">
+           <a class="headerlink" href="#enum_tools.demo.StatusFlags.has_errored" title="{{ permalink }} to this definition">
             ¶
            </a>
           </dt>
@@ -170,10 +171,10 @@
           </dd>
          </dl>
         </dd>
-       </dl>
+       </dl>{% if sphinx_version < (7, 2) %}
        <span class="target" id="module-enum_tools.demo">
-       </span>
-       <dl class="py class flag">
+       </span>{% endif %}
+       <dl class="py class flag"{% if sphinx_version >= (7, 2) %} id="module-enum_tools.demo"{% endif %}>
         <dt{{ sig_object_class }} id="id0">
          <em class="property">
           flag
@@ -195,7 +196,7 @@
          <span class="sig-paren">
           )
          </span>
-         <a class="headerlink" href="#id0" title="Permalink to this definition">
+         <a class="headerlink" href="#id0" title="{{ permalink }} to this definition">
           ¶
          </a>
         </dt>
@@ -229,7 +230,7 @@
            <em class="property">
             = {% if NEW_ENUM_REPR %}StatusFlags.Running{% else %}&lt;StatusFlags.Running: 1&gt;{% endif %}
            </em>
-           <a class="headerlink" href="#id1" title="Permalink to this definition">
+           <a class="headerlink" href="#id1" title="{{ permalink }} to this definition">
             ¶
            </a>
           </dt>
@@ -247,7 +248,7 @@
            <em class="property">
             = {% if NEW_ENUM_REPR %}StatusFlags.Stopped{% else %}&lt;StatusFlags.Stopped: 2&gt;{% endif %}
            </em>
-           <a class="headerlink" href="#id2" title="Permalink to this definition">
+           <a class="headerlink" href="#id2" title="{{ permalink }} to this definition">
             ¶
            </a>
           </dt>
@@ -265,7 +266,7 @@
            <em class="property">
             = {% if NEW_ENUM_REPR %}StatusFlags.Error{% else %}&lt;StatusFlags.Error: 4&gt;{% endif %}
            </em>
-           <a class="headerlink" href="#id3" title="Permalink to this definition">
+           <a class="headerlink" href="#id3" title="{{ permalink }} to this definition">
             ¶
            </a>
           </dt>
@@ -294,7 +295,7 @@
             )
            </span>
            → bool
-           <a class="headerlink" href="#id4" title="Permalink to this definition">
+           <a class="headerlink" href="#id4" title="{{ permalink }} to this definition">
             ¶
            </a>
           </dt>

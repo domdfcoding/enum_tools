@@ -1,9 +1,10 @@
 {% set heading = ("heading" if sphinx_version >= (5, 0) else 'headline') -%}
 {% set sig_prename_tag = ("span" if sphinx_version >= (4, 0) else 'code') -%}
 {% set sig_object_class = (' class="sig sig-object py"' if sphinx_version >= (4, 0) else '') -%}
+{% set permalink = ('Link' if sphinx_version >= (7, 2) else 'Permalink') -%}
 {% set NEW_ENUM_REPR = python_version >= (3, 13) -%}
 <!DOCTYPE html>
-<html{% if sphinx_version >= (5, 0) %} lang="en"{% endif %}>
+<html{% if sphinx_version >= (7, 2) %} data-content_root="./"{% endif %}{% if sphinx_version >= (5, 0) %} lang="en"{% endif %}>
  <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1.0" name="viewport"/>{% if docutils_version > (0, 18) %}
@@ -12,7 +13,7 @@
   <title>
    autoenum Demo - Members without docstrings — Python  documentation
   </title>
-  <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js">
+  <script{% if sphinx_version < (7, 2) %} data-url_root="./" id="documentation_options"{% endif %} src="_static/documentation_options.js">
   </script>{% if sphinx_version < (6, 0) %}
   <script src="_static/jquery.js">
   </script>
@@ -34,7 +35,7 @@
       <{% if docutils_version >= (0, 17) %}section{% else %}div class="section"{% endif %} id="autoenum-demo-members-without-docstrings">
        <h1>
         autoenum Demo - Members without docstrings
-        <a class="headerlink" href="#autoenum-demo-members-without-docstrings" title="Permalink to this {{ heading }}">
+        <a class="headerlink" href="#autoenum-demo-members-without-docstrings" title="{{ permalink }} to this {{ heading }}">
          ¶
         </a>
        </h1>
@@ -60,7 +61,7 @@
          <span class="sig-paren">
           )
          </span>
-         <a class="headerlink" href="#enum_tools.demo.NoMemberDoc" title="Permalink to this definition">
+         <a class="headerlink" href="#enum_tools.demo.NoMemberDoc" title="{{ permalink }} to this definition">
           ¶
          </a>
         </dt>
@@ -94,7 +95,7 @@
            <em class="property">
             = {% if NEW_ENUM_REPR %}NoMemberDoc.Bob{% else %}&lt;NoMemberDoc.Bob: 1&gt;{% endif %}
            </em>
-           <a class="headerlink" href="#enum_tools.demo.NoMemberDoc.Bob" title="Permalink to this definition">
+           <a class="headerlink" href="#enum_tools.demo.NoMemberDoc.Bob" title="{{ permalink }} to this definition">
             ¶
            </a>
           </dt>
@@ -109,7 +110,7 @@
            <em class="property">
             = {% if NEW_ENUM_REPR %}NoMemberDoc.Alice{% else %}&lt;NoMemberDoc.Alice: 2&gt;{% endif %}
            </em>
-           <a class="headerlink" href="#enum_tools.demo.NoMemberDoc.Alice" title="Permalink to this definition">
+           <a class="headerlink" href="#enum_tools.demo.NoMemberDoc.Alice" title="{{ permalink }} to this definition">
             ¶
            </a>
           </dt>
@@ -124,7 +125,7 @@
            <em class="property">
             = {% if NEW_ENUM_REPR %}NoMemberDoc.Carol{% else %}&lt;NoMemberDoc.Carol: 3&gt;{% endif %}
            </em>
-           <a class="headerlink" href="#enum_tools.demo.NoMemberDoc.Carol" title="Permalink to this definition">
+           <a class="headerlink" href="#enum_tools.demo.NoMemberDoc.Carol" title="{{ permalink }} to this definition">
             ¶
            </a>
           </dt>
