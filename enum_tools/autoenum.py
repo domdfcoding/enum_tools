@@ -149,7 +149,7 @@ def _begin_generate(
 	except PycodeError as err:  # pragma: no cover
 		logger.debug("[autodoc] module analyzer failed: %s", err)
 		# no source file -- e.g. for builtin and C modules
-		documenter.analyzer = None  # type: ignore
+		documenter.analyzer = None  # type: ignore[assignment]
 		# at least add the module.__file__ as a dependency
 		if hasattr(documenter.module, "__file__") and documenter.module.__file__:
 			filename_set = getattr(documenter.directive, _filename_set_attribute)
@@ -241,7 +241,7 @@ class EnumDocumenter(ClassDocumenter):
 		user_option_undoc_members = self.options.undoc_members
 
 		# Document enums first
-		self.options.undoc_members = True  # type: ignore
+		self.options.undoc_members = True  # type: ignore[attr-defined]
 
 		enum_members = [ObjectMember(name=var.name, obj=var) for var in self.object]
 		self._do_document_members(
@@ -252,7 +252,7 @@ class EnumDocumenter(ClassDocumenter):
 				)
 
 		# Document everything else
-		self.options.undoc_members = user_option_undoc_members  # type: ignore
+		self.options.undoc_members = user_option_undoc_members  # type: ignore[attr-defined]
 
 		methods_text = (
 				f"The {self.class_xref} and its members "

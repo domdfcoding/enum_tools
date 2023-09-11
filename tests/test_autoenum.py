@@ -10,7 +10,7 @@ from pathlib import Path
 # 3rd party
 import pytest
 import sphinx
-from bs4 import BeautifulSoup, NavigableString  # type: ignore
+from bs4 import BeautifulSoup, NavigableString  # type: ignore[import]
 from sphinx.application import Sphinx
 from sphinx_toolbox.testing import HTMLRegressionFixture
 

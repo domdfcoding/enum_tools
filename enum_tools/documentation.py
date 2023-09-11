@@ -35,8 +35,8 @@ from textwrap import dedent
 from typing import Iterable, Iterator, List, Optional, Sequence, Tuple, TypeVar, Union
 
 # 3rd party
-import pygments.token  # type: ignore
-from pygments.lexers.python import PythonLexer  # type: ignore
+import pygments.token  # type: ignore[import]
+from pygments.lexers.python import PythonLexer  # type: ignore[import]
 
 __all__ = [
 		"get_tokens",
@@ -328,7 +328,7 @@ def document_member(enum_member: Enum) -> None:
 		elif all_tokens[0][0] not in pygments.token.Name:
 			continue
 		else:
-			if indent > base_indent:  # type: ignore
+			if indent > base_indent:  # type: ignore[operator]
 				continue
 		enum_vars, doc = parse_tokens(all_tokens)
 

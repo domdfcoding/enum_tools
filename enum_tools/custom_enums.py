@@ -103,7 +103,7 @@ if sys.version_info >= (3, 11):  # pragma: no cover
 else:  # pragma: no cover (py310+)
 
 	# stdlib
-	from enum import _decompose  # type: ignore
+	from enum import _decompose  # type: ignore[attr-defined]
 
 
 class MemberDirEnum(Enum):
