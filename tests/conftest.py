@@ -40,7 +40,7 @@ def content(app: Sphinx) -> Iterator[Sphinx]:
 def page(content, request) -> BeautifulSoup:  # noqa: MAN001
 	pagename = request.param
 	c = (content.outdir / pagename).read_text()
-	c = c.replace("Â¶", "¶")
-	c = c.replace("â€™", "’")
+	c = c.replace("Â¶", '¶')
+	c = c.replace("â€™", '’')
 
 	yield BeautifulSoup(c, "html5lib")
