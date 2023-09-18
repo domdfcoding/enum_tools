@@ -1,4 +1,4 @@
-beautifulsoup4<4.12.1,>=4.9.1
+beautifulsoup4>=4.9.1,<4.12.3
 coincidence>=0.2.0
 coverage>=5.1
 coverage-pyver-pragma>=0.2.1
