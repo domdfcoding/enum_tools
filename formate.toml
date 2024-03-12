@@ -69,4 +69,4 @@ known_third_party = [
     "sphinxemoji",
     "typing_extensions",
 ]
-known_first_party = "enum_tools"
+known_first_party = [ "enum_tools",]
