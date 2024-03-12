@@ -3,6 +3,7 @@
 {% set sig_object_class = (' class="sig sig-object py"' if sphinx_version >= (4, 0) else '') -%}
 {% set permalink = ('Link' if sphinx_version >= (7, 2) else 'Permalink') -%}
 {% set NEW_ENUM_REPR = python_version >= (3, 13) -%}
+{% set anchor = "autoenum-demo" if sphinx_version >= (7,2) else "module-enum_tools.demo" -%}
 <!DOCTYPE html>
 <html{% if sphinx_version >= (7, 2) %} data-content_root="./"{% endif %}{% if sphinx_version >= (5, 0) %} lang="en"{% endif %}>
  <head>
@@ -34,16 +35,16 @@
    <div class="documentwrapper">
     <div class="bodywrapper">
      <div class="body" role="main">
-      <{% if docutils_version >= (0, 17) %}section{% else %}div class="section"{% endif %} id="module-enum_tools.demo">
+      <{% if docutils_version >= (0, 17) %}section{% else %}div class="section"{% endif %} id="{{ anchor }}">{% if sphinx_version < (7,2) %}
        <span id="autoenum-demo">
-       </span>
+       </span>{% endif %}
        <h1>
         autoenum Demo
-        <a class="headerlink" href="#module-enum_tools.demo" title="{{ permalink }} to this {{ heading }}">
+        <a class="headerlink" href="#{{ anchor }}" title="{{ permalink }} to this {{ heading }}">
          ¶
         </a>
        </h1>
-       <dl class="py class enum">
+       <dl class="py class enum"{% if sphinx_version >= (7, 2) %} id="module-enum_tools.demo"{% endif %}>
         <dt{{ sig_object_class }} id="enum_tools.demo.People">
          <em class="property">
           enum
