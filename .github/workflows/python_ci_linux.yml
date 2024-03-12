@@ -23,7 +23,7 @@ jobs:
     runs-on: "ubuntu-20.04"
     continue-on-error: ${{ matrix.config.experimental }}
     env:
-      USING_COVERAGE: '3.6,3.7,3.8,3.9,3.10,3.11,3.12,3.13.0-alpha.1,pypy-3.6,pypy-3.7,pypy-3.8,pypy-3.9'
+      USING_COVERAGE: '3.6,3.7,3.8,3.9,3.10,3.11,3.12,3.13.0-alpha.4,pypy-3.6,pypy-3.7,pypy-3.8,pypy-3.9'
 
     strategy:
       fail-fast: False
@@ -44,7 +44,7 @@ jobs:
 
     steps:
       - name: Checkout 🛎️
-        uses: "actions/checkout@v3"
+        uses: "actions/checkout@v4"
 
       - name: Check for changed files
         if: startsWith(github.ref, 'refs/tags/') != true
@@ -59,7 +59,7 @@ jobs:
       - name: Setup Python 🐍
         id: setup-python
         if: ${{ steps.changes.outputs.code == 'true' || steps.changes.outcome == 'skipped' }}
-        uses: "actions/setup-python@v4"
+        uses: "actions/setup-python@v5"
         with:
           python-version: "${{ matrix.config.python-version }}"
 
@@ -77,7 +77,7 @@ jobs:
         run: python -m tox -e "${{ matrix.config.testenvs }}" -s false
 
       - name: "Upload Coverage 🚀"
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: ${{ always() && steps.setup-python.outcome == 'success' }}
         with:
           name: "coverage-${{ matrix.config.python-version }}"
@@ -89,10 +89,10 @@ jobs:
     runs-on: "ubuntu-20.04"
     steps:
       - name: Checkout 🛎️
-        uses: "actions/checkout@v3"
+        uses: "actions/checkout@v4"
 
       - name: Setup Python 🐍
-        uses: "actions/setup-python@v4"
+        uses: "actions/setup-python@v5"
         with:
           python-version: 3.8
 
@@ -102,7 +102,7 @@ jobs:
           python -m pip install --upgrade "coveralls>=3.0.0" coverage_pyver_pragma
 
       - name: "Download Coverage 🪂"
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           path: coverage
 
@@ -120,7 +120,7 @@ jobs:
 
       - name: "Upload Combined Coverage Artefact 🚀"
         if: ${{ steps.show.outcome != 'failure' }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: "combined-coverage"
           path: .coverage
@@ -138,11 +138,11 @@ jobs:
     runs-on: "ubuntu-20.04"
     steps:
       - name: Checkout 🛎️
-        uses: "actions/checkout@v3"
+        uses: "actions/checkout@v4"
         if: startsWith(github.ref, 'refs/tags/')
 
       - name: Setup Python 🐍
-        uses: "actions/setup-python@v4"
+        uses: "actions/setup-python@v5"
         if: startsWith(github.ref, 'refs/tags/')
         with:
           python-version: 3.8
@@ -183,10 +183,10 @@ jobs:
     if: startsWith(github.ref, 'refs/tags/') || (startsWith(github.event.head_commit.message, 'Bump version') != true)
     steps:
       - name: Checkout 🛎️
-        uses: "actions/checkout@v3"
+        uses: "actions/checkout@v4"
 
       - name: Setup Python 🐍
-        uses: "actions/setup-python@v4"
+        uses: "actions/setup-python@v5"
         with:
           python-version: 3.8
 
@@ -194,7 +194,7 @@ jobs:
         uses: conda-incubator/setup-miniconda@v2
         with:
           activate-environment: env
-          conda-build-version: 3.23.3
+          conda-build-version: 3.28.4
           python-version: "3.8"
           miniforge-variant: Mambaforge
 
