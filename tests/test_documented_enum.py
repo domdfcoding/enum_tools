@@ -165,23 +165,28 @@ def test_document_enum_not_interactive():
 		def iter_values(cls):  # noqa: MAN002
 			return iter(cls)
 
+	if sys.version_info >= (3, 13):
+		default_docstring = "\nAn enumeration of people\n"
+	else:
+		default_docstring = "\n\t\tAn enumeration of people\n\t\t"
+
 	assert People.Bob == 1
 	assert isinstance(People.Bob, People)
 	assert isinstance(People.Bob, int)
 	assert repr(People.Bob) == "People.Bob" if NEW_ENUM_REPR else "<People.Bob: 1>"
-	assert People.Bob.__doc__ == "\n\t\tAn enumeration of people\n\t\t"  # The default
+	assert People.Bob.__doc__ == default_docstring
 
 	assert People.Alice == 2
 	assert isinstance(People.Alice, People)
 	assert isinstance(People.Alice, int)
 	assert repr(People.Alice) == "People.Alice" if NEW_ENUM_REPR else "<People.Alice: 2>"
-	assert People.Alice.__doc__ == "\n\t\tAn enumeration of people\n\t\t"  # The default
+	assert People.Alice.__doc__ == default_docstring
 
 	assert People.Carol == 3
 	assert isinstance(People.Carol, People)
 	assert isinstance(People.Carol, int)
 	assert repr(People.Carol) == "People.Carol" if NEW_ENUM_REPR else "<People.Carol: 3>"
-	assert People.Carol.__doc__ == "\n\t\tAn enumeration of people\n\t\t"  # The default
+	assert People.Carol.__doc__ == default_docstring
 
 	assert list(iter(People)) == [People.Bob, People.Alice, People.Carol]
 	assert list(iter(People)) == [1, 2, 3]
