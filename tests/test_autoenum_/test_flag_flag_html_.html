@@ -2,7 +2,7 @@
 {% set sig_prename_tag = ("span" if sphinx_version >= (4, 0) else 'code') -%}
 {% set sig_object_class = (' class="sig sig-object py"' if sphinx_version >= (4, 0) else '') -%}
 {% set permalink = ('Link' if sphinx_version >= (7, 2) else 'Permalink') -%}
-{% set NEW_ENUM_REPR = python_version >= (3, 13) -%}
+{% set NEW_ENUM_REPR = python_version >= (3, 14) -%}
 <!DOCTYPE html>
 <html{% if sphinx_version >= (7, 2) %} data-content_root="./"{% endif %}{% if sphinx_version >= (5, 0) %} lang="en"{% endif %}>
  <head>

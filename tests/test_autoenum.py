@@ -17,11 +17,11 @@ from sphinx_toolbox.testing import HTMLRegressionFixture
 # this package
 from enum_tools.autoenum import EnumDocumenter
 
-NEW_ENUM_REPR = sys.version_info >= (3, 13)
+NEW_ENUM_REPR = sys.version_info >= (3, 14)
 
 xfail_312 = pytest.mark.xfail(
-		reason="Python 3.12 behaviour has not been finalised yet.",
-		condition=sys.version_info[:2] == (3, 13) and sys.version_info.releaselevel == "alpha"
+		reason="Python 3.14 behaviour has not been finalised yet.",
+		condition=sys.version_info[:2] == (3, 14) and sys.version_info.releaselevel == "alpha"
 		)
 
 
