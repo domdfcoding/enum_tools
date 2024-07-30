@@ -35,8 +35,8 @@ from textwrap import dedent
 from typing import Iterable, Iterator, List, Optional, Sequence, Tuple, TypeVar, Union
 
 # 3rd party
-import pygments.token  # type: ignore[import]
-from pygments.lexers.python import PythonLexer  # type: ignore[import]
+import pygments.token  # type: ignore[import-untyped]
+from pygments.lexers.python import PythonLexer  # type: ignore[import-untyped]
 
 __all__ = [
 		"get_tokens",

@@ -7,7 +7,7 @@ from typing import Iterator
 # 3rd party
 import pytest
 import sphinx
-from bs4 import BeautifulSoup  # type: ignore[import]
+from bs4 import BeautifulSoup  # type: ignore[import-untyped]
 from sphinx.application import Sphinx
 
 if sys.version_info >= (3, 10):
@@ -17,7 +17,7 @@ if sphinx.version_info >= (7, 2):
 	path = pathlib.Path
 else:
 	# 3rd party
-	from sphinx.testing.path import path  # type: ignore[misc]
+	from sphinx.testing.path import path  # type: ignore[assignment]
 
 pytest_plugins = ("coincidence", "sphinx.testing.fixtures", "sphinx_toolbox.testing")
 
