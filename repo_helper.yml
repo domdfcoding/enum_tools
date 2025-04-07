@@ -22,19 +22,6 @@ conda_channels:
 
 # Versions to run tests for
 python_versions:
- 3.6:
-  matrix_exclude:
-   sphinx:
-    - 5.0
-    - 5.1
-    - 5.2
-    - 5.3
-    - 6.0
-    - 6.1
-    - 6.2
-    - 7.0
-    - 7.1
-    - 7.2
  3.7:
   matrix_exclude:
    sphinx:
@@ -69,24 +56,6 @@ python_versions:
     - 5.3
     - 6.0
     - 6.1
- pypy36:
-  matrix_exclude:
-   sphinx:
-    - 3.4
-    - 3.5
-    - 4.0
-    - 4.1
-    - 4.2
-    - 5.0
-    - 5.1
-    - 5.2
-    - 5.3
-    - 6.0
-    - 6.1
-    - 6.2
-    - 7.0
-    - 7.1
-    - 7.2
  pypy37:
   matrix_exclude:
    sphinx:
