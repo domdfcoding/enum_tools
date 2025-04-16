@@ -3,7 +3,7 @@
 {% set sig_object_class = (' class="sig sig-object py"' if sphinx_version >= (4, 0) else '') -%}
 {% set permalink = ('Link' if sphinx_version >= (7, 2) else 'Permalink') -%}
 {% set NEW_ENUM_REPR = python_version >= (3, 14) -%}
-{% set anchor = "autoenum-demo" if sphinx_version >= (7,2) else "module-enum_tools.demo" -%}
+{% set anchor = "autoenum-demo" if sphinx_version >= (9, 9) else "module-enum_tools.demo" -%}
 <!DOCTYPE html>
 <html{% if sphinx_version >= (7, 2) %} data-content_root="./"{% endif %}{% if sphinx_version >= (5, 0) %} lang="en"{% endif %}>
  <head>
@@ -14,7 +14,7 @@
   {% elif docutils_version[1] == 19 %}<meta content="Docutils 0.19: https://docutils.sourceforge.io/" name="generator"/>
   {% elif docutils_version[1] >= 20 %}<meta content="width=device-width, initial-scale=1" name="viewport"/>
   {% endif %}<title>
-   autoenum Demo — Python  documentation
+   autoenum Demo — {% if sphinx_version >= (7, 4) %}Project name not set{% else %}Python{% endif %}  documentation
   </title>
   <script{% if sphinx_version < (7, 2) %} data-url_root="./" id="documentation_options"{% endif %} src="_static/documentation_options.js">
   </script>{% if sphinx_version < (6, 0) %}
@@ -28,14 +28,13 @@
   </script>{% if sphinx_version >= (5, 2) %}
   <script src="_static/sphinx_highlight.js">
   </script>{% endif %}
-  <meta content="width=device-width, initial-scale=0.9, maximum-scale=0.9" name="viewport"/>
  </head>
  <body>
   <div class="document">
    <div class="documentwrapper">
     <div class="bodywrapper">
      <div class="body" role="main">
-      <{% if docutils_version >= (0, 17) %}section{% else %}div class="section"{% endif %} id="{{ anchor }}">{% if sphinx_version < (7,2) %}
+      <{% if docutils_version >= (0, 17) %}section{% else %}div class="section"{% endif %} id="{{ anchor }}">{% if sphinx_version < (9, 9) %}
        <span id="autoenum-demo">
        </span>{% endif %}
        <h1>
@@ -44,7 +43,7 @@
          ¶
         </a>
        </h1>
-       <dl class="py class enum"{% if sphinx_version >= (7, 2) %} id="module-enum_tools.demo"{% endif %}>
+       <dl class="py class enum"{% if sphinx_version >= (9, 9) %} id="module-enum_tools.demo"{% endif %}>
         <dt{{ sig_object_class }} id="enum_tools.demo.People">
          <em class="property">
           enum
@@ -350,7 +349,9 @@
          </code>
         </a>
        </p>
-      </{% if docutils_version >= (0, 17) %}section{% else %}div{% endif %}>
+      </{% if docutils_version >= (0, 17) %}section{% else %}div{% endif %}>{% if sphinx_version >= (8, 1) %}
+      <div class="clearer">
+      </div>{% endif %}
      </div>
     </div>
    </div>

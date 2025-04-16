@@ -31,15 +31,35 @@ python_versions:
     - 7.0
     - 7.1
     - 7.2
+    - 7.3
+    - 7.4
+    - 8.0
+    - 8.1
+    - 8.2
+    - latest
  3.8:
   matrix_exclude:
    sphinx:
     - 7.2
+    - 7.3
+    - 7.4
+    - 8.0
+    - 8.1
+    - 8.2
+    - latest
  3.9:
+  matrix_exclude:
+   sphinx:
+    - 8.0
+    - 8.1
+    - 8.2
  "3.10":
+  matrix_exclude:
+   sphinx:
+    - 8.2
  "3.11":
  "3.12":
- 3.13-dev:
+ "3.13":
   matrix_exclude:
    sphinx:
     - 3.4
@@ -70,6 +90,12 @@ python_versions:
     - 7.0
     - 7.1
     - 7.2
+    - 7.3
+    - 7.4
+    - 8.0
+    - 8.1
+    - 8.2
+    - latest
  pypy38:
   matrix_exclude:
    sphinx:
@@ -79,6 +105,12 @@ python_versions:
     - 4.1
     - 4.2
     - 7.2
+    - 7.3
+    - 7.4
+    - 8.0
+    - 8.1
+    - 8.2
+    - latest
  pypy39:
   matrix_exclude:
    sphinx:
@@ -87,6 +119,10 @@ python_versions:
     - 4.0
     - 4.1
     - 4.2
+    - 8.0
+    - 8.1
+    - 8.2
+    - latest
 
 manifest_additional:
  - recursive-include enum_tools/ requirements.txt
@@ -122,6 +158,8 @@ extra_sphinx_extensions:
  - sphinx_toolbox_experimental.succinct_seealso
  - sphinx_toolbox_experimental.missing_xref
 
+exclude_files:
+ - tox
 
 sphinx_conf_epilogue:
  - html_logo = "../enum_tools.png"
@@ -158,4 +196,9 @@ third_party_version_matrix:
     - 7.0
     - 7.1
     - 7.2
+    - 7.3
+    - 7.4
+    - 8.0
+    - 8.1
+    - 8.2
 #    - latest

@@ -6,6 +6,7 @@ import sys
 from decimal import Decimal
 from enum import Enum
 from pathlib import Path
+from typing import Dict, List, cast
 
 # 3rd party
 import pytest
@@ -90,6 +91,14 @@ def preprocess_soup(soup: BeautifulSoup) -> None:
 		if div.get("src"):
 			div["src"] = div["src"].split("?v=")[0]
 			print(div["src"])
+
+	for meta in cast(List[Dict], soup.find_all("meta")):
+		if meta.get("content", '') == "width=device-width, initial-scale=0.9, maximum-scale=0.9":
+			meta.extract()  # type: ignore[attr-defined]
+
+	for div in soup.select("div.related"):
+		if div["aria-label"] == "Related":
+			div.extract()
 
 
 @xfail_312

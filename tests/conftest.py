@@ -2,7 +2,7 @@
 import pathlib
 import sys
 import types
-from typing import Iterator
+from typing import Dict, Iterator, List, cast
 
 # 3rd party
 import pytest
@@ -43,4 +43,10 @@ def page(content, request) -> BeautifulSoup:  # noqa: MAN001
 	c = c.replace("Â¶", '¶')
 	c = c.replace("â€™", '’')
 
-	yield BeautifulSoup(c, "html5lib")
+	soup = BeautifulSoup(c, "html5lib")
+
+	for meta in cast(List[Dict], soup.find_all("meta")):
+		if meta.get("content", '') == "width=device-width, initial-scale=0.9, maximum-scale=0.9":
+			meta.extract()  # type: ignore[attr-defined]
+
+	return soup

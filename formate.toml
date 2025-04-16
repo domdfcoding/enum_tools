@@ -35,6 +35,7 @@ known_third_party = [
     "coincidence",
     "coverage",
     "coverage_pyver_pragma",
+    "defusedxml",
     "domdf_python_tools",
     "extras_require",
     "github",
