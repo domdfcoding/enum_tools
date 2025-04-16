@@ -396,6 +396,8 @@ class EnumDocumenter(ClassDocumenter):
 		self.document_members(all_members)
 		del self.sourcename
 
+	_generate = generate
+
 
 class FlagDocumenter(EnumDocumenter):
 	r"""
