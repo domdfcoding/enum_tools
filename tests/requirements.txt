@@ -15,4 +15,5 @@ pytest-regressions>=2.0.1
 pytest-rerunfailures>=9.0
 pytest-timeout>=1.4.2
 sphinx>=3.2.1
+sphinx-prompt>=1.5.0
 sphinx-toolbox[testing]>=3.9.0
