@@ -7,7 +7,7 @@ from typing import Dict, Iterator, List, cast
 # 3rd party
 import pytest
 import sphinx
-from bs4 import BeautifulSoup  # type: ignore[import-untyped]
+from bs4 import BeautifulSoup
 from sphinx.application import Sphinx
 
 if sys.version_info >= (3, 10):
