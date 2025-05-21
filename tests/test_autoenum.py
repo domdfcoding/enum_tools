@@ -87,7 +87,7 @@ def preprocess_soup(soup: BeautifulSoup) -> None:
 	for dt in soup.select("span.sig-return"):
 		dt.replace_with(NavigableString(dt.get_text()))
 
-	for div in soup.findAll("script"):
+	for div in soup.find_all("script"):
 		if div.get("src"):
 			div["src"] = div["src"].split("?v=")[0]
 			print(div["src"])
@@ -120,24 +120,25 @@ def test_index(page: BeautifulSoup, html_regression: HTMLRegressionFixture):
 
 	class_count = 0
 
-	for class_ in page.findAll("dl"):
+	for class_ in page.find_all("dl"):
 		if "enum" not in class_["class"]:
 			continue
 
 		if class_count == 0:
 			assert class_.find("dt")["id"] == "enum_tools.demo.People"
-			assert class_.find("dd").findAll('p')[0].contents[0] == "An enumeration of people."
+			assert class_.find("dd").find_all('p')[0].contents[0] == "An enumeration of people."
 		elif class_count == 1:
 			assert class_.find("dt")["id"] == "enum_tools.demo.NoMethods"
-			assert class_.find("dd").findAll('p')[0].contents[0] == "An enumeration of people without any methods."
+			assert class_.find("dd").find_all('p'
+												)[0].contents[0] == "An enumeration of people without any methods."
 
 		tag = '<code class="xref py py-class docutils literal notranslate">int</code>'
-		assert str(class_.find("dd").findAll('p')[1].contents[0]) == tag
-		assert class_.find("dd").findAll('p')[2].contents[0] == "Valid values are as follows:"
+		assert str(class_.find("dd").find_all('p')[1].contents[0]) == tag
+		assert class_.find("dd").find_all('p')[2].contents[0] == "Valid values are as follows:"
 
 		attr_count = 0
 
-		for attr in class_.findAll("dl"):
+		for attr in class_.find_all("dl"):
 			if "attribute" not in attr["class"]:
 				continue
 
@@ -219,7 +220,7 @@ def test_flag(page: BeautifulSoup, html_regression: HTMLRegressionFixture):
 
 	class_count = 0
 
-	for class_ in page.findAll("dl"):
+	for class_ in page.find_all("dl"):
 		if "flag" not in class_["class"]:
 			continue
 
@@ -228,15 +229,15 @@ def test_flag(page: BeautifulSoup, html_regression: HTMLRegressionFixture):
 		elif class_count == 1:
 			assert class_.find("dt")["id"] == "id0"
 
-		assert class_.find("dd").findAll('p')[0].contents[0] == "An enumeration of status codes."
+		assert class_.find("dd").find_all('p')[0].contents[0] == "An enumeration of status codes."
 
 		tag = '<code class="xref py py-class docutils literal notranslate">int</code>'
-		assert str(class_.find("dd").findAll('p')[1].contents[0]) == tag
-		assert class_.find("dd").findAll('p')[2].contents[0] == "Valid values are as follows:"
+		assert str(class_.find("dd").find_all('p')[1].contents[0]) == tag
+		assert class_.find("dd").find_all('p')[2].contents[0] == "Valid values are as follows:"
 
 		attr_count = 0
 
-		for attr in class_.findAll("dl"):
+		for attr in class_.find_all("dl"):
 			if "attribute" not in attr["class"]:
 				continue
 
@@ -305,24 +306,24 @@ def test_no_member_doc(page: BeautifulSoup, html_regression: HTMLRegressionFixtu
 
 	class_count = 0
 
-	for class_ in page.findAll("dl"):
+	for class_ in page.find_all("dl"):
 		if "enum" not in class_["class"]:
 			continue
 
 		assert class_.find("dt")["id"] == "enum_tools.demo.NoMemberDoc"
-		assert class_.find("dd").findAll('p')[0].contents[
+		assert class_.find("dd").find_all('p')[0].contents[
 				0] == "An enumeration of people without any member docstrings."
 
 		if class_count == 0:
 			tag = '<code class="xref py py-class docutils literal notranslate">int</code>'
-			assert str(class_.find("dd").findAll('p')[1].contents[0]) == tag
-			assert class_.find("dd").findAll('p')[2].contents[0] == "Valid values are as follows:"
+			assert str(class_.find("dd").find_all('p')[1].contents[0]) == tag
+			assert class_.find("dd").find_all('p')[2].contents[0] == "Valid values are as follows:"
 		else:
-			assert class_.find("dd").findAll('p')[1].contents[0] == "Valid values are as follows:"
+			assert class_.find("dd").find_all('p')[1].contents[0] == "Valid values are as follows:"
 
 		attr_count = 0
 
-		for attr in class_.findAll("dl"):
+		for attr in class_.find_all("dl"):
 			if "attribute" not in attr["class"]:
 				continue
 
