@@ -89,16 +89,25 @@ def preprocess_soup(soup: BeautifulSoup) -> None:
 
 	for div in soup.find_all("script"):
 		if cast(Tag, div).get("src"):
-			div["src"] = div["src"].split("?v=")[0]  # type: ignore[union-attr,index]
-			print(div["src"])  # type: ignore[index]
+			div["src"] = div["src"].split("?v=")[0]  # type: ignore[union-attr]
+			print(div["src"])
 
-	for meta in cast(List[Dict], soup.find_all("meta")):
+	for meta in soup.find_all("meta"):
 		if meta.get("content", '') == "width=device-width, initial-scale=0.9, maximum-scale=0.9":
-			meta.extract()  # type: ignore[attr-defined]
+			meta.extract()
 
 	for div in soup.select("div.related"):
 		if div["aria-label"] == "Related":
 			div.extract()
+
+
+def get_page_h1(page: BeautifulSoup) -> str:
+	h1 = page.find("h1")
+	assert h1 is not None
+	contents = h1.contents
+	assert contents is not None
+	title = cast(str, contents[0]).strip()
+	return title
 
 
 @xfail_312
@@ -109,7 +118,7 @@ def preprocess_soup(soup: BeautifulSoup) -> None:
 		)
 def test_index(page: BeautifulSoup, html_regression: HTMLRegressionFixture):
 	# Make sure the page title is what you expect
-	title = page.find("h1").contents[0].strip()  # type: ignore[union-attr]
+	title = get_page_h1(page)
 	assert "autoenum Demo" == title
 
 	preprocess_soup(page)
@@ -121,25 +130,31 @@ def test_index(page: BeautifulSoup, html_regression: HTMLRegressionFixture):
 	class_count = 0
 
 	for class_ in page.find_all("dl"):
-		if "enum" not in class_["class"]:  # type: ignore[index]
+		if "enum" not in class_["class"]:
 			continue
 
-		dd = class_.find("dd")  # type: ignore[union-attr]
+		dd = class_.find("dd")
+		assert dd is not None
+		p = dd.find_all('p')
+		assert p is not None
+		dt = class_.find("dt")
+		assert dt is not None
+
 		if class_count == 0:
-			assert class_.find("dt")["id"] == "enum_tools.demo.People"  # type: ignore[union-attr,index]
-			assert dd.find_all('p')[0].contents[0] == "An enumeration of people."  # type: ignore[union-attr]
+			assert dt["id"] == "enum_tools.demo.People"
+			assert p[0].contents[0] == "An enumeration of people."
 		elif class_count == 1:
-			assert class_.find("dt")["id"] == "enum_tools.demo.NoMethods"  # type: ignore[union-attr,index]
+			assert dt["id"] == "enum_tools.demo.NoMethods"
 			expected = "An enumeration of people without any methods."
-			assert dd.find_all('p')[0].contents[0] == expected  # type: ignore[union-attr]
+			assert p[0].contents[0] == expected
 
 		tag = '<code class="xref py py-class docutils literal notranslate">int</code>'
-		assert str(dd.find_all('p')[1].contents[0]) == tag  # type: ignore[union-attr]
-		assert dd.find_all('p')[2].contents[0] == "Valid values are as follows:"  # type: ignore[union-attr]
+		assert str(p[1].contents[0]) == tag
+		assert p[2].contents[0] == "Valid values are as follows:"
 
 		attr_count = 0
 
-		for attr in class_.find_all("dl"):  # type: ignore[union-attr]
+		for attr in class_.find_all("dl"):
 			attr = cast(Tag, attr)
 			if "attribute" not in attr["class"]:
 				continue
@@ -150,52 +165,57 @@ def test_index(page: BeautifulSoup, html_regression: HTMLRegressionFixture):
 				class_name = "NoMethods"
 
 			dt = attr.find("dt")
+			assert dt is not None
+			em = dt.em
+			assert em is not None
 			dd = attr.find("dd")
+			assert dd is not None
+
 			if attr_count == 0:
-				assert dt["id"] == f"enum_tools.demo.{class_name}.Bob"  # type: ignore[index]
+				assert dt["id"] == f"enum_tools.demo.{class_name}.Bob"
 
 				if NEW_ENUM_REPR:
-					assert dt.em.contents[0] == f" = {class_name}.Bob"  # type: ignore[union-attr]
+					assert em.contents[0] == f" = {class_name}.Bob"
 				else:
-					assert dt.em.contents[0] == f" = <{class_name}.Bob: 1>"  # type: ignore[union-attr]
+					assert em.contents[0] == f" = <{class_name}.Bob: 1>"
 
-				assert str(dd.contents[0]) == "<p>A person called Bob</p>"  # type: ignore[union-attr]
+				assert str(dd.contents[0]) == "<p>A person called Bob</p>"
 
 			elif attr_count == 1:
-				assert dt["id"] == f"enum_tools.demo.{class_name}.Alice"  # type: ignore[index]
+				assert dt["id"] == f"enum_tools.demo.{class_name}.Alice"
 
 				if NEW_ENUM_REPR:
-					assert dt.em.contents[0] == f" = {class_name}.Alice"  # type: ignore[union-attr]
+					assert em.contents[0] == f" = {class_name}.Alice"
 				else:
-					assert dt.em.contents[0] == f" = <{class_name}.Alice: 2>"  # type: ignore[union-attr]
+					assert em.contents[0] == f" = <{class_name}.Alice: 2>"
 
-				assert str(dd.contents[0]) == "<p>A person called Alice</p>"  # type: ignore[union-attr]
+				assert str(dd.contents[0]) == "<p>A person called Alice</p>"
 
 			elif attr_count == 2:
-				assert dt["id"] == f"enum_tools.demo.{class_name}.Carol"  # type: ignore[index]
+				assert dt["id"] == f"enum_tools.demo.{class_name}.Carol"
 
 				if NEW_ENUM_REPR:
-					assert dt.em.contents[0] == f" = {class_name}.Carol"  # type: ignore[union-attr]
+					assert em.contents[0] == f" = {class_name}.Carol"
 				else:
-					assert dt.em.contents[0] == f" = <{class_name}.Carol: 3>"  # type: ignore[union-attr]
+					assert em.contents[0] == f" = <{class_name}.Carol: 3>"
 
 				if class_count == 0:
-					contents = dd.contents  # type: ignore[union-attr]
+					contents = dd.contents
 					assert str(contents[0]) == "<p>A person called Carol.</p>"
 					assert str(contents[1]) == '\n'
 					assert str(contents[2]) == "<p>This is a multiline docstring.</p>"
 				else:
-					assert str(dd.contents[0]) == "<p>A person called Carol</p>"  # type: ignore[union-attr]
+					assert str(dd.contents[0]) == "<p>A person called Carol</p>"
 
 			elif attr_count == 3:
-				assert dt["id"] == f"enum_tools.demo.{class_name}.Dennis"  # type: ignore[index]
+				assert dt["id"] == f"enum_tools.demo.{class_name}.Dennis"
 
 				if NEW_ENUM_REPR:
-					assert dt.em.contents[0] == f" = {class_name}.Dennis"  # type: ignore[union-attr]
+					assert em.contents[0] == f" = {class_name}.Dennis"
 				else:
-					assert dt.em.contents[0] == f" = <{class_name}.Dennis: 4>"  # type: ignore[union-attr]
+					assert em.contents[0] == f" = <{class_name}.Dennis: 4>"
 
-				assert str(dd.contents[0]) == "<p>A person called Dennis</p>"  # type: ignore[union-attr]
+				assert str(dd.contents[0]) == "<p>A person called Dennis</p>"
 
 			attr_count += 1
 
@@ -210,7 +230,7 @@ def test_index(page: BeautifulSoup, html_regression: HTMLRegressionFixture):
 @pytest.mark.parametrize("page", ["flag.html"], indirect=True)
 def test_flag(page: BeautifulSoup, html_regression: HTMLRegressionFixture):
 	# Make sure the page title is what you expect
-	title = page.find("h1").contents[0].strip()  # type: ignore[union-attr]
+	title = get_page_h1(page)
 	assert "autoenum Demo - Flag" == title
 
 	preprocess_soup(page)
@@ -222,15 +242,21 @@ def test_flag(page: BeautifulSoup, html_regression: HTMLRegressionFixture):
 	class_count = 0
 
 	for class_ in page.find_all("dl"):
-		if "flag" not in class_["class"]:  # type: ignore[index]
+		if "flag" not in class_["class"]:
 			continue
 
-		if class_count == 0:
-			assert class_.find("dt")["id"] == "enum_tools.demo.StatusFlags"  # type: ignore[union-attr,index]
-		elif class_count == 1:
-			assert class_.find("dt")["id"] == "id0"  # type: ignore[union-attr,index]
+		dt = class_.find("dt")
+		assert dt is not None
 
-		ps = class_.find("dd").find_all('p')  # type: ignore[union-attr]
+		if class_count == 0:
+			assert dt["id"] == "enum_tools.demo.StatusFlags"
+		elif class_count == 1:
+			assert dt["id"] == "id0"
+
+		dd = class_.find("dd")
+		assert dd is not None
+		ps = dd.find_all('p')
+
 		assert ps[0].contents[0] == "An enumeration of status codes."
 
 		tag = '<code class="xref py py-class docutils literal notranslate">int</code>'
@@ -239,49 +265,54 @@ def test_flag(page: BeautifulSoup, html_regression: HTMLRegressionFixture):
 
 		attr_count = 0
 
-		for attr in class_.find_all("dl"):  # type: ignore[union-attr]
+		for attr in class_.find_all("dl"):
 			attr = cast(Tag, attr)
 			if "attribute" not in attr["class"]:
 				continue
 
 			dt = attr.find("dt")
+			assert dt is not None
+			assert dt.em is not None
 			dd = attr.find("dd")
+			assert dd is not None
+			assert dd.contents is not None
+
 			if attr_count == 0:
 				if class_count == 0:
-					assert dt["id"] == "enum_tools.demo.StatusFlags.Running"  # type: ignore[index]
+					assert dt["id"] == "enum_tools.demo.StatusFlags.Running"
 				elif class_count == 1:
-					assert dt["id"] == "id1"  # type: ignore[index]
+					assert dt["id"] == "id1"
 
 				if NEW_ENUM_REPR:
-					assert dt.em.contents[0] == " = StatusFlags.Running"  # type: ignore[union-attr]
+					assert dt.em.contents[0] == " = StatusFlags.Running"
 				else:
-					assert dt.em.contents[0] == " = <StatusFlags.Running: 1>"  # type: ignore[union-attr]
+					assert dt.em.contents[0] == " = <StatusFlags.Running: 1>"
 
-				assert str(dd.contents[0]) == "<p>The system is running.</p>"  # type: ignore[union-attr]
+				assert str(dd.contents[0]) == "<p>The system is running.</p>"
 			elif attr_count == 1:
 				if class_count == 0:
-					assert dt["id"] == "enum_tools.demo.StatusFlags.Stopped"  # type: ignore[index]
+					assert dt["id"] == "enum_tools.demo.StatusFlags.Stopped"
 				elif class_count == 1:
-					assert dt["id"] == "id2"  # type: ignore[index]
+					assert dt["id"] == "id2"
 
 				if NEW_ENUM_REPR:
-					assert dt.em.contents[0] == " = StatusFlags.Stopped"  # type: ignore[union-attr]
+					assert dt.em.contents[0] == " = StatusFlags.Stopped"
 				else:
-					assert dt.em.contents[0] == " = <StatusFlags.Stopped: 2>"  # type: ignore[union-attr]
+					assert dt.em.contents[0] == " = <StatusFlags.Stopped: 2>"
 
-				assert str(dd.contents[0]) == "<p>The system has stopped.</p>"  # type: ignore[union-attr]
+				assert str(dd.contents[0]) == "<p>The system has stopped.</p>"
 			elif attr_count == 2:
 				if class_count == 0:
-					assert dt["id"] == "enum_tools.demo.StatusFlags.Error"  # type: ignore[index]
+					assert dt["id"] == "enum_tools.demo.StatusFlags.Error"
 				elif class_count == 1:
-					assert dt["id"] == "id3"  # type: ignore[index]
+					assert dt["id"] == "id3"
 
 				if NEW_ENUM_REPR:
-					assert dt.em.contents[0] == " = StatusFlags.Error"  # type: ignore[union-attr]
+					assert dt.em.contents[0] == " = StatusFlags.Error"
 				else:
-					assert dt.em.contents[0] == " = <StatusFlags.Error: 4>"  # type: ignore[union-attr]
+					assert dt.em.contents[0] == " = <StatusFlags.Error: 4>"
 
-				assert str(dd.contents[0]) == "<p>An error has occurred.</p>"  # type: ignore[union-attr]
+				assert str(dd.contents[0]) == "<p>An error has occurred.</p>"
 
 			attr_count += 1
 
@@ -296,7 +327,7 @@ def test_flag(page: BeautifulSoup, html_regression: HTMLRegressionFixture):
 @pytest.mark.parametrize("page", ["no-member-doc.html"], indirect=True)
 def test_no_member_doc(page: BeautifulSoup, html_regression: HTMLRegressionFixture):
 	# Make sure the page title is what you expect
-	title = page.find("h1").contents[0].strip()  # type: ignore[union-attr]
+	title = get_page_h1(page)
 	assert "autoenum Demo - Members without docstrings" == title
 
 	preprocess_soup(page)
@@ -308,65 +339,77 @@ def test_no_member_doc(page: BeautifulSoup, html_regression: HTMLRegressionFixtu
 	class_count = 0
 
 	for class_ in page.find_all("dl"):
-		if "enum" not in class_["class"]:  # type: ignore[index]
+		if "enum" not in class_["class"]:
 			continue
 
-		dd = class_.find("dd")  # type: ignore[union-attr]
-		assert class_.find("dt")["id"] == "enum_tools.demo.NoMemberDoc"  # type: ignore[union-attr,index]
+		dd = class_.find("dd")
+		assert dd is not None
+		dt = class_.find("dt")
+		assert dt is not None
+		p = dd.find_all('p')
+		assert p is not None
+
+		assert dt["id"] == "enum_tools.demo.NoMemberDoc"
 		expected = "An enumeration of people without any member docstrings."
-		assert dd.find_all('p')[0].contents[0] == expected  # type: ignore[union-attr]
+		assert dd.find_all('p')[0].contents[0] == expected
 
 		if class_count == 0:
 			tag = '<code class="xref py py-class docutils literal notranslate">int</code>'
-			assert str(dd.find_all('p')[1].contents[0]) == tag  # type: ignore[union-attr]
-			assert dd.find_all('p')[2].contents[0] == "Valid values are as follows:"  # type: ignore[union-attr]
+			assert str(dd.find_all('p')[1].contents[0]) == tag
+			assert dd.find_all('p')[2].contents[0] == "Valid values are as follows:"
 		else:
-			assert dd.find_all('p')[1].contents[0] == "Valid values are as follows:"  # type: ignore[union-attr]
+			assert dd.find_all('p')[1].contents[0] == "Valid values are as follows:"
 
 		attr_count = 0
 
-		for attr in class_.find_all("dl"):  # type: ignore[union-attr]
+		for attr in class_.find_all("dl"):
 			attr = cast(Tag, attr)
 			if "attribute" not in attr["class"]:
 				continue
 
 			dt = attr.find("dt")
+			assert dt is not None
+			em = dt.em
+			assert em is not None
+			dd = attr.find("dd")
+			assert dd is not None
+
 			if attr_count == 0:
 				if class_count == 0:
-					assert dt["id"] == "enum_tools.demo.NoMemberDoc.Bob"  # type: ignore[index]
+					assert dt["id"] == "enum_tools.demo.NoMemberDoc.Bob"
 				elif class_count == 1:
-					assert dt["id"] == "id1"  # type: ignore[index]
+					assert dt["id"] == "id1"
 
 				if NEW_ENUM_REPR:
-					assert dt.em.contents[0] == " = NoMemberDoc.Bob"  # type: ignore[union-attr]
+					assert em.contents[0] == " = NoMemberDoc.Bob"
 				else:
-					assert dt.em.contents[0] == " = <NoMemberDoc.Bob: 1>"  # type: ignore[union-attr]
+					assert em.contents[0] == " = <NoMemberDoc.Bob: 1>"
 
-				assert not attr.find("dd").contents  # type: ignore[union-attr]
+				assert not dd.contents
 			elif attr_count == 1:
 				if class_count == 0:
-					assert dt["id"] == "enum_tools.demo.NoMemberDoc.Alice"  # type: ignore[index]
+					assert dt["id"] == "enum_tools.demo.NoMemberDoc.Alice"
 				elif class_count == 1:
-					assert dt["id"] == "id2"  # type: ignore[index]
+					assert dt["id"] == "id2"
 
 				if NEW_ENUM_REPR:
-					assert dt.em.contents[0] == " = NoMemberDoc.Alice"  # type: ignore[union-attr]
+					assert em.contents[0] == " = NoMemberDoc.Alice"
 				else:
-					assert dt.em.contents[0] == " = <NoMemberDoc.Alice: 2>"  # type: ignore[union-attr]
+					assert em.contents[0] == " = <NoMemberDoc.Alice: 2>"
 
-				assert not attr.find("dd").contents  # type: ignore[union-attr]
+				assert not dd.contents
 			elif attr_count == 2:
 				if class_count == 0:
-					assert dt["id"] == "enum_tools.demo.NoMemberDoc.Carol"  # type: ignore[index]
+					assert dt["id"] == "enum_tools.demo.NoMemberDoc.Carol"
 				elif class_count == 1:
-					assert dt["id"] == "id3"  # type: ignore[index]
+					assert dt["id"] == "id3"
 
 				if NEW_ENUM_REPR:
-					assert dt.em.contents[0] == " = NoMemberDoc.Carol"  # type: ignore[union-attr]
+					assert em.contents[0] == " = NoMemberDoc.Carol"
 				else:
-					assert dt.em.contents[0] == " = <NoMemberDoc.Carol: 3>"  # type: ignore[union-attr]
+					assert em.contents[0] == " = <NoMemberDoc.Carol: 3>"
 
-				assert not attr.find("dd").contents  # type: ignore[union-attr]
+				assert not dd.contents
 
 			attr_count += 1
 
