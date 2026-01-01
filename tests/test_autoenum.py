@@ -6,7 +6,7 @@ import sys
 from decimal import Decimal
 from enum import Enum
 from pathlib import Path
-from typing import Dict, List, cast
+from typing import cast
 
 # 3rd party
 import pytest
