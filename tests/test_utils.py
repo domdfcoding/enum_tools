@@ -18,7 +18,7 @@ from enum_tools.utils import get_base_object, is_enum, is_enum_member, is_flag
 				(http.HTTPStatus.NOT_ACCEPTABLE, False),
 				(123, False),
 				("abc", False),
-				]
+				],
 		)
 def test_is_enum(obj: object, result: bool):
 	assert is_enum(obj) == result  # type: ignore[arg-type]
@@ -32,7 +32,7 @@ def test_is_enum(obj: object, result: bool):
 				(http.HTTPStatus.NOT_ACCEPTABLE, True),
 				(123, False),
 				("abc", False),
-				]
+				],
 		)
 def test_is_enum_member(obj: object, result: bool):
 	assert is_enum_member(obj) == result  # type: ignore[arg-type]
@@ -57,7 +57,7 @@ PURPLE = Colours.RED | Colours.BLUE
 				(Colours, True),
 				(Colours.RED, False),
 				(PURPLE, False),
-				]
+				],
 		)
 def test_is_flag(obj: object, result: bool):
 	assert is_flag(obj) == result  # type: ignore[arg-type]

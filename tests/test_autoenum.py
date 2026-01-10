@@ -22,19 +22,22 @@ NEW_ENUM_REPR = sys.version_info >= (3, 14)
 
 xfail_312 = pytest.mark.xfail(
 		reason="Python 3.14 behaviour has not been finalised yet.",
-		condition=sys.version_info[:2] == (3, 14) and sys.version_info.releaselevel == "alpha"
+		condition=sys.version_info[:2] == (3, 14) and sys.version_info.releaselevel == "alpha",
 		)
 
 
-@pytest.mark.parametrize("obj", [
-		"abcdefg",
-		b"abcdefg",
-		b"\x00\x01",
-		12345,
-		123.45,
-		Decimal(123.45),
-		Path('.'),
-		])
+@pytest.mark.parametrize(
+		"obj",
+		[
+				"abcdefg",
+				b"abcdefg",
+				b"\x00\x01",
+				12345,
+				123.45,
+				Decimal(123.45),
+				Path('.'),
+				],
+		)
 def test_cannot_document_member(obj: object):
 	assert not EnumDocumenter.can_document_member(obj, '', True, '')
 
@@ -112,9 +115,11 @@ def get_page_h1(page: BeautifulSoup) -> str:
 
 @xfail_312
 @pytest.mark.parametrize(
-		"page", [
+		"page",
+		[
 				"index.html",
-				], indirect=True
+				],
+		indirect=True,
 		)
 def test_index(page: BeautifulSoup, html_regression: HTMLRegressionFixture):
 	# Make sure the page title is what you expect

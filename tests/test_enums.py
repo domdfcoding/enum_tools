@@ -18,7 +18,7 @@ NEW_ENUM_REPR = sys.version_info >= (3, 14)
 
 xfail_314 = pytest.mark.xfail(
 		reason="Python 3.14 behaviour has not been finalised yet.",
-		condition=sys.version_info[:2] == (3, 14) and sys.version_info.releaselevel == "alpha"
+		condition=sys.version_info[:2] == (3, 14) and sys.version_info.releaselevel == "alpha",
 		)
 
 

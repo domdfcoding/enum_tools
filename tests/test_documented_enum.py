@@ -18,7 +18,7 @@ NEW_ENUM_REPR = sys.version_info >= (3, 14)
 
 xfail_314 = pytest.mark.xfail(
 		reason="Python 3.14 behaviour has not been finalised yet.",
-		condition=sys.version_info[:2] == (3, 14) and sys.version_info.releaselevel == "alpha"
+		condition=sys.version_info[:2] == (3, 14) and sys.version_info.releaselevel == "alpha",
 		)
 
 
@@ -115,7 +115,7 @@ def test_documented_enum():
 				Decimal,
 				str,
 				float,
-				]
+				],
 		)
 def test_document_enum_wrong_types(obj: object):
 	with pytest.raises(TypeError, match="'an_enum' must be an 'Enum', not .*!"):
@@ -138,7 +138,7 @@ def test_document_enum_wrong_types(obj: object):
 				Decimal,
 				str,
 				float,
-				]
+				],
 		)
 def test_document_member_wrong_types(obj: object):
 	with pytest.raises(TypeError, match="'an_enum' must be an 'Enum', not .*!"):
