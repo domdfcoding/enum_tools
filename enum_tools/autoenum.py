@@ -448,7 +448,7 @@ class EnumMemberDocumenter(AttributeDocumenter):
 			more_content: Optional[Any] = None,
 			real_modname: Optional[str] = None,
 			check_module: bool = False,
-			all_members: bool = False
+			all_members: bool = False,
 			) -> None:
 		"""
 		Generate reST for the object given by ``self.name``, and possibly for its members.

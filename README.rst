@@ -113,7 +113,7 @@ Enum Tools
 	:alt: Maintenance
 
 .. |pypi-downloads| image:: https://img.shields.io/pypi/dm/enum_tools
-	:target: https://pypi.org/project/enum_tools/
+	:target: https://pypistats.org/packages/enum_tools
 	:alt: PyPI - Downloads
 
 .. end shields
