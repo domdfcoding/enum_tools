@@ -396,7 +396,7 @@ def get_base_indent(
 	return base_indent
 
 
-class DocumentedEnum(Enum):
+class DocumentedEnum(Enum):  # noqa: PRM002
 	"""
 	An enum where docstrings are automatically added to members from comments starting with ``doc:``.
 

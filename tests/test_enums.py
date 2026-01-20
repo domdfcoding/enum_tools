@@ -112,7 +112,7 @@ def test_strenum():
 
 		class SecondFailedStrEnum(StrEnum):
 			one = '1'
-			two = 2,
+			two = 2,  # noqa: C818
 			three = '3'
 
 	with pytest.raises(TypeError, match="2 is not a string"):

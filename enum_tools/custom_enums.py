@@ -55,7 +55,7 @@ if sys.version_info >= (3, 11):  # pragma: no cover
 			return False
 		return value == 2**_high_bit(value)
 
-	def _decompose(flag, value):  # noqa: MAN001,MAN002
+	def _decompose(flag, value):  # noqa: MAN001,MAN002,PRM002
 		"""
 		Extract all members from the value.
 		"""
@@ -213,7 +213,7 @@ class OrderedEnum(Enum):
 		return NotImplemented
 
 
-class DuplicateFreeEnum(Enum):
+class DuplicateFreeEnum(Enum):  # noqa: PRM002
 	"""
 	:class:`~enum.Enum` that disallows duplicated member names.
 	"""

@@ -162,8 +162,9 @@ extra_sphinx_extensions:
  - sphinx_toolbox_experimental.succinct_seealso
  - sphinx_toolbox_experimental.missing_xref
 
-exclude_files:
-   - tox
+tox_unmanaged:
+ - testenv
+ - fixups
 
 sphinx_conf_epilogue:
  - html_logo = "../enum_tools.png"

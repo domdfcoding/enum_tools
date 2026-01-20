@@ -92,7 +92,7 @@ def preprocess_soup(soup: BeautifulSoup) -> None:
 
 	for div in soup.find_all("script"):
 		if cast(Tag, div).get("src"):
-			div["src"] = div["src"].split("?v=")[0]  # type: ignore[union-attr]
+			div["src"] = div["src"].split("?v=")[0]
 			print(div["src"])
 
 	for meta in soup.find_all("meta"):
@@ -106,7 +106,7 @@ def preprocess_soup(soup: BeautifulSoup) -> None:
 
 def get_page_h1(page: BeautifulSoup) -> str:
 	h1 = page.find("h1")
-	assert h1 is not None
+	assert isinstance(h1, Tag)
 	contents = h1.contents
 	assert contents is not None
 	title = cast(str, contents[0]).strip()
@@ -139,11 +139,11 @@ def test_index(page: BeautifulSoup, html_regression: HTMLRegressionFixture):
 			continue
 
 		dd = class_.find("dd")
-		assert dd is not None
+		assert isinstance(dd, Tag)
 		p = dd.find_all('p')
 		assert p is not None
 		dt = class_.find("dt")
-		assert dt is not None
+		assert isinstance(dt, Tag)
 
 		if class_count == 0:
 			assert dt["id"] == "enum_tools.demo.People"
@@ -170,11 +170,11 @@ def test_index(page: BeautifulSoup, html_regression: HTMLRegressionFixture):
 				class_name = "NoMethods"
 
 			dt = attr.find("dt")
-			assert dt is not None
+			assert isinstance(dt, Tag)
 			em = dt.em
 			assert em is not None
 			dd = attr.find("dd")
-			assert dd is not None
+			assert isinstance(dd, Tag)
 
 			if attr_count == 0:
 				assert dt["id"] == f"enum_tools.demo.{class_name}.Bob"
@@ -251,7 +251,7 @@ def test_flag(page: BeautifulSoup, html_regression: HTMLRegressionFixture):
 			continue
 
 		dt = class_.find("dt")
-		assert dt is not None
+		assert isinstance(dt, Tag)
 
 		if class_count == 0:
 			assert dt["id"] == "enum_tools.demo.StatusFlags"
@@ -259,7 +259,7 @@ def test_flag(page: BeautifulSoup, html_regression: HTMLRegressionFixture):
 			assert dt["id"] == "id0"
 
 		dd = class_.find("dd")
-		assert dd is not None
+		assert isinstance(dd, Tag)
 		ps = dd.find_all('p')
 
 		assert ps[0].contents[0] == "An enumeration of status codes."
@@ -276,10 +276,10 @@ def test_flag(page: BeautifulSoup, html_regression: HTMLRegressionFixture):
 				continue
 
 			dt = attr.find("dt")
-			assert dt is not None
+			assert isinstance(dt, Tag)
 			assert dt.em is not None
 			dd = attr.find("dd")
-			assert dd is not None
+			assert isinstance(dd, Tag)
 			assert dd.contents is not None
 
 			if attr_count == 0:
@@ -348,9 +348,9 @@ def test_no_member_doc(page: BeautifulSoup, html_regression: HTMLRegressionFixtu
 			continue
 
 		dd = class_.find("dd")
-		assert dd is not None
+		assert isinstance(dd, Tag)
 		dt = class_.find("dt")
-		assert dt is not None
+		assert isinstance(dt, Tag)
 		p = dd.find_all('p')
 		assert p is not None
 
@@ -373,11 +373,11 @@ def test_no_member_doc(page: BeautifulSoup, html_regression: HTMLRegressionFixtu
 				continue
 
 			dt = attr.find("dt")
-			assert dt is not None
+			assert isinstance(dt, Tag)
 			em = dt.em
 			assert em is not None
 			dd = attr.find("dd")
-			assert dd is not None
+			assert isinstance(dd, Tag)
 
 			if attr_count == 0:
 				if class_count == 0:
