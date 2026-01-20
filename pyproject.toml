@@ -46,10 +46,6 @@ platforms = [ "Windows", "macOS", "Linux",]
 license-key = "LGPL-3.0-or-later"
 additional-files = [ "recursive-include enum_tools/ requirements.txt", "recursive-exclude tests/ *",]
 
-[tool.mkrecipe]
-conda-channels = [ "conda-forge", "domdfcoding",]
-extras = "all"
-
 [tool.sphinx-pyproject]
 github_username = "domdfcoding"
 github_repository = "enum_tools"
