@@ -86,12 +86,12 @@ Enum Tools
 	:target: https://pypi.org/project/enum_tools/
 	:alt: PyPI - Wheel
 
-.. |conda-version| image:: https://img.shields.io/conda/v/conda-forge/enum_tools?logo=anaconda
-	:target: https://anaconda.org/conda-forge/enum_tools
+.. |conda-version| image:: https://img.shields.io/conda/v/conda-forge/enum-tools?logo=anaconda
+	:target: https://anaconda.org/conda-forge/enum-tools
 	:alt: Conda - Package Version
 
-.. |conda-platform| image:: https://img.shields.io/conda/pn/conda-forge/enum_tools?label=conda%7Cplatform
-	:target: https://anaconda.org/conda-forge/enum_tools
+.. |conda-platform| image:: https://img.shields.io/conda/pn/conda-forge/enum-tools?label=conda%7Cplatform
+	:target: https://anaconda.org/conda-forge/enum-tools
 	:alt: Conda - Platform
 
 .. |license| image:: https://img.shields.io/github/license/domdfcoding/enum_tools
@@ -139,13 +139,13 @@ To install with ``pip``:
 
 .. code-block:: bash
 
-	$ python -m pip install enum_tools
+	$ python -m pip install enum-tools
 
 To install with ``conda``:
 
 .. code-block:: bash
 
-	$ conda install -c conda-forge enum_tools
+	$ conda install -c conda-forge enum-tools
 
 .. end installation
 

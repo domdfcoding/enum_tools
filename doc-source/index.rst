@@ -99,12 +99,12 @@ Enum Tools
 		:wheel:
 		:alt: PyPI - Wheel
 
-	.. |conda-version| image:: https://img.shields.io/conda/v/conda-forge/enum_tools?logo=anaconda
-		:target: https://anaconda.org/conda-forge/enum_tools
+	.. |conda-version| image:: https://img.shields.io/conda/v/conda-forge/enum-tools?logo=anaconda
+		:target: https://anaconda.org/conda-forge/enum-tools
 		:alt: Conda - Package Version
 
-	.. |conda-platform| image:: https://img.shields.io/conda/pn/conda-forge/enum_tools?label=conda%7Cplatform
-		:target: https://anaconda.org/conda-forge/enum_tools
+	.. |conda-platform| image:: https://img.shields.io/conda/pn/conda-forge/enum-tools?label=conda%7Cplatform
+		:target: https://anaconda.org/conda-forge/enum-tools
 		:alt: Conda - Platform
 
 	.. |license| github-shield::
@@ -156,8 +156,10 @@ Installation
 
 .. installation:: enum_tools
 	:pypi:
+	:pypi-name: enum-tools
 	:github:
 	:anaconda:
+	:conda-name: enum-tools
 	:conda-channels: conda-forge
 
 .. end installation
