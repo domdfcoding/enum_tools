@@ -70,20 +70,20 @@ Enum Tools
 	:target: https://www.codefactor.io/repository/github/domdfcoding/enum_tools
 	:alt: CodeFactor Grade
 
-.. |pypi-version| image:: https://img.shields.io/pypi/v/enum_tools
-	:target: https://pypi.org/project/enum_tools/
+.. |pypi-version| image:: https://img.shields.io/pypi/v/enum-tools
+	:target: https://pypi.org/project/enum-tools/
 	:alt: PyPI - Package Version
 
-.. |supported-versions| image:: https://img.shields.io/pypi/pyversions/enum_tools?logo=python&logoColor=white
-	:target: https://pypi.org/project/enum_tools/
+.. |supported-versions| image:: https://img.shields.io/pypi/pyversions/enum-tools?logo=python&logoColor=white
+	:target: https://pypi.org/project/enum-tools/
 	:alt: PyPI - Supported Python Versions
 
-.. |supported-implementations| image:: https://img.shields.io/pypi/implementation/enum_tools
-	:target: https://pypi.org/project/enum_tools/
+.. |supported-implementations| image:: https://img.shields.io/pypi/implementation/enum-tools
+	:target: https://pypi.org/project/enum-tools/
 	:alt: PyPI - Supported Implementations
 
-.. |wheel| image:: https://img.shields.io/pypi/wheel/enum_tools
-	:target: https://pypi.org/project/enum_tools/
+.. |wheel| image:: https://img.shields.io/pypi/wheel/enum-tools
+	:target: https://pypi.org/project/enum-tools/
 	:alt: PyPI - Wheel
 
 .. |conda-version| image:: https://img.shields.io/conda/v/conda-forge/enum-tools?logo=anaconda
@@ -112,8 +112,8 @@ Enum Tools
 .. |maintained| image:: https://img.shields.io/maintenance/yes/2026
 	:alt: Maintenance
 
-.. |pypi-downloads| image:: https://img.shields.io/pypi/dm/enum_tools
-	:target: https://pypistats.org/packages/enum_tools
+.. |pypi-downloads| image:: https://img.shields.io/pypi/dm/enum-tools
+	:target: https://pypistats.org/packages/enum-tools
 	:alt: PyPI - Downloads
 
 .. end shields
