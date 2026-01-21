@@ -3,7 +3,7 @@ requires = [ "whey",]
 build-backend = "whey"
 
 [project]
-name = "enum_tools"
+name = "enum-tools"
 version = "0.13.0"
 description = "Tools to expand Python's enum module."
 readme = "README.rst"
@@ -45,6 +45,7 @@ python-implementations = [ "CPython", "PyPy",]
 platforms = [ "Windows", "macOS", "Linux",]
 license-key = "LGPL-3.0-or-later"
 additional-files = [ "recursive-include enum_tools/ requirements.txt", "recursive-exclude tests/ *",]
+package = "enum_tools"
 
 [tool.sphinx-pyproject]
 github_username = "domdfcoding"

@@ -80,22 +80,22 @@ Enum Tools
 		:alt: CodeFactor Grade
 
 	.. |pypi-version| pypi-shield::
-		:project: enum_tools
+		:project: enum-tools
 		:version:
 		:alt: PyPI - Package Version
 
 	.. |supported-versions| pypi-shield::
-		:project: enum_tools
+		:project: enum-tools
 		:py-versions:
 		:alt: PyPI - Supported Python Versions
 
 	.. |supported-implementations| pypi-shield::
-		:project: enum_tools
+		:project: enum-tools
 		:implementations:
 		:alt: PyPI - Supported Implementations
 
 	.. |wheel| pypi-shield::
-		:project: enum_tools
+		:project: enum-tools
 		:wheel:
 		:alt: PyPI - Wheel
 
@@ -127,7 +127,7 @@ Enum Tools
 		:alt: Maintenance
 
 	.. |pypi-downloads| pypi-shield::
-		:project: enum_tools
+		:project: enum-tools
 		:downloads: month
 		:alt: PyPI - Downloads
 

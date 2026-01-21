@@ -7,4 +7,4 @@ License
 .. license-info:: LGPL-3.0
 
 .. license::
-	:py: enum_tools
+	:py: enum-tools
