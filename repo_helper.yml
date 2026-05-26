@@ -151,7 +151,7 @@ keywords:
 
 extras_require:
   sphinx:
-   - sphinx>=3.4.0
+   - sphinx>=3.4.0,<9
    - sphinx-toolbox>=2.16.0
    - sphinx-jinja2-compat>=0.1.1
 
