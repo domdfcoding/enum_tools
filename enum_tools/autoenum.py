@@ -73,11 +73,16 @@ from sphinx.ext.autodoc import (  # nodep
 		ClassLevelDocumenter,
 		Documenter,
 		ObjectMember,
-		logger
 		)
 from sphinx.locale import _  # nodep
 from sphinx.pycode import ModuleAnalyzer  # nodep
+from sphinx.util import logging as sphinx_logging  # nodep
 from sphinx.util.inspect import memory_address_re, safe_getattr  # nodep
+
+# sphinx.ext.autodoc.logger was dropped from the module's public surface in
+# Sphinx 9 when autodoc was rewritten. Construct our own; getLogger has been
+# available in sphinx.util.logging since Sphinx 1.6.
+logger = sphinx_logging.getLogger(__name__)
 from sphinx_toolbox.more_autodoc import ObjectMembers  # nodep
 from sphinx_toolbox.more_autodoc.typehints import format_annotation  # nodep
 from sphinx_toolbox.utils import add_fallback_css_class  # nodep
