@@ -171,7 +171,7 @@ def test_index(page: BeautifulSoup, html_regression: HTMLRegressionFixture):
 
 			dt = attr.find("dt")
 			assert isinstance(dt, Tag)
-			em = dt.em
+			em = dt.em or dt.select_one("span.property")
 			assert em is not None
 			dd = attr.find("dd")
 			assert isinstance(dd, Tag)
@@ -180,9 +180,9 @@ def test_index(page: BeautifulSoup, html_regression: HTMLRegressionFixture):
 				assert dt["id"] == f"enum_tools.demo.{class_name}.Bob"
 
 				if NEW_ENUM_REPR:
-					assert em.contents[0] == f" = {class_name}.Bob"
+					assert em.text.strip() == f"= {class_name}.Bob"
 				else:
-					assert em.contents[0] == f" = <{class_name}.Bob: 1>"
+					assert em.text.strip() == f"= <{class_name}.Bob: 1>"
 
 				assert str(dd.contents[0]) == "<p>A person called Bob</p>"
 
@@ -190,9 +190,9 @@ def test_index(page: BeautifulSoup, html_regression: HTMLRegressionFixture):
 				assert dt["id"] == f"enum_tools.demo.{class_name}.Alice"
 
 				if NEW_ENUM_REPR:
-					assert em.contents[0] == f" = {class_name}.Alice"
+					assert em.text.strip() == f"= {class_name}.Alice"
 				else:
-					assert em.contents[0] == f" = <{class_name}.Alice: 2>"
+					assert em.text.strip() == f"= <{class_name}.Alice: 2>"
 
 				assert str(dd.contents[0]) == "<p>A person called Alice</p>"
 
@@ -200,9 +200,9 @@ def test_index(page: BeautifulSoup, html_regression: HTMLRegressionFixture):
 				assert dt["id"] == f"enum_tools.demo.{class_name}.Carol"
 
 				if NEW_ENUM_REPR:
-					assert em.contents[0] == f" = {class_name}.Carol"
+					assert em.text.strip() == f"= {class_name}.Carol"
 				else:
-					assert em.contents[0] == f" = <{class_name}.Carol: 3>"
+					assert em.text.strip() == f"= <{class_name}.Carol: 3>"
 
 				if class_count == 0:
 					contents = dd.contents
@@ -216,9 +216,9 @@ def test_index(page: BeautifulSoup, html_regression: HTMLRegressionFixture):
 				assert dt["id"] == f"enum_tools.demo.{class_name}.Dennis"
 
 				if NEW_ENUM_REPR:
-					assert em.contents[0] == f" = {class_name}.Dennis"
+					assert em.text.strip() == f"= {class_name}.Dennis"
 				else:
-					assert em.contents[0] == f" = <{class_name}.Dennis: 4>"
+					assert em.text.strip() == f"= <{class_name}.Dennis: 4>"
 
 				assert str(dd.contents[0]) == "<p>A person called Dennis</p>"
 
@@ -277,7 +277,8 @@ def test_flag(page: BeautifulSoup, html_regression: HTMLRegressionFixture):
 
 			dt = attr.find("dt")
 			assert isinstance(dt, Tag)
-			assert dt.em is not None
+			em = dt.em or dt.select_one("span.property")
+			assert em is not None
 			dd = attr.find("dd")
 			assert isinstance(dd, Tag)
 			assert dd.contents is not None
@@ -289,9 +290,9 @@ def test_flag(page: BeautifulSoup, html_regression: HTMLRegressionFixture):
 					assert dt["id"] == "id1"
 
 				if NEW_ENUM_REPR:
-					assert dt.em.contents[0] == " = StatusFlags.Running"
+					assert em.text.strip() == "= StatusFlags.Running"
 				else:
-					assert dt.em.contents[0] == " = <StatusFlags.Running: 1>"
+					assert em.text.strip() == "= <StatusFlags.Running: 1>"
 
 				assert str(dd.contents[0]) == "<p>The system is running.</p>"
 			elif attr_count == 1:
@@ -301,9 +302,9 @@ def test_flag(page: BeautifulSoup, html_regression: HTMLRegressionFixture):
 					assert dt["id"] == "id2"
 
 				if NEW_ENUM_REPR:
-					assert dt.em.contents[0] == " = StatusFlags.Stopped"
+					assert em.text.strip() == "= StatusFlags.Stopped"
 				else:
-					assert dt.em.contents[0] == " = <StatusFlags.Stopped: 2>"
+					assert em.text.strip() == "= <StatusFlags.Stopped: 2>"
 
 				assert str(dd.contents[0]) == "<p>The system has stopped.</p>"
 			elif attr_count == 2:
@@ -313,9 +314,9 @@ def test_flag(page: BeautifulSoup, html_regression: HTMLRegressionFixture):
 					assert dt["id"] == "id3"
 
 				if NEW_ENUM_REPR:
-					assert dt.em.contents[0] == " = StatusFlags.Error"
+					assert em.text.strip() == "= StatusFlags.Error"
 				else:
-					assert dt.em.contents[0] == " = <StatusFlags.Error: 4>"
+					assert em.text.strip() == "= <StatusFlags.Error: 4>"
 
 				assert str(dd.contents[0]) == "<p>An error has occurred.</p>"
 
@@ -374,7 +375,7 @@ def test_no_member_doc(page: BeautifulSoup, html_regression: HTMLRegressionFixtu
 
 			dt = attr.find("dt")
 			assert isinstance(dt, Tag)
-			em = dt.em
+			em = dt.em or dt.select_one("span.property")
 			assert em is not None
 			dd = attr.find("dd")
 			assert isinstance(dd, Tag)
@@ -386,9 +387,9 @@ def test_no_member_doc(page: BeautifulSoup, html_regression: HTMLRegressionFixtu
 					assert dt["id"] == "id1"
 
 				if NEW_ENUM_REPR:
-					assert em.contents[0] == " = NoMemberDoc.Bob"
+					assert em.text.strip() == "= NoMemberDoc.Bob"
 				else:
-					assert em.contents[0] == " = <NoMemberDoc.Bob: 1>"
+					assert em.text.strip() == "= <NoMemberDoc.Bob: 1>"
 
 				assert not dd.contents
 			elif attr_count == 1:
@@ -398,9 +399,9 @@ def test_no_member_doc(page: BeautifulSoup, html_regression: HTMLRegressionFixtu
 					assert dt["id"] == "id2"
 
 				if NEW_ENUM_REPR:
-					assert em.contents[0] == " = NoMemberDoc.Alice"
+					assert em.text.strip() == "= NoMemberDoc.Alice"
 				else:
-					assert em.contents[0] == " = <NoMemberDoc.Alice: 2>"
+					assert em.text.strip() == "= <NoMemberDoc.Alice: 2>"
 
 				assert not dd.contents
 			elif attr_count == 2:
@@ -410,9 +411,9 @@ def test_no_member_doc(page: BeautifulSoup, html_regression: HTMLRegressionFixtu
 					assert dt["id"] == "id3"
 
 				if NEW_ENUM_REPR:
-					assert em.contents[0] == " = NoMemberDoc.Carol"
+					assert em.text.strip() == "= NoMemberDoc.Carol"
 				else:
-					assert em.contents[0] == " = <NoMemberDoc.Carol: 3>"
+					assert em.text.strip() == "= <NoMemberDoc.Carol: 3>"
 
 				assert not dd.contents
 

@@ -32,6 +32,7 @@ def rootdir() -> path:
 
 @pytest.fixture()
 def content(app: Sphinx) -> Iterator[Sphinx]:
+	assert app.config.autodoc_use_legacy_class_based is True
 	app.build()
 	yield app
 

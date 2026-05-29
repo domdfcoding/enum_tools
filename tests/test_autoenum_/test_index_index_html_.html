@@ -4,6 +4,7 @@
 {% set permalink = ('Link' if sphinx_version >= (7, 2) else 'Permalink') -%}
 {% set NEW_ENUM_REPR = python_version >= (3, 14) -%}
 {% set anchor = "autoenum-demo" if sphinx_version >= (9, 9) else "module-enum_tools.demo" -%}
+{% set property_em_span = ('span' if sphinx_version >= (9, 0) else 'em') -%}
 <!DOCTYPE html>
 <html{% if sphinx_version >= (7, 2) %} data-content_root="./"{% endif %}{% if sphinx_version >= (5, 0) %} lang="en"{% endif %}>
  <head>
@@ -45,9 +46,11 @@
        </h1>
        <dl class="py class enum"{% if sphinx_version >= (9, 9) %} id="module-enum_tools.demo"{% endif %}>
         <dt{{ sig_object_class }} id="enum_tools.demo.People">
-         <em class="property">
-          enum
-         </em>
+         <{{ property_em_span }} class="property">
+          {% if sphinx_version >= (9, 0) %}<span class="k">
+           enum
+          </span>{% else %}enum{% endif %}
+         </{{ property_em_span }}>
          <{{ sig_prename_tag }} class="sig-prename descclassname">
           enum_tools.demo.
          </{{ sig_prename_tag }}>
@@ -96,9 +99,10 @@
            <{{ sig_prename_tag }} class="sig-name descname">
             Bob
            </{{ sig_prename_tag }}>
-           <em class="property">
-            = {% if NEW_ENUM_REPR %}People.Bob{% else %}&lt;People.Bob: 1&gt;{% endif %}
-           </em>
+           <{{ property_em_span }} class="property">
+            = {% if NEW_ENUM_REPR %}People.Bob{% else %}&lt;People.Bob:{% if sphinx_version >= (9, 0) %}
+            {% else %} {% endif %}1&gt;{% endif %}
+           </{{ property_em_span }}>
            <a class="headerlink" href="#enum_tools.demo.People.Bob" title="{{ permalink }} to this definition">
             ¶
            </a>
@@ -114,9 +118,10 @@
            <{{ sig_prename_tag }} class="sig-name descname">
             Alice
            </{{ sig_prename_tag }}>
-           <em class="property">
-            = {% if NEW_ENUM_REPR %}People.Alice{% else %}&lt;People.Alice: 2&gt;{% endif %}
-           </em>
+           <{{ property_em_span }} class="property">
+            = {% if NEW_ENUM_REPR %}People.Alice{% else %}&lt;People.Alice:{% if sphinx_version >= (9, 0) %}
+            {% else %} {% endif %}2&gt;{% endif %}
+           </{{ property_em_span }}>
            <a class="headerlink" href="#enum_tools.demo.People.Alice" title="{{ permalink }} to this definition">
             ¶
            </a>
@@ -132,9 +137,10 @@
            <{{ sig_prename_tag }} class="sig-name descname">
             Carol
            </{{ sig_prename_tag }}>
-           <em class="property">
-            = {% if NEW_ENUM_REPR %}People.Carol{% else %}&lt;People.Carol: 3&gt;{% endif %}
-           </em>
+           <{{ property_em_span }} class="property">
+            = {% if NEW_ENUM_REPR %}People.Carol{% else %}&lt;People.Carol:{% if sphinx_version >= (9, 0) %}
+            {% else %} {% endif %}3&gt;{% endif %}
+           </{{ property_em_span }}>
            <a class="headerlink" href="#enum_tools.demo.People.Carol" title="{{ permalink }} to this definition">
             ¶
            </a>
@@ -153,9 +159,10 @@
            <{{ sig_prename_tag }} class="sig-name descname">
             Dennis
            </{{ sig_prename_tag }}>
-           <em class="property">
-            = {% if NEW_ENUM_REPR %}People.Dennis{% else %}&lt;People.Dennis: 4&gt;{% endif %}
-           </em>
+           <{{ property_em_span }} class="property">
+            = {% if NEW_ENUM_REPR %}People.Dennis{% else %}&lt;People.Dennis:{% if sphinx_version >= (9, 0) %}
+            {% else %} {% endif %}4&gt;{% endif %}
+           </{{ property_em_span }}>
            <a class="headerlink" href="#enum_tools.demo.People.Dennis" title="{{ permalink }} to this definition">
             ¶
            </a>
@@ -175,9 +182,11 @@
          </p>
          <dl class="py method">
           <dt{{ sig_object_class }} id="enum_tools.demo.People.iter_values">
-           <em class="property">
-            classmethod
-           </em>
+           <{{ property_em_span }} class="property">
+            {% if sphinx_version >= (9, 0) %}<span class="k">
+             classmethod
+            </span>{% else %}classmethod{% endif %}
+           </{{ property_em_span }}>
            <{{ sig_prename_tag }} class="sig-name descname">
             iter_values
            </{{ sig_prename_tag }}>
@@ -199,9 +208,11 @@
          </dl>
          <dl class="py method">
           <dt{{ sig_object_class }} id="enum_tools.demo.People.as_list">
-           <em class="property">
-            classmethod
-           </em>
+           <{{ property_em_span }} class="property">
+            {% if sphinx_version >= (9, 0) %}<span class="k">
+             classmethod
+            </span>{% else %}classmethod{% endif %}
+           </{{ property_em_span }}>
            <{{ sig_prename_tag }} class="sig-name descname">
             as_list
            </{{ sig_prename_tag }}>
@@ -226,9 +237,11 @@
        </dl>
        <dl class="py class enum">
         <dt{{ sig_object_class }} id="enum_tools.demo.NoMethods">
-         <em class="property">
-          enum
-         </em>
+         <{{ property_em_span }} class="property">
+          {% if sphinx_version >= (9, 0) %}<span class="k">
+           enum
+          </span>{% else %}enum{% endif %}
+         </{{ property_em_span }}>
          <{{ sig_prename_tag }} class="sig-prename descclassname">
           enum_tools.demo.
          </{{ sig_prename_tag }}>
@@ -277,9 +290,10 @@
            <{{ sig_prename_tag }} class="sig-name descname">
             Bob
            </{{ sig_prename_tag }}>
-           <em class="property">
-            = {% if NEW_ENUM_REPR %}NoMethods.Bob{% else %}&lt;NoMethods.Bob: 1&gt;{% endif %}
-           </em>
+           <{{ property_em_span }} class="property">
+            = {% if NEW_ENUM_REPR %}NoMethods.Bob{% else %}&lt;NoMethods.Bob:{% if sphinx_version >= (9, 0) %}
+            {% else %} {% endif %}1&gt;{% endif %}
+           </{{ property_em_span }}>
            <a class="headerlink" href="#enum_tools.demo.NoMethods.Bob" title="{{ permalink }} to this definition">
             ¶
            </a>
@@ -295,9 +309,10 @@
            <{{ sig_prename_tag }} class="sig-name descname">
             Alice
            </{{ sig_prename_tag }}>
-           <em class="property">
-            = {% if NEW_ENUM_REPR %}NoMethods.Alice{% else %}&lt;NoMethods.Alice: 2&gt;{% endif %}
-           </em>
+           <{{ property_em_span }} class="property">
+            = {% if NEW_ENUM_REPR %}NoMethods.Alice{% else %}&lt;NoMethods.Alice:{% if sphinx_version >= (9, 0) %}
+            {% else %} {% endif %}2&gt;{% endif %}
+           </{{ property_em_span }}>
            <a class="headerlink" href="#enum_tools.demo.NoMethods.Alice" title="{{ permalink }} to this definition">
             ¶
            </a>
@@ -313,9 +328,10 @@
            <{{ sig_prename_tag }} class="sig-name descname">
             Carol
            </{{ sig_prename_tag }}>
-           <em class="property">
-            = {% if NEW_ENUM_REPR %}NoMethods.Carol{% else %}&lt;NoMethods.Carol: 3&gt;{% endif %}
-           </em>
+           <{{ property_em_span }} class="property">
+            = {% if NEW_ENUM_REPR %}NoMethods.Carol{% else %}&lt;NoMethods.Carol:{% if sphinx_version >= (9, 0) %}
+            {% else %} {% endif %}3&gt;{% endif %}
+           </{{ property_em_span }}>
            <a class="headerlink" href="#enum_tools.demo.NoMethods.Carol" title="{{ permalink }} to this definition">
             ¶
            </a>

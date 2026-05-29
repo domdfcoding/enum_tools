@@ -33,6 +33,8 @@ python_versions:
     - 8.0
     - 8.1
     - 8.2
+    - 9.0
+    - 9.1
     - latest
  3.8:
   matrix_exclude:
@@ -43,6 +45,8 @@ python_versions:
     - 8.0
     - 8.1
     - 8.2
+    - 9.0
+    - 9.1
     - latest
  3.9:
   matrix_exclude:
@@ -50,11 +54,18 @@ python_versions:
     - 8.0
     - 8.1
     - 8.2
+    - 9.0
+    - 9.1
  "3.10":
   matrix_exclude:
    sphinx:
     - 8.2
+    - 9.0
+    - 9.1
  "3.11":
+  matrix_exclude:
+   sphinx:
+    - 9.1
  "3.12":
   matrix_exclude:
    sphinx:
@@ -99,6 +110,8 @@ python_versions:
     - 8.0
     - 8.1
     - 8.2
+    - 9.0
+    - 9.1
     - latest
  pypy38:
   matrix_exclude:
@@ -114,6 +127,8 @@ python_versions:
     - 8.0
     - 8.1
     - 8.2
+    - 9.0
+    - 9.1
     - latest
  pypy39:
   matrix_exclude:
@@ -126,6 +141,8 @@ python_versions:
     - 8.0
     - 8.1
     - 8.2
+    - 9.0
+    - 9.1
     - latest
 
 manifest_additional:
@@ -206,4 +223,6 @@ third_party_version_matrix:
     - 8.0
     - 8.1
     - 8.2
-#    - latest
+    - 9.0
+    - 9.1
+    # - latest

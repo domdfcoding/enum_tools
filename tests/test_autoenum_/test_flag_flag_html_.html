@@ -3,6 +3,7 @@
 {% set sig_object_class = (' class="sig sig-object py"' if sphinx_version >= (4, 0) else '') -%}
 {% set permalink = ('Link' if sphinx_version >= (7, 2) else 'Permalink') -%}
 {% set NEW_ENUM_REPR = python_version >= (3, 14) -%}
+{% set property_em_span = ('span' if sphinx_version >= (9, 0) else 'em') -%}
 <!DOCTYPE html>
 <html{% if sphinx_version >= (7, 2) %} data-content_root="./"{% endif %}{% if sphinx_version >= (5, 0) %} lang="en"{% endif %}>
  <head>
@@ -42,9 +43,11 @@
        </h1>
        <dl class="py class flag">
         <dt{{ sig_object_class }} id="enum_tools.demo.StatusFlags">
-         <em class="property">
-          flag
-         </em>
+         <{{ property_em_span }} class="property">
+          {% if sphinx_version >= (9, 0) %}<span class="k">
+           flag
+          </span>{% else %}flag{% endif %}
+         </{{ property_em_span }}>
          <{{ sig_prename_tag }} class="sig-prename descclassname">
           enum_tools.demo.
          </{{ sig_prename_tag }}>
@@ -93,9 +96,10 @@
            <{{ sig_prename_tag }} class="sig-name descname">
             Running
            </{{ sig_prename_tag }}>
-           <em class="property">
-            = {% if NEW_ENUM_REPR %}StatusFlags.Running{% else %}&lt;StatusFlags.Running: 1&gt;{% endif %}
-           </em>
+           <{{ property_em_span }} class="property">
+            = {% if NEW_ENUM_REPR %}StatusFlags.Running{% else %}&lt;StatusFlags.Running:{% if sphinx_version >= (9, 0) %}
+            {% else %} {% endif %}1&gt;{% endif %}
+           </{{ property_em_span }}>
            <a class="headerlink" href="#enum_tools.demo.StatusFlags.Running" title="{{ permalink }} to this definition">
             ¶
            </a>
@@ -111,9 +115,10 @@
            <{{ sig_prename_tag }} class="sig-name descname">
             Stopped
            </{{ sig_prename_tag }}>
-           <em class="property">
-            = {% if NEW_ENUM_REPR %}StatusFlags.Stopped{% else %}&lt;StatusFlags.Stopped: 2&gt;{% endif %}
-           </em>
+           <{{ property_em_span }} class="property">
+            = {% if NEW_ENUM_REPR %}StatusFlags.Stopped{% else %}&lt;StatusFlags.Stopped:{% if sphinx_version >= (9, 0) %}
+            {% else %} {% endif %}2&gt;{% endif %}
+           </{{ property_em_span }}>
            <a class="headerlink" href="#enum_tools.demo.StatusFlags.Stopped" title="{{ permalink }} to this definition">
             ¶
            </a>
@@ -129,9 +134,10 @@
            <{{ sig_prename_tag }} class="sig-name descname">
             Error
            </{{ sig_prename_tag }}>
-           <em class="property">
-            = {% if NEW_ENUM_REPR %}StatusFlags.Error{% else %}&lt;StatusFlags.Error: 4&gt;{% endif %}
-           </em>
+           <{{ property_em_span }} class="property">
+            = {% if NEW_ENUM_REPR %}StatusFlags.Error{% else %}&lt;StatusFlags.Error:{% if sphinx_version >= (9, 0) %}
+            {% else %} {% endif %}4&gt;{% endif %}
+           </{{ property_em_span }}>
            <a class="headerlink" href="#enum_tools.demo.StatusFlags.Error" title="{{ permalink }} to this definition">
             ¶
            </a>
@@ -177,9 +183,11 @@
        </span>{% endif %}
        <dl class="py class flag"{% if sphinx_version >= (7, 2) %} id="module-enum_tools.demo"{% endif %}>
         <dt{{ sig_object_class }} id="id0">
-         <em class="property">
-          flag
-         </em>
+         <{{ property_em_span }} class="property">
+          {% if sphinx_version >= (9, 0) %}<span class="k">
+           flag
+          </span>{% else %}flag{% endif %}
+         </{{ property_em_span }}>
          <{{ sig_prename_tag }} class="sig-prename descclassname">
           enum_tools.demo.
          </{{ sig_prename_tag }}>
@@ -228,9 +236,10 @@
            <{{ sig_prename_tag }} class="sig-name descname">
             Running
            </{{ sig_prename_tag }}>
-           <em class="property">
-            = {% if NEW_ENUM_REPR %}StatusFlags.Running{% else %}&lt;StatusFlags.Running: 1&gt;{% endif %}
-           </em>
+           <{{ property_em_span }} class="property">
+            = {% if NEW_ENUM_REPR %}StatusFlags.Running{% else %}&lt;StatusFlags.Running:{% if sphinx_version >= (9, 0) %}
+            {% else %} {% endif %}1&gt;{% endif %}
+           </{{ property_em_span }}>
            <a class="headerlink" href="#id1" title="{{ permalink }} to this definition">
             ¶
            </a>
@@ -246,9 +255,10 @@
            <{{ sig_prename_tag }} class="sig-name descname">
             Stopped
            </{{ sig_prename_tag }}>
-           <em class="property">
-            = {% if NEW_ENUM_REPR %}StatusFlags.Stopped{% else %}&lt;StatusFlags.Stopped: 2&gt;{% endif %}
-           </em>
+           <{{ property_em_span }} class="property">
+            = {% if NEW_ENUM_REPR %}StatusFlags.Stopped{% else %}&lt;StatusFlags.Stopped:{% if sphinx_version >= (9, 0) %}
+            {% else %} {% endif %}2&gt;{% endif %}
+           </{{ property_em_span }}>
            <a class="headerlink" href="#id2" title="{{ permalink }} to this definition">
             ¶
            </a>
@@ -264,9 +274,10 @@
            <{{ sig_prename_tag }} class="sig-name descname">
             Error
            </{{ sig_prename_tag }}>
-           <em class="property">
-            = {% if NEW_ENUM_REPR %}StatusFlags.Error{% else %}&lt;StatusFlags.Error: 4&gt;{% endif %}
-           </em>
+           <{{ property_em_span }} class="property">
+            = {% if NEW_ENUM_REPR %}StatusFlags.Error{% else %}&lt;StatusFlags.Error:{% if sphinx_version >= (9, 0) %}
+            {% else %} {% endif %}4&gt;{% endif %}
+           </{{ property_em_span }}>
            <a class="headerlink" href="#id3" title="{{ permalink }} to this definition">
             ¶
            </a>

@@ -1,11 +1,6 @@
-#beautifulsoup4<4.12.1,>=4.9.1
 coincidence>=0.2.0
 coverage>=5.1
 coverage-pyver-pragma>=0.2.1
-defusedxml>=0.7.1
-domdf-python-tools[testing]>=2.0.1
-html5lib>=1.1
-importlib-metadata>=3.6.0
 iniconfig!=1.1.0,>=1.0.1
 msgpack>=1.1.0; python_version >= "3.8"
 pytest>=6.0.0
@@ -15,6 +10,4 @@ pytest-regressions>=2.0.1
 pytest-rerunfailures>=9.0
 pytest-timeout>=1.4.2
 setuptools<81
-sphinx>=3.2.1
-sphinx-prompt>=1.5.0
-sphinx-toolbox[testing]>=3.9.0
+sphinx-toolbox[testing]>=4.2.0

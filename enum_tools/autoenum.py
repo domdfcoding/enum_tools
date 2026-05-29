@@ -408,7 +408,7 @@ class FlagDocumenter(EnumDocumenter):
 
 	objtype = "flag"
 	directivetype = "flag"
-	priority = 15
+	priority = 25
 	class_xref = ":class:`~enum.Flag`"
 
 	@classmethod
