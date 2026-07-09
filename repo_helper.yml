@@ -4,7 +4,7 @@ modname: enum_tools
 copyright_years: "2020-2022"
 author: "Dominic Davis-Foster"
 email: "dominic@davis-foster.co.uk"
-version: "0.13.0"
+version: "0.13.1"
 username: "domdfcoding"
 license: 'LGPLv3+'
 short_desc: "Tools to expand Python's enum module."
@@ -151,7 +151,7 @@ keywords:
 
 extras_require:
   sphinx:
-   - sphinx>=3.4.0
+   - sphinx>=3.4.0,<9
    - sphinx-toolbox>=2.16.0
    - sphinx-jinja2-compat>=0.1.1
 
