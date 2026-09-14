@@ -4,7 +4,7 @@ build-backend = "whey"
 
 [project]
 name = "enum-tools"
-version = "0.13.0"
+version = "0.13.1"
 description = "Tools to expand Python's enum module."
 readme = "README.rst"
 keywords = [ "documentation", "enum", "sphinx", "sphinx-extension",]
@@ -24,8 +24,8 @@ Homepage = "https://github.com/domdfcoding/enum_tools"
 Documentation = "https://enum-tools.readthedocs.io/en/latest"
 
 [project.optional-dependencies]
-sphinx = [ "sphinx>=3.4.0", "sphinx-jinja2-compat>=0.1.1", "sphinx-toolbox>=2.16.0",]
-all = [ "sphinx>=3.4.0", "sphinx-jinja2-compat>=0.1.1", "sphinx-toolbox>=2.16.0",]
+sphinx = [ "sphinx<9,>=3.4.0", "sphinx-jinja2-compat>=0.1.1", "sphinx-toolbox>=2.16.0",]
+all = [ "sphinx<9,>=3.4.0", "sphinx-jinja2-compat>=0.1.1", "sphinx-toolbox>=2.16.0",]
 
 [tool.whey]
 base-classifiers = [
